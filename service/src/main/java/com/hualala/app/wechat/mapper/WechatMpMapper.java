@@ -11,6 +11,8 @@ public interface WechatMpMapper {
 
 	List<WechatMpModel> queryList(Map<String, Object> params);
 
+	List<Map<String,Object >> queryByParams(Map<String,Object> params);
+
 	int queryCount(Map<String, Object> params);
 
 }

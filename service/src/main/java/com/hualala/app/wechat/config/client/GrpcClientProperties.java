@@ -12,8 +12,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "grpc.client.hosts")
 public class GrpcClientProperties {
     private String wechat;
-//    private String fsm;
-//    private String other;
-//    private String m_domain_hualala;
-//    private String api_domain_name;
+    private String idgen;
 }

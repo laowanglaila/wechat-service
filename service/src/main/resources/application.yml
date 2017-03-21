@@ -10,7 +10,7 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://mu.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://mu.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=com.github.kristofa.brave.mysql.MySQLStatementInterceptor
     username: root
     password: gozapdev
     driver-class-name: com.mysql.jdbc.Driver
@@ -18,276 +18,28 @@ spring:
     max-active: 20
     min-idle: 1
     validation-query: SELECT 1
-
-mybatis:
-  config-location: classpath:mybatis-config.xml
-redis:
-  client:
-      host: mu.redis.hualala.com
-      port: 6379
-      db: 0
-      maxActive: 2
-      maxWait: 10000
-      maxIdle: 1
-      minIdle: 1
-
-grpc:
-  port: 6566
-  client:
-      hosts:
-        wechat: localhost:6566
-environment:
-   #mu的域名
-   m_domain_hualala: http://mu.m.hualala.com/s?
-   #API
-   api_domain_name: http://mu.api.hualala.com/Qrcode.jsp?chl=
----
-spring:
-  profiles: mu
-  aop:
-    auto: true
-  mvc:
-    throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: false
-  datasource:
-    url: jdbc:mysql://mu.mysql.001.master.hualala.com:3306/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
-    username: root
-    password: gozapdev
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 5
-    max-active: 20
-    min-idle: 2
-    validation-query: SELECT 1
-    test-on-borrow: true
+    test-on-borrow: ture
     test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
 
+  # REDIS (RedisProperties)
   redis:
-      database: 0
-      host: mu.redis.hualala.com
-      port: 6379
-      pool:
-        max-idle: 2
-        min-idle: 1
-        max-active: 2
-        max-wait: 10000
-
-  rabbitmq:
-    username: guest
-    password: guest
-    host: 172.16.0.29
-    port: 5672
+    database: 0
+    host: mu.redis.hualala.com
+    port: 6379
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
 
 mybatis:
-  config-location: classpath:mybatis-config.xml
-
-
+   config-location: classpath:mybatis-config.xml
 
 grpc:
-  port: 6566
+  port: 6567
   client:
      hosts:
-        wecaht: localhost:6566
-        fsm: mu.shop.service.hualala.com:32258
-        other: mu.service.shopcenter.hualala.com:32249
-        #mu的域名
-        m_domain_hualala: http://mu.m.hualala.com/s?
-         #API
-        api_domain_name: http://mu.api.hualala.com/Qrcode.jsp?chl=
-
-stock:
-  redis:
-    host: 172.16.0.27
-    port: 19000
-    pool:
-      maxActive: 20
-      maxIdle: 5
-      minIdle: 5
-      maxWait: 10000
-
-#任务执行刷新开发者店铺信息
-#task:
-#  queue:
-#    shop:
-#      developerRefresh: mu_hll:service:shop:queue:developer:refresh
-#  exchange:
-#    shop:
-#      developerRefresh: mu_hll:service:shop:exchange:developer:refresh
-
-#存储到redis中结构key值
-#shop:
-#  redis:
-#    developer:
-#      #key-value
-#      security: "mu_hll:service:shop:developer:security:"
-#      #key-hash
-#      mapSecurity: "mu_hll:service:shop:developer:shops:"
-
-
----
-spring:
-  profiles: dohko
-  aop:
-    auto: true
-  mvc:
-    throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: false
-  datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
-    username: myshopdev
-    password: mydev@pwd
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 5
-    max-active: 30
-    min-idle: 2
-    validation-query: SELECT 1
-    test-on-borrow: true
-    test-while-idle: true
-
-  redis:
-      database: 0
-      host: dohko.redis.hualala.com
-      port: 6379
-      pool:
-        max-idle: 5
-        min-idle: 5
-        max-active: 20
-        max-wait: 10000
-
-  rabbitmq:
-    username: guest
-    password: guest
-    host: 172.16.0.29
-    port: 5672
-
-mybatis:
-  config-location: classpath:mybatis-config.xml
-
-
-
-grpc:
-  port: 6566
-  client:
-     hosts:
-        wecaht: localhost:6566
-        fsm: dohko.settle.service.hualala.com:31507
-        other: dohko.service.shopcenter.hualala.com:6564
-        #mu的域名
-        m_domain_hualala: http://dohko.m.hualala.com/s?
-         #API
-        api_domain_name: http://dohko.api.hualala.com/Qrcode.jsp?chl=
-
-stock:
-  redis:
-    host: 172.16.0.27
-    port: 19000
-    pool:
-      maxActive: 20
-      maxIdle: 5
-      minIdle: 5
-      maxWait: 10000
-
-#任务执行刷新开发者店铺信息
-#task:
-#  queue:
-#    shop:
-#      developerRefresh: dohko_hll:service:shop:queue:developer:refresh
-#  exchange:
-#    shop:
-#      developerRefresh: dohko_hll:service:shop:exchange:developer:refresh
-
-##存储到redis中结构key值
-#shop:
-#  redis:
-#    developer:
-#      #key-value
-#      security: "dohko_hll:service:shop:developer:security:"
-#      #key-hash
-#      mapSecurity: "dohko_hll:service:shop:developer:shops:"
-
----
-spring:
-  profiles: production
-  aop:
-    auto: true
-  mvc:
-    throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: false
-  datasource:
-#    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
-#    username: myhualashopol
-#    password: gppwd@dldshopol
-#    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 10
-    max-active: 100
-    min-idle: 2
-    validation-query: SELECT 1
-    test-on-borrow: true
-    test-while-idle: true
-   
-
-  redis:
-      database: 0
-      host: redis1.api.hualala.com
-      port: 21379
-      pool:
-        max-idle: 100
-        min-idle: 80
-        max-active: 100
-        max-wait: 10000
-
-  rabbitmq:
-    username: admin
-    password: hualalaadmin
-    host: inner.rabbitmq.hualala.com
-    port: 5672
-
-mybatis:
-  config-location: classpath:mybatis-config.xml
-
-
-
-grpc:
-  port: 6566
-  client:
-     hosts:
-        wecaht: localhost:6566
-        fsm: service.settle.hualala.com:32280
-        other: service.shopcenter.hualala.com:7071
-        #mu的域名
-        m_domain_hualala: http://m.hualala.com/s?
-         #API
-        api_domain_name: http://api.hualala.com/Qrcode.jsp?chl=
-
-stock:
-  redis:
-    host: sjhl.codis.hualala.com
-    port: 19000
-    pool:
-      maxActive: 100
-      maxIdle: 100
-      minIdle: 80
-      maxWait: 10000
-
-#任务执行刷新开发者店铺信息
-#task:
-#  queue:
-#    shop:
-#      developerRefresh: hll:service:shop:queue:developer:refresh
-#  exchange:
-#    shop:
-#      developerRefresh: hll:service:shop:exchange:developer:refresh
-
-#存储到redis中结构key值
-#shop:
-#  redis:
-#    developer:
-#      #key-value
-#      security: "hll:service:shop:developer:security:"
-#      #key-hash
-#      mapSecurity: "hll:service:shop:developer:shops:"
-
-
-
+        #wechat: localhost:6566
+        idgen: dohko.id.gen.hualala.com:31249

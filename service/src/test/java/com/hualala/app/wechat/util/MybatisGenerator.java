@@ -1,4 +1,4 @@
-package com.hualala.app.wechat;
+package com.hualala.app.wechat.util;
 
 import com.hualala.core.service.utils.MybatisSqlGenerator;
 import org.junit.Test;

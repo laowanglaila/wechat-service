@@ -1,10 +1,12 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSON;
+import com.hualala.app.wechat.util.WechatCacheUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -16,12 +18,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MpInfoTest {
     @Autowired
     MpInfoService mpInfoService;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
     @Test
     public void myInfoQueryTest(){
 
-        MpInfoService.MpInfoQueryReqData mpInfoQueryReqData = new MpInfoService.MpInfoQueryReqData();
-        mpInfoQueryReqData.setMpID("doulaofang_caicai");
-        MpInfoService.MpInfoQueryResData mpInfoQueryResData = mpInfoService.queryMpInfo(mpInfoQueryReqData);
-        System.out.println(JSON.toJSONString(mpInfoQueryResData));
+        System.out.println("---------------" + WechatCacheUtil.getKey());
+//        MpInfoService.MpInfoQueryReqData mpInfoQueryReqData = new MpInfoService.MpInfoQueryReqData();
+//        mpInfoQueryReqData.setMpID("doulaofang_caicai");
+//        MpInfoService.MpInfoQueryResData mpInfoQueryResData = mpInfoService.queryMpInfo(mpInfoQueryReqData);
+//        System.out.println(JSON.toJSONString(mpInfoQueryResData));
     }
 }

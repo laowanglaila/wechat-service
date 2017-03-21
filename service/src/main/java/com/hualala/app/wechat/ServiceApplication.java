@@ -18,7 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
  * Created by xiangbin on 2016/10/19.
  */
 @SpringBootApplication
-@EnableAutoConfiguration( exclude = RedisAutoConfiguration.class)
+@EnableAutoConfiguration
 @ComponentScan
 public class ServiceApplication extends SpringBootServletInitializer implements CommandLineRunner,EmbeddedServletContainerCustomizer {
 
@@ -28,13 +28,6 @@ public class ServiceApplication extends SpringBootServletInitializer implements 
     public void run(String... strings) throws Exception {
 
     }
-
-//    @Bean
-//    public GrpcServerRunner schedulerRunner() {
-//        return new GrpcServerRunner();
-//    }
-
-
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

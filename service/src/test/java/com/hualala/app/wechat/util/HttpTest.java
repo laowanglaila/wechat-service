@@ -35,7 +35,7 @@ public class HttpTest {
     @Test
     public void HttpGet(){
       //  String str = "d881a83d-6f31-4a26-8b52-5e92b65a3cea, 7e6a4114-4022-4f36-8997-1e4554889404, 743e03fc-7140-4e61-b6d5-4ad60230cc01, 62eadb58-77a0-4767-96d2-73ae20481234, 583ae18a-f208-4662-9bec-db4944150c0c, 572466da-e86e-42f3-b29a-8b265981e0ca, 2c2ccc27-ec70-4992-aa27-70316ca2001e, 1c0811b2-8a21-4062-9ab1-bc0c491c12d5, 0ce699ac-9c9d-4074-9ba4-3e86470152fe";
-      String str = "6372dfb8-362f-4c64-b38d-aba5ac338833, 5964017a-890b-469e-9af8-d55850ebaecd, f75e9497-391f-42b4-b873-579b790566da";
+      String str = "433e2caf-298f-49d6-87a4-f7521e0ba4b7, e2232c34-b5a8-4657-a07d-3b7178899833, 50a0432b-dd79-4741-9412-9bb97a759286, b488e56e-b78a-4fa7-8264-09c9f74e9588";
         String url = "http://m.hualala.com/trdInterface/queryOrderPayStatus.svc?orderKey=";
         String[] strLst = str.split(", ");
         List<String> lst = Arrays.asList(strLst);
@@ -56,7 +56,7 @@ public class HttpTest {
     @Test
     public void HttpTest(){
         String url = "http://m.hualala.com/trdInterface/queryOrderPayStatus.svc?orderKey=";
-        String str = "d6308b7c-20cf-4876-b542-67c536e42548";
+        String str = "433e2caf-298f-49d6-87a4-f7521e0ba4b7";
        System.out.print(HttpApiUtil.httpGet(url + str));
     }
 
