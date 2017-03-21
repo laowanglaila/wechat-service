@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "MPData";
+import "commons.proto";
+import "wechatcommons.proto";
+
+message MpInfoQueryReqData {  
+   // itemID
+   string itemID=2;
+   // 公众号编码
+   string mpID=3;
+   // 公众号名称
+   string mpName=4;
+   // 公众号类型
+   MpTypeEnum mpType=5;
+   // 集团ID
+   int64 groupID=6;
+   // 品牌ID
+   int64 brandID=7;
+   // 店铺ID
+   int64 shopID=8;
+   // appID
+   string appID=9;
+   int32 pageNo=10;
+   int32 pageSize=11;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MpInfoQueryResData {  
+   // 公众号信息集合
+   repeated MpInfoResData mpInfoResDataList=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MpInfoResData {  
+   // itemID
+   string itemID=2;
+   // 公众号编码
+   string mpID=3;
+   // 公众号原始ID
+   string ghID=4;
+   // 公众号名称
+   string mpName=5;
+   // 公众号类型
+   MpTypeEnum mpType=6;
+   // token
+   string token=7;
+   // 公众号APPID
+   string appID=8;
+   // appSecret
+   string appSecret=9;
+   // encodingAESKey
+   string encodingAESKey=10;
+   // 微信关注url
+   string weixinURL=11;
+   // 图片地址
+   string headImg=12;
+   // 关注url
+   string qrCodeURL=13;
+   // 3+5菜单
+   string menuJson=14;
+   // 集团ID
+   int64 groupID=15;
+   // 品牌ID
+   int64 brandID=16;
+   // 店铺ID
+   int64 shopID=17;
+   // 成为会员是否需要手机号
+   string customerWithoutBindMobile=18;
+   // 关注即会员
+   string subscribeToCcustomer=19;
+   // 二码合一模板
+   string tableMsgTemplate=20;
+   // 公众号
+   string alias=21;
+   // 授权方式
+   string authorize=22;
+   // 公众号刷新令牌
+   string authorizerRefreshToken=23;
+   // 是否有微信网页授权权限
+   string oauth=24;
+   // 微信认证日期
+   int64 wechatEndDate=25;
+   // 是否启用 0：未启用，1：启用
+   string isActiveUse=26;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//公众号信息服务
+service MPService{
+    rpc queryMpInfo(MpInfoQueryReqData) returns (MpInfoQueryResData) {}
+}

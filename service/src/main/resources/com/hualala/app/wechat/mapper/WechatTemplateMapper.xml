@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hualala.app.wechat.mapper.WechatTemplateMapper">
+	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatTemplateModel">
+		insert into tbl_shop_wechat_template (
+			<if test="itemID !=null">itemID,</if>
+			<if test="mpID !=null">mpID,</if>
+			<if test="groupID !=null">groupID,</if>
+			<if test="modelID !=null">modelID,</if>
+			<if test="modelTitle !=null">modelTitle,</if>
+			<if test="templateType !=null">templateType,</if>
+			<if test="templateID !=null">templateID,</if>
+        action, #{createStamp}
+		) values (
+			<if test="itemID !=null">#{itemID},</if>
+			<if test="mpID !=null">#{mpID},</if>
+			<if test="groupID !=null">#{groupID},</if>
+			<if test="modelID !=null">#{modelID},</if>
+			<if test="modelTitle !=null">#{modelTitle},</if>
+			<if test="templateType !=null">#{templateType},</if>
+			<if test="templateID !=null">#{templateID},</if>
+        #{action}, #{createStamp}
+		)
+	</insert>
+
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1) from tbl_shop_wechat_template
+    </select>
+
+	<select id="queryList" resultType="com.hualala.app.wechat.model.WechatTemplateModel" parameterType="java.util.Map">
+    select
+    <include refid="queryField"/>
+    from tbl_shop_wechat_template
+    limit #{offset}, #{pageSize}
+    </select>
+
+    <sql id="queryField">
+        itemID,        mpID,        groupID,        modelID,        modelTitle,        templateType,        templateID
+    </sql>
+</mapper>

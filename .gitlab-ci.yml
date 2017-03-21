@@ -1,0 +1,43 @@
+image: registry.hualala.com/maven:3.3-jdk-8
+
+before_script:
+  - pwd
+  - env
+
+stages:
+  - build
+  - test
+  
+maven-test:
+  image: registry.hualala.com/maven:3.3-jdk-8
+  stage: test
+  script:
+    #- mvn clean test 
+    #只是预览当前提交的代码有没有问题
+    - mvn --batch-mode -DskipTests=true sonar:sonar -Dsonar.language=java -Dsonar.login=buildbot -Dsonar.password=build2016 -Dsonar.host.url=http://sonar.hualala.com -Dsonar.analysis.mode=preview -Dsonar.issuesReport.console.enable=true -Dsonar.projectKey=order-service
+  tags:
+    - Kumamon #runner
+  only:
+    - master
+    - dev
+  
+#如果是合并到主干则执行sonar分析并写入服务器
+maven-sonar:
+  image: registry.hualala.com/maven:3.3-jdk-8
+  stage: test
+  script:
+    - mvn --batch-mode -DskipTests=true sonar:sonar -Dsonar.language=java -Dsonar.login=buildbot -Dsonar.password=build2016 -Dsonar.host.url=http://sonar.hualala.com -Dsonar.issuesReport.console.enable=true -Dsonar.projectKey=order-service
+  tags:
+    - Kumamon #runner
+  only:
+    - master
+    - dev
+
+maven-build:
+  image: registry.hualala.com/maven:3.3-jdk-8
+  stage: build
+  script:
+    - mvn clean install -DskipTests=true -U
+  tags:
+    - Kumamon #runner
+  when: always

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hualala.app.wechat.mapper.WechatAutoreplyMapper">
+	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatAutoreplyModel">
+		insert into tbl_shop_wechat_autoreply (
+			<if test="itemID !=null">itemID,</if>
+			<if test="mpID !=null">mpID,</if>
+			<if test="resourceID !=null">resourceID,</if>
+			<if test="resourceVaule !=null">resourceVaule,</if>
+			<if test="pushMsgType !=null">pushMsgType,</if>
+			<if test="pushContent !=null">pushContent,</if>
+			<if test="pushContentType !=null">pushContentType,</if>
+			<if test="pushEvent !=null">pushEvent,</if>
+			<if test="pushEventKey !=null">pushEventKey,</if>
+			<if test="replyMsgType !=null">replyMsgType,</if>
+			<if test="replyContent !=null">replyContent,</if>
+			<if test="serviceName !=null">serviceName,</if>
+			<if test="isActive !=null">isActive,</if>
+        action, #{createStamp}
+		) values (
+			<if test="itemID !=null">#{itemID},</if>
+			<if test="mpID !=null">#{mpID},</if>
+			<if test="resourceID !=null">#{resourceID},</if>
+			<if test="resourceVaule !=null">#{resourceVaule},</if>
+			<if test="pushMsgType !=null">#{pushMsgType},</if>
+			<if test="pushContent !=null">#{pushContent},</if>
+			<if test="pushContentType !=null">#{pushContentType},</if>
+			<if test="pushEvent !=null">#{pushEvent},</if>
+			<if test="pushEventKey !=null">#{pushEventKey},</if>
+			<if test="replyMsgType !=null">#{replyMsgType},</if>
+			<if test="replyContent !=null">#{replyContent},</if>
+			<if test="serviceName !=null">#{serviceName},</if>
+			<if test="isActive !=null">#{isActive},</if>
+        #{action}, #{createStamp}
+		)
+	</insert>
+
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1) from tbl_shop_wechat_autoreply
+    </select>
+
+	<select id="queryList" resultType="com.hualala.app.wechat.model.WechatAutoreplyModel" parameterType="java.util.Map">
+    select
+    <include refid="queryField"/>
+    from tbl_shop_wechat_autoreply
+    limit #{offset}, #{pageSize}
+    </select>
+
+    <sql id="queryField">
+        itemID,        mpID,        resourceID,        resourceVaule,        pushMsgType,        pushContent,        pushContentType,        pushEvent,        pushEventKey,        replyMsgType,        replyContent,        serviceName,        isActive
+    </sql>
+</mapper>

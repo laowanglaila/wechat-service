@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hualala.app.wechat.mapper.WechatMpMapper">
+	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatMpModel">
+		insert into tbl_shop_wechat_mp (
+			<if test="itemID !=null">itemID,</if>
+			<if test="mpID !=null">mpID,</if>
+			<if test="ghID !=null">ghID,</if>
+			<if test="mpName !=null">mpName,</if>
+			<if test="mpType !=null">mpType,</if>
+			<if test="token !=null">token,</if>
+			<if test="appID !=null">appID,</if>
+			<if test="groupID !=null">groupID,</if>
+			<if test="brandID !=null">brandID,</if>
+			<if test="appSecret !=null">appSecret,</if>
+			<if test="encodingAESKey !=null">encodingAESKey,</if>
+			<if test="weixinURL !=null">weixinURL,</if>
+			<if test="headImg !=null">headImg,</if>
+			<if test="qrCodeURL !=null">qrCodeURL,</if>
+			<if test="menuJson !=null">menuJson,</if>
+			<if test="shopID !=null">shopID,</if>
+			<if test="customerWithoutBindMobile !=null">customerWithoutBindMobile,</if>
+			<if test="subscribeToCcustomer !=null">subscribeToCcustomer,</if>
+			<if test="tableMsgTemplate !=null">tableMsgTemplate,</if>
+			<if test="funcInfo !=null">funcInfo,</if>
+			<if test="alias !=null">alias,</if>
+			<if test="authorize !=null">authorize,</if>
+			<if test="authorizerRefreshToken !=null">authorizerRefreshToken,</if>
+			<if test="oauth !=null">oauth,</if>
+			<if test="isActiveUse !=null">isActiveUse,</if>
+			<if test="wechatEndDate !=null">wechatEndDate,</if>
+        action, #{createStamp}
+		) values (
+			<if test="itemID !=null">#{itemID},</if>
+			<if test="mpID !=null">#{mpID},</if>
+			<if test="ghID !=null">#{ghID},</if>
+			<if test="mpName !=null">#{mpName},</if>
+			<if test="mpType !=null">#{mpType},</if>
+			<if test="token !=null">#{token},</if>
+			<if test="appID !=null">#{appID},</if>
+			<if test="groupID !=null">#{groupID},</if>
+			<if test="brandID !=null">#{brandID},</if>
+			<if test="appSecret !=null">#{appSecret},</if>
+			<if test="encodingAESKey !=null">#{encodingAESKey},</if>
+			<if test="weixinURL !=null">#{weixinURL},</if>
+			<if test="headImg !=null">#{headImg},</if>
+			<if test="qrCodeURL !=null">#{qrCodeURL},</if>
+			<if test="menuJson !=null">#{menuJson},</if>
+			<if test="shopID !=null">#{shopID},</if>
+			<if test="customerWithoutBindMobile !=null">#{customerWithoutBindMobile},</if>
+			<if test="subscribeToCcustomer !=null">#{subscribeToCcustomer},</if>
+			<if test="tableMsgTemplate !=null">#{tableMsgTemplate},</if>
+			<if test="funcInfo !=null">#{funcInfo},</if>
+			<if test="alias !=null">#{alias},</if>
+			<if test="authorize !=null">#{authorize},</if>
+			<if test="authorizerRefreshToken !=null">#{authorizerRefreshToken},</if>
+			<if test="oauth !=null">#{oauth},</if>
+			<if test="isActiveUse !=null">#{isActiveUse},</if>
+			<if test="wechatEndDate !=null">#{wechatEndDate},</if>
+        #{action}, #{createStamp}
+		)
+	</insert>
+
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1) from tbl_shop_wechat_mp
+    </select>
+
+	<select id="queryList" resultType="com.hualala.app.wechat.model.WechatMpModel" parameterType="java.util.Map">
+    select
+    <include refid="queryField"/>
+    from tbl_shop_wechat_mp
+    limit #{offset}, #{pageSize}
+    </select>
+
+    <sql id="queryField">
+        itemID,        mpID,        ghID,        mpName,        mpType,        token,        appID,        groupID,        brandID,        appSecret,        encodingAESKey,        weixinURL,        headImg,        qrCodeURL,        menuJson,        shopID,        customerWithoutBindMobile,        subscribeToCcustomer,        tableMsgTemplate,        funcInfo,        alias,        authorize,        authorizerRefreshToken,        oauth,        isActiveUse,        wechatEndDate
+    </sql>
+</mapper>
