@@ -11,5 +11,7 @@ public class WechatBaseApi {
 
     public static final String GET_ACCESS_TOKEN = ROOT + "/token?grant_type=client_credential";
 
-    private static final String API_COMPONENT_TOKEN = ROOT + "/component/api_component_token";
+    public static final String API_COMPONENT_TOKEN = ROOT + "/component/api_component_token";
+
+    public static final String API_AUTHORIZER_TOKEN = ROOT + "/component/api_authorizer_token";
 }

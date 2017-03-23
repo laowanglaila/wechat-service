@@ -43,3 +43,9 @@ grpc:
      hosts:
         #wechat: localhost:6566
         idgen: dohko.id.gen.hualala.com:31249
+
+wechat:
+  data:
+    componentAppID: wx431ecb8eae767f0c
+    componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+

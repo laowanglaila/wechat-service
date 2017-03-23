@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,8 +20,11 @@ public class WechatCacheUtil {
     private static final Map<String, String> WE_CACHE = new HashMap<String, String>();
 
     private final Logger logger = LoggerFactory.getLogger(WechatCacheUtil.class);
+    //private RedisTemplate<String, String> redisTemplate;
+
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
+
 
     private static RedisTemplate<String, String> redisTemplateStatic;
 
@@ -37,7 +41,7 @@ public class WechatCacheUtil {
     }
     @PostConstruct
     private void init() {
-        redisTemplateStatic  = this.redisTemplate;
+        redisTemplateStatic  = this.stringRedisTemplate;
     }
 
 
@@ -146,11 +150,16 @@ public class WechatCacheUtil {
         redisTemplateStatic.opsForValue().set(keyName,value,timeout);
     }
 
-    public static JSONObject getKeyValue(String keyName, String type) {
-        String key = redisTemplateStatic.opsForValue().get(WE_CACHE.get(type) + keyName);
-        if(StringUtils.isEmpty(key)){
+    public static JSONObject getMpInfo(String mpID,String appID) {
+        String value = null;
+        if(StringUtils.isNotEmpty(mpID)) {
+            value = redisTemplateStatic.opsForValue().get(WE_CACHE.get("wechatMpID") + mpID);
+        } else {
+            value = redisTemplateStatic.opsForValue().get(WE_CACHE.get("wechatAppID") + mpID);
+        }
+        if (StringUtils.isEmpty(value)) {
             return null;
         }
-        return JSON.parseObject(key);
+        return JSON.parseObject(value);
     }
 }

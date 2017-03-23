@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class WechatErrorCode {
 
+
+
+
 	public static Map<String,String> wechatError = new HashMap<>();
 
 

@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.WechatBaseApi;
 import org.junit.Test;
 
 import java.util.*;
@@ -76,7 +77,35 @@ public class HttpTest {
         return foodPrice;
     }
     @Test
-    public void TestPrice() {
-        System.out.println(reloadPrice("做法1","做法1@G5,做法2@F5"));
+    public void wechatTest() {
+
+        JSONObject jsonObject = getAccessToken();
+        String token = jsonObject.getString("access_token");
+        //String token = "W22IqMAS3ZRztY6SCb43J2VEWdltZQQ2zFUkm9u2iim7pA3PccNnFB-m6HqlhLbC9zYynwRUMC4uedUwVEvYcB6f46U8KH1e_1RP_r4ySmidQTHIXzKj2-l6NGUVRGHwRVXaACAGKM";
+        System.out.println("==============" + token);
+        String url = "https://api.weixin.qq.com/card/membercard/userinfo/get?access_token=" + token;
+        //String url = "https://api.weixin.qq.com/card/user/getcardlist?access_token=" + token;
+        long start = System.currentTimeMillis();
+      //  for (int i = 0; i < 11;i++){
+            //pRPS3jlEiKw5Bbf9lgLYwCwg9jEs 364070139615
+            //pRPS3jlEiKw5Bbf9lgLYwCwg9jEs 349812965916
+            HttpApiUtil.httpPost(url, getUser("pRPS3jlEiKw5Bbf9lgLYwCwg9jEs", "349812965916"));
+       // }
+        System.out.print("==========:" + (System.currentTimeMillis()-start));
+
+    }
+
+    public JSONObject getAccessToken(){
+        String url = WechatBaseApi.GET_ACCESS_TOKEN + "&appid=" + "wxca431740658cd706" + "&secret=" + "12e0401d258b7e7423c84c0a8704c8e0";
+        return HttpApiUtil.httpGet(url);
+    }
+
+    public String getUser(String cardID,String code){
+        String str = " {" +
+                "\"card_id\": \""+cardID+"\"," +
+                "\"code\": \""+code+"\"" +
+                "}";
+        System.out.println(str.toString());
+        return str;
     }
 }

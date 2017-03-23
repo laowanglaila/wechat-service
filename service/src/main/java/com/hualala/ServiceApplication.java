@@ -1,4 +1,4 @@
-package com.hualala.app.wechat;
+package com.hualala;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,4 +43,16 @@ public class ServiceApplication extends SpringBootServletInitializer implements 
     public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {
         configurableEmbeddedServletContainer.setPort(8881);
     }
+
+//    @Bean
+//    @Primary
+//    RedisTemplate<String, String> redisTemplate(RedisConnectionFactory rcf) {
+//
+//        RedisTemplate<String, String> template = new RedisTemplate<>();
+//        template.setConnectionFactory(rcf);
+//        template.setKeySerializer(new StringRedisSerializer());
+//       // template.setStringSerializer(new StringRedisSerializer());
+//        template.setValueSerializer(new StringRedisSerializer());
+//        return template;
+//    }
 }

@@ -1,13 +1,13 @@
 package com.hualala.app.wechat.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.util.HttpApiUtil;
+import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,183 +26,97 @@ public class AccessTokenService {
     private static Logger logger = LoggerFactory.getLogger(AccessTokenService.class);
 
     @Autowired
-    private MpInfoService mpInfoService;
+    private ComponentTokenService componentTokenService;
 
-    private static MpInfoService mpInfoServiceStatic;
+    /**
+     * 获取公众号accessToken
+     * @param mpID
+     * @return
+     */
+    public JSONObject getAccessToken(String mpID) {
 
-    private void init(){
-        mpInfoServiceStatic = this.mpInfoService;
-    }
-
-    public static Map<String, Object> getAccessToken(String mpID) {
-
-        JSONObject result = new JSONObject();
         if (mpID == null || mpID.trim().isEmpty()) {
-            result.put("isSuccess", WechatMessageType.FALSE);
-            result.put("errmsg", "mpID is null。");
-            return result;
+            return ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
         }
 
         String appID = null;
         String authorize = null;
-        // TODO 获取公众号信息
-        JSONObject mpInfoJson = null;
+        Map<String,Object> param = new HashMap<>();
+        param.put("mpID",mpID);
+        // TODO 待优化
+        JSONObject mpInfoJson = WechatCacheUtil.getMpInfo(mpID, null);
+
         if (mpInfoJson == null) {
-            result.put("isSuccess", WechatMessageType.FALSE);
-            result.put("errmsg", "缓存中获取accessToken is null。");
-            return result;
+            return ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
         }
+
         appID = mpInfoJson.getString("appID");
         authorize = mpInfoJson.getString("authorize");
-        if (logger.isInfoEnabled())
-            logger.info("get appID and authorize! appID:" + appID + " authorize:" + authorize);
-        if (authorize != null && "1".equals(authorize.trim())) {
-            return getAuthorizerAcTokenFromCache(appID);
-        } else if ("2".equals(authorize.trim())) {
-            result.put("isSuccess", WechatMessageType.FALSE);
-            result.put("errmsg", "该公众号已经取消第三方平台授权");
+        if ("1".equals(authorize)) {
+            return componentTokenService.getAuthorizerAcToken(appID);
+        } else if ("2".equals(authorize)) {
+            return ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR,"该公众号已经取消第三方平台授权");
         }
         String accessToken = WechatCacheUtil.getCacheAccessToken(mpID);
-
+        JSONObject result = new JSONObject();
         if (accessToken == null) {
 
-            // TODO 获取accessToken到redis中
-            Map<String,Object> param = new HashMap<String,Object>();
-
-            initAccessToken(param);
-          //  accessToken = WechatCacheUtil.getCacheAccessToken(mpID);
-
-            if (accessToken == null) {
-                result.put("isSuccess", WechatMessageType.FALSE);
-                result.put("errmsg", "缓存中获取accessToken is null。");
-                return result;
+            param.put("mpID",mpID);
+            param.put("appID",appID);
+            result = initAccessToken(param);
+            if(WechatMessageType.FALSE.equals(result.getString("isSuccess"))){
+                return ResultUtil.toResultJson(result,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_ERROR,"缓存中获取accessToken is null");
             }
+            //accessToken = WechatCacheUtil.getCacheAccessToken(mpID);
+            accessToken = result.getString("accessToken");
         }
         result.put("isSuccess", WechatMessageType.TRUE);
         result.put("accessToken", accessToken);
-        return result;
+        return ResultUtil.toResultJson(result,WechatMessageType.TRUE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR,"");
     }
 
-    private static Map<String, Object> initAccessToken(Map<String,Object> param){
-        Map<String,Object> mpInfoLst = mpInfoServiceStatic.queryMpInfo(param);
-        if(mpInfoLst == null){
-            return null;
+    /**
+     *
+     * 初始化accessToken
+     * @param param
+     * @return
+     */
+    private JSONObject initAccessToken(Map<String,Object> param){
+        String mpID = param.containsKey("mpID")?String.valueOf(param.get("mpID")):null;
+        String appID = param.containsKey("appID")?String.valueOf(param.get("appID")):null;
+        JSONObject mpInfoJson = WechatCacheUtil.getMpInfo(mpID, appID);
+
+        //Map<String,Object> mpInfoLst = mpInfoService.queryMpInfo(param);
+        if(mpInfoJson == null){
+            ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_NULL,"未找到对应的公众号");
         }
-        String appID = String.valueOf(mpInfoLst.get("appID"));
-        String mpID = String.valueOf(mpInfoLst.get("mpID"));
-        String appSecret = String.valueOf(mpInfoLst.get("appSecret"));
-        String authorize = String.valueOf(mpInfoLst.get("authorize"));
-        String authorizerRefreshToken = String.valueOf(mpInfoLst.get("authorizerRefreshToken"));
+        appID = mpInfoJson.getString("appID");
+        mpID = mpInfoJson.getString("mpID");
+        String appSecret = mpInfoJson.getString("appSecret");
+        String authorize = mpInfoJson.getString("authorize");
         String url = null;
         if(WechatBaseApi.AUTHORIZE_1.equals(authorize)){
-            String refreshToken = WechatCacheUtil.getData(appID, "authorizerReToken");
-
-           // WechatCacheUtil.setData(componentAppID, "componentAcToken", value, Long.parseLong(result.getString("expires_in")));
+           return componentTokenService.getAuthorizerAcToken(appID);
         } else {
             url = WechatBaseApi.GET_ACCESS_TOKEN + "&appid=" + appID + "&secret=" + appSecret;
             JSONObject resultJson = HttpApiUtil.httpGet(url);
             if(resultJson == null){
-                return null;
+                return ResultUtil.toResultJson(resultJson,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR,"http请求出错了");
             }
 
-            if (resultJson == null || resultJson.getString("access_token") == null) {
+            if (resultJson.getString("access_token") == null) {
                 String errcode = resultJson.getString("errcode");
                 String errmsg   = WechatErrorCode.wechatError.get(errcode);
                 if(errmsg == null){
                     errmsg = resultJson.getString("errmsg");
                 }
-                logger.error("get access token failed for mpID=" + appID + " , errcode : " + errcode + " , errmsg : "+errmsg);
-                return null;
+                return ResultUtil.toResultJson(resultJson,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR,errmsg);
             }
             String value = resultJson.getString("access_token");
             WechatCacheUtil.setCacheAccessToken(mpID, value, Long.parseLong(resultJson.getString("expires_in")));
-            param.put("accessToken",value);
-            return param;
-        }
-        return null;
-    }
 
-    public static JSONObject getAuthorizerAcTokenFromCache (String appID){
-        return null;
-    }
-
-    /**
-     * 开放平台Post请求
-     * @param url
-     * @param componentAccessToken
-     * @param parm
-     * @param appID
-     * @return
-     */
-    public static JSONObject componentPost(String url,String componentAccessToken,String parm,String appID){
-        JSONObject resultJson = null;
-        String errmsg = null;
-        if(url==null || url.trim().isEmpty()
-                || componentAccessToken==null || componentAccessToken.trim().isEmpty()
-                || appID==null || appID.trim().isEmpty()){
-            resultJson = new JSONObject();
-            resultJson.put("isSuccess", WechatMessageType.FALSE);
-            resultJson.put("errmsg", "缺少参数。");
-            return resultJson;
+            resultJson.put("accessToken",value);
+            return ResultUtil.toResultJson(resultJson,WechatMessageType.TRUE, ErrorCodes.WECHAT_SUCCESS_CODE,"");
         }
-        resultJson = HttpApiUtil.httpPost(url+"?component_access_token=" + componentAccessToken, parm);
-        logger.info(">>>>  invoke url=" + url + ", return=" + resultJson);
-        if(resultJson == null){
-            resultJson = new JSONObject();
-            resultJson.put("isSuccess", WechatMessageType.FALSE);
-            resultJson.put("errmsg", "httpClient请求出错。");
-            return resultJson;
-        }
-        String errcode = resultJson.getString("errcode");
-        if(errcode!=null){
-            if(WechatMessageType.WECHAT_INVALID.equals(errcode) || "42001".equals(errcode)){
-//                Dataset dataset=DatasetFactory.buildDataset();
-//                dataset.putProperty("componentAppID", appID);
-//                RequestModel  requestServiceModel=BaseModelFactory.buildRequestModel("wechat_apiComponentAccessToken",dataset);
-//                ResponseModel responseServiceModel=ServiceClientFactory.getNativeClient().doRequestResponse(requestServiceModel);
-//
-//                if(responseServiceModel == null || !responseServiceModel.isSuccess()){
-//                    result = new JSONObject();
-//                    result.put("isSuccess", WechatMessageType.FALSE);
-//                    result.put("errmsg", responseServiceModel.isSuccess()==false ? responseServiceModel.getReturnMessage() : "获取accessToken服务失败。");
-//                    return result;
-//                }
-                componentAccessToken = WechatCacheUtil.getData(appID,"componentAcToken");
-
-                logger.debug(">>>> appID="+appID+" , componentAccessToken=" + componentAccessToken);
-                if(componentAccessToken==null){
-                    resultJson = new JSONObject();
-                    resultJson.put("isSuccess", WechatMessageType.FALSE);
-                    resultJson.put("errmsg", "缓存中获取componentAccessToken is null。");
-                    return resultJson;
-                }
-                resultJson = HttpApiUtil.httpPost(url+"?component_access_token=" + componentAccessToken, parm);
-                logger.debug(">>>>  invoke url=" + url + ", return=" + resultJson);
-                if(resultJson == null){
-                    resultJson = new JSONObject();
-                    resultJson.put("isSuccess", WechatMessageType.FALSE);
-                    resultJson.put("errmsg", "httpClient请求出错。");
-                    return resultJson;
-                }
-                errcode=resultJson.getString("errcode");
-                if(errcode!=null && !"0".equals(errcode)){
-                    errmsg  = WechatErrorCode.wechatError.get(errcode);
-                    if(errmsg != null){
-                        resultJson.put("errmsg", errmsg);
-                    }
-                    resultJson.put("isSuccess", WechatMessageType.FALSE);
-                    return resultJson;
-                }
-            }else if(!"0".equals(errcode)){
-                errmsg  = WechatErrorCode.wechatError.get(errcode);
-                if(errmsg != null){
-                    resultJson.put("errmsg", errmsg);
-                }
-                resultJson.put("isSuccess", WechatMessageType.FALSE);
-                return resultJson;
-            }
-        }
-        resultJson.put("isSuccess", WechatMessageType.TRUE);
-        return resultJson;
     }
 }

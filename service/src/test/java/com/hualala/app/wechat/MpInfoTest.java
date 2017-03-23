@@ -18,12 +18,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MpInfoTest {
     @Autowired
     MpInfoService mpInfoService;
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
     @Test
     public void myInfoQueryTest(){
 
-        System.out.println("---------------" + WechatCacheUtil.getKey());
+        //System.out.println("---------------" + WechatCacheUtil.getKey());
 //        MpInfoService.MpInfoQueryReqData mpInfoQueryReqData = new MpInfoService.MpInfoQueryReqData();
 //        mpInfoQueryReqData.setMpID("doulaofang_caicai");
 //        MpInfoService.MpInfoQueryResData mpInfoQueryResData = mpInfoService.queryMpInfo(mpInfoQueryReqData);

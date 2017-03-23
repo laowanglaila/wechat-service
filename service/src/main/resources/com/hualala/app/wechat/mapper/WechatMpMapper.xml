@@ -79,7 +79,7 @@
     <select id="queryByParams" resultType="java.util.Map">
 
         SELECT
-          mpID,appID,
+          mpID,appID,mpType,appSecret,authorize,authorizerRefreshToken
         FROM tbl_shop_wechat_mp
         WHERE
         <include refid="whereSql"/>
