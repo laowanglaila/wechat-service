@@ -7,13 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class WechatCacheUtil {
@@ -27,7 +27,7 @@ public class WechatCacheUtil {
     private StringRedisTemplate stringRedisTemplate;
 
 
-    private static RedisTemplate<String, String> redisTemplateStatic;
+    private static StringRedisTemplate redisTemplateStatic;
 
     {
         WE_CACHE.put("ticket", "component_ticket_");
@@ -148,7 +148,7 @@ public class WechatCacheUtil {
     }
 
     public static void setData(String keyName, String value, Long timeout) {
-        redisTemplateStatic.opsForValue().set(keyName,value,timeout);
+        redisTemplateStatic.opsForValue().set(keyName,value,timeout, TimeUnit.SECONDS);
     }
 
     public static JSONObject getMpInfo(String mpID,String appID) {
