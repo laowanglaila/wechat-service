@@ -25,7 +25,7 @@ public class AccessTokenServiceTest {
     public void getAccessTokenTest(){
         String mpID = "doulaofang_caicai";
 
-        System.out.println(accessTokenService.getAccessToken(mpID));
+        System.out.println(accessTokenService.getAccessToken(mpID).getString("accessToken"));
     }
 
 

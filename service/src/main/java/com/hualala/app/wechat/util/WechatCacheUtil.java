@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -160,6 +161,15 @@ public class WechatCacheUtil {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        return JSON.parseObject(value);
+
+        JSONObject mpInfoJson = JSON.parseObject(value);
+
+        if(mpInfoJson.containsKey("records")) {
+            JSONArray mpInfoArr = mpInfoJson.getJSONArray("records");
+            if(mpInfoArr.size() > 0){
+                return mpInfoArr.getJSONObject(0);
+            }
+        }
+        return null;
     }
 }
