@@ -94,8 +94,8 @@ public class MemberInfoService {
                         memberInfoModel.setCardID(split[0]);
                         memberInfoModel.setCode(split[1]);
                         //持久化到数据库
-                        System.out.println("---------------------------------------------" + memberInfoModel);
-//                    memberInfoMapper.insert(memberInfoModel);
+//                        System.out.println("---------------------------------------------" + memberInfoModel);
+                    memberInfoMapper.insert(memberInfoModel);
                     }
 
                 }
