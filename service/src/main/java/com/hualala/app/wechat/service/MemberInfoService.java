@@ -3,7 +3,6 @@ package com.hualala.app.wechat.service;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.mapper.WechatMemberInfoMapper;
-import com.hualala.app.wechat.model.WechatMemberInfoModel;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -29,13 +28,14 @@ public class MemberInfoService {
     private Logger logger = LoggerFactory.getLogger(ComponentTokenService.class);
 
     private static String accessToken = null;
+    private static Long iflush = 0L;
 
     public static void setAccessToken(String accessToken) {
         MemberInfoService.accessToken = accessToken;
     }
 
-    private String appId = "wx58e9eacc01f7880c";
-    private String appSecret = "bb43ed30da3409fb1a8ef2b432019332";
+    private static String appId = "wx58e9eacc01f7880c";
+    private static String appSecret = "bb43ed30da3409fb1a8ef2b432019332";
 
     public void setAppId(String appId) {
         this.appId = appId;
@@ -83,19 +83,20 @@ public class MemberInfoService {
                         params.clear();
                         params.put("card_id", split[0]);
                         params.put("code", split[1]);
+                        System.out.println(params);
                         // 访问微信接口
-                        JSONObject jsonObject = visitWeChat(params);
+//                        JSONObject jsonObject = visitWeChat(params);
 
                         //创建数据库参数
-                        WechatMemberInfoModel memberInfoModel = new WechatMemberInfoModel();
-                        memberInfoModel.setWechatJson(jsonObject.toJSONString());
-                        memberInfoModel.setErrcode(Integer.parseInt(jsonObject.getString("errcode")));
-                        memberInfoModel.setAppID(appId);
-                        memberInfoModel.setCardID(split[0]);
-                        memberInfoModel.setCode(split[1]);
+//                        WechatMemberInfoModel memberInfoModel = new WechatMemberInfoModel();
+//                        memberInfoModel.setWechatJson(jsonObject.toJSONString());
+//                        memberInfoModel.setErrcode(Integer.parseInt(jsonObject.getString("errcode")));
+//                        memberInfoModel.setAppID(appId);
+//                        memberInfoModel.setCardID(split[0]);
+//                        memberInfoModel.setCode(split[1]);
                         //持久化到数据库
 //                        System.out.println("---------------------------------------------" + memberInfoModel);
-                    memberInfoMapper.insert(memberInfoModel);
+//                    memberInfoMapper.insert(memberInfoModel);
                     }
 
                 }
@@ -148,13 +149,20 @@ public class MemberInfoService {
      * 请求会员数据之前，判断accessToken是否失效
      * 如果失效重新获取
      */
-    public String getAccessToken() {
+    public synchronized String getAccessToken() {
         //获取一个新的accessToken
 //     appid:   wx58e9eacc01f7880c
 //     appSecret:   bb43ed30da3409fb1a8ef2b432019332
+        if(iflush > System.currentTimeMillis()){
+            return accessToken;
+        }
         String url = WechatBaseApi.GET_ACCESS_TOKEN + "&appid=" + appId + "&secret=" + appSecret;
         JSONObject resultJson = HttpApiUtil.httpGet(url);
         accessToken = resultJson.getString("access_token");
+        Long expiresIn = Long.parseLong(resultJson.getString("expires_in"));
+        System.out.println("------------accessToken有效时间-------------: "+expiresIn+"s ");
+        long currentTime = System.currentTimeMillis();
+        iflush = currentTime + (expiresIn-200)*1000;
         logger.debug("获取到的AccessToken:["+accessToken+"]");
         return accessToken;
     }
