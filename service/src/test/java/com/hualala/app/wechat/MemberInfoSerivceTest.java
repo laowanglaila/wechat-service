@@ -19,12 +19,15 @@ public class MemberInfoSerivceTest {
 
     @Test
     public void memberInfoTest(){
-
-        memberInfoService.setAppId("");
-        memberInfoService.setAppSecret("");
-        memberInfoService.setAccessToken("KJz_JKOY-IxKxUJOwCi3sR9fszJhM6tjc1te5jYB0zcAlvi-DKJ7YbBF7Ng4ejPcvabin_Yk-FqfkR6I_61PKygZw44gCX-_vSjTUWX53xepWlZov9GMEOjYJf_uM6o7QKJfAAATNM");
+        long startTime = System.currentTimeMillis();    //获取开始时间
+        memberInfoService.setAppId("wxca431740658cd706");
+        memberInfoService.setAppSecret("12e0401d258b7e7423c84c0a8704c8e0");
+        memberInfoService.setAccessToken("7uWr7N6PY3kSfzI1t98FNFZh-xYPlbpSZoGXHQEj93qvEcJ5b1fl0uI3dYqVQ3-NL0WwAVUdvbhB7OB-1zg7q1mchMC8XTPNWc7W9lI0N7HRs2DdnrWJWzix7gBNWx-GOZOaABAKVK");
         memberInfoService.setStartLine(1);
-        memberInfoService.loadInfo("C:\\Users\\Administrator\\Desktop\\user_code01.txt");
+        memberInfoService.loadInfo("C:\\Users\\Administrator\\Desktop\\user_code0327.txt");
+        long endTime = System.currentTimeMillis();    //获取结束时间
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+        System.out.println("accessToken : [" + memberInfoService.getAccessToken() + "]");
 
     }
 
