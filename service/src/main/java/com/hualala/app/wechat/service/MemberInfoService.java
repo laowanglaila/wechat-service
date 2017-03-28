@@ -3,6 +3,7 @@ package com.hualala.app.wechat.service;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.mapper.WechatMemberInfoMapper;
+import com.hualala.app.wechat.model.WechatMemberInfoModel;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -85,18 +86,18 @@ public class MemberInfoService {
                         params.put("code", split[1]);
                         System.out.println(params);
                         // 访问微信接口
-//                        JSONObject jsonObject = visitWeChat(params);
+                        JSONObject jsonObject = visitWeChat(params);
 
                         //创建数据库参数
-//                        WechatMemberInfoModel memberInfoModel = new WechatMemberInfoModel();
-//                        memberInfoModel.setWechatJson(jsonObject.toJSONString());
-//                        memberInfoModel.setErrcode(Integer.parseInt(jsonObject.getString("errcode")));
-//                        memberInfoModel.setAppID(appId);
-//                        memberInfoModel.setCardID(split[0]);
-//                        memberInfoModel.setCode(split[1]);
+                        WechatMemberInfoModel memberInfoModel = new WechatMemberInfoModel();
+                        memberInfoModel.setWechatJson(jsonObject.toJSONString());
+                        memberInfoModel.setErrcode(Integer.parseInt(jsonObject.getString("errcode")));
+                        memberInfoModel.setAppID(appId);
+                        memberInfoModel.setCardID(split[0]);
+                        memberInfoModel.setCode(split[1]);
                         //持久化到数据库
 //                        System.out.println("---------------------------------------------" + memberInfoModel);
-//                    memberInfoMapper.insert(memberInfoModel);
+                    memberInfoMapper.insert(memberInfoModel);
                     }
 
                 }
