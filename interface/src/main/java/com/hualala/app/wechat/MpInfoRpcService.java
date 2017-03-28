@@ -15,7 +15,7 @@ import java.util.List;
  * Created by xkia on 2017/3/20.
  */
 @RpcService
-public interface MpInfoService {
+public interface MpInfoRpcService {
 
     @RpcMethod(description = "获取公众信息")
     MpInfoQueryResData queryMpInfo(MpInfoQueryReqData reqData);

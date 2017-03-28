@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class MpInfoTest {
     @Autowired
-    MpInfoService mpInfoService;
+    MpInfoRpcService mpInfoRpcService;
     @Test
     public void myInfoQueryTest(){
 
