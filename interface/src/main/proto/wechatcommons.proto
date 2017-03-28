@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "WechatCommon";
+enum MpTypeEnum {  
+   SUBSCRIPTIONS=0;
+   SUBSCRIPTIONS_AUTH=1;
+   SERVICE=2;
+   SERVICE_AUTH=3;
+}

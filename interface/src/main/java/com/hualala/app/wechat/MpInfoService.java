@@ -4,6 +4,7 @@ import com.hualala.core.base.RequestInfo;
 import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
 import com.hualala.core.rpc.Protocol;
+import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
@@ -13,9 +14,10 @@ import java.util.List;
  * 公众号基本信息
  * Created by xkia on 2017/3/20.
  */
+@RpcService
 public interface MpInfoService {
 
-
+    @RpcMethod(description = "获取公众信息")
     MpInfoQueryResData queryMpInfo(MpInfoQueryReqData reqData);
 
     @Data
