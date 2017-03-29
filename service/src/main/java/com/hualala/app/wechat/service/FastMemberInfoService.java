@@ -89,6 +89,7 @@ public class FastMemberInfoService {
         int lineNumber = 0;
         File file = null;
         InputStreamReader read = null;
+        LineNumberReader lineNumberReader = null;
 
         try {
             String encoding="GBK";
@@ -100,12 +101,12 @@ public class FastMemberInfoService {
             read = new InputStreamReader(
                     new FileInputStream(file),encoding);//考虑到编码格式
             BufferedReader bReader = new BufferedReader(read);
-            LineNumberReader lineReader = new LineNumberReader(bReader);
+            lineNumberReader = new LineNumberReader(bReader);
             String lineTxt = null;
-            while((lineTxt = lineReader.readLine()) != null ){
+            while((lineTxt = lineNumberReader.readLine()) != null ){
                 totalLine++;
             }
-            lineReader.close();
+            lineNumberReader.close();
 
             while (startLine < totalLine ){
                 System.out.println("主线程main开始工作：--------从第 [ "+startLine+" ] 调数据开始------");
@@ -113,7 +114,7 @@ public class FastMemberInfoService {
                 read = new InputStreamReader(
                         new FileInputStream(file),encoding);//考虑到编码格式
                 BufferedReader bufferedReader = new BufferedReader(read);
-                LineNumberReader lineNumberReader = new LineNumberReader(bufferedReader);
+                lineNumberReader = new LineNumberReader(bufferedReader);
                 while(true){
                     lineTxt = lineNumberReader.readLine();
                     lineNumber = lineNumberReader.getLineNumber();
@@ -132,7 +133,7 @@ public class FastMemberInfoService {
                         break;
                     }
                 }
-                read.close();
+                lineNumberReader.close();
                 //主线程等待控制
                 CountDownLatch count = new CountDownLatch(threadNO);
 //                 // TODO: 2017/3/29    使用callPoolRequestMethod增加事务控制
@@ -153,7 +154,7 @@ public class FastMemberInfoService {
                                     }
                                     lineText = textCache.remove(0 );
 
-                                    logger.info("操作第 [ "+(startLine-cacheNo)+"--"+(startLine-1)+" ] 的第 [ "+(cacheNo-count.getCount())+" ] 条数据");
+                                    logger.info("操作第 [ "+(startLine-cacheNo)+"--"+(startLine-1)+" ] 的数据");
                                 }
                                 try {
                                     textRequestMethod(lineText);
@@ -174,8 +175,8 @@ public class FastMemberInfoService {
             e.printStackTrace();
         }finally {
             try {
-                if(null != read)
-                    read.close();
+                if(null != lineNumberReader)
+                    lineNumberReader.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -274,9 +275,10 @@ public class FastMemberInfoService {
             jsonObject = HttpApiUtil.httpPost(url, jsonParams);
 
             if(null == jsonObject){
-                throw new RuntimeException("httpPost请求memberInfo异常！！！");
+                params.put("errcode","404");
+                jsonObject = new JSONObject();
+                jsonObject.putAll(params);
             }
-        System.out.println("响应json ：------ "+jsonObject.toJSONString());
 
         String errcode = jsonObject.getString("errcode");
         if(!"0".equals(errcode)){
@@ -307,7 +309,6 @@ public class FastMemberInfoService {
         JSONObject resultJson = HttpApiUtil.httpGet(url);
         accessToken = resultJson.getString("access_token");
         Long expiresIn = Long.parseLong(resultJson.getString("expires_in"));
-        System.out.println("------------accessToken有效时间-------------: "+expiresIn+"s ");
         long currentTime = System.currentTimeMillis();
         iflush = currentTime + (expiresIn-200)*1000;
         logger.debug("获取到的AccessToken:["+accessToken+"]");
