@@ -1,6 +1,6 @@
 package com.hualala.app.wechat.impl;
 
-import com.hualala.app.wechat.MpInfoService;
+import com.hualala.app.wechat.MpInfoRpcService;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.model.WechatMpModel;
 import com.hualala.core.utils.DataUtils;
@@ -16,10 +16,11 @@ import java.util.Map;
  * Created by xkia on 2017/3/20.
  */
 @Service
-public class MpInfoServiceImpl implements MpInfoService {
+public class MpInfoRpcServiceImpl implements MpInfoRpcService {
 
     @Autowired
     private WechatMpMapper wechatMpMapper;
+
     @Override
     public MpInfoQueryResData queryMpInfo(MpInfoQueryReqData reqData) {
 

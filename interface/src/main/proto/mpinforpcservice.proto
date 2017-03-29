@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_package = "com.hualala.app.wechat.grpc";
-option java_outer_classname = "MpInfoData";
+option java_outer_classname = "MpInfoRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
@@ -88,7 +88,7 @@ message MpInfoResData {
    ResultHeader result=1;
 }
 //
-service MpInfoService{
+service MpInfoRpcService{
     //获取公众信息
     rpc queryMpInfo(MpInfoQueryReqData) returns (MpInfoQueryResData) {}
 }

@@ -10,7 +10,7 @@ public class ProtoGenerator {
 
     @org.junit.Test
     public void generatorProto() {
-        Class[] generatorClass = {MpTypeEnum.class, MpInfoService.class
+        Class[] generatorClass = {MpTypeEnum.class, MpInfoRpcService.class
             };
         RpcProtoGenerator.generate(generatorClass);
     }
