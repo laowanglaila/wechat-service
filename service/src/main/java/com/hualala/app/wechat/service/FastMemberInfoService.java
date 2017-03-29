@@ -9,11 +9,19 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.io.*;
-import java.util.*;
-import java.util.concurrent.CountDownLatch;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * Created by renjianfei on 2017/3/23.
@@ -26,19 +34,25 @@ public class FastMemberInfoService {
 
     private Logger logger = LoggerFactory.getLogger(ComponentTokenService.class);
 
-    private static String accessToken = null;
-    private static Long iflush = 0L;
+    private String accessToken = null;
+    private Long iflush = 0L;
 
-    public static void setAccessToken(String accessToken) {
-        FastMemberInfoService.accessToken = accessToken;
-    }
 
-    private static String appId = "wx58e9eacc01f7880c";
-    private static String appSecret = "bb43ed30da3409fb1a8ef2b432019332";
+    private String appId = "wx58e9eacc01f7880c";
+    private String appSecret = "bb43ed30da3409fb1a8ef2b432019332";
 
     private int startLine = 0;
     private int totalLine = 0;
     private int cacheNo = 500;
+    private int threadNO = 50;
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public void setThreadNO(int threadNO) {
+        this.threadNO = threadNO;
+    }
 
     public void setCacheNo(int cacheNo) {
         this.cacheNo = cacheNo;
@@ -55,6 +69,9 @@ public class FastMemberInfoService {
 
     @Autowired
     private WechatMemberInfoMapper memberInfoMapper;
+
+    @Autowired
+    private ApplicationContext ctx;
 
     public void setStartLine(int startLine) {
         this.startLine = startLine;
@@ -90,8 +107,6 @@ public class FastMemberInfoService {
             }
             lineReader.close();
 
-
-
             while (startLine < totalLine ){
                 System.out.println("主线程main开始工作：--------从第 [ "+startLine+" ] 调数据开始------");
                 ArrayList<String> textCache = new ArrayList<String>();
@@ -117,11 +132,14 @@ public class FastMemberInfoService {
                         break;
                     }
                 }
-
                 read.close();
-                CountDownLatch count = new CountDownLatch(36);
+                //主线程等待控制
+                CountDownLatch count = new CountDownLatch(threadNO);
+//                 // TODO: 2017/3/29    使用callPoolRequestMethod增加事务控制
+//                Future<String> future = callPoolRequestMethod(textCache);
+
                 //多线程请求微信会员接口
-                for (int i = 0 ; i< 36 ; i++){
+                for (int i = 0 ; i< threadNO ; i++){
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -149,9 +167,10 @@ public class FastMemberInfoService {
                     thread.start();
                 }
                 count.await();
+
             }
         } catch (Exception e) {
-            logger.error("在操作: [ "+file.getAbsolutePath()+" ]的第[ "+lineNumber+" ]行出错！");
+            logger.error("在操作: [ "+file.getAbsolutePath()+" ]的第[ "+(startLine-cacheNo)+"--"+(startLine-1)+" ]行出错！");
             e.printStackTrace();
         }finally {
             try {
@@ -162,6 +181,49 @@ public class FastMemberInfoService {
             }
         }
 
+    }
+
+    /**
+     * 多线程创建请求微信接口方法
+     */
+    public Future<String> callPoolRequestMethod(List<String> textCache) throws Exception {
+
+        //手动开启事务
+        DataSourceTransactionManager txManager = (DataSourceTransactionManager) ctx.getBean("transactionManager");
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+        TransactionStatus txStatus = txManager.getTransaction(def);// 获得事务状态
+
+        txManager.commit(txStatus);//事务处理成功，提交当前事务
+
+        txManager.rollback(txStatus);//事务处理失败，回滚当前事务  
+
+        CountDownLatch count = new CountDownLatch(threadNO);
+        ExecutorService exec = Executors.newFixedThreadPool(threadNO);
+        Callable<String> call = new Callable<String>() {
+            public String call() throws Exception {
+                while (true) {
+                    String lineText = null;
+                    synchronized (textCache) {
+                        if (textCache.isEmpty()) {
+                            System.out.println("--------------"+Thread.currentThread().getName()+"子线程跳出微信请求循环------------------");
+                            count.countDown();
+                            break;
+                        }
+                        lineText = textCache.remove(0 );
+
+                        logger.info("操作第 [ "+(startLine-cacheNo)+"--"+(startLine-1)+" ] 的第 [ "+(cacheNo-count.getCount())+" ] 条数据");
+                    }
+                        textRequestMethod(lineText);
+                }
+                return "success";
+            }
+        };
+        Future<String> task = exec.submit(call);
+        count.await();
+        //关闭线程池
+        exec.shutdown();
+        return task;
     }
 
     /**
@@ -216,9 +278,6 @@ public class FastMemberInfoService {
             }
         System.out.println("响应json ：------ "+jsonObject.toJSONString());
 
-
-
-
         String errcode = jsonObject.getString("errcode");
         if(!"0".equals(errcode)){
             //accessToken超时
@@ -237,7 +296,7 @@ public class FastMemberInfoService {
      * 请求会员数据之前，判断accessToken是否失效
      * 如果失效重新获取
      */
-    public String getAccessToken() {
+    public synchronized String getAccessToken() {
         //获取一个新的accessToken
 //     appid:   wx58e9eacc01f7880c
 //     appSecret:   bb43ed30da3409fb1a8ef2b432019332

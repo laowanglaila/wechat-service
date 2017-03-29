@@ -22,11 +22,13 @@ public class FastMenberInfoServiceTest {
         long startTime = System.currentTimeMillis();    //获取开始时间
         memberInfoService.setAppId("wxca431740658cd706");
         memberInfoService.setAppSecret("12e0401d258b7e7423c84c0a8704c8e0");
-        String accessToken = "CNa2aR3atb7HWLP1ewMDfK3jE4LLpq-VDg4Otlni8dKu0dKJtQMsP-z6uP_Kx22vzDuW5DyV061JzqhERBMZin2GvAPxVM9n_5UnrU7QnOJ5nGO-Ioh4sessI5zMz6VvASChAFAGYI";
+        String accessToken = "ApB1dUzbmZhGrgLaYbDcWEFqIJpLo9slR-_2V4wXgEvKd8u2sjjFnXAGwcdRq0d9CoxOV3GrHX36P1L8bTDAomQfD_3PQz53RZuutSE02Md-24RksIEtSVV0H3l-P0KdVDXeAGAAIC";
 //        accessToken = memberInfoService.getAccessToken();
         memberInfoService.setAccessToken(accessToken);
         memberInfoService.setStartLine(1);
         memberInfoService.setCacheNo(500);
+        memberInfoService.setThreadNO(50);
+
         memberInfoService.loadInfo("C:\\Users\\Administrator\\Desktop\\user_code0327.txt");
         long endTime = System.currentTimeMillis();    //获取结束时间
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
