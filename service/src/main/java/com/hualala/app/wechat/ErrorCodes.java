@@ -19,4 +19,8 @@ public interface ErrorCodes {
     String WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR = "00112114";
     // 刷新令牌错误
     String WECHAT_MP_REFRESHTOKEN_ERROR = "00112115";
+    // 图片地址有误
+    String WECHAT_MP_IMAGEURL_ERROR = "00112116";
+    //url不可以为空
+    String WECHAT_MP_URL_NULL = "00112117";
 }
