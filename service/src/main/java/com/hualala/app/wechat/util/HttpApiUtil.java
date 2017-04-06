@@ -16,7 +16,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,7 @@ public class HttpApiUtil {
     private static final int CONNECT_TIMEOUT = 5000;
     private static Logger logger = LoggerFactory.getLogger(HttpApiUtil.class);
     private static String ENCODE = "UTF-8";
+
 
 
     public static JSONObject httpPost(String url, Map<String, String> params) {
@@ -124,24 +124,4 @@ public class HttpApiUtil {
         }
         return null;
     }
-
-    public static JSONObject httpPost(String url,String params,String mpID){
-        String[] split = url.split("[?]");
-        if(split.length > 1 && split[1].startsWith("access_token")){
-
-        }
-
-        JSONObject jsonObject = httpPost(url, params);
-
-        String errCode = jsonObject.getString("errcode");
-
-        if("42001".equals(errCode)){
-
-
-
-        }
-
-        return null;
-    }
-
 }
