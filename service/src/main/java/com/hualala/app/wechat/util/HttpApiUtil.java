@@ -98,6 +98,7 @@ public class HttpApiUtil {
             e.printStackTrace();
             return null;
         }
+
             return null;
     }
 
