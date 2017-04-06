@@ -41,7 +41,7 @@ public class FastMemberInfoService {
     private String appId = "wx58e9eacc01f7880c";
     private String appSecret = "bb43ed30da3409fb1a8ef2b432019332";
 
-    private int startLine = 0;
+    private int startLine = 1;
     private int totalLine = 0;
     private int cacheNo = 500;
     private int threadNO = 50;

@@ -168,8 +168,4 @@ public class MemberInfoService {
         return accessToken;
     }
 
-
-
-
-
 }
