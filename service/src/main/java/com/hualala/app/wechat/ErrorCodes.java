@@ -23,4 +23,6 @@ public interface ErrorCodes {
     String WECHAT_MP_IMAGEURL_ERROR = "00112116";
     //url不可以为空
     String WECHAT_MP_URL_NULL = "00112117";
+    //HTTP请求失败
+    String WECHAT_HTTP_FAILED = "00112118";
 }
