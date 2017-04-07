@@ -20,9 +20,9 @@ public class FastMenberInfoServiceTest {
     @Test
     public void memberInfoTest(){
         long startTime = System.currentTimeMillis();    //获取开始时间
-        memberInfoService.setAppId("");
-        memberInfoService.setAppSecret("");
-        String accessToken = "";
+        memberInfoService.setAppId("wxca431740658cd706");
+        memberInfoService.setAppSecret("12e0401d258b7e7423c84c0a8704c8e0");
+        String accessToken = "fN7UjjtD3ipQzC6yjkUrowK_O0pKQgGVu5-2rV2-iCFQjsMoSdEStpJ_qjoG2YHZaKNhdJSLAVEqHfpgYnl88VTL1QXEoQMlJe_YEGYrHB4FSSbAHATGG";
 //        accessToken = memberInfoService.getAccessToken();
         memberInfoService.setAccessToken(accessToken);
         memberInfoService.setStartLine(1);
