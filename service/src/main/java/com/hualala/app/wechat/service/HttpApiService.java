@@ -46,14 +46,13 @@ public class HttpApiService {
             }
         }
         JSONObject jsonObject = HttpApiUtil.httpPost(url, params);
-
         String errCode = jsonObject.getString("errcode");
 
         if("42001".equals(errCode)){
             //删除原有的accessToken
             String[] sp = url.trim().split("[?]");
             url = sp[0];
-            jsonObject = HttpApiUtil.httpPost(url, params);
+            jsonObject = httpPost(url, params, mpID);
         }
         return jsonObject;
     }
