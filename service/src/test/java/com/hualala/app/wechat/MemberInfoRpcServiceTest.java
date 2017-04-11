@@ -25,10 +25,16 @@ public class MemberInfoRpcServiceTest {
         MemberInfoRpcService.MemberInfoQueryReqData memberInfoQueryReqData = new MemberInfoRpcService.MemberInfoQueryReqData();
         memberInfoQueryReqData.setAppID("wxca431740658cd706");
         memberInfoQueryReqData.setAppSecret("12e0401d258b7e7423c84c0a8704c8e0");
-        memberInfoQueryReqData.setCode("976694052682");
+        memberInfoQueryReqData.setCode("917998989781");
         memberInfoQueryReqData.setCardId("pQqgCs4wFvht1uuiJNgSktnB894E");
+        System.out.println("----------------------------------------------------------------");
+
         MemberInfoRpcService.MemberInfoResData memberInfoResData = memberInfoRpcService.queryMemberInfo(memberInfoQueryReqData);
+
+        System.out.println("----------------------------------------------------------------");
         String s = JSONObject.toJSONString(memberInfoResData);
         System.out.println(s);
+        System.out.println("----------------------------------------------------------------");
+
     }
 }
