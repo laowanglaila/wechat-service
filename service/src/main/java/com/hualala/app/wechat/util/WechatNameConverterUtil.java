@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.util;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.*;
+
 /**
  * Created by renjianfei on 2017/4/10.
  */
@@ -8,36 +9,32 @@ public class WechatNameConverterUtil {
 
 
 
-    /*
+    /**
      * Java field to data base column-key
      */
 
-    public static void getDBKey(String... javaFieldNames){
-        if(javaFieldNames != null && javaFieldNames.length > 0){
-            for(String name : javaFieldNames){
-                StringBuffer buffer = new StringBuffer();
-                char[] array = name.toCharArray();
-                List<Integer> insertIndexes = new ArrayList<>();
-                for(int i=0;i<array.length;i++){
-                    Character c = array[i];
-                    if(i != 0 && Character.isUpperCase(c)){
-                        insertIndexes.add(i);
-                    }
-                }
-                if(insertIndexes.size() > 0){
-                    int flag = 0;
-                    for(int j=0;j<insertIndexes.size();j++){
-                        String word = toLowercase4FirstLetter(name.substring(flag, insertIndexes.get(j)));
-                        buffer.append(word).append("_");
-                        flag = insertIndexes.get(j);
-                    }
-                    String last = toLowercase4FirstLetter(name.substring(flag));
-                    buffer.append(last);
-                    System.out.println(buffer.toString());
-                } else {
-                    System.out.println(name);
-                }
+    public static String getDBKey(String name){
+        StringBuffer buffer = new StringBuffer();
+        char[] array = name.toCharArray();
+        List<Integer> insertIndexes = new ArrayList<>();
+        for(int i=0;i<array.length;i++){
+            Character c = array[i];
+            if(i != 0 && Character.isUpperCase(c)){
+                insertIndexes.add(i);
             }
+        }
+        if(insertIndexes.size() > 0){
+            int flag = 0;
+            for(int j=0;j<insertIndexes.size();j++){
+                String word = toLowercase4FirstLetter(name.substring(flag, insertIndexes.get(j)));
+                buffer.append(word).append("_");
+                flag = insertIndexes.get(j);
+            }
+            String last = toLowercase4FirstLetter(name.substring(flag));
+            buffer.append(last);
+            return buffer.toString();
+        } else {
+           return name;
         }
     }
 
@@ -54,14 +51,10 @@ public class WechatNameConverterUtil {
     /*
      * data base column-key to java field
      */
-    public static void convertToJava(String... dbKeys) {
-        if(dbKeys != null && dbKeys.length > 0){
-            for(String key : dbKeys){
-                String[] words = key.split("_");
-                String result = toUppercase4FirstLetter(words);
-                System.out.println(result);
-            }
-        }
+    public static String getJavaKey(String key) {
+        String[] words = key.split("_");
+        String result = toUppercase4FirstLetter(words);
+        return result;
     }
 
     private static String toUppercase4FirstLetter(String... words){
@@ -82,5 +75,57 @@ public class WechatNameConverterUtil {
             return buffer.toString();
         }
         return "";
+    }
+
+    /**
+     * 将对象装转换成map
+     * @param request
+     * @return
+     */
+    private Map<String, Object> toMap(Object request) {
+        Map<String, Object> params = new HashMap<>();
+        if (request == null) {
+            return params;
+        }
+
+        Field fields[] = request.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                Object obj = field.get(request);
+                params.put(field.getName(), obj);
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return params;
+    }
+
+    /**
+     * 将map中的java风格key全部替换成“_”风格
+     */
+    public static Map<String,Object> convertToDBStyle(Map<String,Object> map){
+        Set<Map.Entry<String, Object>> entries = map.entrySet();
+        HashMap<String, Object> params = new HashMap<>();
+        for (Map.Entry<String, Object> entry : entries){
+            String dbKey = WechatNameConverterUtil.getDBKey(entry.getKey());
+            params.put(dbKey,entry.getValue());
+        }
+        return params;
+    }
+
+    /**
+     * 将map中的“_”风格key全部替换成java风格
+     */
+    public static Map<String,Object> convertToJavaStyle(Map<String,Object> map){
+        Set<Map.Entry<String, Object>> entries = map.entrySet();
+        HashMap<String, Object> params = new HashMap<>();
+        for (Map.Entry<String, Object> entry : entries){
+            String javaKey = WechatNameConverterUtil.getJavaKey(entry.getKey());
+            params.put(javaKey,entry.getValue());
+        }
+        return params;
     }
 }

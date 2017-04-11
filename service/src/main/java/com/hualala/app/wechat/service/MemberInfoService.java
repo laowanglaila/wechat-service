@@ -63,7 +63,7 @@ public class MemberInfoService {
         loadInfo(filePath);
     }
     public void loadInfo(String filePath){
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         int lineNumber = 0;
         File file = null;
         try {
@@ -117,7 +117,7 @@ public class MemberInfoService {
      * @param params
      * @return
      */
-    private JSONObject visitWeChat(Map<String,String> params) throws Exception {
+    public JSONObject visitWeChat(Map<String,Object> params) throws Exception {
 
         if(StringUtils.isBlank(accessToken)){
             getAccessToken();
