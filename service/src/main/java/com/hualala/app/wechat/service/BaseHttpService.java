@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * 微信卡券通用接口
  */
 @Service
-public class BaseCouponService {
+public class BaseHttpService {
 
     @Autowired
     private HttpApiService httpApiService;
