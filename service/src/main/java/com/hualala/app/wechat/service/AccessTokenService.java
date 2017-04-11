@@ -64,13 +64,13 @@ public class AccessTokenService {
             param.put("mpID",mpID);
             param.put("appID",appID);
             result = initAccessToken(param);
-            if(WechatMessageType.FALSE.equals(result.getString("isSuccess"))){
+            if(WechatMessageType.FALSE.equals(result.getString(WechatMessageType.IS_SUCCESS))){
                 return ResultUtil.toResultJson(result,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_ERROR,"缓存中获取accessToken is null");
             }
             //accessToken = WechatCacheUtil.getCacheAccessToken(mpID);
             accessToken = result.getString("accessToken");
         }
-        result.put("isSuccess", WechatMessageType.TRUE);
+        result.put(WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE);
         result.put("accessToken", accessToken);
         return ResultUtil.toResultJson(result,WechatMessageType.TRUE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR,"");
     }
@@ -108,7 +108,7 @@ public class AccessTokenService {
                 String errcode = resultJson.getString("errcode");
                 String errmsg   = WechatErrorCode.wechatError.get(errcode);
                 if(errmsg == null){
-                    errmsg = resultJson.getString("errmsg");
+                    errmsg = resultJson.getString(WechatMessageType.MESSAGE);
                 }
                 return ResultUtil.toResultJson(resultJson,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR,errmsg);
             }

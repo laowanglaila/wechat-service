@@ -36,7 +36,7 @@ public class MediaUploadService {
         String token = null;
 
         JSONObject result = accessTokenService.getAccessToken(mpID);
-        if(WechatMessageType.FALSE.equals(result.getString("isSuccess"))){
+        if(WechatMessageType.FALSE.equals(result.getString(WechatMessageType.IS_SUCCESS))){
             return result;
         }else {
             token = result.getString("accessToken");

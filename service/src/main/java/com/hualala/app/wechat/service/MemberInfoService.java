@@ -1,10 +1,12 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.mapper.WechatMemberInfoMapper;
 import com.hualala.app.wechat.model.WechatMemberInfoModel;
 import com.hualala.app.wechat.util.HttpApiUtil;
+import com.hualala.app.wechat.util.ResultUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,7 +145,7 @@ public class MemberInfoService {
                 throw new RuntimeException("请查询微信错误代码："+errcode);
             }
         }
-        return jsonObject;
+        return ResultUtil.toResultJson(jsonObject,true, ErrorCodes.WECHAT_SUCCESS_CODE,"成功了Yeal!!!");
     }
 
     /**

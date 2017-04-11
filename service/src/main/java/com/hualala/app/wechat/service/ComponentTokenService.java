@@ -58,7 +58,7 @@ public class ComponentTokenService {
         //缓存
         wechatCacheUtil.setData(componentAppID, "componentAcToken", value, Long.parseLong(resultJson.getString("expires_in")));
         resultJson.put("componentAccessToken", value);
-        resultJson.put("isSuccess", WechatMessageType.TRUE);
+        resultJson.put(WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE);
         return resultJson;
     }
 
@@ -103,7 +103,7 @@ public class ComponentTokenService {
 
         JSONObject resultJson = componentPost(WechatBaseApi.API_AUTHORIZER_TOKEN, componentAccessToken, getComponentModel(componentAppID, authorizerAppID, authorizerRefreshToken), componentAppID);
 
-        if (WechatMessageType.FALSE == resultJson.getBoolean("isSuccess")) {
+        if (WechatMessageType.FALSE == resultJson.getBoolean(WechatMessageType.IS_SUCCESS)) {
             return ResultUtil.toResultJson(null,WechatMessageType.FALSE,null, resultJson.getString("errmsg"));
         }
 
@@ -142,7 +142,7 @@ public class ComponentTokenService {
         if(errcode!=null){
             if(WechatMessageType.WECHAT_INVALID.equals(errcode) || "42001".equals(errcode)){
                 Map<String, Object> resultMap = initComponentToken();
-                if(resultMap == null || !(Boolean) resultMap.get("isSuccess")) {
+                if(resultMap == null || !(Boolean) resultMap.get(WechatMessageType.IS_SUCCESS)) {
                     return ResultUtil.toResultJson(resultJson,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_AUTH_ERROR,"获取accessToken服务失败");
                 }
                 componentAccessToken = String.valueOf(resultMap.get("componentAccessToken"));
@@ -164,7 +164,7 @@ public class ComponentTokenService {
                 return ResultUtil.toResultJson(resultJson,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ERROR,errmsg);
             }
         }
-        resultJson.put("isSuccess", WechatMessageType.TRUE);
+        resultJson.put(WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE);
         return resultJson;
     }
 
@@ -184,7 +184,7 @@ public class ComponentTokenService {
                 return ResultUtil.toResultJson(result,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ERROR,"缓存中获取preAuthCode is null");
             }
         }
-        result.put("isSuccess", WechatMessageType.TRUE);
+        result.put(WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE);
         result.put("authorizerAcToken", authorizerAcToken);
         result.put("accessToken", authorizerAcToken);
         return result;
