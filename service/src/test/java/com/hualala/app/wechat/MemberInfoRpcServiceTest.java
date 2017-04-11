@@ -20,7 +20,6 @@ public class MemberInfoRpcServiceTest {
 
     @Test
     public void test() throws Exception {
-
         MemberInfoRpcService memberInfoRpcService = baseRpcClient.getRpcClient(MemberInfoRpcService.class);
 
         MemberInfoRpcService.MemberInfoQueryReqData memberInfoQueryReqData = new MemberInfoRpcService.MemberInfoQueryReqData();

@@ -25,8 +25,7 @@ public interface MemberInfoRpcService {
         private String mpID;
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "公众号名称")
         private String mpName;
-        @Protocol(fieldType = FieldType.ENUM, order = 5, description = "公众号类型")
-        private MpTypeEnum mpType;
+
         @Protocol(fieldType = FieldType.LONG, order = 6, description = "集团ID")
         private long groupID;
         @Protocol(fieldType = FieldType.LONG, order = 7, description = "品牌ID")
