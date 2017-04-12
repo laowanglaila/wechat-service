@@ -7,8 +7,9 @@ import com.hualala.core.base.ValueEnum;
  */
 public enum WechatQRTypeEnum implements ValueEnum {
 
-    TABLETYPE(1),
-    PAY(2);
+    LOGIN(1),
+    INVOICE(2),
+    QUEUE(3);
 
     private int value;
     WechatQRTypeEnum(int value) {
