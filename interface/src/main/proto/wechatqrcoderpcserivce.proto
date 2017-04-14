@@ -3,6 +3,7 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "WechatQRCodeRpcSerivceData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message WechatQRCodeReq {  
    // 公众号编码
@@ -33,11 +34,6 @@ message WechatQRCodeReq {
    int32 expireSeconds=14;
    // 请求公共字段
    RequestHeader header=1;
-}
-enum WechatQRTypeEnum {  
-   LOGIN=0;
-   INVOICE=1;
-   QUEUE=2;
 }
 message WechatQRCodeRes {  
    // 获取的二维码ticket
