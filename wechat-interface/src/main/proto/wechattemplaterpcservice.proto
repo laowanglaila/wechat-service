@@ -49,8 +49,8 @@ message WechatTemplateRpcResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-//
+// 微信模板消息接口
 service WechatTemplateRpcService{
-    //
+    // 创建模板消息
     rpc sentWechatTemplate(WechatTemplateRpcReqData) returns (WechatTemplateRpcResData) {}
 }

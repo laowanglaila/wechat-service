@@ -11,10 +11,10 @@ import lombok.Data;
 /**
  * Created by xkia on 2017/4/13.
  */
-@RpcService
+@RpcService(description = "微信模板消息接口")
 public interface WechatTemplateRpcService {
 
-    @RpcMethod
+    @RpcMethod(description = "创建模板消息")
     WechatTemplateRpcResData sentWechatTemplate(WechatTemplateRpcReqData reqData);
 
 
