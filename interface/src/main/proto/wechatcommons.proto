@@ -9,3 +9,8 @@ enum MpTypeEnum {
    SERVICE=3;
    SERVICE_AUTH=4;
 }
+enum WechatQRTypeEnum {  
+   LOGIN=0;
+   INVOICE=1;
+   QUEUE=2;
+}
