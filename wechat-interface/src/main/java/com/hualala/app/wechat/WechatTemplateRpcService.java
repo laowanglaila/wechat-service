@@ -28,7 +28,7 @@ public interface WechatTemplateRpcService {
         private long shopID;
 
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "模板类型")
-        private String ModelType;
+        private String modelType;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "模板子类型")
         private String modelSubType;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "类型")

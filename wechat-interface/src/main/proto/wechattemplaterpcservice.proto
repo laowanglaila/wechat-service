@@ -12,7 +12,7 @@ message WechatTemplateRpcReqData {
    // 店铺ID
    int64 shopID=4;
    // 模板类型
-   string ModelType=5;
+   string modelType=5;
    // 模板子类型
    string modelSubType=6;
    // 类型
