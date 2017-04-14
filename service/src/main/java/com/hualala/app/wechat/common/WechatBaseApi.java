@@ -65,5 +65,7 @@ public class WechatBaseApi {
     public static final String UPDATE_CARD_CODE = "https://api.weixin.qq.com/card/code/update";
     //获取微信二维码
     public static final String CREATE_QR_CODE = "https://api.weixin.qq.com/cgi-bin/qrcode/create";
+    // 添加微信模板ID
+    public static final String API_ADD_TEMPLATE = ROOT + "template/api_add_template";
 
 }

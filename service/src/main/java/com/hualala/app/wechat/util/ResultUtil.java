@@ -57,4 +57,8 @@ public class ResultUtil {
         }
         return object;
     }
+
+    public static JSONObject toResultJson(JSONObject resultJson, Boolean isSuccess, String code) {
+        return toResultJson(resultJson,isSuccess,code,"");
+    }
 }

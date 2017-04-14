@@ -10,7 +10,7 @@ public class ProtoGenerator {
 
     @org.junit.Test
     public void generatorProto() {
-        Class[] generatorClass = {MemberInfoRpcService.class
+        Class[] generatorClass = {WechatQRCodeRpcSerivce.class,WechatQRTypeEnum.class,MpTypeEnum.class,MpInfoRpcService.class
             };
         RpcProtoGenerator.generate(generatorClass);
     }

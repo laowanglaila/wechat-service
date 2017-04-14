@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.hualala.app.wechat.mapper.WechatMpMapper;
+import com.hualala.app.wechat.model.WechatMpModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,7 @@ public class MpInfoService {
         }
         return list.get(0);
     }
+
+
 
 }

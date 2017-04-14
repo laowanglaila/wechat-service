@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>interface</module>
+        <module>wechat-interface</module>
         <module>service</module>
     </modules>
     <parent>

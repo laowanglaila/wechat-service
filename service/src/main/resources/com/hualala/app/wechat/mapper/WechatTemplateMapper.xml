@@ -10,7 +10,7 @@
 			<if test="modelTitle !=null">modelTitle,</if>
 			<if test="templateType !=null">templateType,</if>
 			<if test="templateID !=null">templateID,</if>
-        action, #{createStamp}
+        action, #{createTime}
 		) values (
 			<if test="itemID !=null">#{itemID},</if>
 			<if test="mpID !=null">#{mpID},</if>
@@ -19,7 +19,7 @@
 			<if test="modelTitle !=null">#{modelTitle},</if>
 			<if test="templateType !=null">#{templateType},</if>
 			<if test="templateID !=null">#{templateID},</if>
-        #{action}, #{createStamp}
+        #{action}, #{createTime}
 		)
 	</insert>
 
@@ -34,7 +34,18 @@
     limit #{offset}, #{pageSize}
     </select>
 
+
+    <select id="queryTemplate" resultType="com.hualala.app.wechat.model.WechatTemplateModel">
+		SELECT
+		<include refid="queryField" />
+		FROM tbl_shop_wechat_template
+		WHERE
+		action in (0,1)
+		AND mpID = #{mpID}
+  		AND modelID = #{modelID}
+	</select>
+
     <sql id="queryField">
-        itemID,        mpID,        groupID,        modelID,        modelTitle,        templateType,        templateID
+        itemID, mpID, groupID, modelID, modelTitle, templateType, templateID, action, actionTime, createTime
     </sql>
 </mapper>

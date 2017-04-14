@@ -243,4 +243,14 @@ public class BaseHttpService {
         }
         return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
     }
+
+    /**
+     * 获得模板ID
+     * @param jsonObject
+     * @param mpID
+     * @return
+     */
+    public JSONObject apiAddTemplate(JSONObject jsonObject, String mpID){
+        return this.commonHttpPost(WechatBaseApi.API_ADD_TEMPLATE, jsonObject,mpID);
+    }
 }
