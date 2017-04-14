@@ -16,7 +16,7 @@
 			<if test="replyContent !=null">replyContent,</if>
 			<if test="serviceName !=null">serviceName,</if>
 			<if test="isActive !=null">isActive,</if>
-        action, #{createStamp}
+        action, #{createTime}
 		) values (
 			<if test="itemID !=null">#{itemID},</if>
 			<if test="mpID !=null">#{mpID},</if>
@@ -31,7 +31,7 @@
 			<if test="replyContent !=null">#{replyContent},</if>
 			<if test="serviceName !=null">#{serviceName},</if>
 			<if test="isActive !=null">#{isActive},</if>
-        #{action}, #{createStamp}
+        #{action}, #{createTime}
 		)
 	</insert>
 

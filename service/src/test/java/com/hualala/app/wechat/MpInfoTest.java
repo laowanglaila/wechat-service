@@ -40,6 +40,7 @@ public class MpInfoTest {
 
 
 
+
 //    @Test
 //    public void test(){
 //        String getTemplateJson = "{\"first\":\"尊敬的顾客,您好!您的排号请求已被确认! \",\"keyword1\":\"[keynote1]\",\"keyword2\":\"[keynote2]\",\"keyword3\":\"[keynote3]\",\"keyword4\":\"[keynote4]位\",\"modelID\":\"[modelID]\",\"remark\":\"[remark]\",\"templateID\":\"[templateID]\"}";

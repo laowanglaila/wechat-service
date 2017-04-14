@@ -58,6 +58,7 @@
 		<if test="isSubscribe != null">
 			and isSubscribe = #{isSubscribe}
 		</if>
+		limit 1;
 
 	</select>
 	<select id="queryCheckOpenID" resultType="java.lang.Integer">
