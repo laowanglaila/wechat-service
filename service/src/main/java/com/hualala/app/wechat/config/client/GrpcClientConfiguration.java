@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ *
  * Created by xiangbin on 2016/10/19.
  */
 @Configuration
@@ -19,7 +20,7 @@ public class GrpcClientConfiguration {
     private GrpcClientProperties grpcClientProperties;
 
     @Bean(name = "com.hualala.app.wechat", destroyMethod = "clean")
-    public GrpcClient grpcClient(Brave brave) {
+    public GrpcClient grpcClient() {
         logger.info(() -> "Initializing com.hualala.app.pay gRpc client... [" + grpcClientProperties.getWechat() + "]");
         GrpcClient client = new GrpcClient(grpcClientProperties.getWechat());
         return client;
@@ -32,4 +33,10 @@ public class GrpcClientConfiguration {
         return client;
     }
 
+    @Bean (name = "com.hualala.message", destroyMethod="clean")
+    public SemServiceClient semServiceClient() {
+        logger.info(() -> "initializing idgen client ... [" + grpcClientProperties.getSem() + "]");
+        SemServiceClient semServiceClient = new SemServiceClient(grpcClientProperties.getSem());
+        return semServiceClient;
+    }
 }
