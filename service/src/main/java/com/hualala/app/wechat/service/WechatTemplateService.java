@@ -8,6 +8,9 @@ import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 微信模板
@@ -31,6 +34,10 @@ public class WechatTemplateService {
      * @return
      */
     public WechatTemplateModel getTemplate(String mpID, String modelID){
+
+        if(StringUtils.isEmpty(mpID) || StringUtils.isEmpty(modelID)){
+            return null;
+        }
 
         WechatTemplateModel wechatTemplateModel = wechatTemplateMapper.queryTemplate(mpID,modelID);
 
