@@ -25,4 +25,6 @@ public interface ErrorCodes {
     String WECHAT_MP_URL_NULL = "00112117";
     //HTTP请求失败
     String WECHAT_HTTP_FAILED = "00112118";
+    // 获取微信模板失败
+    String WECHAT_TEMPLATE_ERROR = "00112119";
 }

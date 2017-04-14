@@ -6,7 +6,7 @@ import java.util.Map;
 public class WechatErrorCode {
 
 
-
+	//private Strign
 
 	public static Map<String,String> wechatError = new HashMap<>();
 

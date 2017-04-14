@@ -17,7 +17,7 @@
 			<if test="headimgurl !=null">headimgurl,</if>
 			<if test="photoImage !=null">photoImage,</if>
 			<if test="isSubscribe !=null">isSubscribe,</if>
-        action, #{createStamp}
+        action, #{createTime}
 		) values (
 			<if test="itemID !=null">#{itemID},</if>
 			<if test="mpID !=null">#{mpID},</if>
@@ -33,7 +33,7 @@
 			<if test="headimgurl !=null">#{headimgurl},</if>
 			<if test="photoImage !=null">#{photoImage},</if>
 			<if test="isSubscribe !=null">#{isSubscribe},</if>
-        #{action}, #{createStamp}
+        #{action}, #{createTime}
 		)
 	</insert>
 
@@ -48,7 +48,32 @@
     limit #{offset}, #{pageSize}
     </select>
 
-    <sql id="queryField">
+	<select id="queryOpenID" resultType="java.lang.String" >
+		SELECT openID
+		FROM tbl_shop_wechat_user
+		WHERE
+		action in (0,1)
+		and mpID = #{mpID}
+		and userID = #{userID}
+		<if test="isSubscribe != null">
+			and isSubscribe = #{isSubscribe}
+		</if>
+
+	</select>
+	<select id="queryCheckOpenID" resultType="java.lang.Integer">
+		SELECT count(1)
+		FROM tbl_shop_wechat_user
+		WHERE
+		action in (0,1)
+		and mpID = #{mpID}
+		and openID = #{openID}
+		<if test="isSubscribe != null">
+			and isSubscribe = #{isSubscribe}
+		</if>
+	</select>
+
+
+	<sql id="queryField">
         itemID,        mpID,        userID,        userLoginName,        openid,        nickname,        userNickName,        sex,        province,        city,        country,        headimgurl,        photoImage,        isSubscribe
     </sql>
 </mapper>
