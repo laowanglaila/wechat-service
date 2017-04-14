@@ -113,8 +113,8 @@ public class BaseHttpService {
      * reated by renjianfei on 2017/4/7.
      * 获取测试白名单
      */
-    public  JSONObject getWhiteList(Map<String, Object> map,String mpId){
-        return this.commonHttpPost(WechatBaseApi.GET_WHITE_LIST,map,mpId);
+    public  JSONObject setWhiteList(Map<String, Object> map,String mpId){
+        return this.commonHttpPost(WechatBaseApi.SET_WHITE_LIST,map,mpId);
     }
 
      /**

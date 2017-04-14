@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "WhiteListRpcData";
+import "commons.proto";
+
+message ReqData {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   string groupID=4;
+   // 品牌ID
+   string brandID=3;
+   // 店铺ID
+   string shopID=5;
+   // 微信用户唯一标识
+   string openID=6;
+   // 微信账号
+   string userName=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ResData {  
+   // 错误码，0为正常
+   string errcode=2;
+   // 错误消息
+   string errmsg=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service WhiteListRpcService{
+    //
+    rpc addToWhiteList(ReqData) returns (ResData) {}
+}
