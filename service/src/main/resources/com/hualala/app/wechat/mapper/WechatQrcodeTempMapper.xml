@@ -16,10 +16,8 @@
 			<if test="shopID !=null">shopID,</if>
 			<if test="ticket !=null">ticket,</if>
 			<if test="wxUrl !=null">wxUrl,</if>
-			<if test="qrcodeIP !=null">qrcodeIP,</if>
-			<if test="isLog !=null">isLog,</if>
 			<if test="deadTime !=null">deadTime,</if>
-        action, #{createStamp}
+        action,createTime
 		) values (
 			<if test="itemID !=null">#{itemID},</if>
 			<if test="mpID !=null">#{mpID},</if>
@@ -34,22 +32,24 @@
 			<if test="shopID !=null">#{shopID},</if>
 			<if test="ticket !=null">#{ticket},</if>
 			<if test="wxUrl !=null">#{wxUrl},</if>
-			<if test="qrcodeIP !=null">#{qrcodeIP},</if>
-			<if test="isLog !=null">#{isLog},</if>
 			<if test="deadTime !=null">#{deadTime},</if>
-        #{action}, #{createStamp}
+        #{action}, #{createTime}
 		)
 	</insert>
 
 	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
     select count(1) from tbl_shop_wechat_qrcode_temp
     </select>
-
 	<select id="queryList" resultType="com.hualala.app.wechat.model.WechatQrcodeTempModel" parameterType="java.util.Map">
     select
     <include refid="queryField"/>
     from tbl_shop_wechat_qrcode_temp
     limit #{offset}, #{pageSize}
+    </select>
+	<select id="queryMacSenceID" resultType="java.lang.Integer">
+    select
+    max(sceneID)
+    from tbl_shop_wechat_qrcode_temp
     </select>
 
     <sql id="queryField">

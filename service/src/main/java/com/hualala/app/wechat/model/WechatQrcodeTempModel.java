@@ -7,6 +7,7 @@ public class WechatQrcodeTempModel extends BaseItem {
     private Long itemID;
     private String mpID;
     private Integer qrcodeType;
+    private Integer sceneID;
     private String qrcodeName;
     private String description;
     private String param1;
@@ -16,8 +17,6 @@ public class WechatQrcodeTempModel extends BaseItem {
     private String shopID;
     private String ticket;
     private String wxUrl;
-    private String qrcodeIP;
-    private Integer isLog;
     private Long deadTime;
 
     public Long getItemID() {
@@ -128,24 +127,6 @@ public class WechatQrcodeTempModel extends BaseItem {
         return this;
     }
 
-    public String getQrcodeIP() {
-        return this.qrcodeIP;
-    }
-
-    public WechatQrcodeTempModel setQrcodeIP(String qrcodeIP) {
-        this.qrcodeIP = qrcodeIP;
-        return this;
-    }
-
-    public Integer getIsLog() {
-        return this.isLog;
-    }
-
-    public WechatQrcodeTempModel setIsLog(Integer isLog) {
-        this.isLog = isLog;
-        return this;
-    }
-
     public Long getDeadTime() {
         return this.deadTime;
     }
@@ -154,4 +135,14 @@ public class WechatQrcodeTempModel extends BaseItem {
         this.deadTime = deadTime;
         return this;
     }
+
+    public Integer getSceneID() {
+        return sceneID;
+    }
+
+    public WechatQrcodeTempModel setSceneID(Integer sceneID) {
+        this.sceneID = sceneID;
+        return this;
+    }
+
 }

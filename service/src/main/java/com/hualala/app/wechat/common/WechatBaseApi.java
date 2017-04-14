@@ -63,5 +63,7 @@ public class WechatBaseApi {
     public static final String GET_ACTIVATE_USERFORM = "https://api.weixin.qq.com/card/membercard/activatetempinfo/get";
     //更改code接口（在转赠优惠券时使用）
     public static final String UPDATE_CARD_CODE = "https://api.weixin.qq.com/card/code/update";
+    //获取微信二维码
+    public static final String CREATE_QR_CODE = "https://api.weixin.qq.com/cgi-bin/qrcode/create";
 
 }

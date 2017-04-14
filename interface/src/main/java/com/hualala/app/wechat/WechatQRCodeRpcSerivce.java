@@ -1,6 +1,7 @@
 package com.hualala.app.wechat;
 
 import com.hualala.core.base.RequestInfo;
+import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
 import com.hualala.core.rpc.Protocol;
 import com.hualala.core.rpc.RpcMethod;
@@ -15,7 +16,7 @@ public interface WechatQRCodeRpcSerivce {
 
 
     @RpcMethod
-    public WechatQRCodeReq createQRCode(WechatQRCodeRes qrCodeReq);
+    public WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq);
 
     @Data
     public class WechatQRCodeReq extends RequestInfo {
@@ -50,19 +51,19 @@ public interface WechatQRCodeRpcSerivce {
         @Protocol(fieldType = FieldType.STRING, order = 13, description = "二维码名称")
         private String qrcodeName;
         //    expire_seconds	该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
-        @Protocol(fieldType = FieldType.LONG, order = 14, description = "该二维码有效时间/秒")
-        private long expireSeconds;
+        @Protocol(fieldType = FieldType.INT, order = 14, description = "该二维码有效时间/秒")
+        private int expireSeconds;
 
     }
 
     @Data
-    public class WechatQRCodeRes extends RequestInfo {
+    public class WechatQRCodeRes extends ResultInfo {
         //        ticket	获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码。
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "获取的二维码ticket")
         private String ticket;
         //        expire_seconds	该二维码有效时间，以秒为单位。 最大不超过2592000（即30天）。
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "该二维码有效时间")
-        private long expireSeconds;
+        @Protocol(fieldType = FieldType.INT, order = 3, description = "该二维码有效时间")
+        private int expireSeconds;
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "二维码图片解析后的地址")
         private String wxUrl;
 
