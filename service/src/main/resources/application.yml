@@ -77,7 +77,7 @@ spring:
   # REDIS (RedisProperties)
   redis:
     database: 0
-    host: mu.redis.hualala.com
+    host: dohko.redis.hualala.com
     port: 6379
     pool:
       max-idle: 1
