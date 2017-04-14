@@ -20,6 +20,13 @@
     <build>
         <plugins>
             <plugin>
+                <!--skip deploy -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5</version>
@@ -94,6 +101,11 @@
             <groupId>com.hualala.wechat</groupId>
             <artifactId>interface</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hualala.message</groupId>
+            <artifactId>short-message-service-interface</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
