@@ -53,7 +53,8 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
             if (StringUtils.isBlank(brandID) || StringUtils.isBlank(groupID)) {
                 return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
             }
-            //todo 通过上面三个属性获取mpID，调用方法待定；
+            //通过上面三个属性获取mpID，调用方法待定；
+            mpID = mpInfoService.queryMpIDAuth(Long.parseLong(groupID), Long.parseLong(brandID), Long.parseLong(shopID));
         }
         if (StringUtils.isBlank(mpID)) {
             //返回响应对象，设置错误信息和错误码；
