@@ -7,6 +7,7 @@ import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
@@ -14,6 +15,7 @@ import java.util.HashMap;
  * Created by renjianfei on 2017/4/14.
  * 通过openid或者username将微信账号加入测试白名单
  */
+@Service
 public class WhiteListRpcServiceImpl implements WhiteListRpcService {
     @Autowired
     private BaseHttpService baseHttpService;
@@ -43,10 +45,10 @@ public class WhiteListRpcServiceImpl implements WhiteListRpcService {
         if(userName.length == 0 && openID.length == 0 ){
             return new ResData().setResultInfo(ErrorCodes.WECHAT_ARGS_ERROR, "username或者openID不能为空！");
         }
-        if(openID.length > 0){
+        if(openID != null && openID.length > 0){
             params.put("openid",openID);
         }
-        if (userName.length > 0){
+        if (userName != null && userName.length > 0){
             params.put("username",userName);
         }
 
