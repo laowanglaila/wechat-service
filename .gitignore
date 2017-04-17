@@ -25,5 +25,4 @@ nbdist/
 
 
 ## grpc auto generate
-interface/src/main/java/com/hualala/app/wechat/grpc
-/wechat-interface/src/main/java/com/hualala/app/wechat/grpc/
+wechat-interface/src/main/java/com/hualala/app/wechat/grpc

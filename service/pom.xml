@@ -99,7 +99,7 @@
         </dependency>
         <dependency>
             <groupId>com.hualala.wechat</groupId>
-            <artifactId>interface</artifactId>
+            <artifactId>wechat-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -85,6 +85,17 @@
         <include refid="whereSql"/>
     </select>
 
+    <select id="queryMpIDAuth" resultType="java.lang.String">
+        SELECT mpID FROM tbl_shop_wechat_mp
+        WHERE
+        action in (0,1)
+        AND groupID = #{groupID}
+        AND ( brandID = #{brandID} or brandID = 0 )
+        AND mpType IN (11,21)
+        AND authorize in (0,1)
+        Order by brandID desc limit 1
+    </select>
+
 
     <sql id="whereSql">
         action in (0,1)
