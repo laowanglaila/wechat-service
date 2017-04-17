@@ -40,11 +40,11 @@ public class WechatQrcodeTempRpcServiceTest {
         wechatQRCodeReq.setParam2("测试二维码:Param2");
         wechatQRCodeReq.setParam3("测试二维码:Param3");
         wechatQRCodeReq.setExpireSeconds(3600*24);
-        wechatQRCodeReq.setBrandID("测试二维码:BrandID");
-        wechatQRCodeReq.setGroupID("测试二维码:GroupID");
-        wechatQRCodeReq.setShopID("测试二维码:ShopID");
+        wechatQRCodeReq.setShopID("0");
+        wechatQRCodeReq.setBrandID("5");
+        wechatQRCodeReq.setGroupID("5");
         wechatQRCodeReq.setShopName("测试二维码:ShopName");
-        wechatQRCodeReq.setMpID("doulaofang");
+//        wechatQRCodeReq.setMpID("doulaofang");
         wechatQRCodeReq.setDescription("测试二维码:Description");
         wechatQRCodeReq.setLocationName("测试二维码:LocationName");
 
