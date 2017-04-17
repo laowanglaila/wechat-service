@@ -41,18 +41,20 @@ public class WhiteListRpcServiceImpl implements WhiteListRpcService {
             return new ResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
         }
 
-        String[] openID = reqData.getOpenID();
-        String[] userName = reqData.getUserName();
+        String openID = reqData.getOpenID();
+        String userName = reqData.getUserName();
 
         HashMap<String, Object> params = new HashMap<>();
-        if(userName.length == 0 && openID.length == 0 ){
+        if(StringUtils.isBlank(openID) && StringUtils.isBlank(userName)){
             return new ResData().setResultInfo(ErrorCodes.WECHAT_ARGS_ERROR, "username或者openID不能为空！");
         }
-        if(openID != null && openID.length > 0){
-            params.put("openid",openID);
+        if(StringUtils.isNotBlank(openID)){
+            String[] split = openID.split(",");
+            params.put("openid",split);
         }
-        if (userName != null && userName.length > 0){
-            params.put("username",userName);
+        if (StringUtils.isNotBlank(userName)){
+            String[] split = userName.split(",");
+            params.put("username",split);
         }
 
         //加入微信白名单

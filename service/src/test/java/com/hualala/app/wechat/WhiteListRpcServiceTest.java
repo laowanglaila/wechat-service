@@ -1,5 +1,7 @@
 package com.hualala.app.wechat;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by renjianfei on 2017/4/14.
  */
@@ -9,9 +11,11 @@ public class WhiteListRpcServiceTest extends BaseRpcTest {
 
         WhiteListRpcService rpcClient = baseRpcClient.getRpcClient(WhiteListRpcService.class);
         WhiteListRpcService.ReqData reqData = new WhiteListRpcService.ReqData();
-        reqData.setMpID("doulaofang");
-        reqData.setUserName(new String[]{"renfeifei_1314"});
-        rpcClient.addToWhiteList(reqData);
+        reqData.setMpID("doulaofangceshi");
+        reqData.setUserName("renfeifei_1314");
+        WhiteListRpcService.ResData resData = rpcClient.addToWhiteList(reqData);
+
+        System.out.println(JSONObject.toJSONString(resData));
 
     }
 }
