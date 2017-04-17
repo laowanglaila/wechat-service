@@ -30,9 +30,9 @@ public interface WhiteListRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "店铺ID")
         private String shopID;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "微信用户唯一标识")
-        private String[] openID;
+        private String openID;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "微信账号")
-        private String[] userName;
+        private String userName;
     }
     @Data
     public class ResData extends ResultInfo {
