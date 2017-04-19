@@ -155,6 +155,6 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
      * @return
      */
     private String getModel(int expireSeconds, String WechatType, int tempSenceID) {
-        return "{\"expire_seconds\": " + expireSeconds + ", \"action_name\": " + WechatType + ", \"action_info\": {\"scene\": {\"scene_id\": " + tempSenceID + "}}}";
+        return "{\"expire_seconds\": " + expireSeconds + ", \"action_name\": \"" + WechatType + "\", \"action_info\": {\"scene\": {\"scene_id\": " + tempSenceID + "}}}";
     }
 }
