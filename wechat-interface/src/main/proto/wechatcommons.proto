@@ -7,10 +7,48 @@ enum WechatQRTypeEnum {
    INVOICE=1;
    QUEUE=2;
 }
+enum ColorEnum {  
+   Color010=0;
+   Color020=1;
+   Color030=2;
+   Color040=3;
+   Color050=4;
+   Color060=5;
+   Color070=6;
+   Color080=7;
+   Color081=8;
+   Color082=9;
+   Color090=10;
+   Color100=11;
+   Color101=12;
+   Color102=13;
+}
+enum CodeTypeEnum {  
+   CODE_TYPE_TEXT=0;
+   CODE_TYPE_BARCODE=1;
+   CODE_TYPE_QRCODE=2;
+   CODE_TYPE_ONLY_QRCODE=3;
+   CODE_TYPE_ONLY_BARCODE=4;
+}
 enum MpTypeEnum {  
    DEFAULT=0;
    SUBSCRIPTIONS=1;
    SUBSCRIPTIONS_AUTH=2;
    SERVICE=3;
    SERVICE_AUTH=4;
+}
+enum CustomCodeModeEnum {  
+   GET_CUSTOM_CODE_MODE_DEPOSIT=0;
+}
+enum DateInfoTypeEnum {  
+   DATE_TYPE_FIX_TIME_RANGE=0;
+   DATE_TYPE_FIX_TERM=1;
+   DATE_TYPE_PERMANENT=2;
+}
+enum CouponTypeEnum {  
+   GROUPON=0;
+   CASH=1;
+   DISCOUNT=2;
+   GIFT=3;
+   GENERAL_COUPON=4;
 }
