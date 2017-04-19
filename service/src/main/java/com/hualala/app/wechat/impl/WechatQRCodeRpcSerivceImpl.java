@@ -11,18 +11,22 @@ import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
+import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by renjianfei on 2017/4/12.
  */
 @Service
 public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
+
+    private Logger logger = Logger.of(WechatQRCodeRpcSerivceImpl.class);
 
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
@@ -71,7 +75,8 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         HashMap<String, Object> params = new HashMap<>();
         params.put("expire_seconds", expireSeconds);
         params.put("action_name", qrcodeType.getWechatType());
-        params.put("action_info", new HashMap<String, Object>().put("scene", new HashMap<String, Object>().put("scene_id", tempSenceID)));
+
+        params.put("action_info:", "{\"scene\":{\"sceneID\":"+tempSenceID+"}}");
 
         JSONObject jsonObject = baseHttpService.createQrCode(params, mpID);
         if (!jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
