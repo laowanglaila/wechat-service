@@ -244,6 +244,21 @@ public class BaseHttpService {
         return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
     }
 
+    public JSONObject createQrCode(String param, String mpID){
+        String url = WechatBaseApi.CREATE_QR_CODE;
+        JSONObject responseJson = httpApiService.httpPost(url, param, mpID);
+        //首先判断 null ：200    然后判断创建是否成功
+        if(null == responseJson){
+            return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,"http请求失败！");
+        }
+        String ticket = responseJson.getString("ticket");
+        String expireSeconds = responseJson.getString("expire_seconds");
+        String qrurl = responseJson.getString("url");
+        if(StringUtils.isBlank(ticket) && StringUtils.isBlank(qrurl)){
+            return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,WechatErrorCode.wechatError.get(responseJson.getString("errcode")));
+        }
+        return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
+    }
     /**
      * 获得模板ID
      * @param jsonObject
