@@ -3,6 +3,7 @@ package com.hualala.app.wechat.impl;
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.model.WechatTemplateModel;
+import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
 import com.hualala.app.wechat.service.WechatUserService;
 import com.hualala.app.wechat.util.template.WechatTemplate;
@@ -11,6 +12,7 @@ import com.hualala.app.wechat.util.template.WechatTemplateFatory;
 import com.hualala.core.app.Logger;
 import com.hualala.core.client.BaseRpcClient;
 import com.hualala.core.utils.DataUtils;
+import com.hualala.message.SemSMSQueueService;
 import com.hualala.message.WechatMsgQueueService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +44,23 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
     private WechatTemplateFatory wechatTemplateFatory;
 
     @Autowired
+    private MpInfoService mpInfoService;
+
+    @Autowired
     private BaseRpcClient rpcClient;
 
     @Override
     public WechatTemplateRpcResData sentWechatTemplate(WechatTemplateRpcReqData reqData) {
 
         String mpID = reqData.getMpID();
+
+        if(StringUtils.isEmpty(mpID)){
+            mpID = mpInfoService.queryMpIDAuth(reqData.getGroupID(),reqData.getBrandID(),reqData.getShopID());
+        }
+        if(StringUtils.isEmpty(mpID)) {
+            return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "未找到对应公众号");
+        }
+
         String modelType = reqData.getModelType();
         String modelSubType = reqData.getModelSubType();
         long userID = reqData.getUserID();
@@ -111,11 +124,12 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
 
         WechatMsgQueueService wechatMsgQueueService = rpcClient.getRpcClient(WechatMsgQueueService.class);
         WechatMsgQueueService.WechatQueueRes wechatQueueRes = wechatMsgQueueService.wechatCreateMsgQueue(req);
-        WechatTemplateRpcResData WechatTemplateRpcResData = new WechatTemplateRpcResData();
+        WechatTemplateRpcResData wechatTemplateRpcResData = new WechatTemplateRpcResData();
 
-        WechatTemplateRpcResData.setResultInfo(wechatQueueRes.getCode(), wechatQueueRes.getMessage());
-        WechatTemplateRpcResData.setItemID(wechatQueueRes.getItemID());
-        return WechatTemplateRpcResData;
+        wechatTemplateRpcResData.setResultInfo(wechatQueueRes.getCode(), wechatQueueRes.getMessage());
+        wechatTemplateRpcResData.setItemID(wechatQueueRes.getItemID());
+        wechatTemplateRpcResData.setMsgType("WECHAT");
+        return wechatTemplateRpcResData;
     }
 
     private String gerModelID(String modelType, String modelSubType) {
@@ -124,5 +138,34 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             return WechatTemplateConstants.MODEL_TYPE_MODELID_MAP.get(modelType + "_" + modelSubType);
         }
         return null;
+    }
+
+    /**
+     * 发送短信
+     * @param smsContent
+     * @param toMobile
+     * @return
+     */
+    private WechatTemplateRpcResData sentSMS(String smsContent, String toMobile){
+
+        logger.debug(() -> "sentSMS : [ 微信消息发送失败 ]");
+
+        WechatTemplateRpcResData wechatTemplateRpcResData = new WechatTemplateRpcResData();
+        if(StringUtils.isEmpty(toMobile) || StringUtils.isEmpty(smsContent)) {
+            wechatTemplateRpcResData.setResultInfo(ErrorCodes.WECHAT_MP_ERROR, "手机号或短信内容为空");
+            wechatTemplateRpcResData.setMsgType("SMS");
+            return wechatTemplateRpcResData;
+        }
+
+        SemSMSQueueService.SmsQueueReq req = new SemSMSQueueService.SmsQueueReq();
+        req.setSmsContent(smsContent);
+        req.setSmsType(24);
+        req.setToMobile(toMobile);
+        SemSMSQueueService semSMSQueueService = rpcClient.getRpcClient(SemSMSQueueService.class);
+        SemSMSQueueService.ResInfo res = semSMSQueueService.sendMessage(req);
+
+        wechatTemplateRpcResData.setResultInfo(res.getCode(), res.getMessage());
+        wechatTemplateRpcResData.setMsgType("SMS");
+        return wechatTemplateRpcResData;
     }
 }

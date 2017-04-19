@@ -46,6 +46,8 @@ message WechatTemplateRpcReqData {
 }
 message WechatTemplateRpcResData {  
    int64 itemID=2;
+   // 发送消息类型 WECHAT SMS
+   string msgType=3;
    // 响应公共字段
    ResultHeader result=1;
 }
