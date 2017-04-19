@@ -113,8 +113,8 @@ public class BaseHttpService {
      * reated by renjianfei on 2017/4/7.
      * 获取测试白名单
      */
-    public  JSONObject getWhiteList(Map<String, Object> map,String mpId){
-        return this.commonHttpPost(WechatBaseApi.GET_WHITE_LIST,map,mpId);
+    public  JSONObject setWhiteList(Map<String, Object> map,String mpId){
+        return this.commonHttpPost(WechatBaseApi.SET_WHITE_LIST,map,mpId);
     }
 
      /**
@@ -239,7 +239,7 @@ public class BaseHttpService {
         String expireSeconds = responseJson.getString("expire_seconds");
         String qrurl = responseJson.getString("url");
         if(StringUtils.isBlank(ticket) && StringUtils.isBlank(qrurl)){
-            return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,WechatErrorCode.wechatError.get(responseJson.getString("40052")));
+            return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,WechatErrorCode.wechatError.get(responseJson.getString("errcode")));
         }
         return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
     }

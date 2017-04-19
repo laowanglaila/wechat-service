@@ -9,6 +9,7 @@ import com.hualala.app.wechat.mapper.WechatQrcodeMapper;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.service.BaseHttpService;
+import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
@@ -38,6 +39,8 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     @Autowired
     private BaseHttpService baseHttpService;
 
+    @Autowired
+    private MpInfoService mpInfoService;
     @Override
     public WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq) {
 
@@ -50,7 +53,8 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
             if (StringUtils.isBlank(brandID) || StringUtils.isBlank(groupID)) {
                 return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
             }
-            //todo 通过上面三个属性获取mpID，调用方法待定；
+            //通过上面三个属性获取mpID，调用方法待定；
+            mpID = mpInfoService.queryMpIDAuth(Long.parseLong(groupID), Long.parseLong(brandID), Long.parseLong(shopID));
         }
         if (StringUtils.isBlank(mpID)) {
             //返回响应对象，设置错误信息和错误码；
@@ -62,7 +66,7 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         int expireSeconds = qrCodeReq.getExpireSeconds();
         expireSeconds = (expireSeconds == 0 ? qrcodeType.getDeadTime() : expireSeconds);
         //从redis获取场景值
-        int tempSenceID = getTempSenceID();
+        int tempSenceID = getTempSenceID(mpID);
         //获取二维码，微信返回三个参数
         HashMap<String, Object> params = new HashMap<>();
         params.put("expire_seconds", expireSeconds);
@@ -91,7 +95,6 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
                 .setQrcodeName(qrCodeReq.getQrcodeName());
 
         qrcodeTempModel.setAction(0);
-        //todo Timestamp类型转换BIGINT
         qrcodeTempModel.setCreateTime(DateUtils.getCurrentDateTimeLong());
         qrcodeTempMapper.insert(qrcodeTempModel);
 
@@ -123,19 +126,17 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
 //        }
 //        return ops.increment(1L).intValue();
 //    }
-    private int getTempSenceID() {
+    private int getTempSenceID(String mpID) {
 //        临时Wechat_SenceID_Temp
-        BoundValueOperations<String, String> ops = stringRedisTemplate.boundValueOps("Wechat_SenceID_Temp");
+        BoundValueOperations<String, String> ops = stringRedisTemplate.boundValueOps("Wechat_SenceID_Temp:"+mpID);
         //获取去之前先判断redis是否存在key值==0
         if (StringUtils.isBlank(ops.get())) {
-            //加锁，数据库获取SenceID最大值
-            synchronized (qrcodeTempMapper) {
+            //加分布式锁，数据库获取SenceID最大值
                 //获取SenceID最大值存入redis
-                int i = qrcodeTempMapper.queryMacSenceID();
+                int i = qrcodeTempMapper.queryMaxSenceID(mpID);
                 if (StringUtils.isBlank(ops.get())) {
                     ops.set("" + i);
                 }
-            }
         }
         return ops.increment(1L).intValue();
     }

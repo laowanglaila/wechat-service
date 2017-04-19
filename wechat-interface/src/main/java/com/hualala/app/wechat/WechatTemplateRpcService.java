@@ -11,10 +11,10 @@ import lombok.Data;
 /**
  * Created by xkia on 2017/4/13.
  */
-@RpcService(description = "微信模板消息接口")
+@RpcService
 public interface WechatTemplateRpcService {
 
-    @RpcMethod(description = "创建模板消息")
+    @RpcMethod
     WechatTemplateRpcResData sentWechatTemplate(WechatTemplateRpcReqData reqData);
 
 
@@ -28,7 +28,7 @@ public interface WechatTemplateRpcService {
         private long shopID;
 
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "模板类型")
-        private String modelType;
+        private String ModelType;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "模板子类型")
         private String modelSubType;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "类型")

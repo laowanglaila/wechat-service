@@ -38,7 +38,7 @@ public class WechatBaseApi {
     //微信卡券获取用户领取卡券列表
     public static final String GET_CARD_LIST = "https://api.weixin.qq.com/card/user/getcardlist";
     //设置测试白名单接口
-    public static final String GET_WHITE_LIST = "https://api.weixin.qq.com/card/testwhitelist/set";
+    public static final String SET_WHITE_LIST = "https://api.weixin.qq.com/card/testwhitelist/set";
     //导入微信code码
     public static final String IMPORT_CARD_CODE = "http://api.weixin.qq.com/card/code/deposit";
     //获取导入code码数量

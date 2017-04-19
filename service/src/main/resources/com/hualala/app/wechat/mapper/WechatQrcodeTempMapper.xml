@@ -46,10 +46,9 @@
     from tbl_shop_wechat_qrcode_temp
     limit #{offset}, #{pageSize}
     </select>
-	<select id="queryMacSenceID" resultType="java.lang.Integer">
-    select
-    max(sceneID)
-    from tbl_shop_wechat_qrcode_temp
+	<select id="queryMaxSenceID" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select IFNULL(max(sceneID),100000000) sceneID from tbl_shop_wechat_qrcode_temp
+		where mpID=#{value} and action in(0,1);
     </select>
 
     <sql id="queryField">
