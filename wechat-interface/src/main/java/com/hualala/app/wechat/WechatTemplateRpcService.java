@@ -64,5 +64,7 @@ public interface WechatTemplateRpcService {
     class WechatTemplateRpcResData extends ResultInfo {
         @Protocol(fieldType = FieldType.LONG, order = 2)
         private long itemID;
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "发送消息类型 WECHAT SMS")
+        private String msgType;
     }
 }
