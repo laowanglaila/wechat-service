@@ -40,7 +40,7 @@ public class WechatQrcodeTempRpcServiceTest {
         wechatQRCodeReq.setParam2("测试二维码:Param2");
         wechatQRCodeReq.setParam3("测试二维码:Param3");
         wechatQRCodeReq.setExpireSeconds(3600*24);
-        wechatQRCodeReq.setShopID("0");
+        wechatQRCodeReq.setShopID("５");
         wechatQRCodeReq.setBrandID("5");
         wechatQRCodeReq.setGroupID("5");
         wechatQRCodeReq.setShopName("测试二维码:ShopName");
