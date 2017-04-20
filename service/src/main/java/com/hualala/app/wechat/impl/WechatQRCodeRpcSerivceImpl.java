@@ -15,10 +15,9 @@ import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by renjianfei on 2017/4/12.
@@ -45,6 +44,7 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
 
     @Autowired
     private MpInfoService mpInfoService;
+
     @Override
     public WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq) {
 
@@ -71,14 +71,10 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         expireSeconds = (expireSeconds == 0 ? qrcodeType.getDeadTime() : expireSeconds);
         //从redis获取场景值
         int tempSenceID = getTempSenceID(mpID);
-        //获取二维码，微信返回三个参数
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("expire_seconds", expireSeconds);
-        params.put("action_name", qrcodeType.getWechatType());
 
-        params.put("action_info:", "{\"scene\":{\"sceneID\":"+tempSenceID+"}}");
 
-        JSONObject jsonObject = baseHttpService.createQrCode(params, mpID);
+        JSONObject jsonObject = baseHttpService.createQrCode(getModel(expireSeconds,qrcodeType.getWechatType(),tempSenceID), mpID);
+
         if (!jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
             return ResultUtil.getResultInfoBean(jsonObject, WechatQRCodeRes.class);
         }
@@ -133,15 +129,15 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
 //    }
     private int getTempSenceID(String mpID) {
 //        临时Wechat_SenceID_Temp
-        BoundValueOperations<String, String> ops = stringRedisTemplate.boundValueOps("Wechat_SenceID_Temp:"+mpID);
+        BoundValueOperations<String, String> ops = stringRedisTemplate.boundValueOps("Wechat_SenceID_Temp:" + mpID);
         //获取去之前先判断redis是否存在key值==0
         if (StringUtils.isBlank(ops.get())) {
             //加分布式锁，数据库获取SenceID最大值
-                //获取SenceID最大值存入redis
-                int i = qrcodeTempMapper.queryMaxSenceID(mpID);
-                if (StringUtils.isBlank(ops.get())) {
-                    ops.set("" + i);
-                }
+            //获取SenceID最大值存入redis
+            int i = qrcodeTempMapper.queryMaxSenceID(mpID);
+            if (StringUtils.isBlank(ops.get())) {
+                ops.set("" + i);
+            }
         }
         return ops.increment(1L).intValue();
     }
@@ -149,5 +145,16 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     private Long getDate(Integer second) {
         long currentDateTimeLong = DateUtils.getCurrentDateTimeLong();
         return currentDateTimeLong + second * 1000L;
+    }
+
+    /**
+     * 获取二维码，微信返回三个参数
+     * @param expireSeconds
+     * @param WechatType
+     * @param tempSenceID
+     * @return
+     */
+    private String getModel(int expireSeconds, String WechatType, int tempSenceID) {
+        return "{\"expire_seconds\": " + expireSeconds + ", \"action_name\": \"" + WechatType + "\", \"action_info\": {\"scene\": {\"scene_id\": " + tempSenceID + "}}}";
     }
 }

@@ -36,7 +36,7 @@ public class WechatQrcodeTempRpcServiceTest {
         WechatQRCodeRpcSerivce.WechatQRCodeReq wechatQRCodeReq = new WechatQRCodeRpcSerivce.WechatQRCodeReq();
         wechatQRCodeReq.setQrcodeName("123");
         wechatQRCodeReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
-        wechatQRCodeReq.setParam1("测试二维码:Param1");
+        wechatQRCodeReq.setParam1("5-76022695-A-5");
         wechatQRCodeReq.setParam2("测试二维码:Param2");
         wechatQRCodeReq.setParam3("测试二维码:Param3");
         wechatQRCodeReq.setExpireSeconds(3600*24);
