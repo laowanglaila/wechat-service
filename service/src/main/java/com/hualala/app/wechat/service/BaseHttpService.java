@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.common.WechatErrorCode;
+import com.hualala.app.wechat.impl.WechatTemplateRpcServiceImpl;
 import com.hualala.app.wechat.util.ResultUtil;
+import com.hualala.core.app.Logger;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ import java.util.Map;
 @Service
 public class BaseHttpService {
 
+
+    private Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
+
     @Autowired
     private HttpApiService httpApiService;
     /**
@@ -28,7 +33,9 @@ public class BaseHttpService {
 
     public JSONObject commonHttpPost(String url,Map<String, Object> map, String mpID){
         JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(map));
+        logger.debug(() -> "微信请求参数 ："+jsonObject.toJSONString());
         JSONObject responseJson = httpApiService.httpPost(url, jsonObject.toJSONString(), mpID);
+        logger.debug(() -> "微信响应参数 ："+responseJson.toJSONString());
         //首先判断 null ：200    然后判断创建是否成功
         if(null == responseJson){
             return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,"http请求失败！");
@@ -52,7 +59,7 @@ public class BaseHttpService {
      "card_id":"p1Pj9jr90_SQRaVqYI239Ka1erkI"
      }
      */
-    public JSONObject createCardAndTicket(Map<String, Object> map, String mpId){
+    public JSONObject createCardAndCoupon(Map<String, Object> map, String mpId){
         return this.commonHttpPost(WechatBaseApi.CREATE_CARD_URL,map,mpId);
     }
 

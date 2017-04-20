@@ -29,4 +29,24 @@ public interface ErrorCodes {
     String WECHAT_TEMPLATE_ERROR = "00112119";
     //微信请求参数错误！
     String WECHAT_ARGS_ERROR = "00112120";
+    //创建卡券时没有指定类型
+    String WECHAT_CARD_TYPE_NULL = "00112121";
+    //创建卡券时没有指定类型
+    String WECHAT_CARD_LEAST_COST_NULL = "00112122";
+    //没有设置团购券交易详情
+    String WECHAT_CARD_QUANTITY_NULL = "00112123";
+    //没有设置团购券交易详情
+    String WECHAT_CARD_DATE_TYPE_NULL = "00112124";
+    //没有logoUrl
+    String WECHAT_CARD_LOGO_NULL = "00112125";
+    //没有设置code显示类型
+    String WECHAT_CARD_CODE_TYPE_NULL = "00112126";
+    //没有设置code显示类型
+    String WECHAT_CARD_COLOR_NULL = "00112127";
+    //没有设置code显示类型
+    String WECHAT_CARD_NOTICE_NULL = "00112128";
+    //没有设置description显示类型
+    String WECHAT_CARD_DESCRIPTION_NULL = "00112129";
+
+
 }
