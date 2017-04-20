@@ -45,4 +45,5 @@ public class WechatMessageType {
 	public static final String MESSAGE = "message4service";
 
 	public static final String IS_SUCCESS = "isSuccess4service";
+	public static final Integer INT_ZERO = -1;
 }

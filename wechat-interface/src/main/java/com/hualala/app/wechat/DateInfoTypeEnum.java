@@ -1,4 +1,4 @@
-package com.hualala.app.wechat.enumtype;
+package com.hualala.app.wechat;
 
 import com.hualala.core.base.ValueEnum;
 
@@ -7,8 +7,8 @@ import com.hualala.core.base.ValueEnum;
  */
 public enum DateInfoTypeEnum implements ValueEnum {
     DATE_TYPE_FIX_TIME_RANGE(1,"DATE_TYPE_FIX_TIME_RANGE"),//表示固定日期区间
-    DATE_TYPE_FIX_TERM(2,"DATE_TYPE_FIX_TERM"),//表示固定时长
-    DATE_TYPE_PERMANENT(3,"DATE_TYPE_PERMANENT");//永久有效
+    DATE_TYPE_FIX_TERM(2,"DATE_TYPE_FIX_TERM");//表示固定时长
+//    DATE_TYPE_PERMANENT(3,"DATE_TYPE_PERMANENT");//永久有效
 
     private int value;
     private String dateInfoType;

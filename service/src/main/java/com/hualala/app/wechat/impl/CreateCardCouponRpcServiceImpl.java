@@ -1,10 +1,8 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.CreateCardCouponRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.*;
 import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.enumtype.*;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -58,6 +56,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         }
         //根据类型设置卡券特有信息
         Map<String, Object> card = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         card.put("card_type",couponType.getName());
         Integer leastCost = null;
         Integer reduceCost = null;
@@ -72,33 +71,36 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
                 if(leastCost == 0 ){
                     return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_LEAST_COST_NULL, "如需要设置无门槛代金券，门槛请设置为-1");
                 }
-                if(leastCost == WechatMessageType.ZERO){
+                if(leastCost == WechatMessageType.INT_ZERO){
                     leastCost = 0;
                 }
-                card.put("least_cost",leastCost);
-                card.put("reduce_cost",reduceCost);
+                map.put("least_cost",leastCost);
+                map.put("reduce_cost",reduceCost);
                 break;
             case GROUPON:
                  dealDetail = couponReqData.getDealDetail();
 
-                card.put("deal_detail",dealDetail);
+                map.put("deal_detail",dealDetail);
                 break;
             case GIFT:
                  gift = couponReqData.getGift();
 
-                card.put("gift",gift);
+                map.put("gift",gift);
                 break;
             case DISCOUNT:
                  discount = couponReqData.getDiscount();
-                card.put("discount",discount);
+                map.put("discount",discount);
                 break;
             case GENERAL_COUPON:
                  defaultDetail = couponReqData.getDefaultDetail();
-                card.put("default_detail",defaultDetail);
+                map.put("default_detail",defaultDetail);
         }
         // BaseInfo设置卡券基本信息
-        BaseInfo baseInfo = couponReqData.getBaseInfo();
-         card = setBaseInfo(card, baseInfo);
+
+        Map<String, Object> baseInfo = getBaseInfo(couponReqData);
+
+        map.put("base_info",baseInfo);
+        card.put(couponType.getCouponValue(),map);
 // TODO AdvancedInfo设置高级信息
 
         //请求微信
@@ -113,12 +115,13 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
 
     /**
      * 将接受到的baseInfo设置到card中
-     * @param card
-     * @param baseInfo
-     * @return card
+     * @param
+     * @param
+     * @return
      */
-    private Map<String, Object> setBaseInfo(Map<String, Object> card, BaseInfo baseInfo) {
-        Map<Object, Object> baseInfoMap = new HashMap<>();
+    private Map<String, Object> getBaseInfo(CouponReqData couponReqData) {
+        BaseInfo baseInfo = couponReqData.getBaseInfo();
+        Map<String, Object> baseInfoMap = new HashMap<>();
         //sku
         Sku sku = baseInfo.getSku();
         Integer quantity = sku.getQuantity();
@@ -137,8 +140,8 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         Map<String, Object> dateInfoMap = new HashMap<>();
         dateInfoMap.put("type",type.getName());
         switch (type){
-            case DATE_TYPE_PERMANENT:
-                break;
+//            case DATE_TYPE_PERMANENT:
+//                break;
             case DATE_TYPE_FIX_TERM:
                 dateInfoMap.put("fixed_begin_term",dateInfo.getFixedBeginTerm());
                 dateInfoMap.put("fixed_term",dateInfo.getEndTimestamp());
@@ -147,7 +150,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
                 dateInfoMap.put("begin_timestamp",dateInfo.getBeginTimestamp());
                 dateInfoMap.put("end_timestamp",dateInfo.getEndTimestamp());
         }
-        baseInfoMap.put("dateInfo",dateInfoMap);
+        baseInfoMap.put("date_info",dateInfoMap);
 
         //baseInfo其他信息（必填）
         //        logo_url 	             是 	string(128) 	http://mmbiz.qpic.cn/ 	卡券的商户logo，建议像素为300*300。
@@ -197,7 +200,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         //        use_custom_code        否 	bool 	        true 	是否自定义Code码。填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。
         baseInfoMap.put("use_custom_code",baseInfo.getUseCustomCode());
         //        bind_openid 	         否 	bool 	        true 	是否指定用户领取，填写true或false。默认为false。
-        baseInfoMap.put("bind_openid",baseInfo.getBindOpenid());
+        baseInfoMap.put("bind_openid",true);
         //        service_phone 	     否 	string（24） 	40012234 	客服电话。
         String servicePhone = baseInfo.getServicePhone();
         if (StringUtils.isNotBlank(servicePhone)){
@@ -249,7 +252,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         //        get_limit 	         否 	int 	        1 	每人可领券的数量限制。默认值为50。
         Integer getLimit = baseInfo.getGetLimit();
         if(null != getLimit && getLimit != 0){
-            if (getLimit == WechatMessageType.ZERO){
+            if (getLimit == WechatMessageType.INT_ZERO){
                 getLimit = 0;
             }
             baseInfoMap.put("get_limit",getLimit);
@@ -279,7 +282,6 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
         baseInfoMap.put("use_limit",baseInfo.getUseLimit());
 
-        card.put("base_info",baseInfoMap);
-        return card;
+        return baseInfoMap;
     }
 }

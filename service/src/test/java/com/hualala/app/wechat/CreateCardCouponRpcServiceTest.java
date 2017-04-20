@@ -1,10 +1,6 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.enumtype.CodeTypeEnum;
-import com.hualala.app.wechat.enumtype.ColorEnum;
-import com.hualala.app.wechat.enumtype.CouponTypeEnum;
-import com.hualala.app.wechat.enumtype.DateInfoTypeEnum;
 import com.hualala.app.wechat.impl.CreateCardCouponRpcServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,10 +26,18 @@ public class CreateCardCouponRpcServiceTest extends BaseRpcTest {
         CreateCardCouponRpcService.BaseInfo baseInfo = couponReqData.getBaseInfo();
         baseInfo.getSku().setQuantity(100);
         CreateCardCouponRpcService.DateInfo dateInfo = baseInfo.getDateInfo();
-        dateInfo.setType(DateInfoTypeEnum.DATE_TYPE_PERMANENT);
+        dateInfo.setType(DateInfoTypeEnum.DATE_TYPE_FIX_TIME_RANGE);
+        Long currentDateTimeLong = System.currentTimeMillis();
+        System.out.println("------------------------------------------------------"+currentDateTimeLong);
+        int startTime = (int) (currentDateTimeLong/1000L);
+        int endTime = startTime + 3600 * 24 * 7;
+        System.out.println("------------------------------------------------------"+startTime);
+        System.out.println("------------------------------------------------------"+endTime);
+        dateInfo.setBeginTimestamp(startTime);
+        dateInfo.setEndTimestamp(endTime);
 
         baseInfo.setBindOpenid(false);
-        baseInfo.setBrandName("微信餐厅：豆捞坊测试");
+        baseInfo.setBrandName("微信餐厅，豆捞坊测试");
         baseInfo.setCanShare(true);
         baseInfo.setCanGiveFriend(true);
         baseInfo.setCenterSubTitle("按钮下方的wording");

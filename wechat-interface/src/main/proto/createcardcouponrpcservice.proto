@@ -8,12 +8,12 @@ import "wechatcommons.proto";
 message CouponReqData {  
    // 公众号信息
    HeadData headData=2;
-   // 卡券基本信息
-   BaseInfo baseInfo=3;
-   // 卡券高级信息
-   AdvancedInfo advancedInfo=4;
    // 优惠券类型
-   CouponTypeEnum couponType=5;
+   CouponTypeEnum couponType=3;
+   // 卡券基本信息
+   BaseInfo baseInfo=4;
+   // 卡券高级信息
+   AdvancedInfo advancedInfo=5;
    // 优惠券专用，填写优惠详情。
    string defaultDetail=6;
    // 团购券专用，填写团购详情。
@@ -48,12 +48,12 @@ message BaseInfo {
    string logoUrl=1;
    // Code展示类型
    CodeTypeEnum codeType=2;
-   // 商户名字,字数上限为12个汉字
-   string brandName=3;
-   // 卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)
-   string title=4;
    // 券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口
-   ColorEnum color=5;
+   ColorEnum color=3;
+   // 商户名字,字数上限为12个汉字
+   string brandName=4;
+   // 卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)
+   string title=5;
    // 卡券使用提醒，字数上限为16个汉字
    string notice=6;
    // 卡券使用说明，字数上限为1024个汉字

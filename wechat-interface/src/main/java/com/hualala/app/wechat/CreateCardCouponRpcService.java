@@ -1,6 +1,5 @@
 package com.hualala.app.wechat;
 
-import com.hualala.app.wechat.enumtype.*;
 import com.hualala.core.base.RequestInfo;
 import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
@@ -79,13 +78,14 @@ public interface CreateCardCouponRpcService {
     class CouponReqData extends RequestInfo {
         @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "公众号信息")
         private HeadData headData = new HeadData();
-        @Protocol(fieldType = FieldType.OBJECT, order = 3, description = "卡券基本信息")
-        private BaseInfo baseInfo = new BaseInfo();
-        @Protocol(fieldType = FieldType.OBJECT, order = 4, description = "卡券高级信息")
-        private AdvancedInfo advancedInfo;
         //        card_type	            是	string(24)	    GENERAL_COUPON	优惠券类型。
-        @Protocol(fieldType = FieldType.ENUM, order = 5, description = "优惠券类型")
+        @Protocol(fieldType = FieldType.ENUM, order = 3, description = "优惠券类型")
         private CouponTypeEnum couponType;
+        @Protocol(fieldType = FieldType.OBJECT, order = 4, description = "卡券基本信息")
+        private BaseInfo baseInfo = new BaseInfo();
+        @Protocol(fieldType = FieldType.OBJECT, order = 5, description = "卡券高级信息")
+        private AdvancedInfo advancedInfo;
+
         //        default_detail	    是	string(3072)	双人套餐\n -进口红酒一支。\n孜然牛肉一份。。	优惠券专用，填写优惠详情。
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "优惠券专用，填写优惠详情。")
         private String defaultDetail;
@@ -145,15 +145,17 @@ public interface CreateCardCouponRpcService {
         //        code_type 	         是 	string(16) 	    CODE_TYPE_TEXT 	Code展示类型，"CODE_TYPE_TEXT"，文本；"CODE_TYPE_BARCODE"，一维码 ；"CODE_TYPE_QRCODE"，二维码；"CODE_TYPE_ONLY_QRCODE",二维码无code显示；"CODE_TYPE_ONLY_BARCODE",一维码无code显示；
         @Protocol(fieldType = FieldType.ENUM, order = 2, description = "Code展示类型")
         private CodeTypeEnum codeType;
-        //        brand_name             是 	string（36） 	海底捞 	商户名字,字数上限为12个汉字。
-        @Protocol(fieldType = FieldType.STRING, order = 3, description = "商户名字,字数上限为12个汉字")
-        private String brandName;
-        //        title 	             是 	string（27） 	双人套餐100元兑换券 	卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)。
-        @Protocol(fieldType = FieldType.STRING, order = 4, description = "卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)")
-        private String title;
         //        color 	             是 	string（16） 	Color010 	券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口
-        @Protocol(fieldType = FieldType.ENUM, order = 5, description = "券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口")
+        @Protocol(fieldType = FieldType.ENUM, order = 3, description = "券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口")
         private ColorEnum color;
+        //        brand_name             是 	string（36） 	海底捞 	商户名字,字数上限为12个汉字。
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "商户名字,字数上限为12个汉字")
+        private String brandName;
+
+        //        title 	             是 	string（27） 	双人套餐100元兑换券 	卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)。
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)")
+        private String title;
+
         //        notice 	             是 	string（48） 	请出示二维码核销卡券 	卡券使用提醒，字数上限为16个汉字。
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券使用提醒，字数上限为16个汉字")
         private String notice;

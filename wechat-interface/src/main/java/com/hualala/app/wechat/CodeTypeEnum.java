@@ -1,4 +1,4 @@
-package com.hualala.app.wechat.enumtype;
+package com.hualala.app.wechat;
 
 import com.hualala.core.base.ValueEnum;
 
