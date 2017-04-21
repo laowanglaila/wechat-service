@@ -6,6 +6,7 @@ import com.hualala.core.base.ValueEnum;
  * Created by renjianfei on 2017/4/18.
  */
 public enum CustomCodeModeEnum implements ValueEnum {
+    DEFAULT_CUSTOM_CODE_MODE(0),
     GET_CUSTOM_CODE_MODE_DEPOSIT(1,"GET_CUSTOM_CODE_MODE_DEPOSIT");
 
 

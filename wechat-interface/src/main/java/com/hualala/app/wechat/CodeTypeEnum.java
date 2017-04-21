@@ -6,6 +6,7 @@ import com.hualala.core.base.ValueEnum;
  * Created by renjianfei on 2017/4/18.
  */
 public enum CodeTypeEnum implements ValueEnum {
+    DEFAULT_CODE_TYPE(0),
     CODE_TYPE_TEXT(1,"CODE_TYPE_TEXT"),
     CODE_TYPE_BARCODE(2,"CODE_TYPE_BARCODE"),
     CODE_TYPE_QRCODE(3,"CODE_TYPE_QRCODE"),
