@@ -3,6 +3,7 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "WechatTemplateRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message WechatTemplateRpcReqData {  
    // 集团ID
@@ -11,36 +12,32 @@ message WechatTemplateRpcReqData {
    int64 brandID=3;
    // 店铺ID
    int64 shopID=4;
-   // 模板类型
-   string modelType=5;
-   // 模板子类型
-   string modelSubType=6;
-   // 类型
-   string subType=7;
+   // 模板消息类型枚举
+   WechatTemplateTypeEnum templateType=5;
    // mpID
-   string mpID=8;
+   string mpID=6;
    // openID
-   string openID=9;
+   string openID=7;
    // 用户ID
-   int64 userID=10;
+   int64 userID=8;
    // 模板消息title
-   string first=11;
+   string first=9;
    // keynote1
-   string keynote1=12;
+   string keynote1=10;
    // keynote2
-   string keynote2=13;
+   string keynote2=11;
    // keynote3
-   string keynote3=14;
+   string keynote3=12;
    // keynote4
-   string keynote4=15;
+   string keynote4=13;
    // keynote5
-   string keynote5=16;
+   string keynote5=14;
    // keynote6
-   string keynote6=17;
+   string keynote6=15;
    // remark
-   string remark=18;
+   string remark=16;
    // param1
-   string param1=19;
+   string param1=17;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -51,8 +48,8 @@ message WechatTemplateRpcResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-// 微信模板消息接口
+//
 service WechatTemplateRpcService{
-    // 创建模板消息
+    //
     rpc sentWechatTemplate(WechatTemplateRpcReqData) returns (WechatTemplateRpcResData) {}
 }

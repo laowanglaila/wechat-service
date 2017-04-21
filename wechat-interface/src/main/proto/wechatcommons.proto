@@ -19,7 +19,21 @@ enum ColorEnum {
    COLOR_101=13;
    COLOR_102=14;
 }
-enum CustomCodeModeEnum {  
+enum CodeTypeEnum {
+   CODE_TYPE_TEXT=0;
+   CODE_TYPE_BARCODE=1;
+   CODE_TYPE_QRCODE=2;
+   CODE_TYPE_ONLY_QRCODE=3;
+   CODE_TYPE_ONLY_BARCODE=4;
+}
+enum MpTypeEnum {
+   DEFAULT=0;
+   SUBSCRIPTIONS=1;
+   SUBSCRIPTIONS_AUTH=2;
+   SERVICE=3;
+   SERVICE_AUTH=4;
+}
+enum CustomCodeModeEnum {
    DEFAULT_CUSTOM_CODE_MODE=0;
    GET_CUSTOM_CODE_MODE_DEPOSIT=1;
 }
@@ -28,7 +42,12 @@ enum DateInfoTypeEnum {
    DATE_TYPE_FIX_TIME_RANGE=1;
    DATE_TYPE_FIX_TERM=2;
 }
-enum CouponTypeEnum {  
+enum WechatTemplateTypeEnum {
+   TEMPLATE_ENUM_DEFAULT=0;
+   TEMPLATE_ENUM_QUEUE=1;
+   TEMPLATE_ENUM_ORDER=2;
+}
+enum CouponTypeEnum {
    DEFAULT_COUPON_TYPE=0;
    GROUPON=1;
    CASH=2;

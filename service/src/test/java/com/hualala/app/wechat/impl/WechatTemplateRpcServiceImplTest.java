@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatTemplateRpcService;
+import com.hualala.app.wechat.WechatTemplateTypeEnum;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +36,9 @@ public class WechatTemplateRpcServiceImplTest {
         reqData.setRemark("备注说明");
         reqData.setMpID("doulaofangceshi");
 
-        reqData.setModelType("queue");
-        reqData.setModelSubType("alarm");
+//        reqData.setModelType("queue");
+//        reqData.setModelSubType("alarm");
+        //reqData.setTemplateType(WechatTemplateTypeEnum.TEMPLATE_ENUM_QUEUE);
         reqData.setUserID(3573647);
         reqData.setOpenID("o7FjEuGrxL0V1qnfz2mxNCUhNxJY");
 
