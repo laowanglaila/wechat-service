@@ -6,11 +6,15 @@ import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
+import com.hualala.app.wechat.util.WechatNameConverterUtil;
+import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,7 +60,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         }
         //根据类型设置卡券特有信息
         Map<String, Object> card = new HashMap<>();
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> cardInfo = new HashMap<>();
         card.put("card_type",couponType.getName());
         Integer leastCost = null;
         Integer reduceCost = null;
@@ -68,65 +72,38 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
             case CASH:
                  leastCost = couponReqData.getLeastCost();//启用门槛 -1为无门槛
                  reduceCost = couponReqData.getReduceCost();//减免金额
-                if(leastCost == 0 ){
-                    return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_LEAST_COST_NULL, "如需要设置无门槛代金券，门槛请设置为-1");
+                if(null == leastCost ||null == reduceCost){
+                    return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_LEAST_COST_NULL, "代金券的启用门槛，或者减免金额不能为空！");
                 }
-                if(leastCost == WechatMessageType.INT_ZERO){
-                    leastCost = 0;
-                }
-                map.put("least_cost",leastCost);
-                map.put("reduce_cost",reduceCost);
+                cardInfo.put("least_cost",leastCost);
+                cardInfo.put("reduce_cost",reduceCost);
                 break;
             case GROUPON:
                  dealDetail = couponReqData.getDealDetail();
 
-                map.put("deal_detail",dealDetail);
+                cardInfo.put("deal_detail",dealDetail);
                 break;
             case GIFT:
                  gift = couponReqData.getGift();
 
-                map.put("gift",gift);
+                cardInfo.put("gift",gift);
                 break;
             case DISCOUNT:
                  discount = couponReqData.getDiscount();
-                map.put("discount",discount);
+                cardInfo.put("discount",discount);
                 break;
             case GENERAL_COUPON:
                  defaultDetail = couponReqData.getDefaultDetail();
-                map.put("default_detail",defaultDetail);
+                cardInfo.put("default_detail",defaultDetail);
         }
         // BaseInfo设置卡券基本信息
-
-        Map<String, Object> baseInfo = getBaseInfo(couponReqData);
-
-        map.put("base_info",baseInfo);
-        card.put(couponType.getCouponValue(),map);
-// TODO AdvancedInfo设置高级信息
-
-        //请求微信
-        Map<String, Object> params = new HashMap<>();
-        params.put("card",card);
-        JSONObject.toJSONString(params);
-        JSONObject jsonObject = baseHttpService.createCardAndCoupon(params, mpID);
-        CardCouponResData resultInfoBean = ResultUtil.getResultInfoBean(jsonObject, CardCouponResData.class);
-        return resultInfoBean;
-    }
-
-
-    /**
-     * 将接受到的baseInfo设置到card中
-     * @param
-     * @param
-     * @return
-     */
-    private Map<String, Object> getBaseInfo(CouponReqData couponReqData) {
         BaseInfo baseInfo = couponReqData.getBaseInfo();
         Map<String, Object> baseInfoMap = new HashMap<>();
         //sku
         Sku sku = baseInfo.getSku();
         Integer quantity = sku.getQuantity();
-        if (quantity == 0 ){
-            return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_QUANTITY_NULL, "库存不能为0");
+        if (null == quantity){
+            return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_QUANTITY_NULL, "库存不能为空");
         }
         Map<String, Object> skuMap = new HashMap<>();
         skuMap.put("quantity",quantity);
@@ -143,12 +120,22 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
 //            case DATE_TYPE_PERMANENT:
 //                break;
             case DATE_TYPE_FIX_TERM:
+                Integer fixedBeginTerm = dateInfo.getFixedBeginTerm();
+                Integer fixedTerm = dateInfo.getFixedTerm();
+                if (null == fixedBeginTerm || null == fixedTerm){
+                    return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_DATE_TYPE_NULL, "卡券生效日期或领取后有效期限不能为空！");
+                }
                 dateInfoMap.put("fixed_begin_term",dateInfo.getFixedBeginTerm());
                 dateInfoMap.put("fixed_term",dateInfo.getEndTimestamp());
                 break;
             case DATE_TYPE_FIX_TIME_RANGE:
-                dateInfoMap.put("begin_timestamp",dateInfo.getBeginTimestamp());
-                dateInfoMap.put("end_timestamp",dateInfo.getEndTimestamp());
+                Integer beginTimestamp = dateInfo.getBeginTimestamp();
+                Integer endTimestamp = dateInfo.getEndTimestamp();
+                if (null == beginTimestamp || null == endTimestamp){
+                    return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_DATE_TYPE_NULL, "卡券启用时间或结束时间不能为空！");
+                }
+                dateInfoMap.put("begin_timestamp",beginTimestamp);
+                dateInfoMap.put("end_timestamp",endTimestamp);
         }
         baseInfoMap.put("date_info",dateInfoMap);
 
@@ -178,11 +165,11 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         }
         baseInfoMap.put("title",title);
         //        color 	             是 	string（16） 	Color010 	券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口
-        ColorEnum color = baseInfo.getColor();
-        if (color == null){
-            return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_COLOR_NULL, "color不能为空！");
+        String color = baseInfo.getColor();
+        if (StringUtils.isBlank(color)){
+            return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_COLOR_NULL, "背景色color不能为空！");
         }
-        baseInfoMap.put("color",color.getName());
+        baseInfoMap.put("color",color);
         //        notice 	             是 	string（48） 	请出示二维码核销卡券 	卡券使用提醒，字数上限为16个汉字。
         String notice = baseInfo.getNotice();
         if (StringUtils.isBlank(notice)){
@@ -208,11 +195,13 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         }
         //-----------------------------------------------------------------------
         //        location_id_list 	     否 	array 	        1234，2312 	门店位置ID。调用POI门店管理接口获取门店位置ID。
-        String locationIdList = baseInfo.getLocationIdList();
-        if (StringUtils.isNotBlank(locationIdList)){
-            String[] split = locationIdList.split(", ");
-            baseInfoMap.put("location_id_list",split);
-        }
+//        String locationIdList = baseInfo.getLocationIdList();
+//        if (StringUtils.isNotBlank(locationIdList)){
+//            String[] split = locationIdList.split(", ");
+//            baseInfoMap.put("location_id_list",split);
+//        }
+        List<Integer> locationIdList = baseInfo.getLocationIdList();
+        baseInfoMap.put("location_id_list",locationIdList);
         //-----------------------------------------------------------------------
         //        source 	             否 	string（36） 	大众点评 	第三方来源名，例如同程旅游、大众点评。
         String source = baseInfo.getSource();
@@ -251,12 +240,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         }
         //        get_limit 	         否 	int 	        1 	每人可领券的数量限制。默认值为50。
         Integer getLimit = baseInfo.getGetLimit();
-        if(null != getLimit && getLimit != 0){
-            if (getLimit == WechatMessageType.INT_ZERO){
-                getLimit = 0;
-            }
             baseInfoMap.put("get_limit",getLimit);
-        }
         //        can_share 	         否 	bool 	        false 	卡券领取页面是否可分享。
         baseInfoMap.put("can_share",baseInfo.getCanShare());
         //        can_give_friend 	     否 	bool 	        false 	卡券是否可转赠。
@@ -267,9 +251,9 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         //        get_custom_code_mode	否	string(32)      GET_CUSTOM_COD E_MODE_DEPOSIT 填入 GET_CUSTOM_CODE_MODE_DEPOSIT
         //                                                  表示该卡券为预存code模式卡券，须导入超过库存数目的自定义code后方可投放，填入该字段后，
         //                                                  quantity字段须为0,须导入code后再增加库存
-        CustomCodeModeEnum getCustomCodeMode = baseInfo.getGetCustomCodeMode();
-        if (getCustomCodeMode != null) {
-            baseInfoMap.put("get_custom_code_mode", getCustomCodeMode.getName());
+        CustomCodeModeEnum customCodeMode = baseInfo.getCustomCodeMode();
+        if (customCodeMode != null) {
+            baseInfoMap.put("get_custom_code_mode", customCodeMode.getName());
         }
         //        use_all_locations     否	bool	        true	设置本卡券支持全部门店，与location_id_list互斥
         baseInfoMap.put("use_all_locations",baseInfo.getUseAllLocations());
@@ -280,8 +264,86 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         //        center_url	        否	string（128）	www.qq.com顶部居中的url，仅在卡券状态正常(可以核销)时显示。
         baseInfoMap.put("center_url",baseInfo.getCenterUrl());
         //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
-        baseInfoMap.put("use_limit",baseInfo.getUseLimit());
+        Integer useLimit = baseInfo.getUseLimit();
+            baseInfoMap.put("use_limit",useLimit);
+//        Map<String, Object> baseInfo = getBaseInfo(couponReqData);
 
-        return baseInfoMap;
+        cardInfo.put("base_info",baseInfoMap);
+
+// TODO AdvancedInfo设置高级信息
+
+        Map<String, Object> advancedInfoMap = new HashMap<>();
+        AdvancedInfo advancedInfo = couponReqData.getAdvancedInfo();
+        //        abstract	                    否	JSON结构	        封面摘要结构体名称
+        Map<String, Object> abstractMap = new HashMap<>();
+        Abstract abstractObj = advancedInfo.getAbstractObj();
+        String coverAbstract = abstractObj.getCoverAbstract();
+        List<String> iconUrlList = abstractObj.getIconUrlList();
+        abstractMap.put("abstract",coverAbstract);
+        abstractMap.put("icon_url_list",iconUrlList);
+        advancedInfoMap.put("abstract",abstractMap);
+        //          business_service	        否	arry	            商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选
+        List<String> businessServiceList = advancedInfo.getBusinessServiceList();
+        advancedInfoMap.put("business_service",businessServiceList);
+        //   todo       text_image_list	            否	JSON结构            图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+        List<TextImage> textImageList = advancedInfo.getTextImageList();
+        List<Map<String, Object>> textImages = new ArrayList<>();
+        for (TextImage textImage : textImageList){
+            Map<String, Object> map = DataUtils.beanToMap(textImage);
+            textImages.add(map);
+        }
+        advancedInfoMap.put("text_image_list",textImages);
+        //          time_limit	                否	JSON结构	        使用时段限制，包含以下字段
+        List<TimeLimit> timeLimitList = advancedInfo.getTimeLimitList();
+        List<Map<String, Object>> timeLimits = new ArrayList<>();
+        for (TimeLimit timeLimit : timeLimitList){
+            Map<String, Object> map = DataUtils.beanToMap(timeLimit);
+            timeLimits.add(map);
+        }
+        advancedInfoMap.put("time_limit",timeLimits);
+
+        //          use_condition	            否	JSON结构            使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+        UseCodition useCodition = advancedInfo.getUseCodition();
+        Map<String, Object> useCoditionMap = DataUtils.beanToMap(useCodition);
+        advancedInfoMap.put("use_condition",useCoditionMap);
+        cardInfo.put("advanced_info",advancedInfoMap);
+        Map<String, Object> map = WechatNameConverterUtil.convertToDBStyle(cardInfo);
+        //请求微信
+        card.put(couponType.getCouponValue(),map);
+        Map<String, Object> params = new HashMap<>();
+        params.put("card",card);
+        String s = JSONObject.toJSONString(params);
+        System.out.println(s);
+        JSONObject jsonObject = baseHttpService.createCardAndCoupon(params, mpID);
+
+        //判断是否在微信端创建成功,如果成功存入数据库
+        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+            //获取cardID
+            String cardId = jsonObject.getString("card_id");
+        }
+        CardCouponResData resultInfoBean = ResultUtil.getResultInfoBean(jsonObject, CardCouponResData.class);
+
+        return resultInfoBean;
     }
+
+
+    /**
+     * 将接受到的baseInfo设置到card中
+     * @param
+     * @param
+     * @return
+     */
+//    private Map<String, Object> getBaseInfo(CouponReqData couponReqData) {
+//
+        ////          least_cost	        是	int	10000	    代金券专用，表示起用金额（单位为分）,如果无起用门槛则填-1。
+            //        reduce_cost	        是	int	10000	    代金券专用，表示减免金额。（单位为分）
+            //        discount	            是	int	30	        折扣券专用，表示打折额度（百分比）。填30就是七折。
+            //        quantity              是 	int 	        100000 	卡券库存的数量，不支持填写0，上限为100000000。
+            //        get_limit 	         否 	int 	        1 	每人可领券的数量限制。默认值为50。
+            //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
+    //        begin_timestamp       否 	unsigned int 	14300000 	type为DATE_TYPE_FIX_TIME_RANGE时专用，表示起用时间。从1970年1月1日00:00:00至起用时间的秒数，最终需转换为字符串形态传入。（东八区时间，单位为秒）
+    //        end_timestamp 	     否 	unsigned int 	15300000 	type为DATE_TYPE_FIX_TERM_RANGE时专用，表示结束时间，建议设置为截止日期的23:59:59过期。（东八区时间，单位为秒）
+    //        fixed_term 	         否 	int 	        0 	type为DATE_TYPE_FIX_TERM时专用，表示自领取后多少天内有效，领取后当天有效填写0。（单位为天）
+    //        fixed_begin_term 	 否 	int 	        15 	type为DATE_TYPE_FIX_TERM时专用，表示自领取后多少天开始生效。（单位为天）
+
 }

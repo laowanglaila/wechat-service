@@ -82,12 +82,11 @@ public class WechatNameConverterUtil {
      * @param request
      * @return
      */
-    private Map<String, Object> toMap(Object request) {
+    public static Map<String, Object> toMap(Object request) {
         Map<String, Object> params = new HashMap<>();
         if (request == null) {
             return params;
         }
-
         Field fields[] = request.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {
@@ -110,8 +109,33 @@ public class WechatNameConverterUtil {
         Set<Map.Entry<String, Object>> entries = map.entrySet();
         HashMap<String, Object> params = new HashMap<>();
         for (Map.Entry<String, Object> entry : entries){
+            Object result = null;
+            Object value = entry.getValue();
+            if (value instanceof Map){
+                Map<String,Object> mapValue = (Map<String,Object>) value;
+                result = convertToDBStyle(mapValue);
+            }
+            if (value instanceof List){
+                List vs = (List) value;
+                List<Object> list = new ArrayList<>();
+                for (Object v : vs){
+                    if (v instanceof Map){
+                        Map<String,Object> mapValue = (Map<String,Object>) v;
+                        Map<String, Object> m = convertToDBStyle(mapValue);
+                        list.add(m);
+                    }
+                }
+                if (list.size() > 0){
+                    result = list;
+                }else {
+                    result = vs;
+                }
+            }
+            if (null == result){
+                result = value;
+            }
             String dbKey = WechatNameConverterUtil.getDBKey(entry.getKey());
-            params.put(dbKey,entry.getValue());
+            params.put(dbKey,result);
         }
         return params;
     }
@@ -123,8 +147,33 @@ public class WechatNameConverterUtil {
         Set<Map.Entry<String, Object>> entries = map.entrySet();
         HashMap<String, Object> params = new HashMap<>();
         for (Map.Entry<String, Object> entry : entries){
+            Object result = null;
             String javaKey = WechatNameConverterUtil.getJavaKey(entry.getKey());
-            params.put(javaKey,entry.getValue());
+            Object value = entry.getValue();
+            if (value instanceof Map){
+                Map<String,Object> mapValue = (Map<String,Object>) value;
+                result = convertToJavaStyle(mapValue);
+            }
+            if (value instanceof List){
+                List vs = (List) value;
+                List<Object> list = new ArrayList<>();
+                for (Object v : vs){
+                    if (v instanceof Map){
+                        Map<String,Object> mapValue = (Map<String,Object>) v;
+                        Map<String, Object> m = convertToJavaStyle(mapValue);
+                        list.add(m);
+                    }
+                }
+                if (list.size() > 0){
+                    result = list;
+                }else {
+                    result = vs;
+                }
+            }
+            if (null == result){
+                result = value;
+            }
+            params.put(javaKey,result);
         }
         return params;
     }

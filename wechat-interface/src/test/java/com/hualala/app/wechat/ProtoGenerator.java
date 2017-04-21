@@ -19,7 +19,6 @@ public class ProtoGenerator {
 //                CodeTypeEnum.class,
 //                MpTypeEnum.class,
 //                WechatQRTypeEnum.class
-
         };
         RpcProtoGenerator.generate(generatorClass);
     }
