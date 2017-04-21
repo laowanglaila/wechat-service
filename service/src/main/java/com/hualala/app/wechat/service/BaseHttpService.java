@@ -35,11 +35,11 @@ public class BaseHttpService {
         JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(map));
         logger.debug(() -> "微信请求参数 ："+jsonObject.toJSONString());
         JSONObject responseJson = httpApiService.httpPost(url, jsonObject.toJSONString(), mpID);
-        logger.debug(() -> "微信响应参数 ："+responseJson.toJSONString());
         //首先判断 null ：200    然后判断创建是否成功
         if(null == responseJson){
             return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,"http请求失败！");
         }
+        logger.debug(() -> "微信响应参数 ："+responseJson.toJSONString());
         String errcode = responseJson.getString( WechatBaseApi.MP_ERRCODE);
         if(!"0".equals(errcode)){
             return ResultUtil.toResultJson(responseJson,false,null, WechatErrorCode.wechatError.get(errcode));
