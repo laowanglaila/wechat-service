@@ -2,6 +2,7 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.WechatTemplateRpcService;
+import com.hualala.app.wechat.WechatTemplateTypeEnum;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
@@ -61,8 +62,13 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "未找到对应公众号");
         }
 
-        String modelType = reqData.getModelType();
+        WechatTemplateTypeEnum templateTypeEnum = reqData.getTemplateType();
+        if(templateTypeEnum == null){
+            return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_TEMPLATE_ERROR, "未制定模板消息类型");
+        }
+        String modelType =templateTypeEnum.getModelType();
         String modelSubType = reqData.getModelSubType();
+
         long userID = reqData.getUserID();
 
         String modelID = gerModelID(modelType, modelSubType);
