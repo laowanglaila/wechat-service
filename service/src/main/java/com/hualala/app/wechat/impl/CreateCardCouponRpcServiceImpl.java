@@ -270,7 +270,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
 
         cardInfo.put("base_info",baseInfoMap);
 
-// TODO AdvancedInfo设置高级信息
+//  AdvancedInfo设置高级信息
 
         Map<String, Object> advancedInfoMap = new HashMap<>();
         AdvancedInfo advancedInfo = couponReqData.getAdvancedInfo();
@@ -285,7 +285,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         //          business_service	        否	arry	            商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选
         List<String> businessServiceList = advancedInfo.getBusinessServiceList();
         advancedInfoMap.put("business_service",businessServiceList);
-        //   todo       text_image_list	            否	JSON结构            图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+        //          text_image_list	            否	JSON结构            图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
         List<TextImage> textImageList = advancedInfo.getTextImageList();
         List<Map<String, Object>> textImages = new ArrayList<>();
         for (TextImage textImage : textImageList){
