@@ -63,11 +63,11 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         }
 
         WechatTemplateTypeEnum templateTypeEnum = reqData.getTemplateType();
-        if(templateTypeEnum == null){
-            return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_TEMPLATE_ERROR, "未制定模板消息类型");
+        if(templateTypeEnum.getValue() == 0){
+            return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_TEMPLATE_ERROR, "未指定模板消息类型");
         }
         String modelType =templateTypeEnum.getModelType();
-        String modelSubType = reqData.getModelSubType();
+        String modelSubType = templateTypeEnum.getModelSubType();
 
         long userID = reqData.getUserID();
 
@@ -122,8 +122,8 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         req.setMpID(mpID);
         req.setParam1(reqData.getParam1());
         req.setTemplateContent(templateStr);
-        req.setTemplateType(reqData.getModelType());
-        req.setTemplateSubType(reqData.getModelSubType());
+        req.setTemplateType(templateTypeEnum.getModelType());
+        req.setTemplateSubType(templateTypeEnum.getModelSubType());
         req.setTemplateID(wechatTemplateModel.getTemplateID());
         req.setOrderKey(UUID.randomUUID().toString());
         req.setGroupID(reqData.getGroupID());
