@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hualala.app.wechat.mapper.card.BaseInfoModelMapper" >
+  <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.BaseInfoModel" >
+    <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
+    <result column="logoUrl" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="codeType" property="codeType" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="brandName" property="brandName" jdbcType="VARCHAR" />
+    <result column="notice" property="notice" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="INTEGER" />
+    <result column="dateInfo" property="dateInfo" jdbcType="VARCHAR" />
+    <result column="useCustomCode" property="useCustomCode" jdbcType="TINYINT" />
+    <result column="bindOpenid" property="bindOpenid" jdbcType="TINYINT" />
+    <result column="servicePhone" property="servicePhone" jdbcType="VARCHAR" />
+    <result column="locationIdList" property="locationIdList" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="customUrlName" property="customUrlName" jdbcType="VARCHAR" />
+    <result column="customUrl" property="customUrl" jdbcType="VARCHAR" />
+    <result column="customUrlSubTitle" property="customUrlSubTitle" jdbcType="VARCHAR" />
+    <result column="promotionUrlName" property="promotionUrlName" jdbcType="VARCHAR" />
+    <result column="promotionUrl" property="promotionUrl" jdbcType="VARCHAR" />
+    <result column="promotionUrlSubTitle" property="promotionUrlSubTitle" jdbcType="VARCHAR" />
+    <result column="getLimit" property="getLimit" jdbcType="INTEGER" />
+    <result column="canShare" property="canShare" jdbcType="TINYINT" />
+    <result column="canGiveFriend" property="canGiveFriend" jdbcType="TINYINT" />
+    <result column="needPushOnView" property="needPushOnView" jdbcType="TINYINT" />
+    <result column="customCodeMode" property="customCodeMode" jdbcType="VARCHAR" />
+    <result column="useAllLocations" property="useAllLocations" jdbcType="TINYINT" />
+    <result column="centerTitle" property="centerTitle" jdbcType="VARCHAR" />
+    <result column="centerSubTitle" property="centerSubTitle" jdbcType="VARCHAR" />
+    <result column="centerUrl" property="centerUrl" jdbcType="VARCHAR" />
+    <result column="useLimit" property="useLimit" jdbcType="INTEGER" />
+    <result column="action" property="action" jdbcType="TINYINT" />
+    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      cardKey, logoUrl, codeType, color, brandName, notice, description, sku, dateInfo, 
+      useCustomCode, bindOpenid, servicePhone, locationIdList, source, customUrlName, customUrl, 
+      customUrlSubTitle, promotionUrlName, promotionUrl, promotionUrlSubTitle, getLimit, 
+      canShare, canGiveFriend, needPushOnView, customCodeMode, useAllLocations, centerTitle, 
+      centerSubTitle, centerUrl, useLimit, action, actionTime, createTime
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hualala.app.wechat.model.card.BaseInfoModelQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_shop_wechat_card_base
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    cardKey,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,action,actionTime,createTime
+    from tbl_shop_wechat_card_base
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_shop_wechat_card_base
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.BaseInfoModelQuery" >
+    delete from tbl_shop_wechat_card_base
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
+    insert into tbl_shop_wechat_card_base (cardKey, logoUrl, codeType, 
+      color, brandName, notice, 
+      description, sku, dateInfo, 
+      useCustomCode, bindOpenid, servicePhone, 
+      locationIdList, source, customUrlName, 
+      customUrl, customUrlSubTitle, promotionUrlName, 
+      promotionUrl, promotionUrlSubTitle, getLimit, 
+      canShare, canGiveFriend, needPushOnView, 
+      customCodeMode, useAllLocations, centerTitle, 
+      centerSubTitle, centerUrl, useLimit, 
+      action, actionTime, createTime
+      )
+    values (#{cardKey,jdbcType=BIGINT}, #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, 
+      #{color,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{sku,jdbcType=INTEGER}, #{dateInfo,jdbcType=VARCHAR}, 
+      #{useCustomCode,jdbcType=TINYINT}, #{bindOpenid,jdbcType=TINYINT}, #{servicePhone,jdbcType=VARCHAR}, 
+      #{locationIdList,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{customUrlName,jdbcType=VARCHAR}, 
+      #{customUrl,jdbcType=VARCHAR}, #{customUrlSubTitle,jdbcType=VARCHAR}, #{promotionUrlName,jdbcType=VARCHAR}, 
+      #{promotionUrl,jdbcType=VARCHAR}, #{promotionUrlSubTitle,jdbcType=VARCHAR}, #{getLimit,jdbcType=INTEGER}, 
+      #{canShare,jdbcType=TINYINT}, #{canGiveFriend,jdbcType=TINYINT}, #{needPushOnView,jdbcType=TINYINT}, 
+      #{customCodeMode,jdbcType=VARCHAR}, #{useAllLocations,jdbcType=TINYINT}, #{centerTitle,jdbcType=VARCHAR}, 
+      #{centerSubTitle,jdbcType=VARCHAR}, #{centerUrl,jdbcType=VARCHAR}, #{useLimit,jdbcType=INTEGER}, 
+      #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
+    insert into tbl_shop_wechat_card_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardKey != null" >
+        cardKey,
+      </if>
+      <if test="logoUrl != null" >
+        logoUrl,
+      </if>
+      <if test="codeType != null" >
+        codeType,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="brandName != null" >
+        brandName,
+      </if>
+      <if test="notice != null" >
+        notice,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="dateInfo != null" >
+        dateInfo,
+      </if>
+      <if test="useCustomCode != null" >
+        useCustomCode,
+      </if>
+      <if test="bindOpenid != null" >
+        bindOpenid,
+      </if>
+      <if test="servicePhone != null" >
+        servicePhone,
+      </if>
+      <if test="locationIdList != null" >
+        locationIdList,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="customUrlName != null" >
+        customUrlName,
+      </if>
+      <if test="customUrl != null" >
+        customUrl,
+      </if>
+      <if test="customUrlSubTitle != null" >
+        customUrlSubTitle,
+      </if>
+      <if test="promotionUrlName != null" >
+        promotionUrlName,
+      </if>
+      <if test="promotionUrl != null" >
+        promotionUrl,
+      </if>
+      <if test="promotionUrlSubTitle != null" >
+        promotionUrlSubTitle,
+      </if>
+      <if test="getLimit != null" >
+        getLimit,
+      </if>
+      <if test="canShare != null" >
+        canShare,
+      </if>
+      <if test="canGiveFriend != null" >
+        canGiveFriend,
+      </if>
+      <if test="needPushOnView != null" >
+        needPushOnView,
+      </if>
+      <if test="customCodeMode != null" >
+        customCodeMode,
+      </if>
+      <if test="useAllLocations != null" >
+        useAllLocations,
+      </if>
+      <if test="centerTitle != null" >
+        centerTitle,
+      </if>
+      <if test="centerSubTitle != null" >
+        centerSubTitle,
+      </if>
+      <if test="centerUrl != null" >
+        centerUrl,
+      </if>
+      <if test="useLimit != null" >
+        useLimit,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="actionTime != null" >
+        actionTime,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardKey != null" >
+        #{cardKey,jdbcType=BIGINT},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=INTEGER},
+      </if>
+      <if test="dateInfo != null" >
+        #{dateInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="useCustomCode != null" >
+        #{useCustomCode,jdbcType=TINYINT},
+      </if>
+      <if test="bindOpenid != null" >
+        #{bindOpenid,jdbcType=TINYINT},
+      </if>
+      <if test="servicePhone != null" >
+        #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="locationIdList != null" >
+        #{locationIdList,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="customUrlName != null" >
+        #{customUrlName,jdbcType=VARCHAR},
+      </if>
+      <if test="customUrl != null" >
+        #{customUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="customUrlSubTitle != null" >
+        #{customUrlSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionUrlName != null" >
+        #{promotionUrlName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionUrl != null" >
+        #{promotionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionUrlSubTitle != null" >
+        #{promotionUrlSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="getLimit != null" >
+        #{getLimit,jdbcType=INTEGER},
+      </if>
+      <if test="canShare != null" >
+        #{canShare,jdbcType=TINYINT},
+      </if>
+      <if test="canGiveFriend != null" >
+        #{canGiveFriend,jdbcType=TINYINT},
+      </if>
+      <if test="needPushOnView != null" >
+        #{needPushOnView,jdbcType=TINYINT},
+      </if>
+      <if test="customCodeMode != null" >
+        #{customCodeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="useAllLocations != null" >
+        #{useAllLocations,jdbcType=TINYINT},
+      </if>
+      <if test="centerTitle != null" >
+        #{centerTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="centerSubTitle != null" >
+        #{centerSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="centerUrl != null" >
+        #{centerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="useLimit != null" >
+        #{useLimit,jdbcType=INTEGER},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        #{actionTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hualala.app.wechat.model.card.BaseInfoModelQuery" resultType="java.lang.Integer" >
+    select count(*) from tbl_shop_wechat_card_base
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_shop_wechat_card_base
+    <set >
+      <if test="record.cardKey != null" >
+        cardKey = #{record.cardKey,jdbcType=BIGINT},
+      </if>
+      <if test="record.logoUrl != null" >
+        logoUrl = #{record.logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeType != null" >
+        codeType = #{record.codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.color != null" >
+        color = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandName != null" >
+        brandName = #{record.brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notice != null" >
+        notice = #{record.notice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sku != null" >
+        sku = #{record.sku,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateInfo != null" >
+        dateInfo = #{record.dateInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useCustomCode != null" >
+        useCustomCode = #{record.useCustomCode,jdbcType=TINYINT},
+      </if>
+      <if test="record.bindOpenid != null" >
+        bindOpenid = #{record.bindOpenid,jdbcType=TINYINT},
+      </if>
+      <if test="record.servicePhone != null" >
+        servicePhone = #{record.servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationIdList != null" >
+        locationIdList = #{record.locationIdList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customUrlName != null" >
+        customUrlName = #{record.customUrlName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customUrl != null" >
+        customUrl = #{record.customUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customUrlSubTitle != null" >
+        customUrlSubTitle = #{record.customUrlSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionUrlName != null" >
+        promotionUrlName = #{record.promotionUrlName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionUrl != null" >
+        promotionUrl = #{record.promotionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionUrlSubTitle != null" >
+        promotionUrlSubTitle = #{record.promotionUrlSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getLimit != null" >
+        getLimit = #{record.getLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.canShare != null" >
+        canShare = #{record.canShare,jdbcType=TINYINT},
+      </if>
+      <if test="record.canGiveFriend != null" >
+        canGiveFriend = #{record.canGiveFriend,jdbcType=TINYINT},
+      </if>
+      <if test="record.needPushOnView != null" >
+        needPushOnView = #{record.needPushOnView,jdbcType=TINYINT},
+      </if>
+      <if test="record.customCodeMode != null" >
+        customCodeMode = #{record.customCodeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useAllLocations != null" >
+        useAllLocations = #{record.useAllLocations,jdbcType=TINYINT},
+      </if>
+      <if test="record.centerTitle != null" >
+        centerTitle = #{record.centerTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centerSubTitle != null" >
+        centerSubTitle = #{record.centerSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centerUrl != null" >
+        centerUrl = #{record.centerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useLimit != null" >
+        useLimit = #{record.useLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.action != null" >
+        action = #{record.action,jdbcType=TINYINT},
+      </if>
+      <if test="record.actionTime != null" >
+        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_shop_wechat_card_base
+    set cardKey = #{record.cardKey,jdbcType=BIGINT},
+      logoUrl = #{record.logoUrl,jdbcType=VARCHAR},
+      codeType = #{record.codeType,jdbcType=VARCHAR},
+      color = #{record.color,jdbcType=VARCHAR},
+      brandName = #{record.brandName,jdbcType=VARCHAR},
+      notice = #{record.notice,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      sku = #{record.sku,jdbcType=INTEGER},
+      dateInfo = #{record.dateInfo,jdbcType=VARCHAR},
+      useCustomCode = #{record.useCustomCode,jdbcType=TINYINT},
+      bindOpenid = #{record.bindOpenid,jdbcType=TINYINT},
+      servicePhone = #{record.servicePhone,jdbcType=VARCHAR},
+      locationIdList = #{record.locationIdList,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      customUrlName = #{record.customUrlName,jdbcType=VARCHAR},
+      customUrl = #{record.customUrl,jdbcType=VARCHAR},
+      customUrlSubTitle = #{record.customUrlSubTitle,jdbcType=VARCHAR},
+      promotionUrlName = #{record.promotionUrlName,jdbcType=VARCHAR},
+      promotionUrl = #{record.promotionUrl,jdbcType=VARCHAR},
+      promotionUrlSubTitle = #{record.promotionUrlSubTitle,jdbcType=VARCHAR},
+      getLimit = #{record.getLimit,jdbcType=INTEGER},
+      canShare = #{record.canShare,jdbcType=TINYINT},
+      canGiveFriend = #{record.canGiveFriend,jdbcType=TINYINT},
+      needPushOnView = #{record.needPushOnView,jdbcType=TINYINT},
+      customCodeMode = #{record.customCodeMode,jdbcType=VARCHAR},
+      useAllLocations = #{record.useAllLocations,jdbcType=TINYINT},
+      centerTitle = #{record.centerTitle,jdbcType=VARCHAR},
+      centerSubTitle = #{record.centerSubTitle,jdbcType=VARCHAR},
+      centerUrl = #{record.centerUrl,jdbcType=VARCHAR},
+      useLimit = #{record.useLimit,jdbcType=INTEGER},
+      action = #{record.action,jdbcType=TINYINT},
+      actionTime = #{record.actionTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
+    update tbl_shop_wechat_card_base
+    <set >
+      <if test="logoUrl != null" >
+        logoUrl = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        codeType = #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brandName = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=INTEGER},
+      </if>
+      <if test="dateInfo != null" >
+        dateInfo = #{dateInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="useCustomCode != null" >
+        useCustomCode = #{useCustomCode,jdbcType=TINYINT},
+      </if>
+      <if test="bindOpenid != null" >
+        bindOpenid = #{bindOpenid,jdbcType=TINYINT},
+      </if>
+      <if test="servicePhone != null" >
+        servicePhone = #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="locationIdList != null" >
+        locationIdList = #{locationIdList,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="customUrlName != null" >
+        customUrlName = #{customUrlName,jdbcType=VARCHAR},
+      </if>
+      <if test="customUrl != null" >
+        customUrl = #{customUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="customUrlSubTitle != null" >
+        customUrlSubTitle = #{customUrlSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionUrlName != null" >
+        promotionUrlName = #{promotionUrlName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionUrl != null" >
+        promotionUrl = #{promotionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionUrlSubTitle != null" >
+        promotionUrlSubTitle = #{promotionUrlSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="getLimit != null" >
+        getLimit = #{getLimit,jdbcType=INTEGER},
+      </if>
+      <if test="canShare != null" >
+        canShare = #{canShare,jdbcType=TINYINT},
+      </if>
+      <if test="canGiveFriend != null" >
+        canGiveFriend = #{canGiveFriend,jdbcType=TINYINT},
+      </if>
+      <if test="needPushOnView != null" >
+        needPushOnView = #{needPushOnView,jdbcType=TINYINT},
+      </if>
+      <if test="customCodeMode != null" >
+        customCodeMode = #{customCodeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="useAllLocations != null" >
+        useAllLocations = #{useAllLocations,jdbcType=TINYINT},
+      </if>
+      <if test="centerTitle != null" >
+        centerTitle = #{centerTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="centerSubTitle != null" >
+        centerSubTitle = #{centerSubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="centerUrl != null" >
+        centerUrl = #{centerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="useLimit != null" >
+        useLimit = #{useLimit,jdbcType=INTEGER},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        actionTime = #{actionTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
+    update tbl_shop_wechat_card_base
+    set logoUrl = #{logoUrl,jdbcType=VARCHAR},
+      codeType = #{codeType,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      brandName = #{brandName,jdbcType=VARCHAR},
+      notice = #{notice,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=INTEGER},
+      dateInfo = #{dateInfo,jdbcType=VARCHAR},
+      useCustomCode = #{useCustomCode,jdbcType=TINYINT},
+      bindOpenid = #{bindOpenid,jdbcType=TINYINT},
+      servicePhone = #{servicePhone,jdbcType=VARCHAR},
+      locationIdList = #{locationIdList,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      customUrlName = #{customUrlName,jdbcType=VARCHAR},
+      customUrl = #{customUrl,jdbcType=VARCHAR},
+      customUrlSubTitle = #{customUrlSubTitle,jdbcType=VARCHAR},
+      promotionUrlName = #{promotionUrlName,jdbcType=VARCHAR},
+      promotionUrl = #{promotionUrl,jdbcType=VARCHAR},
+      promotionUrlSubTitle = #{promotionUrlSubTitle,jdbcType=VARCHAR},
+      getLimit = #{getLimit,jdbcType=INTEGER},
+      canShare = #{canShare,jdbcType=TINYINT},
+      canGiveFriend = #{canGiveFriend,jdbcType=TINYINT},
+      needPushOnView = #{needPushOnView,jdbcType=TINYINT},
+      customCodeMode = #{customCodeMode,jdbcType=VARCHAR},
+      useAllLocations = #{useAllLocations,jdbcType=TINYINT},
+      centerTitle = #{centerTitle,jdbcType=VARCHAR},
+      centerSubTitle = #{centerSubTitle,jdbcType=VARCHAR},
+      centerUrl = #{centerUrl,jdbcType=VARCHAR},
+      useLimit = #{useLimit,jdbcType=INTEGER},
+      action = #{action,jdbcType=TINYINT},
+      actionTime = #{actionTime,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </update>
+</mapper>

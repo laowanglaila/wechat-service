@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hualala.app.wechat.mapper.card.CouponModelMapper" >
+  <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.CouponModel" >
+    <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
+    <result column="cardID" property="cardID" jdbcType="VARCHAR" />
+    <result column="mpID" property="mpID" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="cardType" property="cardType" jdbcType="VARCHAR" />
+    <result column="defaultDetail" property="defaultDetail" jdbcType="VARCHAR" />
+    <result column="dealDetail" property="dealDetail" jdbcType="VARCHAR" />
+    <result column="leastCost" property="leastCost" jdbcType="INTEGER" />
+    <result column="reduceCost" property="reduceCost" jdbcType="INTEGER" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="gift" property="gift" jdbcType="VARCHAR" />
+    <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
+    <result column="action" property="action" jdbcType="TINYINT" />
+    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      cardKey, cardID, mpID, title, cardType, defaultDetail, dealDetail, leastCost, reduceCost, 
+      discount, gift, cardStatus, action, actionTime, createTime
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hualala.app.wechat.model.card.CouponModelQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_shop_wechat_card_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    cardKey,cardID,mpID,title,cardType,defaultDetail,dealDetail,leastCost,reduceCost,discount,gift,cardStatus,action,actionTime,createTime
+    from tbl_shop_wechat_card_coupon
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_shop_wechat_card_coupon
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.CouponModelQuery" >
+    delete from tbl_shop_wechat_card_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
+    insert into tbl_shop_wechat_card_coupon (cardKey, cardID, mpID, 
+      title, cardType, defaultDetail, 
+      dealDetail, leastCost, reduceCost, 
+      discount, gift, cardStatus, 
+      action, actionTime, createTime
+      )
+    values (#{cardKey,jdbcType=BIGINT}, #{cardID,jdbcType=VARCHAR}, #{mpID,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{defaultDetail,jdbcType=VARCHAR}, 
+      #{dealDetail,jdbcType=VARCHAR}, #{leastCost,jdbcType=INTEGER}, #{reduceCost,jdbcType=INTEGER}, 
+      #{discount,jdbcType=INTEGER}, #{gift,jdbcType=VARCHAR}, #{cardStatus,jdbcType=TINYINT}, 
+      #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
+    insert into tbl_shop_wechat_card_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardKey != null" >
+        cardKey,
+      </if>
+      <if test="cardID != null" >
+        cardID,
+      </if>
+      <if test="mpID != null" >
+        mpID,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="cardType != null" >
+        cardType,
+      </if>
+      <if test="defaultDetail != null" >
+        defaultDetail,
+      </if>
+      <if test="dealDetail != null" >
+        dealDetail,
+      </if>
+      <if test="leastCost != null" >
+        leastCost,
+      </if>
+      <if test="reduceCost != null" >
+        reduceCost,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="gift != null" >
+        gift,
+      </if>
+      <if test="cardStatus != null" >
+        cardStatus,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="actionTime != null" >
+        actionTime,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardKey != null" >
+        #{cardKey,jdbcType=BIGINT},
+      </if>
+      <if test="cardID != null" >
+        #{cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="mpID != null" >
+        #{mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultDetail != null" >
+        #{defaultDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="dealDetail != null" >
+        #{dealDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="leastCost != null" >
+        #{leastCost,jdbcType=INTEGER},
+      </if>
+      <if test="reduceCost != null" >
+        #{reduceCost,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="gift != null" >
+        #{gift,jdbcType=VARCHAR},
+      </if>
+      <if test="cardStatus != null" >
+        #{cardStatus,jdbcType=TINYINT},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        #{actionTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hualala.app.wechat.model.card.CouponModelQuery" resultType="java.lang.Integer" >
+    select count(*) from tbl_shop_wechat_card_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_shop_wechat_card_coupon
+    <set >
+      <if test="record.cardKey != null" >
+        cardKey = #{record.cardKey,jdbcType=BIGINT},
+      </if>
+      <if test="record.cardID != null" >
+        cardID = #{record.cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mpID != null" >
+        mpID = #{record.mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        cardType = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultDetail != null" >
+        defaultDetail = #{record.defaultDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealDetail != null" >
+        dealDetail = #{record.dealDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leastCost != null" >
+        leastCost = #{record.leastCost,jdbcType=INTEGER},
+      </if>
+      <if test="record.reduceCost != null" >
+        reduceCost = #{record.reduceCost,jdbcType=INTEGER},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=INTEGER},
+      </if>
+      <if test="record.gift != null" >
+        gift = #{record.gift,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardStatus != null" >
+        cardStatus = #{record.cardStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.action != null" >
+        action = #{record.action,jdbcType=TINYINT},
+      </if>
+      <if test="record.actionTime != null" >
+        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      </if>
+
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_shop_wechat_card_coupon
+    set cardKey = #{record.cardKey,jdbcType=BIGINT},
+      cardID = #{record.cardID,jdbcType=VARCHAR},
+      mpID = #{record.mpID,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      cardType = #{record.cardType,jdbcType=VARCHAR},
+      defaultDetail = #{record.defaultDetail,jdbcType=VARCHAR},
+      dealDetail = #{record.dealDetail,jdbcType=VARCHAR},
+      leastCost = #{record.leastCost,jdbcType=INTEGER},
+      reduceCost = #{record.reduceCost,jdbcType=INTEGER},
+      discount = #{record.discount,jdbcType=INTEGER},
+      gift = #{record.gift,jdbcType=VARCHAR},
+      cardStatus = #{record.cardStatus,jdbcType=TINYINT},
+      action = #{record.action,jdbcType=TINYINT},
+      actionTime = #{record.actionTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
+    update tbl_shop_wechat_card_coupon
+    <set >
+      <if test="cardID != null" >
+        cardID = #{cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="mpID != null" >
+        mpID = #{mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        cardType = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultDetail != null" >
+        defaultDetail = #{defaultDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="dealDetail != null" >
+        dealDetail = #{dealDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="leastCost != null" >
+        leastCost = #{leastCost,jdbcType=INTEGER},
+      </if>
+      <if test="reduceCost != null" >
+        reduceCost = #{reduceCost,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="gift != null" >
+        gift = #{gift,jdbcType=VARCHAR},
+      </if>
+      <if test="cardStatus != null" >
+        cardStatus = #{cardStatus,jdbcType=TINYINT},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        actionTime = #{actionTime,jdbcType=BIGINT},
+      </if>
+
+    </set>
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
+    update tbl_shop_wechat_card_coupon
+    set cardID = #{cardID,jdbcType=VARCHAR},
+      mpID = #{mpID,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      cardType = #{cardType,jdbcType=VARCHAR},
+      defaultDetail = #{defaultDetail,jdbcType=VARCHAR},
+      dealDetail = #{dealDetail,jdbcType=VARCHAR},
+      leastCost = #{leastCost,jdbcType=INTEGER},
+      reduceCost = #{reduceCost,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=INTEGER},
+      gift = #{gift,jdbcType=VARCHAR},
+      cardStatus = #{cardStatus,jdbcType=TINYINT},
+      action = #{action,jdbcType=TINYINT},
+      actionTime = #{actionTime,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
+  </update>
+</mapper>
