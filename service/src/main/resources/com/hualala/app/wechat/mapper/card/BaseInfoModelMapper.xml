@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hualala.app.wechat.mapper.card.BaseInfoModelMapper" >
   <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.BaseInfoModel" >
-    <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
+    <id column="cardKey" property="cardKey" jdbcType="VARCHAR" />
     <result column="logoUrl" property="logoUrl" jdbcType="VARCHAR" />
     <result column="codeType" property="codeType" jdbcType="VARCHAR" />
     <result column="color" property="color" jdbcType="VARCHAR" />
@@ -123,15 +123,15 @@
       limit #{startRow} , #{pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     cardKey,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,action,actionTime,createTime
     from tbl_shop_wechat_card_base
-    where cardKey = #{cardKey,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tbl_shop_wechat_card_base
-    where cardKey = #{cardKey,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.BaseInfoModelQuery" >
     delete from tbl_shop_wechat_card_base
@@ -152,7 +152,7 @@
       centerSubTitle, centerUrl, useLimit, 
       action, actionTime, createTime
       )
-    values (#{cardKey,jdbcType=BIGINT}, #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, 
+    values (#{cardKey,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, 
       #{color,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{sku,jdbcType=INTEGER}, #{dateInfo,jdbcType=VARCHAR}, 
       #{useCustomCode,jdbcType=TINYINT}, #{bindOpenid,jdbcType=TINYINT}, #{servicePhone,jdbcType=VARCHAR}, 
@@ -270,7 +270,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
-        #{cardKey,jdbcType=BIGINT},
+        #{cardKey,jdbcType=VARCHAR},
       </if>
       <if test="logoUrl != null" >
         #{logoUrl,jdbcType=VARCHAR},
@@ -380,7 +380,7 @@
     update tbl_shop_wechat_card_base
     <set >
       <if test="record.cardKey != null" >
-        cardKey = #{record.cardKey,jdbcType=BIGINT},
+        cardKey = #{record.cardKey,jdbcType=VARCHAR},
       </if>
       <if test="record.logoUrl != null" >
         logoUrl = #{record.logoUrl,jdbcType=VARCHAR},
@@ -475,6 +475,7 @@
       <if test="record.actionTime != null" >
         actionTime = #{record.actionTime,jdbcType=BIGINT},
       </if>
+
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -482,7 +483,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tbl_shop_wechat_card_base
-    set cardKey = #{record.cardKey,jdbcType=BIGINT},
+    set cardKey = #{record.cardKey,jdbcType=VARCHAR},
       logoUrl = #{record.logoUrl,jdbcType=VARCHAR},
       codeType = #{record.codeType,jdbcType=VARCHAR},
       color = #{record.color,jdbcType=VARCHAR},
@@ -614,8 +615,9 @@
       <if test="actionTime != null" >
         actionTime = #{actionTime,jdbcType=BIGINT},
       </if>
+
     </set>
-    where cardKey = #{cardKey,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
     update tbl_shop_wechat_card_base
@@ -650,6 +652,6 @@
       useLimit = #{useLimit,jdbcType=INTEGER},
       action = #{action,jdbcType=TINYINT},
       actionTime = #{actionTime,jdbcType=BIGINT}
-    where cardKey = #{cardKey,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
   </update>
 </mapper>

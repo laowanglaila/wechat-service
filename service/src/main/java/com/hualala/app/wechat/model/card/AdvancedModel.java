@@ -9,7 +9,7 @@ public class AdvancedModel extends BaseItem implements Serializable {
     /**
      * 会员端产生的唯一主键
      */
-    private Integer cardKey;
+    private String cardKey;
 
     /**
      * 封面摘要结构体  封面摘要简介/封面图片列表，仅支持填入一个封面图片链接，上传图片接口上传获取图片获得链接，填写非CDN链接会报错，并在此填入。建议图片尺寸像素850*350
@@ -35,8 +35,6 @@ public class AdvancedModel extends BaseItem implements Serializable {
      * 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
      */
     private String useCodition;
-
-
 
     private static final long serialVersionUID = 1L;
 

@@ -9,7 +9,7 @@ public class BaseInfoModel extends BaseItem implements Serializable {
     /**
      * 会员端产生的唯一主键
      */
-    private Long cardKey;
+    private String cardKey;
 
     /**
      * 卡券的商户logo，建议像素为300*300
@@ -157,8 +157,6 @@ public class BaseInfoModel extends BaseItem implements Serializable {
     private Integer useLimit;
 
 
-
     private static final long serialVersionUID = 1L;
-
 
 }

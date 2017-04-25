@@ -12,7 +12,7 @@ public interface BaseInfoModelMapper {
 
     int deleteByExample(BaseInfoModelQuery example);
 
-    int deleteByPrimaryKey(Long cardKey);
+    int deleteByPrimaryKey(String cardKey);
 
     int insert(BaseInfoModel record);
 
@@ -20,7 +20,7 @@ public interface BaseInfoModelMapper {
 
     List<BaseInfoModel> selectByExample(BaseInfoModelQuery example);
 
-    BaseInfoModel selectByPrimaryKey(Long cardKey);
+    BaseInfoModel selectByPrimaryKey(String cardKey);
 
     int updateByExampleSelective(@Param("record") BaseInfoModel record, @Param("example") BaseInfoModelQuery example);
 

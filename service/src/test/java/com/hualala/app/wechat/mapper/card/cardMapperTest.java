@@ -25,7 +25,11 @@ public class cardMapperTest {
     @Test
     public void testMemberMapperInsert(){
         MemberModel memberModel = new MemberModel();
-        memberModel.setCardKey(399999L);
+        memberModel.setCardKey("429999");
+        memberModel.setMpID("adsf");
+        memberModel.setGroupID(12321L);
+        memberModel.setCardType("asdfasdf");
+        memberModel.setTitle("海底捞测试");
         memberModelMapper.insertSelective(memberModel);
     }
     @Test
@@ -34,7 +38,7 @@ public class cardMapperTest {
 //        memberModel.setCardKey(99999L);
         MemberModelQuery memberModelQuery = new MemberModelQuery();
         MemberModelQuery.Criteria criteria = memberModelQuery.createCriteria();
-        criteria.andCardKeyBetween(19999L,99999L);
+        criteria.andCardKeyBetween("123","123123");
         List<MemberModel> memberModels = memberModelMapper.selectByExample(memberModelQuery);
 //        MemberModel memberModel1 = memberModelMapper.selectByPrimaryKey(99999L);
         System.out.println("+++++++++++++++++++++++++++++++++++++"+memberModels.get(0).toString());
@@ -44,7 +48,8 @@ public class cardMapperTest {
 @Test
     public void testMemberMapperUpdate(){
     MemberModel memberModel = new MemberModel();
-    memberModel.setCardKey(399999L);
+    memberModel.setCardKey("429999");
+    memberModel.setAutoActivate(true);
     int i = memberModelMapper.updateByPrimaryKeySelective(memberModel);
 //        MemberModel memberModel1 = memberModelMapper.selectByPrimaryKey(99999L);
         System.out.println("+++++++++++++++++++++++++++++++++++++"+i);
@@ -52,11 +57,22 @@ public class cardMapperTest {
     }
 @Test
     public void testMemberMapperDelete(){
-    int i = memberModelMapper.deleteByPrimaryKey(399999L);
+    int i = memberModelMapper.deleteByPrimaryKey("123");
 //        MemberModel memberModel1 = memberModelMapper.selectByPrimaryKey(99999L);
         System.out.println("+++++++++++++++++++++++++++++++++++++"+i);
 
     }
 
+
+    @Test
+    public void testMemberMapperLike(){
+        MemberModelQuery memberModelQuery = new MemberModelQuery();
+        MemberModelQuery.Criteria criteria = memberModelQuery.createCriteria();
+        criteria.andTitleLike("%测试");
+        List<MemberModel> memberModels = memberModelMapper.selectByExample(memberModelQuery);
+        System.out.println("+++++++++++++++++++++++++++++++++++++"+memberModels.get(0).toString());
+        String s = JSONObject.toJSONString(memberModels.get(0));
+        System.out.println("-------------------------------------"+s);
+    }
 
 }

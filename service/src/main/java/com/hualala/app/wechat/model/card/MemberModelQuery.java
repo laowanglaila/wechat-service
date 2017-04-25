@@ -156,52 +156,62 @@ public class MemberModelQuery {
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyEqualTo(Long value) {
+        public Criteria andCardKeyEqualTo(String value) {
             addCriterion("cardKey =", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyNotEqualTo(Long value) {
+        public Criteria andCardKeyNotEqualTo(String value) {
             addCriterion("cardKey <>", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyGreaterThan(Long value) {
+        public Criteria andCardKeyGreaterThan(String value) {
             addCriterion("cardKey >", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyGreaterThanOrEqualTo(Long value) {
+        public Criteria andCardKeyGreaterThanOrEqualTo(String value) {
             addCriterion("cardKey >=", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyLessThan(Long value) {
+        public Criteria andCardKeyLessThan(String value) {
             addCriterion("cardKey <", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyLessThanOrEqualTo(Long value) {
+        public Criteria andCardKeyLessThanOrEqualTo(String value) {
             addCriterion("cardKey <=", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyIn(List<Long> values) {
+        public Criteria andCardKeyLike(String value) {
+            addCriterion("cardKey like", value, "cardKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardKeyNotLike(String value) {
+            addCriterion("cardKey not like", value, "cardKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardKeyIn(List<String> values) {
             addCriterion("cardKey in", values, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyNotIn(List<Long> values) {
+        public Criteria andCardKeyNotIn(List<String> values) {
             addCriterion("cardKey not in", values, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyBetween(Long value1, Long value2) {
+        public Criteria andCardKeyBetween(String value1, String value2) {
             addCriterion("cardKey between", value1, value2, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyNotBetween(Long value1, Long value2) {
+        public Criteria andCardKeyNotBetween(String value1, String value2) {
             addCriterion("cardKey not between", value1, value2, "cardKey");
             return (Criteria) this;
         }
@@ -273,6 +283,66 @@ public class MemberModelQuery {
 
         public Criteria andCardIDNotBetween(String value1, String value2) {
             addCriterion("cardID not between", value1, value2, "cardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDIsNull() {
+            addCriterion("groupID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDIsNotNull() {
+            addCriterion("groupID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDEqualTo(Long value) {
+            addCriterion("groupID =", value, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDNotEqualTo(Long value) {
+            addCriterion("groupID <>", value, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDGreaterThan(Long value) {
+            addCriterion("groupID >", value, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDGreaterThanOrEqualTo(Long value) {
+            addCriterion("groupID >=", value, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDLessThan(Long value) {
+            addCriterion("groupID <", value, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDLessThanOrEqualTo(Long value) {
+            addCriterion("groupID <=", value, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDIn(List<Long> values) {
+            addCriterion("groupID in", values, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDNotIn(List<Long> values) {
+            addCriterion("groupID not in", values, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDBetween(Long value1, Long value2) {
+            addCriterion("groupID between", value1, value2, "groupID");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIDNotBetween(Long value1, Long value2) {
+            addCriterion("groupID not between", value1, value2, "groupID");
             return (Criteria) this;
         }
 

@@ -156,52 +156,62 @@ public class BaseInfoModelQuery {
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyEqualTo(Long value) {
+        public Criteria andCardKeyEqualTo(String value) {
             addCriterion("cardKey =", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyNotEqualTo(Long value) {
+        public Criteria andCardKeyNotEqualTo(String value) {
             addCriterion("cardKey <>", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyGreaterThan(Long value) {
+        public Criteria andCardKeyGreaterThan(String value) {
             addCriterion("cardKey >", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyGreaterThanOrEqualTo(Long value) {
+        public Criteria andCardKeyGreaterThanOrEqualTo(String value) {
             addCriterion("cardKey >=", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyLessThan(Long value) {
+        public Criteria andCardKeyLessThan(String value) {
             addCriterion("cardKey <", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyLessThanOrEqualTo(Long value) {
+        public Criteria andCardKeyLessThanOrEqualTo(String value) {
             addCriterion("cardKey <=", value, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyIn(List<Long> values) {
+        public Criteria andCardKeyLike(String value) {
+            addCriterion("cardKey like", value, "cardKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardKeyNotLike(String value) {
+            addCriterion("cardKey not like", value, "cardKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardKeyIn(List<String> values) {
             addCriterion("cardKey in", values, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyNotIn(List<Long> values) {
+        public Criteria andCardKeyNotIn(List<String> values) {
             addCriterion("cardKey not in", values, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyBetween(Long value1, Long value2) {
+        public Criteria andCardKeyBetween(String value1, String value2) {
             addCriterion("cardKey between", value1, value2, "cardKey");
             return (Criteria) this;
         }
 
-        public Criteria andCardKeyNotBetween(Long value1, Long value2) {
+        public Criteria andCardKeyNotBetween(String value1, String value2) {
             addCriterion("cardKey not between", value1, value2, "cardKey");
             return (Criteria) this;
         }

@@ -19,62 +19,9 @@ public interface CreateCardCouponRpcService {
     @RpcMethod(description = "卡券创建方法")
     public CardCouponResData createCoupon(CouponReqData couponReqData);
 
-
-    @Data
-    class MemberCardReqData extends RequestInfo {
-        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "公众号信息")
-        private HeadData headData;
-        @Protocol(fieldType = FieldType.OBJECT, order = 3, description = "卡券基本信息")
-        private BaseInfo baseInfo;
-        @Protocol(fieldType = FieldType.OBJECT, order = 4, description = "卡券高级信息")
-        private AdvancedInfo advancedInfo;
-
-//        card_type            	    是            	string(24)            	会员卡类型。
-//        background_pic_url        否            	string(128)             商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
-//        base_info            	    是            	JSON结构            	基本的卡券数据，见下表，所有卡券类型通用。
-        //        prerogative            	是              string（3072）          会员卡特权说明。
-        //        auto_activate            	否            	bool            	    设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
-        //        wx_activate            	否            	bool            	    设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
-        //        supply_bonus            	是            	bool            	    显示积分，填写true或false，如填写true，积分相关字段均为必填。
-        //        bonus_url            	    否            	string(128)            	设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
-        //        supply_balance            是            	bool            	    是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
-        //        balance_url            	否            	string(128)            	设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
-//        custom_field1            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段
-//        custom_field2            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示，包含name_type(name)和url字段
-//        custom_field3            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示，包含name_type(name)和url字段
-//        name_type            	    否            	string(24)              会员信息类目半自定义名称，当开发者变更这类类目信息的value值时可以选择触发系统模板消息通知用户。
-        //        FIELD_NAME_TYPE_LEVEL                 等级
-        //        FIELD_NAME_TYPE_COUPON                优惠券
-        //        FIELD_NAME_TYPE_STAMP                 印花
-        //        FIELD_NAME_TYPE_DISCOUNT              折扣
-        //        FIELD_NAME_TYPE_ACHIEVEMEN            成就
-        //        FIELD_NAME_TYPE_MILEAGE               里程
-        //        FIELD_NAME_TYPE_SET_POINTS            集点
-        //        FIELD_NAME_TYPE_TIMS                  次数
-
-//        name	                        否	            string(24)     会员信息类目自定义名称，当开发者变更这类类目信息的value值时不会触发系统模板消息通知用户
-//        url            	            否            	string（128）            	点击类目跳转外链url
-//        bonus_cleared            	    否            	string（128）            	积分清零规则。
-//        bonus_rules            	    否            	string（128）            	积分规则。
-//        balance_rules            	    否            	string（128）            	储值说明。
-//        activate_url            	    是            	string（128）            	激活会员卡的url。
-//        custom_cell1            	    否            	JSON结构            	自定义会员信息类目，会员卡激活后显示。
-//        name            	            是            	string（15）            	入口名称。
-//        tips            	            是            	string（18）            	入口右侧提示语，6个汉字内。
-//        url            	            是            	string（128）            	入口跳转链接。
-//        bonus_rule               	    否            	JSON结构      	积分规则。
-//        cost_money_unit            	否            	int            	消费金额。以分为单位。
-//        increase_bonus            	否            	int            	对应增加的积分。
-//        max_increase_bonus            否            	int            	用户单次可获取的积分上限。
-//        init_increase_bonus           否            	int            	初始设置积分。
-//        cost_bonus_unit            	否            	int            	每使用5积分。
-//        reduce_money            	    否            	int            	抵扣xx元，（这里以分为单位）
-//        least_money_to_use_bonus      否            	int            	抵扣条件，满xx元（这里以分为单位）可用。
-//        max_reduce_bonus              否            	int            	抵扣条件，单笔最多使用xx积分。
-//        discount            	        否            	int            	折扣，该会员卡享受的折扣优惠,填10就是九折。
-
-    }
-
+    /**
+     * 优惠券，券
+     */
     @Data
     class CouponReqData extends RequestInfo {
         @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "公众号信息")
@@ -164,7 +111,7 @@ public interface CreateCardCouponRpcService {
         private String description;
         //--------------------------------------------------------------------------
 //        sku 	                 是 	Json结构 	    见上述示例。 	商品信息。
-//        -quantity              是 	int 	        100000 	卡券库存的数量，不支持填写0，上限为100000000。
+//        -quantity              是 	int 	        100000   	卡券库存的数量，不支持填写0，上限为100000000。
         @Protocol(fieldType = FieldType.OBJECT, order = 8, description = "商品信息")
         private Sku sku = new Sku();
         //--------------------------------------------------------------------------
@@ -218,7 +165,7 @@ public interface CreateCardCouponRpcService {
         @Protocol(fieldType = FieldType.BOOL, order = 23, description = "卡券是否可转赠。")
         private Boolean canGiveFriend;
         //        need_push_on_view 	 否 	bool 	        false 	填写true为用户点击进入会员卡时推送事件，默认为false。详情见进入会员卡事件推送
-        @Protocol(fieldType = FieldType.BOOL, order = 24, description = "填写true为用户点击进入会员卡时推送事件，默认为false。详情见进入会员卡事件推送")
+        @Protocol(fieldType = FieldType.BOOL, order = 24, description = "填写true为用户点击进入会员卡时推送事件，默认为false。会员卡专用")
         private Boolean needPushOnView;
 
         //        get_custom_code_mode	否	string(32)      GET_CUSTOM_COD E_MODE_DEPOSIT 填入 GET_CUSTOM_CODE_MODE_DEPOSIT
@@ -237,7 +184,7 @@ public interface CreateCardCouponRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 28, description = "立即享受优惠显示在入口下方的提示，仅在卡券状态正常(可以核销)时显示。")
         private String centerSubTitle;
         //        center_url	        否	string（128）	www.qq.com顶部居中的url，仅在卡券状态正常(可以核销)时显示。
-        @Protocol(fieldType = FieldType.STRING, order = 29, description = "顶部居中的url，仅在卡券状态正常(可以核销)时显示。")
+            @Protocol(fieldType = FieldType.STRING, order = 29, description = "顶部居中的url，仅在卡券状态正常(可以核销)时显示。")
         private String centerUrl;
         //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
         @Protocol(fieldType = FieldType.STRING, order = 30, description = "每人可核销的数量限制,不填写默认为50。")
@@ -278,7 +225,7 @@ public interface CreateCardCouponRpcService {
         private Integer fixedBeginTerm;
     }
 
-    //TODO 卡券高级属性封装形式待定
+    // 卡券高级属性封装形式待定
     @Data
     class AdvancedInfo {
         //        abstract	                    否	JSON结构	        封面摘要结构体名称
@@ -309,6 +256,7 @@ public interface CreateCardCouponRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "封面图片列表，仅支持填入一个封面图片链接，上传图片接口上传获取图片获得链接，填写非CDN链接会报错，并在此填入。建议图片尺寸像素850*350")
         private List<String> iconUrlList;
     }
+
     @Data
     class TextImage {
         //              image_url	                    否	string（128）       图片链接，必须调用上传图片接口上传图片获得链接，并在此填入，否则报错
@@ -358,6 +306,69 @@ public interface CreateCardCouponRpcService {
         //              can_use_with_other_discount	    否	bool                不可以与其他类型共享门槛，填写false时系统将在使用须知里 拼写“不可与其他优惠共享”，填写true时系统将在使用须知里 拼写“可与其他优惠共享”，默认为true
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "不可以与其他类型共享门槛，填写false时系统将在使用须知里 拼写“不可与其他优惠共享”，填写true时系统将在使用须知里 拼写“可与其他优惠共享”，默认为true")
         private Boolean canUseWithOtherDiscount;
+
+    }
+
+    /**
+     * 会员卡请求参数
+     */
+    @Data
+    class MemberCardReqData extends RequestInfo {
+        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "公众号信息")
+        private HeadData headData;
+        @Protocol(fieldType = FieldType.OBJECT, order = 3, description = "卡券基本信息")
+        private BaseInfo baseInfo;
+        @Protocol(fieldType = FieldType.OBJECT, order = 4, description = "卡券高级信息")
+        private AdvancedInfo advancedInfo;
+
+//        card_type            	    是            	string(24)            	会员卡类型。
+
+//        background_pic_url        否            	string(128)             商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
+//        prerogative            	是              string（3072）          会员卡特权说明。
+//        auto_activate            	否            	bool            	    设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
+//        wx_activate            	否            	bool            	    设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
+//        supply_bonus            	是            	bool            	    显示积分，填写true或false，如填写true，积分相关字段均为必填。
+//        bonus_url            	    否            	string(128)            	设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
+//        supply_balance            是            	bool            	    是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
+//        balance_url            	否            	string(128)            	设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
+//        discount            	        否            	int            	折扣，该会员卡享受的折扣优惠,填10就是九折。
+
+//        custom_field1            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段
+//        custom_field2            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示，包含name_type(name)和url字段
+//        custom_field3            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示，包含name_type(name)和url字段
+        //        name_type            	    否            	string(24)              会员信息类目半自定义名称，当开发者变更这类类目信息的value值时可以选择触发系统模板消息通知用户。
+            /*                FIELD_NAME_TYPE_LEVEL                 等级
+                            FIELD_NAME_TYPE_COUPON                优惠券
+                            FIELD_NAME_TYPE_STAMP                 印花
+                            FIELD_NAME_TYPE_DISCOUNT              折扣
+                            FIELD_NAME_TYPE_ACHIEVEMEN            成就
+                            FIELD_NAME_TYPE_MILEAGE               里程
+                            FIELD_NAME_TYPE_SET_POINTS            集点
+                            FIELD_NAME_TYPE_TIMS                  次数*/
+
+//        name	                        否	            string(24)     会员信息类目自定义名称，当开发者变更这类类目信息的value值时不会触发系统模板消息通知用户
+//        url            	            否            	string（128）            	点击类目跳转外链url
+
+//        bonus_cleared            	    否            	string（128）            	积分清零规则。
+//        bonus_rules            	    否            	string（128）            	积分规则。
+//        balance_rules            	    否            	string（128）            	储值说明。
+//        activate_url            	    是            	string（128）            	激活会员卡的url。
+
+//        custom_cell1            	    否            	JSON结构            	自定义会员信息类目，会员卡激活后显示。
+//        name            	            是            	string（15）            	入口名称。
+//        tips            	            是            	string（18）            	入口右侧提示语，6个汉字内。
+//        url            	            是            	string（128）            	入口跳转链接。
+
+//        bonus_rule               	    否            	JSON结构      	积分规则。
+//        cost_money_unit            	否            	int            	消费金额。以分为单位。
+//        increase_bonus            	否            	int            	对应增加的积分。
+//        max_increase_bonus            否            	int            	用户单次可获取的积分上限。
+//        init_increase_bonus           否            	int            	初始设置积分。
+//        cost_bonus_unit            	否            	int            	每使用5积分。
+//        reduce_money            	    否            	int            	抵扣xx元，（这里以分为单位）
+//        least_money_to_use_bonus      否            	int            	抵扣条件，满xx元（这里以分为单位）可用。
+//        max_reduce_bonus              否            	int            	抵扣条件，单笔最多使用xx积分。
+
 
     }
 }

@@ -9,12 +9,17 @@ public class CouponModel extends BaseItem implements Serializable {
     /**
      * 会员端产生的唯一主键
      */
-    private Long cardKey;
+    private String cardKey;
 
     /**
      * 微信返回的卡券ID
      */
     private String cardID;
+
+    /**
+     * 集团ID
+     */
+    private Long groupID;
 
     /**
      * 公众平台微信号
