@@ -57,6 +57,11 @@ public class MemberModel extends BaseItem implements Serializable {
     private Boolean autoActivate;
 
     /**
+     * 激活会员卡的url
+     */
+    private String activateUrl;
+
+    /**
      * 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
      */
     private Boolean wxActivate;
@@ -72,6 +77,11 @@ public class MemberModel extends BaseItem implements Serializable {
     private String bonusUrl;
 
     /**
+     * 积分清零规则
+     */
+    private String bonusCleared;
+
+    /**
      * 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
      */
     private Boolean supplyBalance;
@@ -80,6 +90,11 @@ public class MemberModel extends BaseItem implements Serializable {
      * 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
      */
     private String balanceUrl;
+
+    /**
+     * 储值说明
+     */
+    private String balanceRules;
 
     /**
      * 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
@@ -111,6 +126,9 @@ public class MemberModel extends BaseItem implements Serializable {
      */
     private Integer cardStatus;
 
+
+
     private static final long serialVersionUID = 1L;
+
 
 }

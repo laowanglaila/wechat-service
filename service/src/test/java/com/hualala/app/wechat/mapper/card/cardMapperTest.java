@@ -3,6 +3,7 @@ package com.hualala.app.wechat.mapper.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.model.card.MemberModelQuery;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class cardMapperTest {
 
 
     @Test
-    public void testMemberMapperInsert(){
+    public void testMemberMapperInsert() throws MySQLIntegrityConstraintViolationException {
         MemberModel memberModel = new MemberModel();
         memberModel.setCardKey("429999");
         memberModel.setMpID("adsf");

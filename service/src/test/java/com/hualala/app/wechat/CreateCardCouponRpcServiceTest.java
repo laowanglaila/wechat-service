@@ -31,11 +31,8 @@ public class CreateCardCouponRpcServiceTest extends BaseRpcTest {
         CreateCardCouponRpcService.DateInfo dateInfo = baseInfo.getDateInfo();
         dateInfo.setType(DateInfoTypeEnum.DATE_TYPE_FIX_TIME_RANGE);
         Long currentDateTimeLong = System.currentTimeMillis();
-        System.out.println("------------------------------------------------------"+currentDateTimeLong);
         Integer startTime =  (int)(currentDateTimeLong/1000L);
         Integer endTime = startTime + 3600 * 24 * 7;
-        System.out.println("------------------------------------------------------"+startTime);
-        System.out.println("------------------------------------------------------"+endTime);
         dateInfo.setBeginTimestamp(startTime);
         dateInfo.setEndTimestamp(endTime);
 

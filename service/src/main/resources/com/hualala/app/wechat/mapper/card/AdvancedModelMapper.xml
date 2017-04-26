@@ -5,8 +5,8 @@
     <id column="cardKey" property="cardKey" jdbcType="VARCHAR" />
     <result column="abstractInfo" property="abstractInfo" jdbcType="VARCHAR" />
     <result column="businessService" property="businessService" jdbcType="VARCHAR" />
-    <result column="textImage" property="textImage" jdbcType="VARCHAR" />
-    <result column="timeLimit" property="timeLimit" jdbcType="VARCHAR" />
+    <result column="textImage" property="textImage" jdbcType="LONGVARCHAR" />
+    <result column="timeLimit" property="timeLimit" jdbcType="LONGVARCHAR" />
     <result column="useCodition" property="useCodition" jdbcType="VARCHAR" />
     <result column="action" property="action" jdbcType="TINYINT" />
     <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
@@ -118,7 +118,7 @@
       action, actionTime, createTime
       )
     values (#{cardKey,jdbcType=VARCHAR}, #{abstractInfo,jdbcType=VARCHAR}, #{businessService,jdbcType=VARCHAR}, 
-      #{textImage,jdbcType=VARCHAR}, #{timeLimit,jdbcType=VARCHAR}, #{useCodition,jdbcType=VARCHAR}, 
+      #{textImage,jdbcType=LONGVARCHAR}, #{timeLimit,jdbcType=LONGVARCHAR}, #{useCodition,jdbcType=VARCHAR},
       #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
       )
   </insert>
@@ -164,10 +164,10 @@
         #{businessService,jdbcType=VARCHAR},
       </if>
       <if test="textImage != null" >
-        #{textImage,jdbcType=VARCHAR},
+        #{textImage,jdbcType=LONGVARCHAR},
       </if>
       <if test="timeLimit != null" >
-        #{timeLimit,jdbcType=VARCHAR},
+        #{timeLimit,jdbcType=LONGVARCHAR},
       </if>
       <if test="useCodition != null" >
         #{useCodition,jdbcType=VARCHAR},
@@ -202,10 +202,10 @@
         businessService = #{record.businessService,jdbcType=VARCHAR},
       </if>
       <if test="record.textImage != null" >
-        textImage = #{record.textImage,jdbcType=VARCHAR},
+        textImage = #{record.textImage,jdbcType=LONGVARCHAR},
       </if>
       <if test="record.timeLimit != null" >
-        timeLimit = #{record.timeLimit,jdbcType=VARCHAR},
+        timeLimit = #{record.timeLimit,jdbcType=LONGVARCHAR},
       </if>
       <if test="record.useCodition != null" >
         useCodition = #{record.useCodition,jdbcType=VARCHAR},
@@ -227,8 +227,8 @@
     set cardKey = #{record.cardKey,jdbcType=VARCHAR},
       abstractInfo = #{record.abstractInfo,jdbcType=VARCHAR},
       businessService = #{record.businessService,jdbcType=VARCHAR},
-      textImage = #{record.textImage,jdbcType=VARCHAR},
-      timeLimit = #{record.timeLimit,jdbcType=VARCHAR},
+      textImage = #{record.textImage,jdbcType=LONGVARCHAR},
+      timeLimit = #{record.timeLimit,jdbcType=LONGVARCHAR},
       useCodition = #{record.useCodition,jdbcType=VARCHAR},
       action = #{record.action,jdbcType=TINYINT},
       actionTime = #{record.actionTime,jdbcType=BIGINT}
@@ -246,10 +246,10 @@
         businessService = #{businessService,jdbcType=VARCHAR},
       </if>
       <if test="textImage != null" >
-        textImage = #{textImage,jdbcType=VARCHAR},
+        textImage = #{textImage,jdbcType=LONGVARCHAR},
       </if>
       <if test="timeLimit != null" >
-        timeLimit = #{timeLimit,jdbcType=VARCHAR},
+        timeLimit = #{timeLimit,jdbcType=LONGVARCHAR},
       </if>
       <if test="useCodition != null" >
         useCodition = #{useCodition,jdbcType=VARCHAR},
@@ -268,8 +268,8 @@
     update tbl_shop_wechat_card_advanced
     set abstractInfo = #{abstractInfo,jdbcType=VARCHAR},
       businessService = #{businessService,jdbcType=VARCHAR},
-      textImage = #{textImage,jdbcType=VARCHAR},
-      timeLimit = #{timeLimit,jdbcType=VARCHAR},
+      textImage = #{textImage,jdbcType=LONGVARCHAR},
+      timeLimit = #{timeLimit,jdbcType=LONGVARCHAR},
       useCodition = #{useCodition,jdbcType=VARCHAR},
       action = #{action,jdbcType=TINYINT},
       actionTime = #{actionTime,jdbcType=BIGINT}

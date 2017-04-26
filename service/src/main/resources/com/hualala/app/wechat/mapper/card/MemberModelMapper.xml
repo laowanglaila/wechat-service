@@ -12,11 +12,14 @@
     <result column="backgroundPicUrl" property="backgroundPicUrl" jdbcType="VARCHAR" />
     <result column="prerogative" property="prerogative" jdbcType="VARCHAR" />
     <result column="autoActivate" property="autoActivate" jdbcType="TINYINT" />
+    <result column="activateUrl" property="activateUrl" jdbcType="VARCHAR" />
     <result column="wxActivate" property="wxActivate" jdbcType="TINYINT" />
     <result column="supplyBonus" property="supplyBonus" jdbcType="TINYINT" />
     <result column="bonusUrl" property="bonusUrl" jdbcType="VARCHAR" />
+    <result column="bonusCleared" property="bonusCleared" jdbcType="VARCHAR" />
     <result column="supplyBalance" property="supplyBalance" jdbcType="TINYINT" />
     <result column="balanceUrl" property="balanceUrl" jdbcType="VARCHAR" />
+    <result column="balanceRules" property="balanceRules" jdbcType="VARCHAR" />
     <result column="customField1" property="customField1" jdbcType="VARCHAR" />
     <result column="customField2" property="customField2" jdbcType="VARCHAR" />
     <result column="customField3" property="customField3" jdbcType="VARCHAR" />
@@ -88,9 +91,9 @@
   <sql id="Base_Column_List" >
     <if test="fields == null" >
       cardKey, cardID, groupID, mpID, title, cardType, discount, backgroundPicUrl, prerogative, 
-      autoActivate, wxActivate, supplyBonus, bonusUrl, supplyBalance, balanceUrl, customField1, 
-      customField2, customField3, customCell1, bonusRule, cardStatus, action, actionTime, 
-      createTime
+      autoActivate, activateUrl, wxActivate, supplyBonus, bonusUrl, bonusCleared, supplyBalance, 
+      balanceUrl, balanceRules, customField1, customField2, customField3, customCell1, 
+      bonusRule, cardStatus, action, actionTime, createTime
     </if>
     <if test="fields != null" >
       ${fields}
@@ -115,7 +118,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,wxActivate,supplyBonus,bonusUrl,supplyBalance,balanceUrl,customField1,customField2,customField3,customCell1,bonusRule,cardStatus,action,actionTime,createTime
+    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,cardStatus,action,actionTime,createTime
     from tbl_shop_wechat_card_member
     where cardKey = #{cardKey,jdbcType=VARCHAR}
   </select>
@@ -133,8 +136,9 @@
     insert into tbl_shop_wechat_card_member (cardKey, cardID, groupID, 
       mpID, title, cardType, 
       discount, backgroundPicUrl, prerogative, 
-      autoActivate, wxActivate, supplyBonus, 
-      bonusUrl, supplyBalance, balanceUrl, 
+      autoActivate, activateUrl, wxActivate, 
+      supplyBonus, bonusUrl, bonusCleared, 
+      supplyBalance, balanceUrl, balanceRules, 
       customField1, customField2, customField3, 
       customCell1, bonusRule, cardStatus, 
       action, actionTime, createTime
@@ -142,8 +146,9 @@
     values (#{cardKey,jdbcType=VARCHAR}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
       #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
       #{discount,jdbcType=INTEGER}, #{backgroundPicUrl,jdbcType=VARCHAR}, #{prerogative,jdbcType=VARCHAR}, 
-      #{autoActivate,jdbcType=TINYINT}, #{wxActivate,jdbcType=TINYINT}, #{supplyBonus,jdbcType=TINYINT}, 
-      #{bonusUrl,jdbcType=VARCHAR}, #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, 
+      #{autoActivate,jdbcType=TINYINT}, #{activateUrl,jdbcType=VARCHAR}, #{wxActivate,jdbcType=TINYINT}, 
+      #{supplyBonus,jdbcType=TINYINT}, #{bonusUrl,jdbcType=VARCHAR}, #{bonusCleared,jdbcType=VARCHAR}, 
+      #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, #{balanceRules,jdbcType=VARCHAR}, 
       #{customField1,jdbcType=VARCHAR}, #{customField2,jdbcType=VARCHAR}, #{customField3,jdbcType=VARCHAR}, 
       #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, #{cardStatus,jdbcType=TINYINT}, 
       #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
@@ -182,6 +187,9 @@
       <if test="autoActivate != null" >
         autoActivate,
       </if>
+      <if test="activateUrl != null" >
+        activateUrl,
+      </if>
       <if test="wxActivate != null" >
         wxActivate,
       </if>
@@ -191,11 +199,17 @@
       <if test="bonusUrl != null" >
         bonusUrl,
       </if>
+      <if test="bonusCleared != null" >
+        bonusCleared,
+      </if>
       <if test="supplyBalance != null" >
         supplyBalance,
       </if>
       <if test="balanceUrl != null" >
         balanceUrl,
+      </if>
+      <if test="balanceRules != null" >
+        balanceRules,
       </if>
       <if test="customField1 != null" >
         customField1,
@@ -256,6 +270,9 @@
       <if test="autoActivate != null" >
         #{autoActivate,jdbcType=TINYINT},
       </if>
+      <if test="activateUrl != null" >
+        #{activateUrl,jdbcType=VARCHAR},
+      </if>
       <if test="wxActivate != null" >
         #{wxActivate,jdbcType=TINYINT},
       </if>
@@ -265,11 +282,17 @@
       <if test="bonusUrl != null" >
         #{bonusUrl,jdbcType=VARCHAR},
       </if>
+      <if test="bonusCleared != null" >
+        #{bonusCleared,jdbcType=VARCHAR},
+      </if>
       <if test="supplyBalance != null" >
         #{supplyBalance,jdbcType=TINYINT},
       </if>
       <if test="balanceUrl != null" >
         #{balanceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceRules != null" >
+        #{balanceRules,jdbcType=VARCHAR},
       </if>
       <if test="customField1 != null" >
         #{customField1,jdbcType=VARCHAR},
@@ -339,6 +362,9 @@
       <if test="record.autoActivate != null" >
         autoActivate = #{record.autoActivate,jdbcType=TINYINT},
       </if>
+      <if test="record.activateUrl != null" >
+        activateUrl = #{record.activateUrl,jdbcType=VARCHAR},
+      </if>
       <if test="record.wxActivate != null" >
         wxActivate = #{record.wxActivate,jdbcType=TINYINT},
       </if>
@@ -348,11 +374,17 @@
       <if test="record.bonusUrl != null" >
         bonusUrl = #{record.bonusUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.bonusCleared != null" >
+        bonusCleared = #{record.bonusCleared,jdbcType=VARCHAR},
+      </if>
       <if test="record.supplyBalance != null" >
         supplyBalance = #{record.supplyBalance,jdbcType=TINYINT},
       </if>
       <if test="record.balanceUrl != null" >
         balanceUrl = #{record.balanceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balanceRules != null" >
+        balanceRules = #{record.balanceRules,jdbcType=VARCHAR},
       </if>
       <if test="record.customField1 != null" >
         customField1 = #{record.customField1,jdbcType=VARCHAR},
@@ -396,11 +428,14 @@
       backgroundPicUrl = #{record.backgroundPicUrl,jdbcType=VARCHAR},
       prerogative = #{record.prerogative,jdbcType=VARCHAR},
       autoActivate = #{record.autoActivate,jdbcType=TINYINT},
+      activateUrl = #{record.activateUrl,jdbcType=VARCHAR},
       wxActivate = #{record.wxActivate,jdbcType=TINYINT},
       supplyBonus = #{record.supplyBonus,jdbcType=TINYINT},
       bonusUrl = #{record.bonusUrl,jdbcType=VARCHAR},
+      bonusCleared = #{record.bonusCleared,jdbcType=VARCHAR},
       supplyBalance = #{record.supplyBalance,jdbcType=TINYINT},
       balanceUrl = #{record.balanceUrl,jdbcType=VARCHAR},
+      balanceRules = #{record.balanceRules,jdbcType=VARCHAR},
       customField1 = #{record.customField1,jdbcType=VARCHAR},
       customField2 = #{record.customField2,jdbcType=VARCHAR},
       customField3 = #{record.customField3,jdbcType=VARCHAR},
@@ -443,6 +478,9 @@
       <if test="autoActivate != null" >
         autoActivate = #{autoActivate,jdbcType=TINYINT},
       </if>
+      <if test="activateUrl != null" >
+        activateUrl = #{activateUrl,jdbcType=VARCHAR},
+      </if>
       <if test="wxActivate != null" >
         wxActivate = #{wxActivate,jdbcType=TINYINT},
       </if>
@@ -452,11 +490,17 @@
       <if test="bonusUrl != null" >
         bonusUrl = #{bonusUrl,jdbcType=VARCHAR},
       </if>
+      <if test="bonusCleared != null" >
+        bonusCleared = #{bonusCleared,jdbcType=VARCHAR},
+      </if>
       <if test="supplyBalance != null" >
         supplyBalance = #{supplyBalance,jdbcType=TINYINT},
       </if>
       <if test="balanceUrl != null" >
         balanceUrl = #{balanceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceRules != null" >
+        balanceRules = #{balanceRules,jdbcType=VARCHAR},
       </if>
       <if test="customField1 != null" >
         customField1 = #{customField1,jdbcType=VARCHAR},
@@ -497,11 +541,14 @@
       backgroundPicUrl = #{backgroundPicUrl,jdbcType=VARCHAR},
       prerogative = #{prerogative,jdbcType=VARCHAR},
       autoActivate = #{autoActivate,jdbcType=TINYINT},
+      activateUrl = #{activateUrl,jdbcType=VARCHAR},
       wxActivate = #{wxActivate,jdbcType=TINYINT},
       supplyBonus = #{supplyBonus,jdbcType=TINYINT},
       bonusUrl = #{bonusUrl,jdbcType=VARCHAR},
+      bonusCleared = #{bonusCleared,jdbcType=VARCHAR},
       supplyBalance = #{supplyBalance,jdbcType=TINYINT},
       balanceUrl = #{balanceUrl,jdbcType=VARCHAR},
+      balanceRules = #{balanceRules,jdbcType=VARCHAR},
       customField1 = #{customField1,jdbcType=VARCHAR},
       customField2 = #{customField2,jdbcType=VARCHAR},
       customField3 = #{customField3,jdbcType=VARCHAR},

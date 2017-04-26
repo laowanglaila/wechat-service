@@ -336,28 +336,13 @@ public interface CreateCardCouponRpcService {
 //        custom_field1            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段
 //        custom_field2            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示，包含name_type(name)和url字段
 //        custom_field3            	否            	JSON结构            	自定义会员信息类目，会员卡激活后显示，包含name_type(name)和url字段
-        //        name_type            	    否            	string(24)              会员信息类目半自定义名称，当开发者变更这类类目信息的value值时可以选择触发系统模板消息通知用户。
-            /*                FIELD_NAME_TYPE_LEVEL                 等级
-                            FIELD_NAME_TYPE_COUPON                优惠券
-                            FIELD_NAME_TYPE_STAMP                 印花
-                            FIELD_NAME_TYPE_DISCOUNT              折扣
-                            FIELD_NAME_TYPE_ACHIEVEMEN            成就
-                            FIELD_NAME_TYPE_MILEAGE               里程
-                            FIELD_NAME_TYPE_SET_POINTS            集点
-                            FIELD_NAME_TYPE_TIMS                  次数*/
-
-//        name	                        否	            string(24)     会员信息类目自定义名称，当开发者变更这类类目信息的value值时不会触发系统模板消息通知用户
-//        url            	            否            	string（128）            	点击类目跳转外链url
 
 //        bonus_cleared            	    否            	string（128）            	积分清零规则。
 //        bonus_rules            	    否            	string（128）            	积分规则。
 //        balance_rules            	    否            	string（128）            	储值说明。
 //        activate_url            	    是            	string（128）            	激活会员卡的url。
 
-//        custom_cell1            	    否            	JSON结构            	自定义会员信息类目，会员卡激活后显示。
-//        name            	            是            	string（15）            	入口名称。
-//        tips            	            是            	string（18）            	入口右侧提示语，6个汉字内。
-//        url            	            是            	string（128）            	入口跳转链接。
+//        custom_cell1            	    否            	JSON结构            	自定义会员信息类目，会员卡激活后显示。           	            是            	string（128）            	入口跳转链接。
 
 //        bonus_rule               	    否            	JSON结构      	积分规则。
 //        cost_money_unit            	否            	int            	消费金额。以分为单位。
@@ -368,6 +353,10 @@ public interface CreateCardCouponRpcService {
 //        reduce_money            	    否            	int            	抵扣xx元，（这里以分为单位）
 //        least_money_to_use_bonus      否            	int            	抵扣条件，满xx元（这里以分为单位）可用。
 //        max_reduce_bonus              否            	int            	抵扣条件，单笔最多使用xx积分。
+
+
+
+
 
 
     }

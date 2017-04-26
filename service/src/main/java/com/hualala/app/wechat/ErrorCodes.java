@@ -53,5 +53,11 @@ public interface ErrorCodes {
     String WECHAT_CARD_TITLE_NULL = "00112131";
     //公众号cardKey不允许为空
     String WECHAT_CARD_KEY_NULL = "00112132";
+    //卡券数据重复提交
+    String WECHAT_CARD_SUBMIT_REPEATED = "00112133";
+    //会员卡特权说明为空
+    String WECHAT_CARD_PREROGATIVE_EMPTY = "00112134";
+    //会员卡特权说明为空
+    public static final String WECHAT_CARD_PRIMARY_REPEATED = "00112135";
 
 }

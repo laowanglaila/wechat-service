@@ -80,12 +80,10 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
                 break;
             case GROUPON:
                  dealDetail = couponReqData.getDealDetail();
-
                 cardInfo.put("deal_detail",dealDetail);
                 break;
             case GIFT:
                  gift = couponReqData.getGift();
-
                 cardInfo.put("gift",gift);
                 break;
             case DISCOUNT:
@@ -333,7 +331,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
      * @param
      * @return
      */
-//    private Map<String, Object> getBaseInfo(CouponReqData couponReqData) {
+//    private Map<String, Object> getBaseInfo(PreCouponReqData couponReqData) {
 //
         ////          least_cost	        是	int	10000	    代金券专用，表示起用金额（单位为分）,如果无起用门槛则填-1。
             //        reduce_cost	        是	int	10000	    代金券专用，表示减免金额。（单位为分）

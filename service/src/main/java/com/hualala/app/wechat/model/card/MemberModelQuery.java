@@ -816,6 +816,76 @@ public class MemberModelQuery {
             return (Criteria) this;
         }
 
+        public Criteria andActivateUrlIsNull() {
+            addCriterion("activateUrl is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlIsNotNull() {
+            addCriterion("activateUrl is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlEqualTo(String value) {
+            addCriterion("activateUrl =", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlNotEqualTo(String value) {
+            addCriterion("activateUrl <>", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlGreaterThan(String value) {
+            addCriterion("activateUrl >", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("activateUrl >=", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlLessThan(String value) {
+            addCriterion("activateUrl <", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlLessThanOrEqualTo(String value) {
+            addCriterion("activateUrl <=", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlLike(String value) {
+            addCriterion("activateUrl like", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlNotLike(String value) {
+            addCriterion("activateUrl not like", value, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlIn(List<String> values) {
+            addCriterion("activateUrl in", values, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlNotIn(List<String> values) {
+            addCriterion("activateUrl not in", values, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlBetween(String value1, String value2) {
+            addCriterion("activateUrl between", value1, value2, "activateUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivateUrlNotBetween(String value1, String value2) {
+            addCriterion("activateUrl not between", value1, value2, "activateUrl");
+            return (Criteria) this;
+        }
+
         public Criteria andWxActivateIsNull() {
             addCriterion("wxActivate is null");
             return (Criteria) this;
@@ -1006,6 +1076,76 @@ public class MemberModelQuery {
             return (Criteria) this;
         }
 
+        public Criteria andBonusClearedIsNull() {
+            addCriterion("bonusCleared is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedIsNotNull() {
+            addCriterion("bonusCleared is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedEqualTo(String value) {
+            addCriterion("bonusCleared =", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedNotEqualTo(String value) {
+            addCriterion("bonusCleared <>", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedGreaterThan(String value) {
+            addCriterion("bonusCleared >", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedGreaterThanOrEqualTo(String value) {
+            addCriterion("bonusCleared >=", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedLessThan(String value) {
+            addCriterion("bonusCleared <", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedLessThanOrEqualTo(String value) {
+            addCriterion("bonusCleared <=", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedLike(String value) {
+            addCriterion("bonusCleared like", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedNotLike(String value) {
+            addCriterion("bonusCleared not like", value, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedIn(List<String> values) {
+            addCriterion("bonusCleared in", values, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedNotIn(List<String> values) {
+            addCriterion("bonusCleared not in", values, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedBetween(String value1, String value2) {
+            addCriterion("bonusCleared between", value1, value2, "bonusCleared");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusClearedNotBetween(String value1, String value2) {
+            addCriterion("bonusCleared not between", value1, value2, "bonusCleared");
+            return (Criteria) this;
+        }
+
         public Criteria andSupplyBalanceIsNull() {
             addCriterion("supplyBalance is null");
             return (Criteria) this;
@@ -1133,6 +1273,76 @@ public class MemberModelQuery {
 
         public Criteria andBalanceUrlNotBetween(String value1, String value2) {
             addCriterion("balanceUrl not between", value1, value2, "balanceUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesIsNull() {
+            addCriterion("balanceRules is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesIsNotNull() {
+            addCriterion("balanceRules is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesEqualTo(String value) {
+            addCriterion("balanceRules =", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesNotEqualTo(String value) {
+            addCriterion("balanceRules <>", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesGreaterThan(String value) {
+            addCriterion("balanceRules >", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesGreaterThanOrEqualTo(String value) {
+            addCriterion("balanceRules >=", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesLessThan(String value) {
+            addCriterion("balanceRules <", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesLessThanOrEqualTo(String value) {
+            addCriterion("balanceRules <=", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesLike(String value) {
+            addCriterion("balanceRules like", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesNotLike(String value) {
+            addCriterion("balanceRules not like", value, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesIn(List<String> values) {
+            addCriterion("balanceRules in", values, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesNotIn(List<String> values) {
+            addCriterion("balanceRules not in", values, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesBetween(String value1, String value2) {
+            addCriterion("balanceRules between", value1, value2, "balanceRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceRulesNotBetween(String value1, String value2) {
+            addCriterion("balanceRules not between", value1, value2, "balanceRules");
             return (Criteria) this;
         }
 

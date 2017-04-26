@@ -29,20 +29,6 @@ message CouponReqData {
    // 请求公共字段
    RequestHeader header=1;
 }
-message HeadData {  
-   // 公众号编码
-   string mpID=1;
-   // 集团ID
-   string groupID=2;
-   // 品牌ID
-   string brandID=3;
-   // 店铺ID
-   string shopID=4;
-   // 微信用户唯一标识
-   string openID=5;
-   // 微信账号
-   string userName=6;
-}
 message BaseInfo {  
    // 卡券的商户logo，建议像素为300*300
    string logoUrl=1;
@@ -90,7 +76,7 @@ message BaseInfo {
    bool canShare=22;
    // 卡券是否可转赠。
    bool canGiveFriend=23;
-   // 填写true为用户点击进入会员卡时推送事件，默认为false。详情见进入会员卡事件推送
+   // 填写true为用户点击进入会员卡时推送事件，默认为false。会员卡专用
    bool needPushOnView=24;
    // 填入 GET_CUSTOM_CODE_MODE_DEPOSIT 表示该卡券为预存code模式卡券，须导入超过库存数目的自定义code后方可投放，填入该字段后，quantity字段须为0,须导入code后再增加库存
    CustomCodeModeEnum CustomCodeMode=25;
@@ -121,6 +107,20 @@ message Sku {
    // 卡券库存的数量，不支持填写0，上限为100000000
    string quantity=1;
 }
+message HeadData {  
+   // 公众号编码
+   string mpID=1;
+   // 集团ID
+   string groupID=2;
+   // 品牌ID
+   string brandID=3;
+   // 店铺ID
+   string shopID=4;
+   // 微信用户唯一标识
+   string openID=5;
+   // 微信账号
+   string userName=6;
+}
 message AdvancedInfo {  
    // 封面摘要结构体名称
    Abstract abstractObj=1;
@@ -139,6 +139,12 @@ message Abstract {
    // 封面图片列表，仅支持填入一个封面图片链接，上传图片接口上传获取图片获得链接，填写非CDN链接会报错，并在此填入。建议图片尺寸像素850*350
    repeated string iconUrlList=2;
 }
+message TextImage {  
+   // 图片链接，必须调用上传图片接口上传图片获得链接，并在此填入，否则报错。
+   string imageUrl=1;
+   // 图文描述。
+   string text=2;
+}
 message UseCodition {  
    // 指定可用的商品类目，仅用于代金券类型，填入后将在券面拼写适用于xxx
    string acceptCategory=1;
@@ -150,12 +156,6 @@ message UseCodition {
    string objectUseFor=4;
    // 不可以与其他类型共享门槛，填写false时系统将在使用须知里 拼写“不可与其他优惠共享”，填写true时系统将在使用须知里 拼写“可与其他优惠共享”，默认为true
    string canUseWithOtherDiscount=5;
-}
-message TextImage {  
-   // 图片链接，必须调用上传图片接口上传图片获得链接，并在此填入，否则报错。
-   string imageUrl=1;
-   // 图文描述。
-   string text=2;
 }
 message TimeLimit {  
    // 限制类型枚举值：支持填入 MONDAY 周一,TUESDAY 周二,WEDNESDAY 周三,THURSDAY 周四,FRIDAY 周五,SATURDAY 周六, SUNDAY 周日,此处只控制显示，不控制实际使用逻辑，不填默认不显示
