@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public abstract class BaseRpcTest {
 
     @Autowired
-    BaseRpcClient baseRpcClient;
+    public BaseRpcClient baseRpcClient;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(BaseRpcTest.class);
     @Test

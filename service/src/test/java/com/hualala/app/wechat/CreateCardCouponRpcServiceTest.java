@@ -1,8 +1,6 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.impl.CreateCardCouponRpcServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +10,8 @@ import java.util.List;
  */
 public class CreateCardCouponRpcServiceTest extends BaseRpcTest {
 
-    @Autowired
-    private CreateCardCouponRpcServiceImpl rpcClient;
+//    @Autowired
+//    private CreateCardCouponRpcServiceImpl rpcClient;
 
     @Override
     public void test() {

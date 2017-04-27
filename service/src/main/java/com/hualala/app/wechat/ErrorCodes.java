@@ -58,6 +58,6 @@ public interface ErrorCodes {
     //会员卡特权说明为空
     String WECHAT_CARD_PREROGATIVE_EMPTY = "00112134";
     //会员卡特权说明为空
-    public static final String WECHAT_CARD_PRIMARY_REPEATED = "00112135";
+    String WECHAT_CARD_RESULT_NULL = "00112135";
 
 }

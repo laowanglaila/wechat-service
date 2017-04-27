@@ -8,43 +8,98 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * Created by renjianfei on 2017/4/25.
+ * Created by renjianfei on 2017/4/26.
+ * <p>
+ * 查询卡券创建相关数据
  */
-@RpcService(description = "预创建卡券接口")
-public interface PrePareCreateCardRpcService {
-    @RpcMethod(description = "卡券创建必要信息方法")
-    public PreCardResData createCoupon(PreCouponReqData preCouponReqData);
-
-    @RpcMethod(description = "会员卡创建必要信息方法")
-    public PreCardResData createMemberCard(PreMemberReqData preCardReqData);
-
-    @RpcMethod(description = "基本信息")
-    public PreCardResData createBaseInfo(PreCardBaseInfoData preCardBaseInfoData);
-
-    @RpcMethod(description = "高级信息")
-    public PreCardResData createAdvancedInfo(PreAdvancedInfoData preAdvancedInfoData);
-
-    @RpcMethod(description = "提交优惠券")
-    public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey);
-
-    @RpcMethod(description = "提交会员卡信息")
-    public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey);
+@RpcService(description = "查询卡券创建相关数据")
+public interface PrePareQueryCardRpcService {
 
     /**
-     * 主键
+     * 查询会员卡数据
+     * 查一个   查所有 按类型   名称
+     */
+    @RpcMethod(description = "查询会员卡数据")
+    public MemberResData queryMemberByCardKey(CardQuery cardQuery);
+    @RpcMethod(description = "查询多个会员卡数据")
+    public MemberResDataList queryMemberList(CardQuery cardQuery);
+
+
+    /**
+     * 查询优惠券数据
+     * 查一个   查所有 按类型   名称
+     */
+    @RpcMethod(description = "查询优惠券数据")
+    public CouponResData queryCouponByCardKey(CardQuery cardQuery);
+    @RpcMethod(description = "查询多个优惠券数据")
+    public CouponResDataList queryCouponList(CardQuery cardQuery);
+
+
+    /**
+     * 查询baseInfo
+     * 查一个
+     */
+    @RpcMethod(description = "查询基本数据")
+    public CardBaseInfoResData queryBaseInfoByCardKey(CardQuery cardQuery);
+
+    /**
+     * 查询advancedInfo
+     * 查一个
+     */
+    @RpcMethod(description = "查询优高级数据")
+    public CardAdvancedInfoResData queryAdvancedInfoByCardKey(CardQuery cardQuery);
+
+
+
+
+    /**
+     * 查询条件
      */
     @Data
-    class CardPrimaryKey extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "卡券主键")
+    class CardQuery extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
+        private String mpID;
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        private Long groupID;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        private Long brandID;
+        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        private Long shopID;
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
+        private String title;
+        @Protocol(fieldType = FieldType.STRING, order = 7, description = "优惠券类型")
+        private String cardType;
+        @Protocol(fieldType = FieldType.STRING, order = 8, description = "唯一ID")
         private String cardKey;
+        @Protocol(fieldType = FieldType.INT, order = 9, description = "分页起始索引")
+        private Integer pageNO;
+        @Protocol(fieldType = FieldType.INT, order = 10, description = "每页结果数")
+        private Integer pageSize;
     }
 
     /**
      * 优惠券，券
      */
     @Data
-    class PreCouponReqData extends RequestInfo {
+    class CouponResDataList extends ResultInfo {
+        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "优惠券集合")
+        private List<CouponResData> couponResDataList;
+        @Protocol(fieldType = FieldType.INT, order = 3, description = "起始索引")
+        private Integer pageNO;
+        @Protocol(fieldType = FieldType.INT, order = 4, description = "每页结果数")
+        private Integer pageSize;
+        @Protocol(fieldType = FieldType.INT, order = 5, description = "结果集总条数")
+        private Integer totleCount;
+    }
+
+    /**
+     * 优惠券，券
+     */
+    @Data
+    class CouponResData extends ResultInfo {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
@@ -80,13 +135,30 @@ public interface PrePareCreateCardRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 14, description = "可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。")
         private String gift;
 
+
     }
 
     /**
      * 会员卡
      */
     @Data
-    class PreMemberReqData extends RequestInfo {
+    class MemberResDataList extends ResultInfo {
+        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "会员卡信息List")
+        private List<MemberResData> memberResData;
+        @Protocol(fieldType = FieldType.INT, order = 3, description = "起始索引")
+        private Integer pageNO;
+        @Protocol(fieldType = FieldType.INT, order = 4, description = "每页结果数")
+        private Integer pageSize;
+        @Protocol(fieldType = FieldType.INT, order = 5, description = "结果集总条数")
+        private Integer totleCount;
+    }
+
+
+    /**
+     * 会员卡
+     */
+    @Data
+    class MemberResData extends ResultInfo {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
@@ -157,19 +229,15 @@ public interface PrePareCreateCardRpcService {
         private String balanceRules;
 
 
+
     }
 
-    @Data
-    class PreCardResData extends ResultInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
-    }
 
     /**
      * 卡券基本信息
      */
     @Data
-    class PreCardBaseInfoData extends RequestInfo {
+    class CardBaseInfoResData extends ResultInfo {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
         private String cardKey;
@@ -267,12 +335,12 @@ public interface PrePareCreateCardRpcService {
 
     }
 
+
     /**
      * 卡券高级属性封装形式Json
      */
-
     @Data
-    class PreAdvancedInfoData extends RequestInfo {
+    class CardAdvancedInfoResData extends ResultInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
         private String cardKey;
         //        abstract	                    否	JSON结构	        封面摘要结构体名称
@@ -292,5 +360,6 @@ public interface PrePareCreateCardRpcService {
         private String useCodition;
 
     }
+
 
 }
