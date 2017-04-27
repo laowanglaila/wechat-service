@@ -156,7 +156,14 @@ public class BaseInfoModel extends BaseItem implements Serializable {
      */
     private Integer useLimit;
 
+    /**
+     * 是否设置该会员卡支持拉出微信支付刷卡界面
+     */
+    private Boolean isSwipeCard;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+     */
+    private Boolean isPayAndQrcode;
 
 }

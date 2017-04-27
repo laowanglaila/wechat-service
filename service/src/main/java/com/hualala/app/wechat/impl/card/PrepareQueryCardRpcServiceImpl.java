@@ -1,9 +1,7 @@
-package com.hualala.app.wechat.impl;
+package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.PrePareCreateCardRpcService;
 import com.hualala.app.wechat.PrePareQueryCardRpcService;
-import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -17,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by renjianfei on 2017/4/26.

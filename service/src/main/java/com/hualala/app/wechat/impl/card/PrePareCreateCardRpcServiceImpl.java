@@ -2,7 +2,9 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.*;
+import com.hualala.app.wechat.CreateCardCouponRpcService;
+import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.PrePareCreateCardRpcService;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
@@ -689,6 +691,15 @@ public class PrePareCreateCardRpcServiceImpl implements PrePareCreateCardRpcServ
         //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
         Integer useLimit = baseInfo.getUseLimit();
         baseInfoMap.put("use_limit",useLimit);
+
+        if (baseInfo.getIsSwipeCard()){
+            String payInfo = "{\"swipe_card\" : {\"is_swipe_card\" : true}}";
+            JSONObject payJson = JSONObject.parseObject(payInfo);
+            baseInfoMap.put("pay_info",payJson);
+        }
+        if (baseInfo.getIsPayAndQrcode()){
+            baseInfoMap.put("is_pay_and_qrcode",true);
+        }
 
         cardInfo.put("base_info",baseInfoMap);
 

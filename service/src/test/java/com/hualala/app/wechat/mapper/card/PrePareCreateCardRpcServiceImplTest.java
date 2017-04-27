@@ -286,7 +286,7 @@ public class PrePareCreateCardRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         PrePareCreateCardRpcService.CardPrimaryKey cardPrimaryKey = new PrePareCreateCardRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey("123aerzc12adssg123");
+        cardPrimaryKey.setCardKey("123aerzc12adsg123");
         PrePareCreateCardRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitMemberInfo(cardPrimaryKey);
         System.out.println(preCardResData);
     }

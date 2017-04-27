@@ -32,6 +32,8 @@
     <result column="centerSubTitle" property="centerSubTitle" jdbcType="VARCHAR" />
     <result column="centerUrl" property="centerUrl" jdbcType="VARCHAR" />
     <result column="useLimit" property="useLimit" jdbcType="INTEGER" />
+    <result column="isSwipeCard" property="isSwipeCard" jdbcType="TINYINT" />
+    <result column="isPayAndQrcode" property="isPayAndQrcode" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
     <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
@@ -100,7 +102,8 @@
       useCustomCode, bindOpenid, servicePhone, locationIdList, source, customUrlName, customUrl, 
       customUrlSubTitle, promotionUrlName, promotionUrl, promotionUrlSubTitle, getLimit, 
       canShare, canGiveFriend, needPushOnView, customCodeMode, useAllLocations, centerTitle, 
-      centerSubTitle, centerUrl, useLimit, action, actionTime, createTime
+      centerSubTitle, centerUrl, useLimit, isSwipeCard, isPayAndQrcode, action, actionTime, 
+      createTime
     </if>
     <if test="fields != null" >
       ${fields}
@@ -125,7 +128,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    cardKey,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,action,actionTime,createTime
+    cardKey,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,isSwipeCard,isPayAndQrcode,action,actionTime,createTime
     from tbl_shop_wechat_card_base
     where cardKey = #{cardKey,jdbcType=VARCHAR}
   </select>
@@ -150,8 +153,8 @@
       canShare, canGiveFriend, needPushOnView, 
       customCodeMode, useAllLocations, centerTitle, 
       centerSubTitle, centerUrl, useLimit, 
-      action, actionTime, createTime
-      )
+      isSwipeCard, isPayAndQrcode, action, 
+      actionTime, createTime)
     values (#{cardKey,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, 
       #{color,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{sku,jdbcType=INTEGER}, #{dateInfo,jdbcType=VARCHAR}, 
@@ -162,8 +165,8 @@
       #{canShare,jdbcType=TINYINT}, #{canGiveFriend,jdbcType=TINYINT}, #{needPushOnView,jdbcType=TINYINT}, 
       #{customCodeMode,jdbcType=VARCHAR}, #{useAllLocations,jdbcType=TINYINT}, #{centerTitle,jdbcType=VARCHAR}, 
       #{centerSubTitle,jdbcType=VARCHAR}, #{centerUrl,jdbcType=VARCHAR}, #{useLimit,jdbcType=INTEGER}, 
-      #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
-      )
+      #{isSwipeCard,jdbcType=TINYINT}, #{isPayAndQrcode,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, 
+      #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
     insert into tbl_shop_wechat_card_base
@@ -257,6 +260,12 @@
       </if>
       <if test="useLimit != null" >
         useLimit,
+      </if>
+      <if test="isSwipeCard != null" >
+        isSwipeCard,
+      </if>
+      <if test="isPayAndQrcode != null" >
+        isPayAndQrcode,
       </if>
       <if test="action != null" >
         action,
@@ -358,6 +367,12 @@
       </if>
       <if test="useLimit != null" >
         #{useLimit,jdbcType=INTEGER},
+      </if>
+      <if test="isSwipeCard != null" >
+        #{isSwipeCard,jdbcType=TINYINT},
+      </if>
+      <if test="isPayAndQrcode != null" >
+        #{isPayAndQrcode,jdbcType=TINYINT},
       </if>
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
@@ -469,6 +484,12 @@
       <if test="record.useLimit != null" >
         useLimit = #{record.useLimit,jdbcType=INTEGER},
       </if>
+      <if test="record.isSwipeCard != null" >
+        isSwipeCard = #{record.isSwipeCard,jdbcType=TINYINT},
+      </if>
+      <if test="record.isPayAndQrcode != null" >
+        isPayAndQrcode = #{record.isPayAndQrcode,jdbcType=TINYINT},
+      </if>
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
@@ -513,6 +534,8 @@
       centerSubTitle = #{record.centerSubTitle,jdbcType=VARCHAR},
       centerUrl = #{record.centerUrl,jdbcType=VARCHAR},
       useLimit = #{record.useLimit,jdbcType=INTEGER},
+      isSwipeCard = #{record.isSwipeCard,jdbcType=TINYINT},
+      isPayAndQrcode = #{record.isPayAndQrcode,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
       actionTime = #{record.actionTime,jdbcType=BIGINT}
     <if test="_parameter != null" >
@@ -609,6 +632,12 @@
       <if test="useLimit != null" >
         useLimit = #{useLimit,jdbcType=INTEGER},
       </if>
+      <if test="isSwipeCard != null" >
+        isSwipeCard = #{isSwipeCard,jdbcType=TINYINT},
+      </if>
+      <if test="isPayAndQrcode != null" >
+        isPayAndQrcode = #{isPayAndQrcode,jdbcType=TINYINT},
+      </if>
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
@@ -650,6 +679,8 @@
       centerSubTitle = #{centerSubTitle,jdbcType=VARCHAR},
       centerUrl = #{centerUrl,jdbcType=VARCHAR},
       useLimit = #{useLimit,jdbcType=INTEGER},
+      isSwipeCard = #{isSwipeCard,jdbcType=TINYINT},
+      isPayAndQrcode = #{isPayAndQrcode,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
       actionTime = #{actionTime,jdbcType=BIGINT}
     where cardKey = #{cardKey,jdbcType=VARCHAR}

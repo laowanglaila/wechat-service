@@ -264,6 +264,10 @@ public interface PrePareCreateCardRpcService {
         //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
         @Protocol(fieldType = FieldType.STRING, order = 31, description = "每人可核销的数量限制,不填写默认为50。")
         private Integer useLimit;
+        @Protocol(fieldType = FieldType.BOOL, order = 32, description = "是否设置该会员卡支持拉出微信支付刷卡界面")
+        private Boolean isSwipeCard;
+        @Protocol(fieldType = FieldType.BOOL, order = 33, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
+        private Boolean isPayAndQrcode;
 
     }
 

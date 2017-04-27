@@ -2156,6 +2156,126 @@ public class BaseInfoModelQuery {
             return (Criteria) this;
         }
 
+        public Criteria andIsSwipeCardIsNull() {
+            addCriterion("isSwipeCard is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardIsNotNull() {
+            addCriterion("isSwipeCard is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardEqualTo(Boolean value) {
+            addCriterion("isSwipeCard =", value, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardNotEqualTo(Boolean value) {
+            addCriterion("isSwipeCard <>", value, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardGreaterThan(Boolean value) {
+            addCriterion("isSwipeCard >", value, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("isSwipeCard >=", value, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardLessThan(Boolean value) {
+            addCriterion("isSwipeCard <", value, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardLessThanOrEqualTo(Boolean value) {
+            addCriterion("isSwipeCard <=", value, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardIn(List<Boolean> values) {
+            addCriterion("isSwipeCard in", values, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardNotIn(List<Boolean> values) {
+            addCriterion("isSwipeCard not in", values, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardBetween(Boolean value1, Boolean value2) {
+            addCriterion("isSwipeCard between", value1, value2, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSwipeCardNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("isSwipeCard not between", value1, value2, "isSwipeCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeIsNull() {
+            addCriterion("isPayAndQrcode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeIsNotNull() {
+            addCriterion("isPayAndQrcode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeEqualTo(Boolean value) {
+            addCriterion("isPayAndQrcode =", value, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeNotEqualTo(Boolean value) {
+            addCriterion("isPayAndQrcode <>", value, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeGreaterThan(Boolean value) {
+            addCriterion("isPayAndQrcode >", value, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("isPayAndQrcode >=", value, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeLessThan(Boolean value) {
+            addCriterion("isPayAndQrcode <", value, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeLessThanOrEqualTo(Boolean value) {
+            addCriterion("isPayAndQrcode <=", value, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeIn(List<Boolean> values) {
+            addCriterion("isPayAndQrcode in", values, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeNotIn(List<Boolean> values) {
+            addCriterion("isPayAndQrcode not in", values, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeBetween(Boolean value1, Boolean value2) {
+            addCriterion("isPayAndQrcode between", value1, value2, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPayAndQrcodeNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("isPayAndQrcode not between", value1, value2, "isPayAndQrcode");
+            return (Criteria) this;
+        }
+
         public Criteria andActionIsNull() {
             addCriterion("action is null");
             return (Criteria) this;

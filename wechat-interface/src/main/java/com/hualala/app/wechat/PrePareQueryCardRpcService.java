@@ -186,19 +186,19 @@ public interface PrePareQueryCardRpcService {
         private String prerogative;
         //        auto_activate            	否            	bool            	设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
         @Protocol(fieldType = FieldType.BOOL, order = 12, description = "设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。")
-        private Boolean autoActivate;
+        private boolean autoActivate;
         //        wx_activate            	否            	bool            	设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
         @Protocol(fieldType = FieldType.BOOL, order = 13, description = "设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。")
-        private Boolean wxActivate;
+        private boolean wxActivate;
         //        supply_bonus            	是            	bool            	显示积分，填写true或false，如填写true，积分相关字段均为必填。
         @Protocol(fieldType = FieldType.BOOL, order = 14, description = "显示积分，填写true或false，如填写true，积分相关字段均为必填。")
-        private Boolean supplyBonus;
+        private boolean supplyBonus;
         //        bonus_url            	否            	string(128)            	设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
         @Protocol(fieldType = FieldType.STRING, order = 15, description = "设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。")
         private String bonusUrl;
         //        supply_balance            	是            	bool            	是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
         @Protocol(fieldType = FieldType.BOOL, order = 16, description = "是否支持储值，填写true或false。如填写true，储值相关字段均为必填。")
-        private Boolean supplyBalance;
+        private boolean supplyBalance;
         //        balance_url            	否            	string(128)            	设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
         @Protocol(fieldType = FieldType.STRING, order = 17, description = "设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。")
         private String balanceUrl;
@@ -267,10 +267,10 @@ public interface PrePareQueryCardRpcService {
         private String dateInfo;
         //        use_custom_code        否 	bool 	        true 	是否自定义Code码。填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。
         @Protocol(fieldType = FieldType.BOOL, order = 11, description = "是否自定义Code码.填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。")
-        private Boolean useCustomCode;
+        private boolean useCustomCode;
         //        bind_openid 	         否 	bool 	        true 	是否指定用户领取，填写true或false。默认为false。
         @Protocol(fieldType = FieldType.BOOL, order = 12, description = "是否指定用户领取，填写true或false。默认为false。")
-        private Boolean bindOpenid;
+        private boolean bindOpenid;
         //        service_phone 	     否 	string（24） 	40012234 	客服电话。
         @Protocol(fieldType = FieldType.STRING, order = 13, description = "客服电话。")
         private String servicePhone;
@@ -305,13 +305,13 @@ public interface PrePareQueryCardRpcService {
         private Integer getLimit;
         //        can_share 	         否 	bool 	        false 	卡券领取页面是否可分享。
         @Protocol(fieldType = FieldType.BOOL, order = 23, description = "卡券领取页面是否可分享。")
-        private Boolean canShare;
+        private boolean canShare;
         //        can_give_friend 	     否 	bool 	        false 	卡券是否可转赠。
         @Protocol(fieldType = FieldType.BOOL, order = 24, description = "卡券是否可转赠。")
-        private Boolean canGiveFriend;
+        private boolean canGiveFriend;
         //        need_push_on_view 	 否 	bool 	        false 	填写true为用户点击进入会员卡时推送事件，默认为false。详情见进入会员卡事件推送
         @Protocol(fieldType = FieldType.BOOL, order = 25, description = "填写true为用户点击进入会员卡时推送事件，默认为false。会员卡专用")
-        private Boolean needPushOnView;
+        private boolean needPushOnView;
         //        get_custom_code_mode	否	string(32)      GET_CUSTOM_COD E_MODE_DEPOSIT 填入 GET_CUSTOM_CODE_MODE_DEPOSIT
         //                                                  表示该卡券为预存code模式卡券，须导入超过库存数目的自定义code后方可投放，填入该字段后，
         //                                                  quantity字段须为0,须导入code后再增加库存
@@ -319,7 +319,7 @@ public interface PrePareQueryCardRpcService {
         private String customCodeMode;
         //        use_all_locations     否	bool	        true	设置本卡券支持全部门店，与location_id_list互斥
         @Protocol(fieldType = FieldType.BOOL, order = 27, description = "设置本卡券支持全部门店，与location_id_list互斥")
-        private Boolean useAllLocations;
+        private boolean useAllLocations;
         //        center_title	        否	string（18）	立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示
         @Protocol(fieldType = FieldType.STRING, order = 28, description = "立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示")
         private String centerTitle;
@@ -332,6 +332,10 @@ public interface PrePareQueryCardRpcService {
         //        use_limit	            否	int	            100	每人可核销的数量限制,不填写默认为50。
         @Protocol(fieldType = FieldType.STRING, order = 31, description = "每人可核销的数量限制,不填写默认为50。")
         private Integer useLimit;
+        @Protocol(fieldType = FieldType.BOOL, order = 32, description = "是否设置该会员卡支持拉出微信支付刷卡界面")
+        private boolean isSwipeCard;
+        @Protocol(fieldType = FieldType.BOOL, order = 33, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
+        private boolean isPayAndQrcode;
 
     }
 
