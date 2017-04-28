@@ -117,9 +117,14 @@ public class MemberModel extends BaseItem implements Serializable {
     private String customCell1;
 
     /**
-     * 积分规则。JSON结构
+     * 积分规则。JSON结构,用于微信买单
      */
     private String bonusRule;
+
+    /**
+     * 积分规则
+     */
+    private String bonusRules;
 
     /**
      * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审合通过，4：审核失败，5：已投放
@@ -129,6 +134,5 @@ public class MemberModel extends BaseItem implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
-
 
 }

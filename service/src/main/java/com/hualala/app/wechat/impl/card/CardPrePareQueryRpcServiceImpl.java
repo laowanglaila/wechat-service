@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.impl.card;
 
+import com.hualala.app.wechat.CardPrePareQueryRpcService;
 import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.PrePareQueryCardRpcService;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -21,7 +21,7 @@ import java.util.List;
  * Created by renjianfei on 2017/4/26.
  */
 @Service
-public class PrepareQueryCardRpcServiceImpl implements PrePareQueryCardRpcService {
+public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcService {
 
     @Autowired
     private MemberModelMapper memberModelMapper;

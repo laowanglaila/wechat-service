@@ -8,98 +8,43 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
-import java.util.List;
-
 /**
- * Created by renjianfei on 2017/4/26.
- * <p>
- * 查询卡券创建相关数据
+ * Created by renjianfei on 2017/4/25.
  */
-@RpcService(description = "查询卡券创建相关数据")
-public interface PrePareQueryCardRpcService {
+@RpcService(description = "预创建卡券接口")
+public interface CardPrePareCreateRpcService {
+    @RpcMethod(description = "卡券创建必要信息方法")
+    public PreCardResData createCoupon(PreCouponReqData preCouponReqData);
+
+    @RpcMethod(description = "会员卡创建必要信息方法")
+    public PreCardResData createMemberCard(PreMemberReqData preCardReqData);
+
+    @RpcMethod(description = "基本信息")
+    public PreCardResData createBaseInfo(PreCardBaseInfoData preCardBaseInfoData);
+
+    @RpcMethod(description = "高级信息")
+    public PreCardResData createAdvancedInfo(PreAdvancedInfoData preAdvancedInfoData);
+
+    @RpcMethod(description = "提交优惠券")
+    public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey);
+
+    @RpcMethod(description = "提交会员卡信息")
+    public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey);
 
     /**
-     * 查询会员卡数据
-     * 查一个   查所有 按类型   名称
-     */
-    @RpcMethod(description = "查询会员卡数据")
-    public MemberResData queryMemberByCardKey(CardQuery cardQuery);
-    @RpcMethod(description = "查询多个会员卡数据")
-    public MemberResDataList queryMemberList(CardQuery cardQuery);
-
-
-    /**
-     * 查询优惠券数据
-     * 查一个   查所有 按类型   名称
-     */
-    @RpcMethod(description = "查询优惠券数据")
-    public CouponResData queryCouponByCardKey(CardQuery cardQuery);
-    @RpcMethod(description = "查询多个优惠券数据")
-    public CouponResDataList queryCouponList(CardQuery cardQuery);
-
-
-    /**
-     * 查询baseInfo
-     * 查一个
-     */
-    @RpcMethod(description = "查询基本数据")
-    public CardBaseInfoResData queryBaseInfoByCardKey(CardQuery cardQuery);
-
-    /**
-     * 查询advancedInfo
-     * 查一个
-     */
-    @RpcMethod(description = "查询优高级数据")
-    public CardAdvancedInfoResData queryAdvancedInfoByCardKey(CardQuery cardQuery);
-
-
-
-
-    /**
-     * 查询条件
+     * 主键
      */
     @Data
-    class CardQuery extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
-        private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
-        private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
-        private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
-        private Long shopID;
-        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
-        private String title;
-        @Protocol(fieldType = FieldType.STRING, order = 7, description = "优惠券类型")
-        private String cardType;
-        @Protocol(fieldType = FieldType.STRING, order = 8, description = "唯一ID")
+    class CardPrimaryKey extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "卡券主键")
         private String cardKey;
-        @Protocol(fieldType = FieldType.INT, order = 9, description = "分页起始索引")
-        private Integer pageNO;
-        @Protocol(fieldType = FieldType.INT, order = 10, description = "每页结果数")
-        private Integer pageSize;
     }
 
     /**
      * 优惠券，券
      */
     @Data
-    class CouponResDataList extends ResultInfo {
-        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "优惠券集合")
-        private List<CouponResData> couponResDataList;
-        @Protocol(fieldType = FieldType.INT, order = 3, description = "起始索引")
-        private Integer pageNO;
-        @Protocol(fieldType = FieldType.INT, order = 4, description = "每页结果数")
-        private Integer pageSize;
-        @Protocol(fieldType = FieldType.INT, order = 5, description = "结果集总条数")
-        private Integer totleCount;
-    }
-
-    /**
-     * 优惠券，券
-     */
-    @Data
-    class CouponResData extends ResultInfo {
+    class PreCouponReqData extends RequestInfo {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
@@ -135,30 +80,13 @@ public interface PrePareQueryCardRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 14, description = "可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。")
         private String gift;
 
-
     }
 
     /**
      * 会员卡
      */
     @Data
-    class MemberResDataList extends ResultInfo {
-        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "会员卡信息List")
-        private List<MemberResData> memberResData;
-        @Protocol(fieldType = FieldType.INT, order = 3, description = "起始索引")
-        private Integer pageNO;
-        @Protocol(fieldType = FieldType.INT, order = 4, description = "每页结果数")
-        private Integer pageSize;
-        @Protocol(fieldType = FieldType.INT, order = 5, description = "结果集总条数")
-        private Integer totleCount;
-    }
-
-
-    /**
-     * 会员卡
-     */
-    @Data
-    class MemberResData extends ResultInfo {
+    class PreMemberReqData extends RequestInfo {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
@@ -186,19 +114,19 @@ public interface PrePareQueryCardRpcService {
         private String prerogative;
         //        auto_activate            	否            	bool            	设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
         @Protocol(fieldType = FieldType.BOOL, order = 12, description = "设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。")
-        private boolean autoActivate;
+        private Boolean autoActivate;
         //        wx_activate            	否            	bool            	设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
         @Protocol(fieldType = FieldType.BOOL, order = 13, description = "设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。")
-        private boolean wxActivate;
+        private Boolean wxActivate;
         //        supply_bonus            	是            	bool            	显示积分，填写true或false，如填写true，积分相关字段均为必填。
         @Protocol(fieldType = FieldType.BOOL, order = 14, description = "显示积分，填写true或false，如填写true，积分相关字段均为必填。")
-        private boolean supplyBonus;
+        private Boolean supplyBonus;
         //        bonus_url            	否            	string(128)            	设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
         @Protocol(fieldType = FieldType.STRING, order = 15, description = "设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。")
         private String bonusUrl;
         //        supply_balance            	是            	bool            	是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
         @Protocol(fieldType = FieldType.BOOL, order = 16, description = "是否支持储值，填写true或false。如填写true，储值相关字段均为必填。")
-        private boolean supplyBalance;
+        private Boolean supplyBalance;
         //        balance_url            	否            	string(128)            	设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
         @Protocol(fieldType = FieldType.STRING, order = 17, description = "设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。")
         private String balanceUrl;
@@ -215,7 +143,8 @@ public interface PrePareQueryCardRpcService {
 
         @Protocol(fieldType = FieldType.STRING, order = 21, description = "自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构")
         private String customCell1;
-        //        bonus_rules            	否            	string（512）            	积分规则。
+
+        //        bonus_rule            	        否            	JSON结构 	积分规则结构体，用于微信买单功能
         @Protocol(fieldType = FieldType.STRING, order = 22, description = "积分规则。JSON结构")
         private String bonusRule;
         //        activate_url            	是            	string（128）            	激活会员卡的url。
@@ -227,17 +156,23 @@ public interface PrePareQueryCardRpcService {
         //        balance_rules            	否            	string（128）            	储值说明。
         @Protocol(fieldType = FieldType.STRING, order = 25, description = "储值说明。")
         private String balanceRules;
-
-
+        //        bonus_rules            	否            	string（512）            	积分规则。
+        @Protocol(fieldType = FieldType.STRING, order = 26, description = "积分规则")
+        private String bonusRules;
 
     }
 
+    @Data
+    class PreCardResData extends ResultInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+    }
 
     /**
      * 卡券基本信息
      */
     @Data
-    class CardBaseInfoResData extends ResultInfo {
+    class PreCardBaseInfoData extends RequestInfo {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
         private String cardKey;
@@ -267,10 +202,10 @@ public interface PrePareQueryCardRpcService {
         private String dateInfo;
         //        use_custom_code        否 	bool 	        true 	是否自定义Code码。填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。
         @Protocol(fieldType = FieldType.BOOL, order = 11, description = "是否自定义Code码.填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。")
-        private boolean useCustomCode;
+        private Boolean useCustomCode;
         //        bind_openid 	         否 	bool 	        true 	是否指定用户领取，填写true或false。默认为false。
         @Protocol(fieldType = FieldType.BOOL, order = 12, description = "是否指定用户领取，填写true或false。默认为false。")
-        private boolean bindOpenid;
+        private Boolean bindOpenid;
         //        service_phone 	     否 	string（24） 	40012234 	客服电话。
         @Protocol(fieldType = FieldType.STRING, order = 13, description = "客服电话。")
         private String servicePhone;
@@ -297,7 +232,7 @@ public interface PrePareQueryCardRpcService {
         //        promotion_url 	     否 	string（128） 	XXXX.com 	入口跳转外链的地址链接。
         @Protocol(fieldType = FieldType.STRING, order = 20, description = "入口跳转外链的地址链接。")
         private String promotionUrl;
-        //        promotion_url_sub_title否 	string（18） 	卖场大优惠。 	显示在营销入口右侧的提示语。
+        //        promotion_url_sub_title 否 	string（18） 	卖场大优惠。 	显示在营销入口右侧的提示语。
         @Protocol(fieldType = FieldType.STRING, order = 21, description = "显示在营销入口右侧的提示语。")
         private String promotionUrlSubTitle;
         //        get_limit 	         否 	int 	        1 	每人可领券的数量限制。默认值为50。
@@ -305,13 +240,13 @@ public interface PrePareQueryCardRpcService {
         private Integer getLimit;
         //        can_share 	         否 	bool 	        false 	卡券领取页面是否可分享。
         @Protocol(fieldType = FieldType.BOOL, order = 23, description = "卡券领取页面是否可分享。")
-        private boolean canShare;
+        private Boolean canShare;
         //        can_give_friend 	     否 	bool 	        false 	卡券是否可转赠。
         @Protocol(fieldType = FieldType.BOOL, order = 24, description = "卡券是否可转赠。")
-        private boolean canGiveFriend;
+        private Boolean canGiveFriend;
         //        need_push_on_view 	 否 	bool 	        false 	填写true为用户点击进入会员卡时推送事件，默认为false。详情见进入会员卡事件推送
         @Protocol(fieldType = FieldType.BOOL, order = 25, description = "填写true为用户点击进入会员卡时推送事件，默认为false。会员卡专用")
-        private boolean needPushOnView;
+        private Boolean needPushOnView;
         //        get_custom_code_mode	否	string(32)      GET_CUSTOM_COD E_MODE_DEPOSIT 填入 GET_CUSTOM_CODE_MODE_DEPOSIT
         //                                                  表示该卡券为预存code模式卡券，须导入超过库存数目的自定义code后方可投放，填入该字段后，
         //                                                  quantity字段须为0,须导入code后再增加库存
@@ -319,7 +254,7 @@ public interface PrePareQueryCardRpcService {
         private String customCodeMode;
         //        use_all_locations     否	bool	        true	设置本卡券支持全部门店，与location_id_list互斥
         @Protocol(fieldType = FieldType.BOOL, order = 27, description = "设置本卡券支持全部门店，与location_id_list互斥")
-        private boolean useAllLocations;
+        private Boolean useAllLocations;
         //        center_title	        否	string（18）	立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示
         @Protocol(fieldType = FieldType.STRING, order = 28, description = "立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示")
         private String centerTitle;
@@ -333,18 +268,18 @@ public interface PrePareQueryCardRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 31, description = "每人可核销的数量限制,不填写默认为50。")
         private Integer useLimit;
         @Protocol(fieldType = FieldType.BOOL, order = 32, description = "是否设置该会员卡支持拉出微信支付刷卡界面")
-        private boolean isSwipeCard;
+        private Boolean isSwipeCard;
         @Protocol(fieldType = FieldType.BOOL, order = 33, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
-        private boolean isPayAndQrcode;
+        private Boolean isPayAndQrcode;
 
     }
-
 
     /**
      * 卡券高级属性封装形式Json
      */
+
     @Data
-    class CardAdvancedInfoResData extends ResultInfo {
+    class PreAdvancedInfoData extends RequestInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
         private String cardKey;
         //        abstract	                    否	JSON结构	        封面摘要结构体名称
@@ -364,6 +299,5 @@ public interface PrePareQueryCardRpcService {
         private String useCodition;
 
     }
-
 
 }

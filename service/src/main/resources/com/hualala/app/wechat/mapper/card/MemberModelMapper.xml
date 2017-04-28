@@ -25,6 +25,7 @@
     <result column="customField3" property="customField3" jdbcType="VARCHAR" />
     <result column="customCell1" property="customCell1" jdbcType="VARCHAR" />
     <result column="bonusRule" property="bonusRule" jdbcType="VARCHAR" />
+    <result column="bonusRules" property="bonusRules" jdbcType="VARCHAR" />
     <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
     <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
@@ -93,7 +94,7 @@
       cardKey, cardID, groupID, mpID, title, cardType, discount, backgroundPicUrl, prerogative, 
       autoActivate, activateUrl, wxActivate, supplyBonus, bonusUrl, bonusCleared, supplyBalance, 
       balanceUrl, balanceRules, customField1, customField2, customField3, customCell1, 
-      bonusRule, cardStatus, action, actionTime, createTime
+      bonusRule, bonusRules, cardStatus, action, actionTime, createTime
     </if>
     <if test="fields != null" >
       ${fields}
@@ -118,7 +119,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,cardStatus,action,actionTime,createTime
+    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,bonusRules,cardStatus,action,actionTime,createTime
     from tbl_shop_wechat_card_member
     where cardKey = #{cardKey,jdbcType=VARCHAR}
   </select>
@@ -140,9 +141,9 @@
       supplyBonus, bonusUrl, bonusCleared, 
       supplyBalance, balanceUrl, balanceRules, 
       customField1, customField2, customField3, 
-      customCell1, bonusRule, cardStatus, 
-      action, actionTime, createTime
-      )
+      customCell1, bonusRule, bonusRules, 
+      cardStatus, action, actionTime, 
+      createTime)
     values (#{cardKey,jdbcType=VARCHAR}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
       #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
       #{discount,jdbcType=INTEGER}, #{backgroundPicUrl,jdbcType=VARCHAR}, #{prerogative,jdbcType=VARCHAR}, 
@@ -150,9 +151,9 @@
       #{supplyBonus,jdbcType=TINYINT}, #{bonusUrl,jdbcType=VARCHAR}, #{bonusCleared,jdbcType=VARCHAR}, 
       #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, #{balanceRules,jdbcType=VARCHAR}, 
       #{customField1,jdbcType=VARCHAR}, #{customField2,jdbcType=VARCHAR}, #{customField3,jdbcType=VARCHAR}, 
-      #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, #{cardStatus,jdbcType=TINYINT}, 
-      #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
-      )
+      #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, #{bonusRules,jdbcType=VARCHAR}, 
+      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
     insert into tbl_shop_wechat_card_member
@@ -225,6 +226,9 @@
       </if>
       <if test="bonusRule != null" >
         bonusRule,
+      </if>
+      <if test="bonusRules != null" >
+        bonusRules,
       </if>
       <if test="cardStatus != null" >
         cardStatus,
@@ -308,6 +312,9 @@
       </if>
       <if test="bonusRule != null" >
         #{bonusRule,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusRules != null" >
+        #{bonusRules,jdbcType=VARCHAR},
       </if>
       <if test="cardStatus != null" >
         #{cardStatus,jdbcType=TINYINT},
@@ -401,6 +408,9 @@
       <if test="record.bonusRule != null" >
         bonusRule = #{record.bonusRule,jdbcType=VARCHAR},
       </if>
+      <if test="record.bonusRules != null" >
+        bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
+      </if>
       <if test="record.cardStatus != null" >
         cardStatus = #{record.cardStatus,jdbcType=TINYINT},
       </if>
@@ -441,6 +451,7 @@
       customField3 = #{record.customField3,jdbcType=VARCHAR},
       customCell1 = #{record.customCell1,jdbcType=VARCHAR},
       bonusRule = #{record.bonusRule,jdbcType=VARCHAR},
+      bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
       cardStatus = #{record.cardStatus,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
       actionTime = #{record.actionTime,jdbcType=BIGINT}
@@ -517,6 +528,9 @@
       <if test="bonusRule != null" >
         bonusRule = #{bonusRule,jdbcType=VARCHAR},
       </if>
+      <if test="bonusRules != null" >
+        bonusRules = #{bonusRules,jdbcType=VARCHAR},
+      </if>
       <if test="cardStatus != null" >
         cardStatus = #{cardStatus,jdbcType=TINYINT},
       </if>
@@ -554,6 +568,7 @@
       customField3 = #{customField3,jdbcType=VARCHAR},
       customCell1 = #{customCell1,jdbcType=VARCHAR},
       bonusRule = #{bonusRule,jdbcType=VARCHAR},
+      bonusRules = #{bonusRules,jdbcType=VARCHAR},
       cardStatus = #{cardStatus,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
       actionTime = #{actionTime,jdbcType=BIGINT}

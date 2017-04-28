@@ -1696,6 +1696,76 @@ public class MemberModelQuery {
             return (Criteria) this;
         }
 
+        public Criteria andBonusRulesIsNull() {
+            addCriterion("bonusRules is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesIsNotNull() {
+            addCriterion("bonusRules is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesEqualTo(String value) {
+            addCriterion("bonusRules =", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesNotEqualTo(String value) {
+            addCriterion("bonusRules <>", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesGreaterThan(String value) {
+            addCriterion("bonusRules >", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesGreaterThanOrEqualTo(String value) {
+            addCriterion("bonusRules >=", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesLessThan(String value) {
+            addCriterion("bonusRules <", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesLessThanOrEqualTo(String value) {
+            addCriterion("bonusRules <=", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesLike(String value) {
+            addCriterion("bonusRules like", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesNotLike(String value) {
+            addCriterion("bonusRules not like", value, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesIn(List<String> values) {
+            addCriterion("bonusRules in", values, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesNotIn(List<String> values) {
+            addCriterion("bonusRules not in", values, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesBetween(String value1, String value2) {
+            addCriterion("bonusRules between", value1, value2, "bonusRules");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusRulesNotBetween(String value1, String value2) {
+            addCriterion("bonusRules not between", value1, value2, "bonusRules");
+            return (Criteria) this;
+        }
+
         public Criteria andCardStatusIsNull() {
             addCriterion("cardStatus is null");
             return (Criteria) this;

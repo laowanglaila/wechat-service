@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.mapper.card;
 
-import com.hualala.app.wechat.PrePareCreateCardRpcService;
-import com.hualala.app.wechat.impl.card.PrePareCreateCardRpcServiceImpl;
+import com.hualala.app.wechat.CardPrePareCreateRpcService;
+import com.hualala.app.wechat.impl.card.CardPrePareCreateRpcServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PrePareCreateCardRpcServiceImplTest {
+public class CardPrePareCreateRpcServiceImplTest {
 
     @Autowired
-    private PrePareCreateCardRpcServiceImpl prePareCreateCardRpcService;
+    private CardPrePareCreateRpcServiceImpl prePareCreateCardRpcService;
     @Test
     public void test(){
-        PrePareCreateCardRpcService.PreCouponReqData couponReqData = new PrePareCreateCardRpcService.PreCouponReqData();
+        CardPrePareCreateRpcService.PreCouponReqData couponReqData = new CardPrePareCreateRpcService.PreCouponReqData();
 //        couponReqData.setMpID("doulaofangceshi");
         couponReqData.setBrandID(5L);
         couponReqData.setGroupID(5L);
@@ -35,14 +35,14 @@ public class PrePareCreateCardRpcServiceImplTest {
         couponReqData.setLeastCost(100);
         couponReqData.setReduceCost(10);
         couponReqData.setCardKey("123sdvfxgazfg");
-        PrePareCreateCardRpcService.PreCardResData coupon = prePareCreateCardRpcService.createCoupon(couponReqData);
+        CardPrePareCreateRpcService.PreCardResData coupon = prePareCreateCardRpcService.createCoupon(couponReqData);
 
         System.out.println("--------------------------------"+coupon.toString());
     }
     @Test
     public void testBaseInfo(){
 
-        PrePareCreateCardRpcService.PreCardBaseInfoData preCardBaseInfoData = new PrePareCreateCardRpcService.PreCardBaseInfoData();
+        CardPrePareCreateRpcService.PreCardBaseInfoData preCardBaseInfoData = new CardPrePareCreateRpcService.PreCardBaseInfoData();
         preCardBaseInfoData.setBrandName("海底捞");
         preCardBaseInfoData.setBindOpenid(true);
         preCardBaseInfoData.setCanGiveFriend(true);
@@ -55,16 +55,16 @@ public class PrePareCreateCardRpcServiceImplTest {
         preCardBaseInfoData.setColor("Color10");
         preCardBaseInfoData.setSku(100);
         preCardBaseInfoData.setNotice("Notice");
-        PrePareCreateCardRpcService.PreCardResData baseInfo = prePareCreateCardRpcService.createBaseInfo(preCardBaseInfoData);
+        CardPrePareCreateRpcService.PreCardResData baseInfo = prePareCreateCardRpcService.createBaseInfo(preCardBaseInfoData);
         System.out.println("-------------------------------"+baseInfo);
     }
     @Test
     public void testAdvancedInfo(){
 
-        PrePareCreateCardRpcService.PreAdvancedInfoData preAdvancedInfoData = new PrePareCreateCardRpcService.PreAdvancedInfoData();
+        CardPrePareCreateRpcService.PreAdvancedInfoData preAdvancedInfoData = new CardPrePareCreateRpcService.PreAdvancedInfoData();
         preAdvancedInfoData.setCardKey("123sdvwfxgazfg");
         preAdvancedInfoData.setAbstractInfo("Json");
-        PrePareCreateCardRpcService.PreCardResData advancedInfo = prePareCreateCardRpcService.createAdvancedInfo(preAdvancedInfoData);
+        CardPrePareCreateRpcService.PreCardResData advancedInfo = prePareCreateCardRpcService.createAdvancedInfo(preAdvancedInfoData);
         System.out.println("-------------------------------"+advancedInfo);
     }
 
@@ -74,7 +74,7 @@ public class PrePareCreateCardRpcServiceImplTest {
     @Test
     public void testInsertCoupon(){
 
-    PrePareCreateCardRpcService.PreCouponReqData couponData = new PrePareCreateCardRpcService.PreCouponReqData();
+    CardPrePareCreateRpcService.PreCouponReqData couponData = new CardPrePareCreateRpcService.PreCouponReqData();
     //头信息：商家信息
     couponData.setTitle("哗啦啦尊享火锅套餐");
     couponData.setMpID("doulaofangceshi");
@@ -82,7 +82,7 @@ public class PrePareCreateCardRpcServiceImplTest {
     couponData.setCardKey("sffg7896aerzcvgadsg123");
     couponData.setCardType("GROUPON");
     //设置baseInfo
-    PrePareCreateCardRpcService.PreCardBaseInfoData baseInfo = new PrePareCreateCardRpcService.PreCardBaseInfoData();
+    CardPrePareCreateRpcService.PreCardBaseInfoData baseInfo = new CardPrePareCreateRpcService.PreCardBaseInfoData();
     baseInfo.setSku(100);
     //Json
     Long currentDateTimeLong = System.currentTimeMillis();
@@ -119,7 +119,7 @@ public class PrePareCreateCardRpcServiceImplTest {
     baseInfo.setLocationIdList("123, 12321, 345345");
 
     //高级
-    PrePareCreateCardRpcService.PreAdvancedInfoData advancedInfo = new PrePareCreateCardRpcService.PreAdvancedInfoData();
+    CardPrePareCreateRpcService.PreAdvancedInfoData advancedInfo = new CardPrePareCreateRpcService.PreAdvancedInfoData();
 
     advancedInfo.setAbstractInfo("{\"abstract\" : \"微信餐厅推出多种新季菜品，期待您的光临\",\"icon_url_list\" : [\"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sj  piby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\"]}");
     advancedInfo.setBusinessService("BIZ_SERVICE_FREE_WIFI, BIZ_SERVICE_WITH_PET, BIZ_SERVICE_FREE_PARK, BIZ_SERVICE_DELIVER");
@@ -143,7 +143,7 @@ public class PrePareCreateCardRpcServiceImplTest {
             "}");
 
 
-    PrePareCreateCardRpcService.PreCardResData resInfo = prePareCreateCardRpcService.createCoupon(couponData);
+    CardPrePareCreateRpcService.PreCardResData resInfo = prePareCreateCardRpcService.createCoupon(couponData);
     String cardKey = resInfo.getCardKey();
     baseInfo.setCardKey(cardKey);
     advancedInfo.setCardKey(cardKey);
@@ -154,15 +154,15 @@ public class PrePareCreateCardRpcServiceImplTest {
 
     @Test
     public void testSubmitCoupon(){
-        PrePareCreateCardRpcService.CardPrimaryKey cardPrimaryKey = new PrePareCreateCardRpcService.CardPrimaryKey();
+        CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
         cardPrimaryKey.setCardKey("sffg7896aerzcvgadsg123");
-        PrePareCreateCardRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCouponInfo(cardPrimaryKey);
+        CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCouponInfo(cardPrimaryKey);
         System.out.println(preCardResData);
     }
 
     @Test
     public void testMemberInfo(){
-        PrePareCreateCardRpcService.PreMemberReqData preMemberReqData = new PrePareCreateCardRpcService.PreMemberReqData();
+        CardPrePareCreateRpcService.PreMemberReqData preMemberReqData = new CardPrePareCreateRpcService.PreMemberReqData();
 //        couponReqData.setMpID("doulaofangceshi");
         preMemberReqData.setBrandID(5L);
         preMemberReqData.setGroupID(5L);
@@ -184,7 +184,7 @@ public class PrePareCreateCardRpcServiceImplTest {
         preMemberReqData.setBonusUrl("url");
         preMemberReqData.setSupplyBalance(true);
         preMemberReqData.setDiscount(10);
-        PrePareCreateCardRpcService.PreCardResData coupon = prePareCreateCardRpcService.createMemberCard(preMemberReqData);
+        CardPrePareCreateRpcService.PreCardResData coupon = prePareCreateCardRpcService.createMemberCard(preMemberReqData);
 
         System.out.println("--------------------------------"+coupon.toString());
     }
@@ -195,7 +195,7 @@ public class PrePareCreateCardRpcServiceImplTest {
     @Test
     public void testInsertMember(){
 
-        PrePareCreateCardRpcService.PreMemberReqData couponData = new PrePareCreateCardRpcService.PreMemberReqData();
+        CardPrePareCreateRpcService.PreMemberReqData couponData = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
         couponData.setTitle("哗啦啦会员");
         couponData.setMpID("doulaofangceshi");
@@ -213,7 +213,7 @@ public class PrePareCreateCardRpcServiceImplTest {
                 "   \"url\" : \"http://www.qq.com\"\n" +
                 "}\n");
         //设置baseInfo
-        PrePareCreateCardRpcService.PreCardBaseInfoData baseInfo = new PrePareCreateCardRpcService.PreCardBaseInfoData();
+        CardPrePareCreateRpcService.PreCardBaseInfoData baseInfo = new CardPrePareCreateRpcService.PreCardBaseInfoData();
         baseInfo.setSku(100);
         //Json
         Long currentDateTimeLong = System.currentTimeMillis();
@@ -250,7 +250,7 @@ public class PrePareCreateCardRpcServiceImplTest {
         baseInfo.setLocationIdList("123, 12321, 345345");
 
         //高级
-        PrePareCreateCardRpcService.PreAdvancedInfoData advancedInfo = new PrePareCreateCardRpcService.PreAdvancedInfoData();
+        CardPrePareCreateRpcService.PreAdvancedInfoData advancedInfo = new CardPrePareCreateRpcService.PreAdvancedInfoData();
 
         advancedInfo.setAbstractInfo("{\"abstract\" : \"微信餐厅推出多种新季菜品，期待您的光临\",\"icon_url_list\" : [\"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sj  piby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\"]}");
         advancedInfo.setBusinessService("BIZ_SERVICE_FREE_WIFI, BIZ_SERVICE_WITH_PET, BIZ_SERVICE_FREE_PARK, BIZ_SERVICE_DELIVER");
@@ -274,7 +274,7 @@ public class PrePareCreateCardRpcServiceImplTest {
                 "}");
 
 
-        PrePareCreateCardRpcService.PreCardResData resInfo = prePareCreateCardRpcService.createMemberCard(couponData);
+        CardPrePareCreateRpcService.PreCardResData resInfo = prePareCreateCardRpcService.createMemberCard(couponData);
         String cardKey = resInfo.getCardKey();
         baseInfo.setCardKey(cardKey);
         advancedInfo.setCardKey(cardKey);
@@ -285,9 +285,9 @@ public class PrePareCreateCardRpcServiceImplTest {
 
     @Test
     public void testSubmitMember(){
-        PrePareCreateCardRpcService.CardPrimaryKey cardPrimaryKey = new PrePareCreateCardRpcService.CardPrimaryKey();
+        CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
         cardPrimaryKey.setCardKey("123aerzc12adsg123");
-        PrePareCreateCardRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitMemberInfo(cardPrimaryKey);
+        CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitMemberInfo(cardPrimaryKey);
         System.out.println(preCardResData);
     }
 

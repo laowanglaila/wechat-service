@@ -2,9 +2,9 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.CardPrePareCreateRpcService;
 import com.hualala.app.wechat.CreateCardCouponRpcService;
 import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.PrePareCreateCardRpcService;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
@@ -33,9 +33,9 @@ import java.util.Map;
  * Created by renjianfei on 2017/4/25.
  */
 @Service
-public class PrePareCreateCardRpcServiceImpl implements PrePareCreateCardRpcService {
+public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcService {
 
-    private Logger logger = Logger.of(PrePareCreateCardRpcServiceImpl.class);
+    private Logger logger = Logger.of(CardPrePareCreateRpcServiceImpl.class);
 
     @Autowired
     private MpInfoService mpInfoService;
