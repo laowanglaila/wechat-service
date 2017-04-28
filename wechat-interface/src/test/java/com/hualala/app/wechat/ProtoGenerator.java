@@ -11,8 +11,8 @@ public class ProtoGenerator {
     @org.junit.Test
     public void generatorProto() {
         Class[] generatorClass = new Class[]{
-                PrePareQueryCardRpcService.class
-//                PrePareCreateCardRpcService.class
+                CardPrePareQueryRpcService.class
+//                CardPrePareCreateRpcService.class
 //                CreateCardCouponRpcService.class,
 //                ColorEnum.class,
 //                CouponTypeEnum.class,
