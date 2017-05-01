@@ -26,11 +26,11 @@ public interface CardUpdateRpcService {
     /**
      * 更新基本信息（优惠券只支持更新基本信息）
      *
-     * @param cardBaseInfoUpdateReqData
+     * @param couponInfoUpdateReqData
      * @return
      */
     @RpcMethod
-    CardUpdateResData updateBaseInfo(CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData);
+    CardUpdateResData updateCouponInfo(CouponInfoUpdateReqData couponInfoUpdateReqData);
 
 
 
@@ -93,83 +93,104 @@ public interface CardUpdateRpcService {
         //        bonus_rules            	        否           	string(3072)            	积分规则。
         @Protocol(fieldType = FieldType.STRING, order = 20, description = "积分规则")
         private String bonusRules;
+        //        title	                            是	            string(27)	            微信会员卡	会员卡标题，字数上限为9个汉字
+        @Protocol(fieldType = FieldType.STRING, order = 21, description = "卡券名称")
+        private String title;
+        @Protocol(fieldType = FieldType.OBJECT, order = 22, description = "卡券基本信息")
+        private CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData ;
+
+        public CardBaseInfoUpdateReqData buildBaseInfo(){
+            return cardBaseInfoUpdateReqData==null?new CardBaseInfoUpdateReqData():cardBaseInfoUpdateReqData;
+        }
+        private void setCardBaseInfoUpdateReqData(CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData){
+
+        }
     }
 
     @Data
-    class CardBaseInfoUpdateReqData extends RequestInfo {
+    class CouponInfoUpdateReqData extends  RequestInfo{
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
         private String cardKey;
         //        title	                            是	            string(27)	            微信会员卡	会员卡标题，字数上限为9个汉字
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "卡券名称")
         private String title;
+        @Protocol(fieldType = FieldType.OBJECT, order = 4, description = "卡券基本信息")
+        private CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = new CardBaseInfoUpdateReqData();
+
+    }
+
+    @Data
+    class CardBaseInfoUpdateReqData {
+
+
         //        description            	        是            	string（3072）          不可与其他优惠同享使用说明。
-        @Protocol(fieldType = FieldType.STRING, order = 4, description = "卡券使用说明，字数上限为1024个汉字")
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "卡券使用说明，字数上限为1024个汉字")
         private String description;
         //        notice            	            是（会员卡不提审）         	    string（48）            请出示二维码核销卡券。使用提醒，字数上限为16个汉字。
-        @Protocol(fieldType = FieldType.STRING, order = 5, description = "卡券使用提醒，字数上限为16个汉字")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "卡券使用提醒，字数上限为16个汉字")
         private String notice;
         //        logo_url            	            否          	string(128)             http://mmbiz.qpic.cn/卡券的商户logo，建议像素为300*300。
-        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券的商户logo，建议像素为300*300")
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "卡券的商户logo，建议像素为300*300")
         private String logoUrl;
         //        service_phone            	        否            	string（24）            	40012234            	客服电话。
-        @Protocol(fieldType = FieldType.STRING, order = 7, description = "客服电话。")
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "客服电话。")
         private String servicePhone;
         //        color            	                否          	string（3072）            	Color010            	卡券颜色。
-        @Protocol(fieldType = FieldType.STRING, order = 8, description = "券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口")
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口")
         private String color;
         //        location_id_list            	    否            	string（3072）            	1234,2314            	支持更新适用门店列表。
-        @Protocol(fieldType = FieldType.STRING, order = 9, description = "门店位置ID集合。调用POI门店管理接口获取门店位置ID。多个使用( ','+'空格' )分割")
+        @Protocol(fieldType = FieldType.STRING, order = 7, description = "门店位置ID集合。调用POI门店管理接口获取门店位置ID。多个使用( ','+'空格' )分割")
         private String locationIdList;
         //        use_all_locations	                否 	            bool	true	        支持全部门店，填入后卡券门店跟随商户门店更新而更新
-        @Protocol(fieldType = FieldType.BOOL, order = 10, description = "设置本卡券支持全部门店，与location_id_list互斥")
+        @Protocol(fieldType = FieldType.BOOL, order = 8, description = "设置本卡券支持全部门店，与location_id_list互斥")
         private Boolean useAllLocations;
         //        center_title            	        否            	string(18)            	立即使用会员卡中部的跳转按钮名称 ，建议用作使用用途
-        @Protocol(fieldType = FieldType.STRING, order = 11, description = "立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示")
+        @Protocol(fieldType = FieldType.STRING, order = 9, description = "立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示")
         private String centerTitle;
         //        center_sub_title            	    否            	string(24)            	到店后使用            	会员卡中部按钮解释wording
-        @Protocol(fieldType = FieldType.STRING, order = 12, description = "立即享受优惠显示在入口下方的提示，仅在卡券状态正常(可以核销)时显示。")
+        @Protocol(fieldType = FieldType.STRING, order = 10, description = "立即享受优惠显示在入口下方的提示，仅在卡券状态正常(可以核销)时显示。")
         private String centerSubTitle;
         //        center_url            	        否            	string(128)            	www.qq.com            	会员卡中部按钮对应跳转的url
-        @Protocol(fieldType = FieldType.STRING, order = 13, description = "顶部居中的url，仅在卡券状态正常(可以核销)时显示。")
+        @Protocol(fieldType = FieldType.STRING, order = 11, description = "顶部居中的url，仅在卡券状态正常(可以核销)时显示。")
         private String centerUrl;
         //        custom_url_name            	    否            	string（16）            	立即使用            	自定义跳转入口的名字。
-        @Protocol(fieldType = FieldType.STRING, order = 14, description = "自定义跳转外链的入口名字。")
+        @Protocol(fieldType = FieldType.STRING, order = 12, description = "自定义跳转外链的入口名字。")
         private String customUrlName;
         //        custom_url            	        否            	string（128）            	www.qq.com            	自定义跳转的URL。
-        @Protocol(fieldType = FieldType.STRING, order = 15, description = "自定义跳转的URL。")
+        @Protocol(fieldType = FieldType.STRING, order = 13, description = "自定义跳转的URL。")
         private String customUrl;
         //        custom_url_sub_title            	否            	string（18）            	更多惊喜            	显示在入口右侧的提示语。
-        @Protocol(fieldType = FieldType.STRING, order = 16, description = "显示在入口右侧的提示语。")
+        @Protocol(fieldType = FieldType.STRING, order = 14, description = "显示在入口右侧的提示语。")
         private String customUrlSubTitle;
         //        promotion_url_name            	否            	string（16）            	产品介绍。            	营销场景的自定义入口名称。
-        @Protocol(fieldType = FieldType.STRING, order = 17, description = "营销场景的自定义入口名称。")
+        @Protocol(fieldType = FieldType.STRING, order = 15, description = "营销场景的自定义入口名称。")
         private String promotionUrlName;
         //        promotion_url            	        否            	string（128）            	www.qq.com；            	入口跳转外链的地址链接。
-        @Protocol(fieldType = FieldType.STRING, order = 18, description = "入口跳转外链的地址链接。")
+        @Protocol(fieldType = FieldType.STRING, order = 16, description = "入口跳转外链的地址链接。")
         private String promotionUrl;
         //        promotion_url_sub_title           否            	string（18）            	卖场大优惠。            	显示在营销入口右侧的提示语。
-        @Protocol(fieldType = FieldType.STRING, order = 19, description = "显示在营销入口右侧的提示语。")
+        @Protocol(fieldType = FieldType.STRING, order = 17, description = "显示在营销入口右侧的提示语。")
         private String promotionUrlSubTitle;
         //        code_type            	            否            	string（16）            CODE_TYPE_TEXT。Code码展示类型，"CODE_TYPE_TEXT"  文本           "CODE_TYPE_BARCODE"一维码 "CODE_TYPE_QRCODE 二维码   "CODE_TYPE_ONLY_QRCODE"仅显示二维码  "CODE_TYPE_ONLY_BARCODE"仅显示一维码  "CODE_TYPE_NONE"不显示任何码型
-        @Protocol(fieldType = FieldType.STRING, order = 20, description = "Code展示类型")
+        @Protocol(fieldType = FieldType.STRING, order = 18, description = "Code展示类型")
         private String codeType;
         //        is_swipe_card	                    否	            bool	                true	    是否设置该会员卡支持拉出微信支付刷卡界面
-        @Protocol(fieldType = FieldType.BOOL, order = 21, description = "是否设置该会员卡支持拉出微信支付刷卡界面")
+        @Protocol(fieldType = FieldType.BOOL, order = 19, description = "是否设置该会员卡支持拉出微信支付刷卡界面")
         private Boolean isSwipeCard;
         //        is_pay_and_qrcode	                否	            bool	                true	是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
-        @Protocol(fieldType = FieldType.BOOL, order = 22, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
+        @Protocol(fieldType = FieldType.BOOL, order = 20, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
         private Boolean isPayAndQrcode;
         //        get_limit            	            否            	int            	        1            	每人可领券的数量限制
-        @Protocol(fieldType = FieldType.STRING, order = 23, description = "每人可领券的数量限制。默认值为50。")
+        @Protocol(fieldType = FieldType.STRING, order = 21, description = "每人可领券的数量限制。默认值为50。")
         private Integer getLimit;
         //        can_share            	            否            	bool            	    false            	卡券原生领取页面是否可分享
-        @Protocol(fieldType = FieldType.BOOL, order = 24, description = "卡券领取页面是否可分享。")
+        @Protocol(fieldType = FieldType.BOOL, order = 22, description = "卡券领取页面是否可分享。")
         private Boolean canShare;
         //        can_give_friend            	    否            	bool            	    false            	卡券是否可转赠
-        @Protocol(fieldType = FieldType.BOOL, order = 25, description = "卡券是否可转赠。")
+        @Protocol(fieldType = FieldType.BOOL, order = 23, description = "卡券是否可转赠。")
         private Boolean canGiveFriend;
         //        date_info            	            否            	Json结构            	见上述示例            	使用日期，有效期的信息，有效期时间修改仅支持有效区间的扩大
-        @Protocol(fieldType = FieldType.STRING, order = 26, description = "使用日期，有效期的信息")
+        @Protocol(fieldType = FieldType.STRING, order = 24, description = "使用日期，有效期的信息")
         private String dateInfo;
     }
 

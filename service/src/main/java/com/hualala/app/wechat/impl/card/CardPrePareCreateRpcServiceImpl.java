@@ -526,12 +526,22 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
         if (supplyBonus){
             String bonusUrl = memberModel.getBonusUrl();
             String bonusCleared = memberModel.getBonusCleared();
-            cardInfo.put("bonus_url", bonusUrl);
-            cardInfo.put("bonus_cleared", bonusCleared);
+            if (StringUtils.isNotBlank(bonusUrl)) {
+                cardInfo.put("bonus_url", bonusUrl);
+            }
+            if (StringUtils.isNotBlank(bonusCleared)) {
+                cardInfo.put("bonus_cleared", bonusCleared);
+            }
             //json
             String bonusRule = memberModel.getBonusRule();
-            JSONObject jsonObject = JSONObject.parseObject(bonusRule);
-            cardInfo.put("bonus_rule", jsonObject);
+            if (StringUtils.isNotBlank(bonusRule)) {
+                JSONObject jsonObject = JSONObject.parseObject(bonusRule);
+                cardInfo.put("bonus_rule", jsonObject);
+            }
+            String bonusRules = memberModel.getBonusRules();
+            if (StringUtils.isNotBlank(bonusRules)){
+                cardInfo.put("bonus_rules",bonusRules);
+            }
         }
 
 
