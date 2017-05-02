@@ -13,4 +13,6 @@ public interface WechatQrcodeTempMapper {
 
 	int queryCount(Map<String, Object> params);
 
+	int queryMaxSenceID(String mpID);
+
 }

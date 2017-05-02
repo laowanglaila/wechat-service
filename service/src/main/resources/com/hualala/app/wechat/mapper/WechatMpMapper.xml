@@ -1,78 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hualala.app.wechat.mapper.WechatMpMapper">
-	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatMpModel">
-		insert into tbl_shop_wechat_mp (
-			<if test="itemID !=null">itemID,</if>
-			<if test="mpID !=null">mpID,</if>
-			<if test="ghID !=null">ghID,</if>
-			<if test="mpName !=null">mpName,</if>
-			<if test="mpType !=null">mpType,</if>
-			<if test="token !=null">token,</if>
-			<if test="appID !=null">appID,</if>
-			<if test="groupID !=null">groupID,</if>
-			<if test="brandID !=null">brandID,</if>
-			<if test="appSecret !=null">appSecret,</if>
-			<if test="encodingAESKey !=null">encodingAESKey,</if>
-			<if test="weixinURL !=null">weixinURL,</if>
-			<if test="headImg !=null">headImg,</if>
-			<if test="qrCodeURL !=null">qrCodeURL,</if>
-			<if test="menuJson !=null">menuJson,</if>
-			<if test="shopID !=null">shopID,</if>
-			<if test="customerWithoutBindMobile !=null">customerWithoutBindMobile,</if>
-			<if test="subscribeToCcustomer !=null">subscribeToCcustomer,</if>
-			<if test="tableMsgTemplate !=null">tableMsgTemplate,</if>
-			<if test="funcInfo !=null">funcInfo,</if>
-			<if test="alias !=null">alias,</if>
-			<if test="authorize !=null">authorize,</if>
-			<if test="authorizerRefreshToken !=null">authorizerRefreshToken,</if>
-			<if test="oauth !=null">oauth,</if>
-			<if test="isActiveUse !=null">isActiveUse,</if>
-			<if test="wechatEndDate !=null">wechatEndDate,</if>
-        action, #{createStamp}
-		) values (
-			<if test="itemID !=null">#{itemID},</if>
-			<if test="mpID !=null">#{mpID},</if>
-			<if test="ghID !=null">#{ghID},</if>
-			<if test="mpName !=null">#{mpName},</if>
-			<if test="mpType !=null">#{mpType},</if>
-			<if test="token !=null">#{token},</if>
-			<if test="appID !=null">#{appID},</if>
-			<if test="groupID !=null">#{groupID},</if>
-			<if test="brandID !=null">#{brandID},</if>
-			<if test="appSecret !=null">#{appSecret},</if>
-			<if test="encodingAESKey !=null">#{encodingAESKey},</if>
-			<if test="weixinURL !=null">#{weixinURL},</if>
-			<if test="headImg !=null">#{headImg},</if>
-			<if test="qrCodeURL !=null">#{qrCodeURL},</if>
-			<if test="menuJson !=null">#{menuJson},</if>
-			<if test="shopID !=null">#{shopID},</if>
-			<if test="customerWithoutBindMobile !=null">#{customerWithoutBindMobile},</if>
-			<if test="subscribeToCcustomer !=null">#{subscribeToCcustomer},</if>
-			<if test="tableMsgTemplate !=null">#{tableMsgTemplate},</if>
-			<if test="funcInfo !=null">#{funcInfo},</if>
-			<if test="alias !=null">#{alias},</if>
-			<if test="authorize !=null">#{authorize},</if>
-			<if test="authorizerRefreshToken !=null">#{authorizerRefreshToken},</if>
-			<if test="oauth !=null">#{oauth},</if>
-			<if test="isActiveUse !=null">#{isActiveUse},</if>
-			<if test="wechatEndDate !=null">#{wechatEndDate},</if>
-        #{action}, #{createStamp}
-		)
-	</insert>
+    <insert id="insert" parameterType="com.hualala.app.wechat.model.WechatMpModel">
+        insert into tbl_shop_wechat_mp (
+        <if test="itemID !=null">itemID,</if>
+        <if test="mpID !=null">mpID,</if>
+        <if test="ghID !=null">ghID,</if>
+        <if test="mpName !=null">mpName,</if>
+        <if test="mpType !=null">mpType,</if>
+        <if test="token !=null">token,</if>
+        <if test="appID !=null">appID,</if>
+        <if test="groupID !=null">groupID,</if>
+        <if test="brandID !=null">brandID,</if>
+        <if test="appSecret !=null">appSecret,</if>
+        <if test="encodingAESKey !=null">encodingAESKey,</if>
+        <if test="weixinURL !=null">weixinURL,</if>
+        <if test="headImg !=null">headImg,</if>
+        <if test="qrCodeURL !=null">qrCodeURL,</if>
+        <if test="menuJson !=null">menuJson,</if>
+        <if test="shopID !=null">shopID,</if>
+        <if test="customerWithoutBindMobile !=null">customerWithoutBindMobile,</if>
+        <if test="subscribeToCcustomer !=null">subscribeToCcustomer,</if>
+        <if test="tableMsgTemplate !=null">tableMsgTemplate,</if>
+        <if test="funcInfo !=null">funcInfo,</if>
+        <if test="alias !=null">alias,</if>
+        <if test="authorize !=null">authorize,</if>
+        <if test="authorizerRefreshToken !=null">authorizerRefreshToken,</if>
+        <if test="oauth !=null">oauth,</if>
+        <if test="isActiveUse !=null">isActiveUse,</if>
+        <if test="wechatEndDate !=null">wechatEndDate,</if>
+        action, #{createTime}
+        ) values (
+        <if test="itemID !=null">#{itemID},</if>
+        <if test="mpID !=null">#{mpID},</if>
+        <if test="ghID !=null">#{ghID},</if>
+        <if test="mpName !=null">#{mpName},</if>
+        <if test="mpType !=null">#{mpType},</if>
+        <if test="token !=null">#{token},</if>
+        <if test="appID !=null">#{appID},</if>
+        <if test="groupID !=null">#{groupID},</if>
+        <if test="brandID !=null">#{brandID},</if>
+        <if test="appSecret !=null">#{appSecret},</if>
+        <if test="encodingAESKey !=null">#{encodingAESKey},</if>
+        <if test="weixinURL !=null">#{weixinURL},</if>
+        <if test="headImg !=null">#{headImg},</if>
+        <if test="qrCodeURL !=null">#{qrCodeURL},</if>
+        <if test="menuJson !=null">#{menuJson},</if>
+        <if test="shopID !=null">#{shopID},</if>
+        <if test="customerWithoutBindMobile !=null">#{customerWithoutBindMobile},</if>
+        <if test="subscribeToCcustomer !=null">#{subscribeToCcustomer},</if>
+        <if test="tableMsgTemplate !=null">#{tableMsgTemplate},</if>
+        <if test="funcInfo !=null">#{funcInfo},</if>
+        <if test="alias !=null">#{alias},</if>
+        <if test="authorize !=null">#{authorize},</if>
+        <if test="authorizerRefreshToken !=null">#{authorizerRefreshToken},</if>
+        <if test="oauth !=null">#{oauth},</if>
+        <if test="isActiveUse !=null">#{isActiveUse},</if>
+        <if test="wechatEndDate !=null">#{wechatEndDate},</if>
+        #{action}, #{createTime}
+        )
+    </insert>
 
-	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
-    select count(1) from tbl_shop_wechat_mp
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+
+      SELECT COUNT(1) FROM tbl_shop_wechat_mp
+      WHERE
+      <include refid="whereSql" />
+
     </select>
 
-	<select id="queryList" resultType="com.hualala.app.wechat.model.WechatMpModel" parameterType="java.util.Map">
-    select
-    <include refid="queryField"/>
-    from tbl_shop_wechat_mp
-    limit #{offset}, #{pageSize}
+    <select id="queryList" resultType="com.hualala.app.wechat.model.WechatMpModel" parameterType="java.util.Map">
+        SELECT
+        <include refid="queryField"/>
+        FROM tbl_shop_wechat_mp
+        WHERE
+        <include refid="whereSql"/>
     </select>
+    <select id="queryByParams" resultType="java.util.Map">
+
+        SELECT
+          mpID,appID,mpType,appSecret,authorize,authorizerRefreshToken,groupID
+        FROM tbl_shop_wechat_mp
+        WHERE
+        <include refid="whereSql"/>
+    </select>
+
+    <select id="queryMpIDAuth" resultType="java.lang.String">
+        SELECT mpID FROM tbl_shop_wechat_mp
+        WHERE
+        action in (0,1)
+        AND groupID = #{groupID}
+        AND ( brandID = #{brandID} or brandID = 0 )
+        AND mpType IN (11,21)
+        AND authorize in (0,1)
+        Order by brandID desc limit 1
+    </select>
+
+
+    <sql id="whereSql">
+        action in (0,1)
+        <if test="mpID != null">
+            and mpID = #{mpID}
+        </if>
+        <if test="appID != null">
+            and appID = #{appID}
+        </if>
+        <if test="groupID != null">
+            and groupID = #{groupID}
+        </if>
+        <if test="brandID != null">
+            and brandID = #{brandID}
+        </if>
+        <if test="mpType != null">
+            and mpType = #{mpType}
+        </if>
+        <if test="offset != null and pageSize != null">
+            limit #{offset}, #{pageSize}
+        </if>
+    </sql>
+
 
     <sql id="queryField">
-        itemID,        mpID,        ghID,        mpName,        mpType,        token,        appID,        groupID,        brandID,        appSecret,        encodingAESKey,        weixinURL,        headImg,        qrCodeURL,        menuJson,        shopID,        customerWithoutBindMobile,        subscribeToCcustomer,        tableMsgTemplate,        funcInfo,        alias,        authorize,        authorizerRefreshToken,        oauth,        isActiveUse,        wechatEndDate
+        itemID, mpID, ghID, mpName, mpType, token, appID, groupID, brandID, appSecret, encodingAESKey, weixinURL, headImg, qrCodeURL, menuJson, shopID, customerWithoutBindMobile, subscribeToCcustomer, tableMsgTemplate, funcInfo, alias, authorize, authorizerRefreshToken, oauth, isActiveUse, wechatEndDate
     </sql>
 </mapper>

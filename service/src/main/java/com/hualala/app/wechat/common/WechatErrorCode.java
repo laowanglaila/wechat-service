@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class WechatErrorCode {
 
+
+	//private Strign
+
 	public static Map<String,String> wechatError = new HashMap<>();
 
 
@@ -52,6 +55,8 @@ public class WechatErrorCode {
 		wechatError.put("40039", "不合法的URL长度");
 		wechatError.put("40050", "不合法的分组id");
 		wechatError.put("40051", "分组名字不合法");
+		wechatError.put("40052", "JSON格式错误");
+		wechatError.put("40079", "不合法的时间");
 		wechatError.put("41001", "缺少access_token参数");
 		wechatError.put("41002", "缺少appid参数");
 		wechatError.put("41003", "缺少refresh_token参数");
@@ -61,6 +66,7 @@ public class WechatErrorCode {
 		wechatError.put("41007", "缺少子菜单数据");
 		wechatError.put("41008", "缺少oauth code");
 		wechatError.put("41009", "缺少openid");
+		wechatError.put("41011", "缺少必须的参数");
 		wechatError.put("42001", "access_token超时，请检查access_token的有效期");
 		wechatError.put("42002", "refresh_token超时");
 		wechatError.put("42003", "oauth_code超时");

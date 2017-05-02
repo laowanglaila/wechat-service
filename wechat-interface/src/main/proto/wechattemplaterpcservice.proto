@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "WechatTemplateRpcData";
+import "commons.proto";
+import "wechatcommons.proto";
+
+message WechatTemplateRpcReqData {  
+   // 集团ID
+   int64 groupID=2;
+   // 品牌ID
+   int64 brandID=3;
+   // 店铺ID
+   int64 shopID=4;
+   // 模板消息类型枚举
+   WechatTemplateTypeEnum templateType=5;
+   // mpID
+   string mpID=6;
+   // openID
+   string openID=7;
+   // 用户ID
+   int64 userID=8;
+   // 模板消息title
+   string first=9;
+   // keynote1
+   string keynote1=10;
+   // keynote2
+   string keynote2=11;
+   // keynote3
+   string keynote3=12;
+   // keynote4
+   string keynote4=13;
+   // keynote5
+   string keynote5=14;
+   // keynote6
+   string keynote6=15;
+   // remark
+   string remark=16;
+   // param1
+   string param1=17;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WechatTemplateRpcResData {  
+   int64 itemID=2;
+   // 发送消息类型 WECHAT SMS
+   string msgType=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service WechatTemplateRpcService{
+    //
+    rpc sentWechatTemplate(WechatTemplateRpcReqData) returns (WechatTemplateRpcResData) {}
+}

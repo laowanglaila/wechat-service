@@ -16,7 +16,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,7 @@ public class HttpApiUtil {
     private static final int CONNECT_TIMEOUT = 5000;
     private static Logger logger = LoggerFactory.getLogger(HttpApiUtil.class);
     private static String ENCODE = "UTF-8";
+
 
 
     public static JSONObject httpPost(String url, Map<String, String> params) {
@@ -68,10 +68,14 @@ public class HttpApiUtil {
     }
 
     public static JSONObject httpPost(String url, String params) {
+
         HttpClient httpClient = HttpClientBuilder.create().build();
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(SOCKET_TIMEOUT).setConnectTimeout(CONNECT_TIMEOUT).build();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setConfig(requestConfig);
+        //设置请求头，服务器端关闭连接
+        httpPost.setHeader("Connection", "close");
+
         try {
             httpPost.setEntity(new StringEntity(params, ENCODE));
             HttpResponse httpResponse = null;
@@ -81,9 +85,10 @@ public class HttpApiUtil {
                 logger.error("url [" + url + "] statusCode [" + httpResponse.getStatusLine().getStatusCode() + "]");
                 // TODO
             }
-            HttpEntity httpEntity = httpResponse.getEntity();
+            HttpEntity httpEntity  = httpResponse.getEntity();
             if (httpEntity != null) {
                 String result = result = EntityUtils.toString(httpEntity, ENCODE);
+
                 if (logger.isInfoEnabled()) {
                     logger.info("result data：[" + result + "]");
                 }
@@ -115,6 +120,7 @@ public class HttpApiUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
         return null;
     }

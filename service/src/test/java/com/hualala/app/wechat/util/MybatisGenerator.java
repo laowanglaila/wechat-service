@@ -1,4 +1,4 @@
-package com.hualala.app.wechat;
+package com.hualala.app.wechat.util;
 
 import com.hualala.core.service.utils.MybatisSqlGenerator;
 import org.junit.Test;
@@ -17,13 +17,14 @@ public class MybatisGenerator {
         //new MybatisSqlGenerator().generatorMySql("db_pay", "tbl_pay_account_external_map", "output");
         // new MybatisSqlGenerator().generatorMySql("db_pay", "tbl_pay_account_shop_map", "output");
 
-        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_autoreply", "wechat",0);
-        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_mp", "wechat",0);
-        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_qrcode", "wechat",0);
-        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_qrcode_temp", "wechat",0);
-        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_template", "wechat",0);
-        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_user", "wechat",0);
+//        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_autoreply", "wechat",0);
+//        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_mp", "wechat",0);
+//        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_qrcode", "wechat",0);
+//        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_qrcode_temp", "wechat",0);
+//        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_template", "wechat",0);
+//        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_user", "wechat",0);
 //
+        new MybatisSqlGenerator().generatorMySql("db_shop", "tbl_shop_wechat_member_info", "wechat",0);
 
         /*
         tbl_shop_wechat_autoreply

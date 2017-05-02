@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hualala.wechat</groupId>
     <artifactId>wechat-service</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <modules>
-        <module>interface</module>
+        <module>wechat-interface</module>
         <module>service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.5.RELEASE</version>
+        <version>1.4.2.RELEASE</version>
     </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
         <maven.build.timestamp.format>yyyyMMdd.HHmm</maven.build.timestamp.format>
-        <hualala.core.version>0.2.0-SNAPSHOT</hualala.core.version>
+        <hualala.core.version>0.4.1-SNAPSHOT</hualala.core.version>
     </properties>
     <distributionManagement>
         <repository>
@@ -39,13 +39,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
+                <groupId>com.hualala.rpc</groupId>
+                <artifactId>rpc-core</artifactId>
+                <version>${hualala.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.hualala.rpc</groupId>
@@ -53,19 +49,30 @@
                 <version>${hualala.core.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hualala.rpc</groupId>
-                <artifactId>rpc-core</artifactId>
-                <version>${hualala.core.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity</artifactId>
                 <version>1.7</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hualala.idgen</groupId>
+                <artifactId>idgen-interface</artifactId>
+                <version>1.0.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.hualala.grpc</groupId>
+                        <artifactId>grpc-all</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.hualala.grpc</groupId>
+                        <artifactId>grpc-core</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -121,6 +128,13 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>

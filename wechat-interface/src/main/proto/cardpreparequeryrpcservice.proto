@@ -1,0 +1,235 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardPrePareQueryRpcData";
+import "commons.proto";
+
+message CardQuery {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
+   // 卡券名称
+   string title=6;
+   // 优惠券类型
+   string cardType=7;
+   // 唯一ID
+   string cardKey=8;
+   // 分页起始索引
+   int32 pageNO=9;
+   // 每页结果数
+   int32 pageSize=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MemberResData {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
+   // 卡券名称
+   string title=6;
+   // 优惠券类型
+   string cardType=7;
+   // 会员端产生的唯一主键ID
+   string cardKey=8;
+   // 折扣，该会员卡享受的折扣优惠,填10就是九折。
+   int32 discount=9;
+   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
+   string backgroundPicUrl=10;
+   // 会员卡特权说明。
+   string prerogative=11;
+   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
+   bool autoActivate=12;
+   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
+   bool wxActivate=13;
+   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
+   bool supplyBonus=14;
+   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
+   string bonusUrl=15;
+   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
+   bool supplyBalance=16;
+   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
+   string balanceUrl=17;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField1=18;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField2=19;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField3=20;
+   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
+   string customCell1=21;
+   // 积分规则。JSON结构
+   string bonusRule=22;
+   // 激活会员卡的url。
+   string activateUrl=23;
+   // 积分清零规则。
+   string bonusCleared=24;
+   // 储值说明。
+   string balanceRules=25;
+   // 积分规则
+   string bonusRules=26;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CouponResData {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
+   // 卡券名称
+   string title=6;
+   // 优惠券类型
+   string cardType=7;
+   // 唯一ID
+   string cardKey=8;
+   // 优惠券专用，填写优惠详情。
+   string defaultDetail=9;
+   // 团购券专用，填写团购详情。
+   string dealDetail=10;
+   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。
+   string leastCost=11;
+   // 代金券专用，表示减免金额。（单位为分）
+   string reduceCost=12;
+   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
+   string discount=13;
+   // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
+   string gift=14;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardBaseInfoResData {  
+   // card唯一键
+   string cardKey=2;
+   // 卡券的商户logo，建议像素为300*300
+   string logoUrl=3;
+   // Code展示类型
+   string codeType=4;
+   // 券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口
+   string color=5;
+   // 商户名字,字数上限为12个汉字
+   string brandName=6;
+   // 卡券使用提醒，字数上限为16个汉字
+   string notice=7;
+   // 卡券使用说明，字数上限为1024个汉字
+   string description=8;
+   // 库存信息
+   int32 sku=9;
+   // 使用日期，有效期的信息
+   string dateInfo=10;
+   // 是否自定义Code码.填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。
+   bool useCustomCode=11;
+   // 是否指定用户领取，填写true或false。默认为false。
+   bool bindOpenid=12;
+   // 客服电话。
+   string servicePhone=13;
+   // 门店位置ID集合。调用POI门店管理接口获取门店位置ID。多个使用( ','+'空格' )分割
+   string locationIdList=14;
+   // 第三方来源名，例如同程旅游、大众点评。
+   string source=15;
+   // 自定义跳转外链的入口名字。
+   string customUrlName=16;
+   // 自定义跳转的URL。
+   string customUrl=17;
+   // 显示在入口右侧的提示语。
+   string customUrlSubTitle=18;
+   // 营销场景的自定义入口名称。
+   string promotionUrlName=19;
+   // 入口跳转外链的地址链接。
+   string promotionUrl=20;
+   // 显示在营销入口右侧的提示语。
+   string promotionUrlSubTitle=21;
+   // 每人可领券的数量限制。默认值为50。
+   string getLimit=22;
+   // 卡券领取页面是否可分享。
+   bool canShare=23;
+   // 卡券是否可转赠。
+   bool canGiveFriend=24;
+   // 填写true为用户点击进入会员卡时推送事件，默认为false。会员卡专用
+   bool needPushOnView=25;
+   // 填入 GET_CUSTOM_CODE_MODE_DEPOSIT 表示该卡券为预存code模式卡券，须导入超过库存数目的自定义code后方可投放，填入该字段后，quantity字段须为0,须导入code后再增加库存
+   string customCodeMode=26;
+   // 设置本卡券支持全部门店，与location_id_list互斥
+   bool useAllLocations=27;
+   // 立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示
+   string centerTitle=28;
+   // 立即享受优惠显示在入口下方的提示，仅在卡券状态正常(可以核销)时显示。
+   string centerSubTitle=29;
+   // 顶部居中的url，仅在卡券状态正常(可以核销)时显示。
+   string centerUrl=30;
+   // 每人可核销的数量限制,不填写默认为50。
+   string useLimit=31;
+   // 是否设置该会员卡支持拉出微信支付刷卡界面
+   bool isSwipeCard=32;
+   // 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+   bool isPayAndQrcode=33;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardAdvancedInfoResData {  
+   // card唯一键
+   string cardKey=2;
+   // 封面摘要结构体名称
+   string abstractInfo=3;
+   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
+   string businessService=4;
+   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+   string textImage=5;
+   // 使用时段限制，包含以下字段
+   string timeLimit=6;
+   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+   string useCodition=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MemberResDataList {  
+   // 会员卡信息List
+   repeated MemberResData memberResData=2;
+   // 起始索引
+   int32 pageNO=3;
+   // 每页结果数
+   int32 pageSize=4;
+   // 结果集总条数
+   int32 totleCount=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CouponResDataList {  
+   // 优惠券集合
+   repeated CouponResData couponResDataList=2;
+   // 起始索引
+   int32 pageNO=3;
+   // 每页结果数
+   int32 pageSize=4;
+   // 结果集总条数
+   int32 totleCount=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//查询卡券创建相关数据
+service CardPrePareQueryRpcService{
+    //查询会员卡数据
+    rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
+    //查询优惠券数据
+    rpc queryCouponByCardKey(CardQuery) returns (CouponResData) {}
+    //查询基本数据
+    rpc queryBaseInfoByCardKey(CardQuery) returns (CardBaseInfoResData) {}
+    //查询优高级数据
+    rpc queryAdvancedInfoByCardKey(CardQuery) returns (CardAdvancedInfoResData) {}
+    //查询多个会员卡数据
+    rpc queryMemberList(CardQuery) returns (MemberResDataList) {}
+    //查询多个优惠券数据
+    rpc queryCouponList(CardQuery) returns (CouponResDataList) {}
+}

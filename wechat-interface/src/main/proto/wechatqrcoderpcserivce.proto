@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "WechatQRCodeRpcSerivceData";
+import "commons.proto";
+import "wechatcommons.proto";
+
+message WechatQRCodeReq {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   string groupID=4;
+   // 品牌ID
+   string brandID=3;
+   // 店铺ID
+   string shopID=5;
+   // 二维码描述
+   string description=6;
+   // 二维码类型
+   WechatQRTypeEnum qrcodeType=7;
+   // param1冗余
+   string param1=8;
+   // param2冗余
+   string param2=9;
+   // param3冗余
+   string param3=10;
+   // locationName二维码使用场景地址
+   string locationName=11;
+   // 店铺名称
+   string shopName=12;
+   // 二维码名称
+   string qrcodeName=13;
+   // 该二维码有效时间/秒
+   int32 expireSeconds=14;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WechatQRCodeRes {  
+   // 获取的二维码ticket
+   string ticket=2;
+   // 该二维码有效时间
+   int32 expireSeconds=3;
+   // 二维码图片解析后的地址
+   string wxUrl=4;
+   // param1冗余
+   string param1=5;
+   // param2冗余
+   string param2=6;
+   // param3冗余
+   string param3=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service WechatQRCodeRpcSerivce{
+    //
+    rpc createQRCode(WechatQRCodeReq) returns (WechatQRCodeRes) {}
+}

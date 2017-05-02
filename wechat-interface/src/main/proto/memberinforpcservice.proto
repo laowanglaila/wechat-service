@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "MemberInfoRpcData";
+import "commons.proto";
+
+message MemberInfoQueryReqData {  
+   // itemID
+   string itemID=2;
+   // 公众号编码
+   string mpID=3;
+   // 公众号名称
+   string mpName=4;
+   // 集团ID
+   int64 groupID=6;
+   // 品牌ID
+   int64 brandID=7;
+   // 店铺ID
+   int64 shopID=8;
+   // appID
+   string appID=9;
+   // appSecret
+   string appSecret=10;
+   // cardId
+   string cardId=11;
+   // code
+   string code=12;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MemberInfoResData {  
+   // errcode
+   string errcode=2;
+   // errmsg
+   string errmsg=3;
+   // openid
+   string openid=4;
+   // nickname
+   string nickname=5;
+   // bonus
+   string bonus=6;
+   // balance
+   string balance=7;
+   // sex
+   string sex=8;
+   // userInfo
+   string userInfo=9;
+   // customFieldList
+   string customFieldList=10;
+   // name
+   string name=11;
+   // value
+   string value=12;
+   // userCardStatus
+   string userCardStatus=13;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service MemberInfoRpcService{
+    //获取单条会员信息
+    rpc queryMemberInfo(MemberInfoQueryReqData) returns (MemberInfoResData) {}
+}
