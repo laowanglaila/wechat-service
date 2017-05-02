@@ -1,7 +1,6 @@
-package com.hualala.app.wechat.mapper.card;
+package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.CardPrePareCreateRpcService;
-import com.hualala.app.wechat.impl.card.CardPrePareCreateRpcServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

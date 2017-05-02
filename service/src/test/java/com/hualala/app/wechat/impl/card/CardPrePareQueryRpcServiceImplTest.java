@@ -1,4 +1,4 @@
-package com.hualala.app.wechat.mapper.card;
+package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.BaseRpcTest;
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
