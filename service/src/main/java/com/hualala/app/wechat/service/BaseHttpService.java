@@ -46,6 +46,25 @@ public class BaseHttpService {
         }
         return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
     }
+    /**
+     * 通用的httppost请求方法返回标准的result
+     * 适合errcode =“0”代表成功的请求使用
+     */
+
+    public JSONObject commonHttpPost(String url,String jsonString, String mpID){
+        logger.debug(() -> "微信请求参数 ："+jsonString);
+        JSONObject responseJson = httpApiService.httpPost(url, jsonString, mpID);
+        //首先判断 null ：200    然后判断创建是否成功
+        if(null == responseJson){
+            return ResultUtil.toResultJson(responseJson,false, ErrorCodes.WECHAT_HTTP_FAILED,"http请求失败！");
+        }
+        logger.debug(() -> "微信响应参数 ："+responseJson.toJSONString());
+        String errcode = responseJson.getString( WechatBaseApi.MP_ERRCODE);
+        if(!"0".equals(errcode)){
+            return ResultUtil.toResultJson(responseJson,false,null, WechatErrorCode.wechatError.get(errcode));
+        }
+        return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
+    }
 
     /**
      * Created by renjianfei on 2017/4/6.
@@ -108,6 +127,9 @@ public class BaseHttpService {
      */
     public  JSONObject deleteCard(Map<String, Object> map,String mpId){
         return this.commonHttpPost(WechatBaseApi.DELETE_CARD,map,mpId);
+    }
+    public  JSONObject deleteCard(String jsonString,String mpId){
+        return this.commonHttpPost(WechatBaseApi.DELETE_CARD,jsonString,mpId);
     }
      /**
      * reated by renjianfei on 2017/4/7.
