@@ -1,10 +1,32 @@
 syntax = "proto3";
 
 option java_package = "com.hualala.app.wechat.grpc";
-option java_outer_classname = "PrePareQueryCardRpcData";
+option java_outer_classname = "CardPrePareCreateRpcData";
 import "commons.proto";
 
-message CardQuery {  
+message PreAdvancedInfoData {  
+   // card唯一键
+   string cardKey=2;
+   // 封面摘要结构体名称
+   string abstractInfo=3;
+   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
+   string businessService=4;
+   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+   string textImage=5;
+   // 使用时段限制，包含以下字段
+   string timeLimit=6;
+   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+   string useCodition=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PreCardResData {  
+   // 唯一ID
+   string cardKey=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message PreCouponReqData {  
    // 公众号编码
    string mpID=2;
    // 集团ID
@@ -19,14 +41,22 @@ message CardQuery {
    string cardType=7;
    // 唯一ID
    string cardKey=8;
-   // 分页起始索引
-   int32 pageNO=9;
-   // 每页结果数
-   int32 pageSize=10;
+   // 优惠券专用，填写优惠详情。
+   string defaultDetail=9;
+   // 团购券专用，填写团购详情。
+   string dealDetail=10;
+   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。
+   string leastCost=11;
+   // 代金券专用，表示减免金额。（单位为分）
+   string reduceCost=12;
+   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
+   string discount=13;
+   // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
+   string gift=14;
    // 请求公共字段
    RequestHeader header=1;
 }
-message MemberResData {  
+message PreMemberReqData {  
    // 公众号编码
    string mpID=2;
    // 集团ID
@@ -75,40 +105,12 @@ message MemberResData {
    string bonusCleared=24;
    // 储值说明。
    string balanceRules=25;
-   // 响应公共字段
-   ResultHeader result=1;
+   // 积分规则
+   string bonusRules=26;
+   // 请求公共字段
+   RequestHeader header=1;
 }
-message CouponResData {  
-   // 公众号编码
-   string mpID=2;
-   // 集团ID
-   int64 groupID=3;
-   // 品牌ID
-   int64 brandID=4;
-   // 店铺ID
-   int64 shopID=5;
-   // 卡券名称
-   string title=6;
-   // 优惠券类型
-   string cardType=7;
-   // 唯一ID
-   string cardKey=8;
-   // 优惠券专用，填写优惠详情。
-   string defaultDetail=9;
-   // 团购券专用，填写团购详情。
-   string dealDetail=10;
-   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。
-   string leastCost=11;
-   // 代金券专用，表示减免金额。（单位为分）
-   string reduceCost=12;
-   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
-   string discount=13;
-   // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
-   string gift=14;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CardBaseInfoResData {  
+message PreCardBaseInfoData {  
    // card唯一键
    string cardKey=2;
    // 卡券的商户logo，建议像素为300*300
@@ -173,61 +175,27 @@ message CardBaseInfoResData {
    bool isSwipeCard=32;
    // 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
    bool isPayAndQrcode=33;
-   // 响应公共字段
-   ResultHeader result=1;
+   // 请求公共字段
+   RequestHeader header=1;
 }
-message CardAdvancedInfoResData {  
-   // card唯一键
+message CardPrimaryKey {  
+   // 卡券主键
    string cardKey=2;
-   // 封面摘要结构体名称
-   string abstractInfo=3;
-   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
-   string businessService=4;
-   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
-   string textImage=5;
-   // 使用时段限制，包含以下字段
-   string timeLimit=6;
-   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
-   string useCodition=7;
-   // 响应公共字段
-   ResultHeader result=1;
+   // 请求公共字段
+   RequestHeader header=1;
 }
-message MemberResDataList {  
-   // 会员卡信息List
-   repeated MemberResData memberResData=2;
-   // 起始索引
-   int32 pageNO=3;
-   // 每页结果数
-   int32 pageSize=4;
-   // 结果集总条数
-   int32 totleCount=5;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CouponResDataList {  
-   // 优惠券集合
-   repeated CouponResData couponResDataList=2;
-   // 起始索引
-   int32 pageNO=3;
-   // 每页结果数
-   int32 pageSize=4;
-   // 结果集总条数
-   int32 totleCount=5;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-//查询卡券创建相关数据
-service PrePareQueryCardRpcService{
-    //查询会员卡数据
-    rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
-    //查询优惠券数据
-    rpc queryCouponByCardKey(CardQuery) returns (CouponResData) {}
-    //查询基本数据
-    rpc queryBaseInfoByCardKey(CardQuery) returns (CardBaseInfoResData) {}
-    //查询优高级数据
-    rpc queryAdvancedInfoByCardKey(CardQuery) returns (CardAdvancedInfoResData) {}
-    //查询多个会员卡数据
-    rpc queryMemberList(CardQuery) returns (MemberResDataList) {}
-    //查询多个优惠券数据
-    rpc queryCouponList(CardQuery) returns (CouponResDataList) {}
+//预创建卡券接口
+service CardPrePareCreateRpcService{
+    //高级信息
+    rpc createAdvancedInfo(PreAdvancedInfoData) returns (PreCardResData) {}
+    //卡券创建必要信息方法
+    rpc createCoupon(PreCouponReqData) returns (PreCardResData) {}
+    //会员卡创建必要信息方法
+    rpc createMemberCard(PreMemberReqData) returns (PreCardResData) {}
+    //基本信息
+    rpc createBaseInfo(PreCardBaseInfoData) returns (PreCardResData) {}
+    //提交优惠券
+    rpc submitCouponInfo(CardPrimaryKey) returns (PreCardResData) {}
+    //提交会员卡信息
+    rpc submitMemberInfo(CardPrimaryKey) returns (PreCardResData) {}
 }
