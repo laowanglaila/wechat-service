@@ -89,7 +89,7 @@ public class WechatTemplateConstants {
 		MODELID_TITLE_MAP.put("OPENTM200833782","订单状态提醒");
 
 		MODEL_TYPE_MODELID_MAP.put("queue_alarm",QUEUE_ALARM_MODELID);
-		MODEL_TYPE_MODELID_MAP.put("order_submit",ORDER_MODELID);
+		MODEL_TYPE_MODELID_MAP.put("order_default",ORDER_MODELID);
 
 	}
 }

@@ -25,7 +25,7 @@
 							}
 						},
 						"order": {
-							"submit":{
+							"default":{
 								"modelID": "[modelID]",
 								"templateID": "[templateID]",
 								"first": "[first]",
