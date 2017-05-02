@@ -2,28 +2,18 @@ syntax = "proto3";
 
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "WechatCommon";
-enum ColorEnum {  
-   Color010=0;
-   Color020=1;
-   Color030=2;
-   Color040=3;
-   Color050=4;
-   Color060=5;
-   Color070=6;
-   Color080=7;
-   Color081=8;
-   Color082=9;
-   Color090=10;
-   Color100=11;
-   Color101=12;
-   Color102=13;
+enum CouponTypeEnum {  
+   DEFAULT_COUPON_TYPE=0;
+   GROUPON=1;
+   CASH=2;
+   DISCOUNT=3;
+   GIFT=4;
+   GENERAL_COUPON=5;
 }
-enum CodeTypeEnum {  
-   CODE_TYPE_TEXT=0;
-   CODE_TYPE_BARCODE=1;
-   CODE_TYPE_QRCODE=2;
-   CODE_TYPE_ONLY_QRCODE=3;
-   CODE_TYPE_ONLY_BARCODE=4;
+enum DateInfoTypeEnum {  
+   DEFAULT_DATE_TYPE=0;
+   DATE_TYPE_FIX_TIME_RANGE=1;
+   DATE_TYPE_FIX_TERM=2;
 }
 enum MpTypeEnum {  
    DEFAULT=0;
@@ -32,27 +22,53 @@ enum MpTypeEnum {
    SERVICE=3;
    SERVICE_AUTH=4;
 }
-enum CustomCodeModeEnum {  
-   GET_CUSTOM_CODE_MODE_DEPOSIT=0;
-}
-enum DateInfoTypeEnum {  
-   DATE_TYPE_FIX_TIME_RANGE=0;
-   DATE_TYPE_FIX_TERM=1;
+enum ColorEnum {  
+   DEFAULT_COLOR=0;
+   COLOR_010=1;
+   COLOR_020=2;
+   COLOR_030=3;
+   COLOR_040=4;
+   COLOR_050=5;
+   COLOR_060=6;
+   COLOR_070=7;
+   COLOR_080=8;
+   COLOR_081=9;
+   COLOR_082=10;
+   COLOR_090=11;
+   COLOR_100=12;
+   COLOR_101=13;
+   COLOR_102=14;
 }
 enum WechatTemplateTypeEnum {  
    TEMPLATE_ENUM_DEFAULT=0;
    TEMPLATE_ENUM_QUEUE=1;
    TEMPLATE_ENUM_ORDER=2;
 }
-enum CouponTypeEnum {  
-   GROUPON=0;
-   CASH=1;
-   DISCOUNT=2;
-   GIFT=3;
-   GENERAL_COUPON=4;
+enum TimelimitTypeEnum {  
+   DEFAULT_TIMELIMIT_TYPE=0;
+   MONDAY=1;
+   TUESDAY=2;
+   WEDNESDAY=3;
+   THURSDAY=4;
+   FRIDAY=5;
+   SATURDAY=6;
+   SUNDAY=7;
+}
+enum CodeTypeEnum {  
+   DEFAULT_CODE_TYPE=0;
+   CODE_TYPE_TEXT=1;
+   CODE_TYPE_BARCODE=2;
+   CODE_TYPE_QRCODE=3;
+   CODE_TYPE_ONLY_QRCODE=4;
+   CODE_TYPE_ONLY_BARCODE=5;
+}
+enum CustomCodeModeEnum {  
+   DEFAULT_CUSTOM_CODE_MODE=0;
+   GET_CUSTOM_CODE_MODE_DEPOSIT=1;
 }
 enum WechatQRTypeEnum {  
-   LOGIN=0;
-   INVOICE=1;
-   QUEUE=2;
+   DEFAULT_QR_TYPE=0;
+   LOGIN=1;
+   INVOICE=2;
+   QUEUE=3;
 }

@@ -1,0 +1,97 @@
+package com.hualala.app.wechat.impl.card;
+
+import com.hualala.app.wechat.BaseRpcTest;
+import com.hualala.app.wechat.CardPrePareQueryRpcService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
+/**
+ * Created by renjianfei on 2017/4/26.
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
+//    @Autowired
+//    private CardPrePareQueryRpcService prePareQueryCardRpcService;
+
+
+    @Test
+    public void testQueryByKey(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setCardKey("sffg7896aerzcvgadsg123");
+        CardPrePareQueryRpcService.CouponResData couponResData = rpcClient.queryCouponByCardKey(cardQuery);
+        System.out.println(couponResData.toString());
+
+
+    }
+
+
+    @Override
+    public void test() {
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setCardKey("123aerzcvgadsg123");
+        CardPrePareQueryRpcService.MemberResData memberResData = rpcClient.queryMemberByCardKey(cardQuery);
+        System.out.println(memberResData.toString());
+    }
+    @Test
+    public void testQueryByWhere(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setCardKey("sffg7896aerzcvgadsg123");
+        cardQuery.setMpID("doulaofangceshi");
+        cardQuery.setTitle("豆捞坊%");
+        CardPrePareQueryRpcService.CouponResDataList couponResDataList = rpcClient.queryCouponList(cardQuery);
+        List<CardPrePareQueryRpcService.CouponResData> couponResDataList1 = couponResDataList.getCouponResDataList();
+        System.out.println(couponResDataList1);
+
+
+    }
+    @Test
+    public void testQueryMemberByWhere(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setCardKey("asdfa123123dfgasd");
+        cardQuery.setMpID("doulaofangceshi");
+        cardQuery.setTitle("豆捞坊%");
+        cardQuery.setPageNO(1);
+        cardQuery.setPageSize(2);
+        CardPrePareQueryRpcService.MemberResDataList memberResDataList = rpcClient.queryMemberList(cardQuery);
+        List<CardPrePareQueryRpcService.MemberResData> memberResDataList1 = memberResDataList.getMemberResData();
+        System.out.println(memberResDataList1.size());
+    }
+    @Test
+    public void testQueryCouponByWhere(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setMpID("doulaofangceshi");
+        cardQuery.setTitle("%哗啦啦%");
+        cardQuery.setPageNO(1);
+        cardQuery.setPageSize(2);
+        CardPrePareQueryRpcService.CouponResDataList couponResDataList = rpcClient.queryCouponList(cardQuery);
+        List<CardPrePareQueryRpcService.CouponResData> couponResDataList1 = couponResDataList.getCouponResDataList();
+        System.out.println(couponResDataList1.size());
+    }
+
+    @Test
+    public void testQueryBaseInfoByKey(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setCardKey("1203128074192cfsdfsdf");
+        CardPrePareQueryRpcService.CardBaseInfoResData baseInfo = rpcClient.queryBaseInfoByCardKey(cardQuery);
+        System.out.println(baseInfo.toString());
+    }
+    @Test
+    public void testQueryAdvanceInfoByKey(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
+        cardQuery.setCardKey("1203128074192cfsdfsdf");
+        CardPrePareQueryRpcService.CardAdvancedInfoResData advancedInfoResData = rpcClient.queryAdvancedInfoByCardKey(cardQuery);
+        System.out.println(advancedInfoResData.toString());
+    }
+}

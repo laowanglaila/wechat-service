@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hualala.app.wechat.mapper.card.MemberModelMapper" >
+  <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.MemberModel" >
+    <id column="cardKey" property="cardKey" jdbcType="VARCHAR" />
+    <result column="cardID" property="cardID" jdbcType="VARCHAR" />
+    <result column="groupID" property="groupID" jdbcType="BIGINT" />
+    <result column="mpID" property="mpID" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="cardType" property="cardType" jdbcType="VARCHAR" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="backgroundPicUrl" property="backgroundPicUrl" jdbcType="VARCHAR" />
+    <result column="prerogative" property="prerogative" jdbcType="VARCHAR" />
+    <result column="autoActivate" property="autoActivate" jdbcType="TINYINT" />
+    <result column="activateUrl" property="activateUrl" jdbcType="VARCHAR" />
+    <result column="wxActivate" property="wxActivate" jdbcType="TINYINT" />
+    <result column="supplyBonus" property="supplyBonus" jdbcType="TINYINT" />
+    <result column="bonusUrl" property="bonusUrl" jdbcType="VARCHAR" />
+    <result column="bonusCleared" property="bonusCleared" jdbcType="VARCHAR" />
+    <result column="supplyBalance" property="supplyBalance" jdbcType="TINYINT" />
+    <result column="balanceUrl" property="balanceUrl" jdbcType="VARCHAR" />
+    <result column="balanceRules" property="balanceRules" jdbcType="VARCHAR" />
+    <result column="customField1" property="customField1" jdbcType="VARCHAR" />
+    <result column="customField2" property="customField2" jdbcType="VARCHAR" />
+    <result column="customField3" property="customField3" jdbcType="VARCHAR" />
+    <result column="customCell1" property="customCell1" jdbcType="VARCHAR" />
+    <result column="bonusRule" property="bonusRule" jdbcType="VARCHAR" />
+    <result column="bonusRules" property="bonusRules" jdbcType="VARCHAR" />
+    <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
+    <result column="action" property="action" jdbcType="TINYINT" />
+    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      cardKey, cardID, groupID, mpID, title, cardType, discount, backgroundPicUrl, prerogative, 
+      autoActivate, activateUrl, wxActivate, supplyBonus, bonusUrl, bonusCleared, supplyBalance, 
+      balanceUrl, balanceRules, customField1, customField2, customField3, customCell1, 
+      bonusRule, bonusRules, cardStatus, action, actionTime, createTime
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hualala.app.wechat.model.card.MemberModelQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_shop_wechat_card_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,bonusRules,cardStatus,action,actionTime,createTime
+    from tbl_shop_wechat_card_member
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_shop_wechat_card_member
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.MemberModelQuery" >
+    delete from tbl_shop_wechat_card_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
+    insert into tbl_shop_wechat_card_member (cardKey, cardID, groupID, 
+      mpID, title, cardType, 
+      discount, backgroundPicUrl, prerogative, 
+      autoActivate, activateUrl, wxActivate, 
+      supplyBonus, bonusUrl, bonusCleared, 
+      supplyBalance, balanceUrl, balanceRules, 
+      customField1, customField2, customField3, 
+      customCell1, bonusRule, bonusRules, 
+      cardStatus, action, actionTime, 
+      createTime)
+    values (#{cardKey,jdbcType=VARCHAR}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
+      #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{discount,jdbcType=INTEGER}, #{backgroundPicUrl,jdbcType=VARCHAR}, #{prerogative,jdbcType=VARCHAR}, 
+      #{autoActivate,jdbcType=TINYINT}, #{activateUrl,jdbcType=VARCHAR}, #{wxActivate,jdbcType=TINYINT}, 
+      #{supplyBonus,jdbcType=TINYINT}, #{bonusUrl,jdbcType=VARCHAR}, #{bonusCleared,jdbcType=VARCHAR}, 
+      #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, #{balanceRules,jdbcType=VARCHAR}, 
+      #{customField1,jdbcType=VARCHAR}, #{customField2,jdbcType=VARCHAR}, #{customField3,jdbcType=VARCHAR}, 
+      #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, #{bonusRules,jdbcType=VARCHAR}, 
+      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
+    insert into tbl_shop_wechat_card_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardKey != null" >
+        cardKey,
+      </if>
+      <if test="cardID != null" >
+        cardID,
+      </if>
+      <if test="groupID != null" >
+        groupID,
+      </if>
+      <if test="mpID != null" >
+        mpID,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="cardType != null" >
+        cardType,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="backgroundPicUrl != null" >
+        backgroundPicUrl,
+      </if>
+      <if test="prerogative != null" >
+        prerogative,
+      </if>
+      <if test="autoActivate != null" >
+        autoActivate,
+      </if>
+      <if test="activateUrl != null" >
+        activateUrl,
+      </if>
+      <if test="wxActivate != null" >
+        wxActivate,
+      </if>
+      <if test="supplyBonus != null" >
+        supplyBonus,
+      </if>
+      <if test="bonusUrl != null" >
+        bonusUrl,
+      </if>
+      <if test="bonusCleared != null" >
+        bonusCleared,
+      </if>
+      <if test="supplyBalance != null" >
+        supplyBalance,
+      </if>
+      <if test="balanceUrl != null" >
+        balanceUrl,
+      </if>
+      <if test="balanceRules != null" >
+        balanceRules,
+      </if>
+      <if test="customField1 != null" >
+        customField1,
+      </if>
+      <if test="customField2 != null" >
+        customField2,
+      </if>
+      <if test="customField3 != null" >
+        customField3,
+      </if>
+      <if test="customCell1 != null" >
+        customCell1,
+      </if>
+      <if test="bonusRule != null" >
+        bonusRule,
+      </if>
+      <if test="bonusRules != null" >
+        bonusRules,
+      </if>
+      <if test="cardStatus != null" >
+        cardStatus,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="actionTime != null" >
+        actionTime,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardKey != null" >
+        #{cardKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cardID != null" >
+        #{cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="groupID != null" >
+        #{groupID,jdbcType=BIGINT},
+      </if>
+      <if test="mpID != null" >
+        #{mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="backgroundPicUrl != null" >
+        #{backgroundPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="prerogative != null" >
+        #{prerogative,jdbcType=VARCHAR},
+      </if>
+      <if test="autoActivate != null" >
+        #{autoActivate,jdbcType=TINYINT},
+      </if>
+      <if test="activateUrl != null" >
+        #{activateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="wxActivate != null" >
+        #{wxActivate,jdbcType=TINYINT},
+      </if>
+      <if test="supplyBonus != null" >
+        #{supplyBonus,jdbcType=TINYINT},
+      </if>
+      <if test="bonusUrl != null" >
+        #{bonusUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusCleared != null" >
+        #{bonusCleared,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyBalance != null" >
+        #{supplyBalance,jdbcType=TINYINT},
+      </if>
+      <if test="balanceUrl != null" >
+        #{balanceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceRules != null" >
+        #{balanceRules,jdbcType=VARCHAR},
+      </if>
+      <if test="customField1 != null" >
+        #{customField1,jdbcType=VARCHAR},
+      </if>
+      <if test="customField2 != null" >
+        #{customField2,jdbcType=VARCHAR},
+      </if>
+      <if test="customField3 != null" >
+        #{customField3,jdbcType=VARCHAR},
+      </if>
+      <if test="customCell1 != null" >
+        #{customCell1,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusRule != null" >
+        #{bonusRule,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusRules != null" >
+        #{bonusRules,jdbcType=VARCHAR},
+      </if>
+      <if test="cardStatus != null" >
+        #{cardStatus,jdbcType=TINYINT},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        #{actionTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hualala.app.wechat.model.card.MemberModelQuery" resultType="java.lang.Integer" >
+    select count(*) from tbl_shop_wechat_card_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_shop_wechat_card_member
+    <set >
+      <if test="record.cardKey != null" >
+        cardKey = #{record.cardKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardID != null" >
+        cardID = #{record.cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupID != null" >
+        groupID = #{record.groupID,jdbcType=BIGINT},
+      </if>
+      <if test="record.mpID != null" >
+        mpID = #{record.mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        cardType = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=INTEGER},
+      </if>
+      <if test="record.backgroundPicUrl != null" >
+        backgroundPicUrl = #{record.backgroundPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prerogative != null" >
+        prerogative = #{record.prerogative,jdbcType=VARCHAR},
+      </if>
+      <if test="record.autoActivate != null" >
+        autoActivate = #{record.autoActivate,jdbcType=TINYINT},
+      </if>
+      <if test="record.activateUrl != null" >
+        activateUrl = #{record.activateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxActivate != null" >
+        wxActivate = #{record.wxActivate,jdbcType=TINYINT},
+      </if>
+      <if test="record.supplyBonus != null" >
+        supplyBonus = #{record.supplyBonus,jdbcType=TINYINT},
+      </if>
+      <if test="record.bonusUrl != null" >
+        bonusUrl = #{record.bonusUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bonusCleared != null" >
+        bonusCleared = #{record.bonusCleared,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplyBalance != null" >
+        supplyBalance = #{record.supplyBalance,jdbcType=TINYINT},
+      </if>
+      <if test="record.balanceUrl != null" >
+        balanceUrl = #{record.balanceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balanceRules != null" >
+        balanceRules = #{record.balanceRules,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customField1 != null" >
+        customField1 = #{record.customField1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customField2 != null" >
+        customField2 = #{record.customField2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customField3 != null" >
+        customField3 = #{record.customField3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customCell1 != null" >
+        customCell1 = #{record.customCell1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bonusRule != null" >
+        bonusRule = #{record.bonusRule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bonusRules != null" >
+        bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardStatus != null" >
+        cardStatus = #{record.cardStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.action != null" >
+        action = #{record.action,jdbcType=TINYINT},
+      </if>
+      <if test="record.actionTime != null" >
+        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      </if>
+
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_shop_wechat_card_member
+    set cardKey = #{record.cardKey,jdbcType=VARCHAR},
+      cardID = #{record.cardID,jdbcType=VARCHAR},
+      groupID = #{record.groupID,jdbcType=BIGINT},
+      mpID = #{record.mpID,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      cardType = #{record.cardType,jdbcType=VARCHAR},
+      discount = #{record.discount,jdbcType=INTEGER},
+      backgroundPicUrl = #{record.backgroundPicUrl,jdbcType=VARCHAR},
+      prerogative = #{record.prerogative,jdbcType=VARCHAR},
+      autoActivate = #{record.autoActivate,jdbcType=TINYINT},
+      activateUrl = #{record.activateUrl,jdbcType=VARCHAR},
+      wxActivate = #{record.wxActivate,jdbcType=TINYINT},
+      supplyBonus = #{record.supplyBonus,jdbcType=TINYINT},
+      bonusUrl = #{record.bonusUrl,jdbcType=VARCHAR},
+      bonusCleared = #{record.bonusCleared,jdbcType=VARCHAR},
+      supplyBalance = #{record.supplyBalance,jdbcType=TINYINT},
+      balanceUrl = #{record.balanceUrl,jdbcType=VARCHAR},
+      balanceRules = #{record.balanceRules,jdbcType=VARCHAR},
+      customField1 = #{record.customField1,jdbcType=VARCHAR},
+      customField2 = #{record.customField2,jdbcType=VARCHAR},
+      customField3 = #{record.customField3,jdbcType=VARCHAR},
+      customCell1 = #{record.customCell1,jdbcType=VARCHAR},
+      bonusRule = #{record.bonusRule,jdbcType=VARCHAR},
+      bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
+      cardStatus = #{record.cardStatus,jdbcType=TINYINT},
+      action = #{record.action,jdbcType=TINYINT},
+      actionTime = #{record.actionTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
+    update tbl_shop_wechat_card_member
+    <set >
+      <if test="cardID != null" >
+        cardID = #{cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="groupID != null" >
+        groupID = #{groupID,jdbcType=BIGINT},
+      </if>
+      <if test="mpID != null" >
+        mpID = #{mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        cardType = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="backgroundPicUrl != null" >
+        backgroundPicUrl = #{backgroundPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="prerogative != null" >
+        prerogative = #{prerogative,jdbcType=VARCHAR},
+      </if>
+      <if test="autoActivate != null" >
+        autoActivate = #{autoActivate,jdbcType=TINYINT},
+      </if>
+      <if test="activateUrl != null" >
+        activateUrl = #{activateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="wxActivate != null" >
+        wxActivate = #{wxActivate,jdbcType=TINYINT},
+      </if>
+      <if test="supplyBonus != null" >
+        supplyBonus = #{supplyBonus,jdbcType=TINYINT},
+      </if>
+      <if test="bonusUrl != null" >
+        bonusUrl = #{bonusUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusCleared != null" >
+        bonusCleared = #{bonusCleared,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyBalance != null" >
+        supplyBalance = #{supplyBalance,jdbcType=TINYINT},
+      </if>
+      <if test="balanceUrl != null" >
+        balanceUrl = #{balanceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceRules != null" >
+        balanceRules = #{balanceRules,jdbcType=VARCHAR},
+      </if>
+      <if test="customField1 != null" >
+        customField1 = #{customField1,jdbcType=VARCHAR},
+      </if>
+      <if test="customField2 != null" >
+        customField2 = #{customField2,jdbcType=VARCHAR},
+      </if>
+      <if test="customField3 != null" >
+        customField3 = #{customField3,jdbcType=VARCHAR},
+      </if>
+      <if test="customCell1 != null" >
+        customCell1 = #{customCell1,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusRule != null" >
+        bonusRule = #{bonusRule,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusRules != null" >
+        bonusRules = #{bonusRules,jdbcType=VARCHAR},
+      </if>
+      <if test="cardStatus != null" >
+        cardStatus = #{cardStatus,jdbcType=TINYINT},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        actionTime = #{actionTime,jdbcType=BIGINT},
+      </if>
+
+    </set>
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
+    update tbl_shop_wechat_card_member
+    set cardID = #{cardID,jdbcType=VARCHAR},
+      groupID = #{groupID,jdbcType=BIGINT},
+      mpID = #{mpID,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      cardType = #{cardType,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=INTEGER},
+      backgroundPicUrl = #{backgroundPicUrl,jdbcType=VARCHAR},
+      prerogative = #{prerogative,jdbcType=VARCHAR},
+      autoActivate = #{autoActivate,jdbcType=TINYINT},
+      activateUrl = #{activateUrl,jdbcType=VARCHAR},
+      wxActivate = #{wxActivate,jdbcType=TINYINT},
+      supplyBonus = #{supplyBonus,jdbcType=TINYINT},
+      bonusUrl = #{bonusUrl,jdbcType=VARCHAR},
+      bonusCleared = #{bonusCleared,jdbcType=VARCHAR},
+      supplyBalance = #{supplyBalance,jdbcType=TINYINT},
+      balanceUrl = #{balanceUrl,jdbcType=VARCHAR},
+      balanceRules = #{balanceRules,jdbcType=VARCHAR},
+      customField1 = #{customField1,jdbcType=VARCHAR},
+      customField2 = #{customField2,jdbcType=VARCHAR},
+      customField3 = #{customField3,jdbcType=VARCHAR},
+      customCell1 = #{customCell1,jdbcType=VARCHAR},
+      bonusRule = #{bonusRule,jdbcType=VARCHAR},
+      bonusRules = #{bonusRules,jdbcType=VARCHAR},
+      cardStatus = #{cardStatus,jdbcType=TINYINT},
+      action = #{action,jdbcType=TINYINT},
+      actionTime = #{actionTime,jdbcType=BIGINT}
+    where cardKey = #{cardKey,jdbcType=VARCHAR}
+  </update>
+</mapper>

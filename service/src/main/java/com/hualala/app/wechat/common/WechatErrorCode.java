@@ -66,6 +66,7 @@ public class WechatErrorCode {
 		wechatError.put("41007", "缺少子菜单数据");
 		wechatError.put("41008", "缺少oauth code");
 		wechatError.put("41009", "缺少openid");
+		wechatError.put("41011", "缺少必须的参数");
 		wechatError.put("42001", "access_token超时，请检查access_token的有效期");
 		wechatError.put("42002", "refresh_token超时");
 		wechatError.put("42003", "oauth_code超时");

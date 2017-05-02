@@ -18,30 +18,16 @@ message CouponReqData {
    string defaultDetail=6;
    // 团购券专用，填写团购详情。
    string dealDetail=7;
-   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填-1。
-   int32 leastCost=8;
+   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。
+   string leastCost=8;
    // 代金券专用，表示减免金额。（单位为分）
-   int32 reduceCost=9;
+   string reduceCost=9;
    // 折扣券专用，表示打折额度（百分比）。填30就是七折。
-   int32 discount=10;
+   string discount=10;
    // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
    string gift=11;
    // 请求公共字段
    RequestHeader header=1;
-}
-message HeadData {  
-   // 公众号编码
-   string mpID=1;
-   // 集团ID
-   string groupID=2;
-   // 品牌ID
-   string brandID=3;
-   // 店铺ID
-   string shopID=4;
-   // 微信用户唯一标识
-   string openID=5;
-   // 微信账号
-   string userName=6;
 }
 message BaseInfo {  
    // 卡券的商户logo，建议像素为300*300
@@ -49,7 +35,7 @@ message BaseInfo {
    // Code展示类型
    CodeTypeEnum codeType=2;
    // 券颜色。按色彩规范标注填写Color010-Color100。详情见获取颜色列表接口
-   ColorEnum color=3;
+   string color=3;
    // 商户名字,字数上限为12个汉字
    string brandName=4;
    // 卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)
@@ -69,7 +55,7 @@ message BaseInfo {
    // 客服电话。
    string servicePhone=12;
    // 门店位置ID集合。调用POI门店管理接口获取门店位置ID。多个使用( ','+'空格' )分割
-   string locationIdList=13;
+   repeated int32 locationIdList=13;
    // 第三方来源名，例如同程旅游、大众点评。
    string source=14;
    // 自定义跳转外链的入口名字。
@@ -84,16 +70,16 @@ message BaseInfo {
    string promotionUrl=19;
    // 显示在营销入口右侧的提示语。
    string promotionUrlSubTitle=20;
-   // 每人可领券的数量限制。默认值为50。如果要设置0，请输入-1
-   int32 getLimit=21;
+   // 每人可领券的数量限制。默认值为50。
+   string getLimit=21;
    // 卡券领取页面是否可分享。
    bool canShare=22;
    // 卡券是否可转赠。
    bool canGiveFriend=23;
-   // 填写true为用户点击进入会员卡时推送事件，默认为false。详情见进入会员卡事件推送
+   // 填写true为用户点击进入会员卡时推送事件，默认为false。会员卡专用
    bool needPushOnView=24;
    // 填入 GET_CUSTOM_CODE_MODE_DEPOSIT 表示该卡券为预存code模式卡券，须导入超过库存数目的自定义code后方可投放，填入该字段后，quantity字段须为0,须导入code后再增加库存
-   CustomCodeModeEnum getCustomCodeMode=25;
+   CustomCodeModeEnum CustomCodeMode=25;
    // 设置本卡券支持全部门店，与location_id_list互斥
    bool useAllLocations=26;
    // 立即使用卡券顶部居中的按钮，仅在卡券状态正常(可以核销)时显示
@@ -103,25 +89,85 @@ message BaseInfo {
    // 顶部居中的url，仅在卡券状态正常(可以核销)时显示。
    string centerUrl=29;
    // 每人可核销的数量限制,不填写默认为50。
-   int32 useLimit=30;
+   string useLimit=30;
 }
 message DateInfo {  
    // DATE_TYPE_FIX_TIME_RANGE 表示固定日期区间，DATE_TYPE_FIX_TERM表示固定时长（自领取后按天算），DATE_TYPE_PERMANENT 表示永久有效。
    DateInfoTypeEnum type=1;
    // type为DATE_TYPE_FIX_TIME_RANGE时专用，表示起用时间。从1970年1月1日00:00:00至起用时间的秒数，最终需转换为字符串形态传入。（东八区时间，单位为秒）
-   int32 beginTimestamp=2;
+   string beginTimestamp=2;
    // type为DATE_TYPE_FIX_TERM_RANGE时专用，表示结束时间，建议设置为截止日期的23:59:59过期。（东八区时间，单位为秒）
-   int32 endTimestamp=3;
+   string endTimestamp=3;
    // type为DATE_TYPE_FIX_TERM时专用，表示自领取后多少天内有效，领取后当天有效填写0
-   int32 fixedTerm=4;
+   string fixedTerm=4;
    // type为DATE_TYPE_FIX_TERM时专用，表示自领取后多少天开始生效。（单位为天）
-   int32 fixedBeginTerm=5;
+   string fixedBeginTerm=5;
 }
 message Sku {  
    // 卡券库存的数量，不支持填写0，上限为100000000
-   int32 quantity=1;
+   string quantity=1;
+}
+message HeadData {  
+   // 公众号编码
+   string mpID=1;
+   // 集团ID
+   string groupID=2;
+   // 品牌ID
+   string brandID=3;
+   // 店铺ID
+   string shopID=4;
+   // 微信用户唯一标识
+   string openID=5;
+   // 微信账号
+   string userName=6;
 }
 message AdvancedInfo {  
+   // 封面摘要结构体名称
+   Abstract abstractObj=1;
+   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选
+   repeated string businessServiceList=2;
+   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+   repeated TextImage textImageList=3;
+   // 使用时段限制，包含以下字段
+   repeated TimeLimit timeLimitList=4;
+   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+   UseCodition useCodition=5;
+}
+message Abstract {  
+   // 封面摘要简介。
+   string coverAbstract=1;
+   // 封面图片列表，仅支持填入一个封面图片链接，上传图片接口上传获取图片获得链接，填写非CDN链接会报错，并在此填入。建议图片尺寸像素850*350
+   repeated string iconUrlList=2;
+}
+message TextImage {  
+   // 图片链接，必须调用上传图片接口上传图片获得链接，并在此填入，否则报错。
+   string imageUrl=1;
+   // 图文描述。
+   string text=2;
+}
+message UseCodition {  
+   // 指定可用的商品类目，仅用于代金券类型，填入后将在券面拼写适用于xxx
+   string acceptCategory=1;
+   // 指定不可用的商品类目，仅用于代金券类型，填入后将在券面拼写不适用于xxxx
+   string rejectCategory=2;
+   // 满减门槛字段，可用于兑换券和代金券，填入后将在全面拼写消费满xx元可用。
+   string leastCost=3;
+   // 购买xx可用类型门槛，仅用于兑换，填入后自动拼写购买xxx可用。
+   string objectUseFor=4;
+   // 不可以与其他类型共享门槛，填写false时系统将在使用须知里 拼写“不可与其他优惠共享”，填写true时系统将在使用须知里 拼写“可与其他优惠共享”，默认为true
+   string canUseWithOtherDiscount=5;
+}
+message TimeLimit {  
+   // 限制类型枚举值：支持填入 MONDAY 周一,TUESDAY 周二,WEDNESDAY 周三,THURSDAY 周四,FRIDAY 周五,SATURDAY 周六, SUNDAY 周日,此处只控制显示，不控制实际使用逻辑，不填默认不显示
+   string type=1;
+   // 当前type类型下的起始时间（小时），如当前结构体内填写了MONDAY，此处填写了10，则此处表示周一 10:00可用
+   string beginHour=2;
+   // 当前type类型下的起始时间（分钟），如当前结构体内填写了MONDAY，begin_hour填写10，此处填写了59，则此处表示周一 10:59可用
+   string beginMinute=3;
+   // 当前type类型下的结束时间（小时），如当前结构体内填写了MONDAY，此处填写了20，则此处表示周一 10:00-20:00可用
+   string endHour=4;
+   // 当前type类型下的结束时间（分钟），如当前结构体内填写了MONDAY，begin_hour填写10，此处填写了59，则此处表示周一 10:59-00:59可用
+   string endMinute=5;
 }
 message CardCouponResData {  
    // 错误码，0为正常

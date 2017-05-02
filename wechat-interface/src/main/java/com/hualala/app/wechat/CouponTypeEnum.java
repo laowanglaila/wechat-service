@@ -6,6 +6,7 @@ import com.hualala.core.base.ValueEnum;
  * Created by renjianfei on 2017/4/18.
  */
 public enum CouponTypeEnum implements ValueEnum {
+    DEFAULT_COUPON_TYPE(0),
     GROUPON(1,"GROUPON","groupon"),
     CASH(2,"CASH","cash"),
     DISCOUNT(3,"DISCOUNT","discount"),

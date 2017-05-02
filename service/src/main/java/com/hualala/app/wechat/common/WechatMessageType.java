@@ -45,5 +45,10 @@ public class WechatMessageType {
 	public static final String MESSAGE = "message4service";
 
 	public static final String IS_SUCCESS = "isSuccess4service";
-	public static final Integer INT_ZERO = -1;
+	public static final String CARD_TYPE_GROUPON = "GROUPON";
+	public static final String CARD_TYPE_CASH = "CASH";
+	public static final String CARD_TYPE_DISCOUNT = "DISCOUNT";
+	public static final String CARD_TYPE_GIFT = "GIFT";
+	public static final String CARD_TYPE_GENERAL_COUPON = "GENERAL_COUPON";
+
 }

@@ -47,6 +47,17 @@ public interface ErrorCodes {
     String WECHAT_CARD_NOTICE_NULL = "00112128";
     //没有设置description显示类型
     String WECHAT_CARD_DESCRIPTION_NULL = "00112129";
-
+    //公众号groupID不允许为空
+    String WECHAT_GROUP_ID_NULL = "00112130";
+    //公众号title不允许为空
+    String WECHAT_CARD_TITLE_NULL = "00112131";
+    //公众号cardKey不允许为空
+    String WECHAT_CARD_KEY_NULL = "00112132";
+    //卡券数据重复提交
+    String WECHAT_CARD_SUBMIT_REPEATED = "00112133";
+    //会员卡特权说明为空
+    String WECHAT_CARD_PREROGATIVE_EMPTY = "00112134";
+    //会员卡特权说明为空
+    String WECHAT_CARD_RESULT_NULL = "00112135";
 
 }

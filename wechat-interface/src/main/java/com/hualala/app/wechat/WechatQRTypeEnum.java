@@ -6,7 +6,7 @@ import com.hualala.core.base.ValueEnum;
  * Created by renjianfei on 2017/4/12.
  */
 public enum WechatQRTypeEnum implements ValueEnum {
-
+    DEFAULT_QR_TYPE(0),
     LOGIN(1,604800,false),
     INVOICE(2,604800,false),
     QUEUE(3,604800,false);
