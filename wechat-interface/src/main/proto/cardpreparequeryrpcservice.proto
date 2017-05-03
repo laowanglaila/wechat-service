@@ -26,6 +26,18 @@ message CardQuery {
    // 请求公共字段
    RequestHeader header=1;
 }
+message MemberResDataList {  
+   // 会员卡信息List
+   repeated MemberResData memberResData=2;
+   // 起始索引
+   int32 pageNO=3;
+   // 每页结果数
+   int32 pageSize=4;
+   // 结果集总条数
+   int32 totleCount=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message MemberResData {  
    // 公众号编码
    string mpID=2;
@@ -77,6 +89,28 @@ message MemberResData {
    string balanceRules=25;
    // 积分规则
    string bonusRules=26;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardSyncReqData {  
+   // 唯一ID
+   string cardKey=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardSyncResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CouponResDataList {  
+   // 优惠券集合
+   repeated CouponResData couponResDataList=2;
+   // 起始索引
+   int32 pageNO=3;
+   // 每页结果数
+   int32 pageSize=4;
+   // 结果集总条数
+   int32 totleCount=5;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -194,32 +228,16 @@ message CardAdvancedInfoResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-message MemberResDataList {  
-   // 会员卡信息List
-   repeated MemberResData memberResData=2;
-   // 起始索引
-   int32 pageNO=3;
-   // 每页结果数
-   int32 pageSize=4;
-   // 结果集总条数
-   int32 totleCount=5;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CouponResDataList {  
-   // 优惠券集合
-   repeated CouponResData couponResDataList=2;
-   // 起始索引
-   int32 pageNO=3;
-   // 每页结果数
-   int32 pageSize=4;
-   // 结果集总条数
-   int32 totleCount=5;
-   // 响应公共字段
-   ResultHeader result=1;
-}
 //查询卡券创建相关数据
 service CardPrePareQueryRpcService{
+    //查询多个会员卡数据
+    rpc queryMemberList(CardQuery) returns (MemberResDataList) {}
+    //
+    rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}
+    //查询多个优惠券数据
+    rpc queryCouponList(CardQuery) returns (CouponResDataList) {}
+    //
+    rpc syncCouponInfo(CardSyncReqData) returns (CardSyncResData) {}
     //查询会员卡数据
     rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
     //查询优惠券数据
@@ -228,8 +246,4 @@ service CardPrePareQueryRpcService{
     rpc queryBaseInfoByCardKey(CardQuery) returns (CardBaseInfoResData) {}
     //查询优高级数据
     rpc queryAdvancedInfoByCardKey(CardQuery) returns (CardAdvancedInfoResData) {}
-    //查询多个会员卡数据
-    rpc queryMemberList(CardQuery) returns (MemberResDataList) {}
-    //查询多个优惠券数据
-    rpc queryCouponList(CardQuery) returns (CouponResDataList) {}
 }

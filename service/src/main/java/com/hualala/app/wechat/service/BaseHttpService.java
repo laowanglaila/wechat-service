@@ -44,7 +44,7 @@ public class BaseHttpService {
         if(!"0".equals(errcode)){
             return ResultUtil.toResultJson(responseJson,false,null, WechatErrorCode.wechatError.get(errcode));
         }
-        return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
+        return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"执行成功！");
     }
     /**
      * 通用的httppost请求方法返回标准的result
@@ -63,7 +63,7 @@ public class BaseHttpService {
         if(!"0".equals(errcode)){
             return ResultUtil.toResultJson(responseJson,false,null, WechatErrorCode.wechatError.get(errcode));
         }
-        return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"");
+        return ResultUtil.toResultJson(responseJson,true,ErrorCodes.WECHAT_SUCCESS_CODE,"执行成功！");
     }
 
     /**
@@ -104,6 +104,9 @@ public class BaseHttpService {
      */
     public  JSONObject getCardInfo(Map<String, Object> map,String mpId){
         return this.commonHttpPost(WechatBaseApi.GET_CARD_INFO,map,mpId);
+    }
+    public  JSONObject getCardInfo(String jsonString,String mpId){
+        return this.commonHttpPost(WechatBaseApi.GET_CARD_INFO,jsonString,mpId);
     }
 
     /**
