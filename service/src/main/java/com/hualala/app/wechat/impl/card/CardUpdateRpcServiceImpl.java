@@ -1,8 +1,10 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.CardPrePareQueryRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
 import com.hualala.app.wechat.CodeTypeEnum;
+import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
@@ -14,6 +16,7 @@ import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
+import jdk.nashorn.internal.ir.IfNode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,8 +47,16 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     public CardUpdateResData updateMemberInfo(MemberUpdateReqData memberUpdateReqData) {
         //获取mpID
         String cardKey = memberUpdateReqData.getCardKey();
-        CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = memberUpdateReqData.getCardBaseInfoUpdateReqData();
+        if (StringUtils.isBlank(cardKey)){
+            return new CardUpdateResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+        }
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
+        if (null == memberModel){
+            return new CardUpdateResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+        }
+
         String mpID = memberModel.getMpID();
         String cardType = memberModel.getCardType();
         String cardID = memberModel.getCardID();
@@ -59,6 +70,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         if (StringUtils.isNotBlank(title)){
             baseInfo.put("title",title);
         }
+        CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = memberUpdateReqData.getCardBaseInfoUpdateReqData();
         prepareBaseInfo(baseInfo, cardBaseInfoUpdateReqData);
 
         Map<String, Object> card = new HashMap<>();
@@ -101,7 +113,15 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     public CardUpdateResData updateCouponInfo(CouponInfoUpdateReqData couponInfoUpdateReqData) {
         //获取mpID
         String cardKey = couponInfoUpdateReqData.getCardKey();
+        if (StringUtils.isBlank(cardKey)){
+            return new CardUpdateResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+        }
         CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
+        if (null == couponModel){
+            return new CardUpdateResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+        }
         String mpID = couponModel.getMpID();
         String cardType = couponModel.getCardType();
         String cardID = couponModel.getCardID();
@@ -151,6 +171,62 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
             }
         }
         return resultInfoBean;
+    }
+
+    /**
+     * 更新微信端库存，同时修改库存总数
+     */
+    @Override
+    public CardUpdateResData updateCouponSku(CardSkuUpdateReqData cardSkuUpdateReqData) {
+        String cardKey = cardSkuUpdateReqData.getCardKey();
+        if (StringUtils.isBlank(cardKey)){
+            return new CardUpdateResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+        }
+        CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
+        if (null == couponModel){
+            return new CardUpdateResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+        }
+        String cardID = couponModel.getCardID();
+        String mpID = couponModel.getMpID();
+
+        return null;
+    }
+   @Override
+    public CardUpdateResData updateMemberSku(CardSkuUpdateReqData cardSkuUpdateReqData) {
+        String cardKey = cardSkuUpdateReqData.getCardKey();
+       if (StringUtils.isBlank(cardKey)){
+           return new CardUpdateResData()
+                   .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+       }
+       MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
+       if (null == memberModel){
+           return new CardUpdateResData()
+                   .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+       }
+       String cardID = memberModel.getCardID();
+       String mpID = memberModel.getMpID();
+       int increaseStockValue = cardSkuUpdateReqData.getIncreaseStockValue();
+       int reduceStockValue = cardSkuUpdateReqData.getReduceStockValue();
+       String params = "{" +
+                           "\"card_id\": \""+cardID+"\"," +
+                           "\"increase_stock_value\": "+increaseStockValue+"," +
+                           "\"reduce_stock_value\": "+reduceStockValue +
+                       "}";
+       JSONObject jsonObject = baseHttpService.setCardSku(params, mpID);
+
+       if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+           BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+
+           BaseInfoModel baseInfoModel = new BaseInfoModel();
+           baseInfoModel.setCardKey(cardKey);
+           Integer sku = baseInfoModel1.getSku();
+           baseInfoModel.setSku(sku+increaseStockValue-reduceStockValue);
+           baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+       }
+
+       return ResultUtil.getResultInfoBean(jsonObject,CardUpdateResData.class);
     }
 
     private void prepareBaseInfo(Map<String, Object> baseInfo, CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData) {

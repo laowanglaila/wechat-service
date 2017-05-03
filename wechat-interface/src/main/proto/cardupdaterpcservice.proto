@@ -4,49 +4,29 @@ option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardUpdateRpcData";
 import "commons.proto";
 
-message MemberUpdateReqData {  
+message CardSkuUpdateReqData {  
    // 唯一ID
    string cardKey=2;
-   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
-   bool supplyBonus=3;
-   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
-   bool supplyBalance=4;
-   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
-   string discount=5;
-   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
-   string backgroundPicUrl=6;
-   // 积分清零规则。
-   string bonusCleared=7;
-   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
-   string bonusUrl=8;
-   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
-   string balanceUrl=9;
-   // 储值说明。
-   string balanceRules=10;
-   // 会员卡特权说明。
-   string prerogative=11;
-   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
-   bool wxActivate=12;
-   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
-   bool autoActivate=13;
-   // 激活会员卡的url。
-   string activateUrl=14;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField1=15;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField2=16;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField3=17;
-   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
-   string customCell1=18;
-   // 积分规则。JSON结构
-   string bonusRule=19;
-   // 积分规则
-   string bonusRules=20;
+   // 增加多少库存，支持不填或填0。
+   int32 increaseStockValue=3;
+   // 减少多少库存，可以不填或填0。
+   int32 reduceStockValue=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardUpdateResData {  
+   // 是否需要提审
+   bool sendCheck=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CouponInfoUpdateReqData {  
+   // 唯一ID
+   string cardKey=2;
    // 卡券名称
-   string title=21;
+   string title=3;
    // 卡券基本信息
-   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=22;
+   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=4;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -98,26 +78,60 @@ message CardBaseInfoUpdateReqData {
    // 使用日期，有效期的信息
    string dateInfo=24;
 }
-message CardUpdateResData {  
-   // 是否需要提审
-   bool sendCheck=2;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CouponInfoUpdateReqData {  
+message MemberUpdateReqData {  
    // 唯一ID
    string cardKey=2;
+   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
+   bool supplyBonus=3;
+   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
+   bool supplyBalance=4;
+   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
+   string discount=5;
+   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
+   string backgroundPicUrl=6;
+   // 积分清零规则。
+   string bonusCleared=7;
+   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
+   string bonusUrl=8;
+   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
+   string balanceUrl=9;
+   // 储值说明。
+   string balanceRules=10;
+   // 会员卡特权说明。
+   string prerogative=11;
+   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
+   bool wxActivate=12;
+   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
+   bool autoActivate=13;
+   // 激活会员卡的url。
+   string activateUrl=14;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField1=15;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField2=16;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField3=17;
+   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
+   string customCell1=18;
+   // 积分规则。JSON结构
+   string bonusRule=19;
+   // 积分规则
+   string bonusRules=20;
    // 卡券名称
-   string title=3;
+   string title=21;
    // 卡券基本信息
-   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=4;
+   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=22;
    // 请求公共字段
    RequestHeader header=1;
 }
 //
 service CardUpdateRpcService{
     //
-    rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
+    rpc updateMemberSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
     //
     rpc updateCouponInfo(CouponInfoUpdateReqData) returns (CardUpdateResData) {}
+    //
+    rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
+    //
+    rpc updateCouponSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
 }

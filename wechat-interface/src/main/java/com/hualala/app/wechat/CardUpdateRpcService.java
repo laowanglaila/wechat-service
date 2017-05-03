@@ -32,8 +32,28 @@ public interface CardUpdateRpcService {
     @RpcMethod
     CardUpdateResData updateCouponInfo(CouponInfoUpdateReqData couponInfoUpdateReqData);
 
+    /**
+     * 更新微信端库存，同时修改库存总数
+     */
+    @RpcMethod
+    CardUpdateResData updateCouponSku(CardSkuUpdateReqData cardSkuUpdateReqData);
+    @RpcMethod
+    CardUpdateResData updateMemberSku(CardSkuUpdateReqData cardSkuUpdateReqData);
+    /**
+     * 更新库存请求参数对象
+     */
+    @Data
+    class CardSkuUpdateReqData extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+        //        increase_stock_value	否	int	1231231	增加多少库存，支持不填或填0。
+        @Protocol(fieldType = FieldType.INT, order = 3, description = "增加多少库存，支持不填或填0。")
+        private int increaseStockValue;
+        //        reduce_stock_value	否	int	1231231	减少多少库存，可以不填或填0。
+        @Protocol(fieldType = FieldType.INT, order = 4, description = "减少多少库存，可以不填或填0。")
+        private int reduceStockValue;
 
-
+    }
 
     @Data
     class MemberUpdateReqData extends RequestInfo {
@@ -97,18 +117,20 @@ public interface CardUpdateRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 21, description = "卡券名称")
         private String title;
         @Protocol(fieldType = FieldType.OBJECT, order = 22, description = "卡券基本信息")
-        private CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData ;
+        private CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData;
 
-        public CardBaseInfoUpdateReqData buildBaseInfo(){
-            return cardBaseInfoUpdateReqData==null?new CardBaseInfoUpdateReqData():cardBaseInfoUpdateReqData;
+        @RpcMethod
+        public CardBaseInfoUpdateReqData buildBaseInfo() {
+            return cardBaseInfoUpdateReqData == null ? new CardBaseInfoUpdateReqData() : cardBaseInfoUpdateReqData;
         }
-        private void setCardBaseInfoUpdateReqData(CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData){
+
+        private void setCardBaseInfoUpdateReqData(CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData) {
 
         }
     }
 
     @Data
-    class CouponInfoUpdateReqData extends  RequestInfo{
+    class CouponInfoUpdateReqData extends RequestInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
         private String cardKey;
         //        title	                            是	            string(27)	            微信会员卡	会员卡标题，字数上限为9个汉字

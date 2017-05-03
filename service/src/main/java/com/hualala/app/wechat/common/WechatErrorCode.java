@@ -56,7 +56,7 @@ public class WechatErrorCode {
 		wechatError.put("40050", "不合法的分组id");
 		wechatError.put("40051", "分组名字不合法");
 		wechatError.put("40052", "JSON格式错误");
-		wechatError.put("40079", "不合法的时间");
+		wechatError.put("40079", "有效期错误");
 		wechatError.put("41001", "缺少access_token参数");
 		wechatError.put("41002", "缺少appid参数");
 		wechatError.put("41003", "缺少refresh_token参数");

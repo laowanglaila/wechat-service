@@ -124,6 +124,9 @@ public class BaseHttpService {
     public  JSONObject setCardSku(Map<String, Object> map,String mpId){
         return this.commonHttpPost(WechatBaseApi.MODIFY_CARD_SKU,map,mpId);
     }
+     public  JSONObject setCardSku(String jsonString,String mpId){
+        return this.commonHttpPost(WechatBaseApi.MODIFY_CARD_SKU,jsonString,mpId);
+    }
      /**
      * reated by renjianfei on 2017/4/7.
      * 删除一个优惠券或者会员卡
