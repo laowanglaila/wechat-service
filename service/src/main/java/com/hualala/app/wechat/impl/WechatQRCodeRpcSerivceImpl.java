@@ -19,6 +19,9 @@ import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by renjianfei on 2017/4/12.
  */
@@ -142,9 +145,12 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         return ops.increment(1L).intValue();
     }
 
+
     private Long getDate(Integer second) {
-        long currentDateTimeLong = DateUtils.getCurrentDateTimeLong();
-        return currentDateTimeLong + second * 1000L;
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.SECOND, second);
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return Long.valueOf(sf.format(c.getTime()).toString());
     }
 
     /**
