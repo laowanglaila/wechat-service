@@ -1,6 +1,5 @@
 package com.hualala.app.wechat;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.impl.WechatQRCodeRpcSerivceImpl;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.service.HttpApiService;
@@ -32,11 +31,14 @@ public class WechatQrcodeTempRpcServiceTest {
 
     @Test
     public void  test(){
+        int i = 0;
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeReq wechatQRCodeReq = new WechatQRCodeRpcSerivce.WechatQRCodeReq();
         wechatQRCodeReq.setQrcodeName("123");
         wechatQRCodeReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
-        wechatQRCodeReq.setParam1("5-76022695-A-5");
+
+        String param1 = "任鉴非"+i++;
+        wechatQRCodeReq.setParam1(param1);
         wechatQRCodeReq.setParam2("测试二维码:Param2");
         wechatQRCodeReq.setParam3("测试二维码:Param3");
         wechatQRCodeReq.setExpireSeconds(3600*24);
@@ -49,7 +51,7 @@ public class WechatQrcodeTempRpcServiceTest {
         wechatQRCodeReq.setLocationName("测试二维码:LocationName");
 
         WechatQRCodeRpcSerivce.WechatQRCodeRes qrCode = rpcClient.createQRCode(wechatQRCodeReq);
-        String s = JSONObject.toJSONString(qrCode);
-        System.out.println(s);
+        String param11 = qrCode.getParam1();
+        System.out.println("------------------------------->"+param11);
     }
 }
