@@ -23,8 +23,8 @@ public class WechatBaseApi {
     public static final String SET_SELF_CONSUME = "https://api.weixin.qq.com/card/selfconsumecell/set";
     //微信卡券查看卡券详情/审核状态
     public static final String GET_CARD_INFO = "https://api.weixin.qq.com/card/get";
-    //微信卡券批量查看卡券详情/审核状态
-    public static final String BATCHGET_CARD_INFO = "https://api.weixin.qq.com/card/batchget";
+    //微信卡券批量查看卡券id
+    public static final String BATCHGET_CARD_ID = "https://api.weixin.qq.com/card/batchget";
     //微信卡券修改库存
     public static final String MODIFY_CARD_SKU = "https://api.weixin.qq.com/card/modifystock";
     //微信卡券删除卡券

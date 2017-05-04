@@ -1,23 +1,19 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.CardDeleteRpcService;
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
+import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.common.CardStatus;
 import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
 import com.hualala.app.wechat.service.BaseHttpService;
-import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
-import com.hualala.core.utils.SystemUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -227,9 +223,9 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
 //“CARD_STATUS_DELETE”，卡券被商户删除；
 //“CARD_STATUS_DISPATCH”，在公众平台投放过的卡券；
         String status = baseInfo.getString("status");
-        CardStatus cardStatus = CardStatus.valueOf(status);
+        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
         CouponModel couponModel1 = DataUtils.mapToBean(map, CouponModel.class);
-        couponModel1.setCardStatus(cardStatus.getValue());
+        couponModel1.setCardStatus(cardStatusEnum.getValue());
         couponModel1.setCardKey(cardKey);
 
         couponModelMapper.updateByPrimaryKeySelective(couponModel);
@@ -326,9 +322,9 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
         JSONObject baseInfo = memberInfo.getJSONObject("baseInfo");
         //判断会员卡状态
         String status = baseInfo.getString("status");
-        CardStatus cardStatus = CardStatus.valueOf(status);
+        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
         CouponModel couponModel1 = DataUtils.mapToBean(memberInfo, CouponModel.class);
-        couponModel1.setCardStatus(cardStatus.getValue());
+        couponModel1.setCardStatus(cardStatusEnum.getValue());
         couponModel1.setCardKey(cardKey);
 
         memberModelMapper.updateByPrimaryKeySelective(memberModel);

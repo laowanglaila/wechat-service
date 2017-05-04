@@ -123,8 +123,8 @@ public class BaseHttpService {
      * reated by renjianfei on 2017/4/7.
      * 批量查看卡券详情
      */
-    public JSONObject getBatchCardInfo(Map<String, Object> map, String mpId) {
-        return this.commonHttpPost(WechatBaseApi.BATCHGET_CARD_INFO, map, mpId);
+    public JSONObject getBatchCardID(Map<String, Object> map, String mpId) {
+        return this.commonHttpPost(WechatBaseApi.BATCHGET_CARD_ID, map, mpId);
     }
 
     /**
