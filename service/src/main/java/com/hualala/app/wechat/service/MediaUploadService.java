@@ -45,8 +45,8 @@ public class MediaUploadService {
         JSONObject jsonObject = WechatMediaUtil.uploadMedia(file, token, type, url);
         if(null == jsonObject){
             return ResultUtil.toResultJson(jsonObject,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_IMAGEURL_ERROR,"图片地址有误");
-        }else if (jsonObject.containsKey(WechatBaseApi.MP_ERRCODE)){
-            String errcode = jsonObject.getString(WechatBaseApi.MP_ERRCODE);
+        }else if (jsonObject.containsKey(WechatMessageType.WECHAT_ERR_CODE)){
+            String errcode = jsonObject.getString(WechatMessageType.WECHAT_ERR_CODE);
             return ResultUtil.toResultJson(jsonObject,WechatMessageType.FALSE,null, WechatErrorCode.wechatError.get(errcode));
         }
 

@@ -77,8 +77,8 @@ public class CardPrePareCreateRpcServiceImplTest {
     //头信息：商家信息
     couponData.setTitle("哗啦啦尊享火锅套餐");
     couponData.setMpID("doulaofangceshi");
-    couponData.setDealDetail("以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补 凉锅、酸菜鱼锅可选）：大锅1份 12元小锅2份 16元 ");
-    couponData.setCardKey("sffg7896aerzcvgadsg123");
+    couponData.setDealDetail("DealDetail:以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补 凉锅、酸菜鱼锅可选）：大锅1份 12元小锅2份 16元 ");
+    couponData.setCardKey("33222sffg7896aerzcvgadsg123");
     couponData.setCardType("GROUPON");
     //设置baseInfo
     CardPrePareCreateRpcService.PreCardBaseInfoData baseInfo = new CardPrePareCreateRpcService.PreCardBaseInfoData();
@@ -154,9 +154,9 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitCoupon(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey("sffg7896aerzcvgadsg123");
+        cardPrimaryKey.setCardKey("222sffg7896aerzcvgadsg123");
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCouponInfo(cardPrimaryKey);
-        System.out.println(preCardResData);
+        System.out.println(preCardResData.getMessage());
     }
 
     @Test
@@ -198,7 +198,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         //头信息：商家信息
         couponData.setTitle("哗啦啦会员");
         couponData.setMpID("doulaofangceshi");
-        couponData.setCardKey("5678aerzc12adssg123");
+        couponData.setCardKey("ren5671243fdsgsvg25");
         couponData.setCardType("MEMBER_CARD");
         couponData.setPrerogative("asdfasdf");
 
@@ -240,7 +240,8 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setServicePhone("17614430096");
         baseInfo.setSource("哗啦啦微信门店");
 
-        baseInfo.setUseCustomCode(false);
+        baseInfo.setUseCustomCode(true);
+//        baseInfo.setCustomCodeMode("GET_CUSTOM_CODE_MODE_DEPOSIT");
         baseInfo.setUseLimit(0);
         baseInfo.setUseAllLocations(false);
         ArrayList<Integer> locationIdList = new ArrayList<>();
@@ -285,9 +286,9 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey("5678aerzc12adssg123");
+        cardPrimaryKey.setCardKey("222sffg7896aerzcvgadsg123");
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitMemberInfo(cardPrimaryKey);
-        System.out.println(preCardResData);
+        System.out.println(preCardResData.getMessage());
     }
 
 }

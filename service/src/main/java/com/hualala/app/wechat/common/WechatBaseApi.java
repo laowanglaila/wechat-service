@@ -14,8 +14,6 @@ public class WechatBaseApi {
 
     public static final String API_AUTHORIZER_TOKEN = ROOT + "/component/api_authorizer_token";
 
-    //微信公众号错误码字段名
-    public static final String MP_ERRCODE = "errcode";
 
     //微信卡券上传背景图片
     public static final String API_UPLOAD_MEDIA = ROOT + "/media/uploadimg";

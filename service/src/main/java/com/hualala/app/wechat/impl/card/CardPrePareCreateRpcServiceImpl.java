@@ -745,6 +745,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
 
         Map<String, Object> params = new HashMap<>();
         params.put("card",card);
+        String s = JSONObject.toJSONString(params);
         JSONObject jsonObject = baseHttpService.createCardAndCoupon(params, mpID);
         //判断是否在微信端创建成功,如果成功存入数据库
         if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){

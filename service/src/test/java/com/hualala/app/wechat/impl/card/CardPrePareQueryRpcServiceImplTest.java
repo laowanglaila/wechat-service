@@ -111,7 +111,7 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
     public void testSyncMemberInfo(){
         CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
         CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
-        cardSyncReqData.setCardKey("5678aerzc12adssg123");
+        cardSyncReqData.setCardKey("ren5671243fdsgsvg25");
         rpcClient.syncMemberInfo(cardSyncReqData);
     }
 }

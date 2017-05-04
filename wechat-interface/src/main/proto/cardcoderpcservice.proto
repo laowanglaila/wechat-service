@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardCodeRpcData";
+import "commons.proto";
+
+message CardCodeImportReqData {  
+   // 唯一ID
+   string cardKey=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   repeated string code=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeImportResData {  
+   // 已经成功存入的code
+   repeated string existCode=2;
+   // 没有存入的code
+   repeated string notExistCode=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service CardCodeRpcService{
+    //
+    rpc importMemberCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+    //
+    rpc importCouponCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+}

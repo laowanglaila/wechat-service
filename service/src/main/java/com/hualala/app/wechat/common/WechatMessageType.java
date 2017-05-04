@@ -43,6 +43,8 @@ public class WechatMessageType {
 	public static final String CODE = "code4service";
 
 	public static final String MESSAGE = "message4service";
+	public static final String WECHAT_ERR_CODE = "errcode";
+	public static final String WECHAT_ERR_MESSAGE = "errmsg";
 
 	public static final String IS_SUCCESS = "isSuccess4service";
 	public static final String CARD_TYPE_GROUPON = "GROUPON";
