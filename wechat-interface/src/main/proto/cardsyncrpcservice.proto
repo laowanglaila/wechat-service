@@ -25,8 +25,39 @@ message CardListResData {
    // 响应公共字段
    ResultHeader result=1;
 }
+message CardDownloadReqData {  
+   // 唯一ID
+   string cardKey=2;
+   // 微信卡券唯一ID
+   string cardID=3;
+   // 微信公众号唯一标识
+   string mpID=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardDownloadResData {  
+   // 唯一ID
+   string cardKey=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardSyncReqData {  
+   // 唯一ID
+   string cardKey=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardSyncResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
 //
 service CardSyncRpcService{
     //
     rpc getCardList(CardListReqData) returns (CardListResData) {}
+    rpc downloadCardInfo(CardDownloadReqData) returns (CardDownloadResData) {}
+    //
+    rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}
+    //
+    rpc syncCouponInfo(CardSyncReqData) returns (CardSyncResData) {}
 }

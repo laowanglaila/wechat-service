@@ -92,16 +92,16 @@ message MemberResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-message CardSyncReqData {  
-   // 唯一ID
-   string cardKey=2;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message CardSyncResData {  
-   // 响应公共字段
-   ResultHeader result=1;
-}
+//message CardSyncReqData {
+//   // 唯一ID
+//   string cardKey=2;
+//   // 请求公共字段
+//   RequestHeader header=1;
+//}
+//message CardSyncResData {
+//   // 响应公共字段
+//   ResultHeader result=1;
+//}
 message CouponResDataList {  
    // 优惠券集合
    repeated CouponResData couponResDataList=2;
@@ -233,11 +233,11 @@ service CardPrePareQueryRpcService{
     //查询多个会员卡数据
     rpc queryMemberList(CardQuery) returns (MemberResDataList) {}
     //
-    rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}
+//    rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}
     //查询多个优惠券数据
     rpc queryCouponList(CardQuery) returns (CouponResDataList) {}
     //
-    rpc syncCouponInfo(CardSyncReqData) returns (CardSyncResData) {}
+//    rpc syncCouponInfo(CardSyncReqData) returns (CardSyncResData) {}
     //查询会员卡数据
     rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
     //查询优惠券数据

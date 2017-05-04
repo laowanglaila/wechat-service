@@ -54,7 +54,49 @@ public interface CardSyncRpcService {
     }
 
     /**
-     * 根据CardKey和card_id同步数据到本地
+     * 根据CardKey和card_id导入数据到本地
      */
+    CardDownloadResData downloadCardInfo(CardDownloadReqData cardSyncReqData);
+    /**
+     * 与微信同步会员数据
+     */
+    @RpcMethod
+    CardSyncResData syncMemberInfo(CardSyncReqData cardSyncReqData);
+
+    /**
+     * 与微信同步卡券数据
+     */
+    @RpcMethod
+    CardSyncResData syncCouponInfo(CardSyncReqData cardSyncReqData);
+
+    /**
+     * 同步数据返回对象
+     */
+    @Data
+    class CardSyncResData extends ResultInfo{
+    }
+
+    @Data
+    class CardSyncReqData extends RequestInfo{
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+
+    }
+
+    @Data
+    class CardDownloadReqData extends RequestInfo{
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "微信卡券唯一ID")
+        private String cardID;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "微信公众号唯一标识")
+        private String mpID;
+    }
+    @Data
+    class CardDownloadResData extends ResultInfo{
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+    }
+
 
 }

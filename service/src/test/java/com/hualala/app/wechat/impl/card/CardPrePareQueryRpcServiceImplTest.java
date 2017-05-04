@@ -100,18 +100,18 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
         CardPrePareQueryRpcService.CardAdvancedInfoResData advancedInfoResData = rpcClient.queryAdvancedInfoByCardKey(cardQuery);
         System.out.println(advancedInfoResData.toString());
     }
-    @Test
-    public void testSyncCouponInfo(){
-        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
-        CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
-        cardSyncReqData.setCardKey("sffgaergfdgadsg123");
-        rpcClient.syncCouponInfo(cardSyncReqData);
-    }
-    @Test
-    public void testSyncMemberInfo(){
-        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
-        CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
-        cardSyncReqData.setCardKey("ren5671243fdsgsvg25");
-        rpcClient.syncMemberInfo(cardSyncReqData);
-    }
+//    @Test
+//    public void testSyncCouponInfo(){
+//        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+//        CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
+//        cardSyncReqData.setCardKey("sffgaergfdgadsg123");
+//        rpcClient.syncCouponInfo(cardSyncReqData);
+//    }
+//    @Test
+//    public void testSyncMemberInfo(){
+//        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+//        CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
+//        cardSyncReqData.setCardKey("ren5671243fdsgsvg25");
+//        rpcClient.syncMemberInfo(cardSyncReqData);
+//    }
 }

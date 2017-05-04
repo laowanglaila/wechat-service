@@ -26,11 +26,11 @@ public interface CardPrePareQueryRpcService {
      MemberResData queryMemberByCardKey(CardQuery cardQuery);
     @RpcMethod(description = "查询多个会员卡数据")
      MemberResDataList queryMemberList(CardQuery cardQuery);
-    /**
-     * 与微信同步会员数据
-     */
-    @RpcMethod
-    CardSyncResData syncMemberInfo(CardSyncReqData cardSyncReqData);
+//    /**
+//     * 与微信同步会员数据
+//     */
+//    @RpcMethod
+//    CardSyncResData syncMemberInfo(CardSyncReqData cardSyncReqData);
 
     /**
      * 查询优惠券数据
@@ -40,11 +40,11 @@ public interface CardPrePareQueryRpcService {
      CouponResData queryCouponByCardKey(CardQuery cardQuery);
     @RpcMethod(description = "查询多个优惠券数据")
      CouponResDataList queryCouponList(CardQuery cardQuery);
-    /**
-     * 与微信同步卡券数据
-     */
-    @RpcMethod
-    CardSyncResData syncCouponInfo(CardSyncReqData cardSyncReqData);
+//    /**
+//     * 与微信同步卡券数据
+//     */
+//    @RpcMethod
+//    CardSyncResData syncCouponInfo(CardSyncReqData cardSyncReqData);
 
     /**
      * 查询baseInfo
@@ -64,15 +64,15 @@ public interface CardPrePareQueryRpcService {
     /**
      * 同步数据返回对象
      */
-   @Data
-   class CardSyncResData extends ResultInfo{
-    }
-
-    @Data
-   class CardSyncReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
-    }
+//   @Data
+//   class CardSyncResData extends ResultInfo{
+//    }
+//
+//    @Data
+//   class CardSyncReqData extends RequestInfo{
+//        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+//        private String cardKey;
+//    }
 
 
     /**
