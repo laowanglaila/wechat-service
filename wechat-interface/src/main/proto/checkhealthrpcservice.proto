@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CheckHealthRpcData";
+import "commons.proto";
+
+message CheckHealthReqData {  
+   // 接收到请求的时间
+   int64 responseTime=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CheckHealthResData {  
+   // 接收到请求的时间
+   int64 responseTime=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service CheckHealthRpcService{
+    //
+    rpc check(CheckHealthReqData) returns (CheckHealthResData) {}
+}
