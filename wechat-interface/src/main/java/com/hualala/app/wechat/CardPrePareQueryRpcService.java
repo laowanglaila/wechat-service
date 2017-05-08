@@ -23,36 +23,56 @@ public interface CardPrePareQueryRpcService {
      * 查一个   查所有 按类型   名称
      */
     @RpcMethod(description = "查询会员卡数据")
-    public MemberResData queryMemberByCardKey(CardQuery cardQuery);
+     MemberResData queryMemberByCardKey(CardQuery cardQuery);
     @RpcMethod(description = "查询多个会员卡数据")
-    public MemberResDataList queryMemberList(CardQuery cardQuery);
-
+     MemberResDataList queryMemberList(CardQuery cardQuery);
+    /**
+     * 与微信同步会员数据
+     */
+    @RpcMethod
+    CardSyncResData syncMemberInfo(CardSyncReqData cardSyncReqData);
 
     /**
      * 查询优惠券数据
      * 查一个   查所有 按类型   名称
      */
     @RpcMethod(description = "查询优惠券数据")
-    public CouponResData queryCouponByCardKey(CardQuery cardQuery);
+     CouponResData queryCouponByCardKey(CardQuery cardQuery);
     @RpcMethod(description = "查询多个优惠券数据")
-    public CouponResDataList queryCouponList(CardQuery cardQuery);
-
+     CouponResDataList queryCouponList(CardQuery cardQuery);
+    /**
+     * 与微信同步卡券数据
+     */
+    @RpcMethod
+    CardSyncResData syncCouponInfo(CardSyncReqData cardSyncReqData);
 
     /**
      * 查询baseInfo
      * 查一个
      */
     @RpcMethod(description = "查询基本数据")
-    public CardBaseInfoResData queryBaseInfoByCardKey(CardQuery cardQuery);
+     CardBaseInfoResData queryBaseInfoByCardKey(CardQuery cardQuery);
 
     /**
      * 查询advancedInfo
      * 查一个
      */
     @RpcMethod(description = "查询优高级数据")
-    public CardAdvancedInfoResData queryAdvancedInfoByCardKey(CardQuery cardQuery);
+     CardAdvancedInfoResData queryAdvancedInfoByCardKey(CardQuery cardQuery);
 
 
+    /**
+     * 同步数据返回对象
+     */
+   @Data
+   class CardSyncResData extends ResultInfo{
+    }
+
+    @Data
+   class CardSyncReqData extends RequestInfo{
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+    }
 
 
     /**

@@ -4,7 +4,6 @@ import com.hualala.app.wechat.MpInfoRpcService;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.model.WechatMpModel;
 import com.hualala.core.utils.DataUtils;
-import io.netty.channel.ChannelHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

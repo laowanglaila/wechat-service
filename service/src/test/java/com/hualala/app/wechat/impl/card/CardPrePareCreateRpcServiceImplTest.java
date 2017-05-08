@@ -198,7 +198,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         //头信息：商家信息
         couponData.setTitle("哗啦啦会员");
         couponData.setMpID("doulaofangceshi");
-        couponData.setCardKey("123aerzc12adssg123");
+        couponData.setCardKey("5678aerzc12adssg123");
         couponData.setCardType("MEMBER_CARD");
         couponData.setPrerogative("asdfasdf");
 
@@ -285,7 +285,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey("123aerzc12adsg123");
+        cardPrimaryKey.setCardKey("5678aerzc12adssg123");
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitMemberInfo(cardPrimaryKey);
         System.out.println(preCardResData);
     }

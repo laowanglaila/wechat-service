@@ -16,6 +16,7 @@ import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Map;
 /**
  * Created by Thinkpad on 2017/4/29 0029.
  */
+@Service
 public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
 
     @Autowired
@@ -62,7 +64,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         Map<String, Object> card = new HashMap<>();
         prepareMemberInfo(card, memberUpdateReqData);
         card.put("base_info",baseInfo);
-        params.put(cardType,card);
+        params.put(cardType.toLowerCase(),card);
 
         Map<String, Object> map = WechatNameConverterUtil.convertToDBStyle(params);
         JSONObject jsonObject = baseHttpService.updateCardInfo(map,mpID);
@@ -78,7 +80,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
                 if (sendCheck){
                     memberModel1.setCardStatus(2);
                 }
-                memberModelMapper.updateByPrimaryKey(memberModel1);
+                memberModelMapper.updateByPrimaryKeySelective(memberModel1);
             if (memberUpdateReqData.getCardBaseInfoUpdateReqData()!=null){
                 BaseInfoModel baseInfoModel = DataUtils.copyProperties(memberUpdateReqData, BaseInfoModel.class);
                 baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
@@ -88,76 +90,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
 
     }
 
-    private void prepareMemberInfo(Map<String, Object> card, MemberUpdateReqData memberUpdateReqData) {
-        String activateUrl = memberUpdateReqData.getActivateUrl();
-        if (StringUtils.isNotBlank(activateUrl)){
-            card.put("activateUrl",activateUrl);
-        }
-        Boolean autoActivate = memberUpdateReqData.getAutoActivate();
-        card.put("autoActivate",autoActivate);
-        String backgroundPicUrl = memberUpdateReqData.getBackgroundPicUrl();
-        if (StringUtils.isNotBlank(backgroundPicUrl)){
-            card.put("backgroundPicUrl",backgroundPicUrl);
-        }
-        String balanceRules = memberUpdateReqData.getBalanceRules();
-        if (StringUtils.isNotBlank(balanceRules)){
-            card.put("balanceRules",balanceRules);
-        }
-        String balanceUrl = memberUpdateReqData.getBalanceUrl();
-        if (StringUtils.isNotBlank(balanceUrl)){
-            card.put("balanceUrl",balanceUrl);
-        }
-        String bonusCleared = memberUpdateReqData.getBonusCleared();
-        if (StringUtils.isNotBlank(bonusCleared)){
-            card.put("bonusCleared",bonusCleared);
-        }
-        String bonusRule = memberUpdateReqData.getBonusRule();
-        if (StringUtils.isNotBlank(bonusRule)){
-            JSONObject jsonObject = JSONObject.parseObject(bonusRule);
-            card.put("bonusRule",jsonObject);
-        }
-        String bonusRules = memberUpdateReqData.getBonusRules();
-        if (StringUtils.isNotBlank(bonusRules)){
-            card.put("bonusRules",bonusRules);
-        }
-        String bonusUrl = memberUpdateReqData.getBonusUrl();
-        if (StringUtils.isNotBlank(bonusUrl)){
-            card.put("bonusUrl",bonusUrl);
-        }
-        String customCell1 = memberUpdateReqData.getCustomCell1();
-        if (StringUtils.isNotBlank(customCell1)){
-            JSONObject jsonObject = JSONObject.parseObject(customCell1);
-            card.put("customCell1",jsonObject);
-        }
-        String customField1 = memberUpdateReqData.getCustomField1();
-        if (StringUtils.isNotBlank(customField1)){
-            JSONObject jsonObject = JSONObject.parseObject(customField1);
-            card.put("customField1",jsonObject);
-        }
-        String customField2 = memberUpdateReqData.getCustomField2();
-        if (StringUtils.isNotBlank(customField2)){
-            JSONObject jsonObject = JSONObject.parseObject(customField2);
-            card.put("customField2",jsonObject);
-        }
-        String customField3 = memberUpdateReqData.getCustomField3();
-        if (StringUtils.isNotBlank(customField3)){
-            JSONObject jsonObject = JSONObject.parseObject(customField3);
-            card.put("customField3",jsonObject);
-        }
-        Integer discount = memberUpdateReqData.getDiscount();
-        card.put("discount",discount);
-        String prerogative = memberUpdateReqData.getPrerogative();
-        if (StringUtils.isNotBlank(prerogative)){
-            card.put("prerogative",prerogative);
-        }
-        Boolean supplyBalance = memberUpdateReqData.getSupplyBalance();
-        card.put("supplyBalance",supplyBalance);
-        Boolean supplyBonus = memberUpdateReqData.getSupplyBonus();
-        card.put("supplyBonus",supplyBonus);
-        Boolean wxActivate = memberUpdateReqData.getWxActivate();
-        card.put("wxActivate",wxActivate);
 
-    }
 
     /**
      * 更新优惠券基本信息（只支持部分信息修改）
@@ -209,7 +142,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
                 if (sendCheck){
                     couponModel1.setCardStatus(2);
                 }
-                couponModelMapper.updateByPrimaryKey(couponModel1);
+                couponModelMapper.updateByPrimaryKeySelective(couponModel1);
             }
                 if (couponInfoUpdateReqData.getCardBaseInfoUpdateReqData()!=null){
 
@@ -221,6 +154,9 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     }
 
     private void prepareBaseInfo(Map<String, Object> baseInfo, CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData) {
+        if (cardBaseInfoUpdateReqData == null ){
+            return;
+        }
         Boolean canGiveFriend = cardBaseInfoUpdateReqData.getCanGiveFriend();
         baseInfo.put("canGiveFriend",canGiveFriend);
         Boolean canShare = cardBaseInfoUpdateReqData.getCanShare();
@@ -303,6 +239,77 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         }
         Boolean useAllLocations = cardBaseInfoUpdateReqData.getUseAllLocations();
         baseInfo.put("useAllLocations",useAllLocations);
+    }
+
+    private void prepareMemberInfo(Map<String, Object> card, MemberUpdateReqData memberUpdateReqData) {
+        String activateUrl = memberUpdateReqData.getActivateUrl();
+        if (StringUtils.isNotBlank(activateUrl)){
+            card.put("activateUrl",activateUrl);
+        }
+        Boolean autoActivate = memberUpdateReqData.getAutoActivate();
+        card.put("autoActivate",autoActivate);
+        String backgroundPicUrl = memberUpdateReqData.getBackgroundPicUrl();
+        if (StringUtils.isNotBlank(backgroundPicUrl)){
+            card.put("backgroundPicUrl",backgroundPicUrl);
+        }
+        String balanceRules = memberUpdateReqData.getBalanceRules();
+        if (StringUtils.isNotBlank(balanceRules)){
+            card.put("balanceRules",balanceRules);
+        }
+        String balanceUrl = memberUpdateReqData.getBalanceUrl();
+        if (StringUtils.isNotBlank(balanceUrl)){
+            card.put("balanceUrl",balanceUrl);
+        }
+        String bonusCleared = memberUpdateReqData.getBonusCleared();
+        if (StringUtils.isNotBlank(bonusCleared)){
+            card.put("bonusCleared",bonusCleared);
+        }
+        String bonusRule = memberUpdateReqData.getBonusRule();
+        if (StringUtils.isNotBlank(bonusRule)){
+            JSONObject jsonObject = JSONObject.parseObject(bonusRule);
+            card.put("bonusRule",jsonObject);
+        }
+        String bonusRules = memberUpdateReqData.getBonusRules();
+        if (StringUtils.isNotBlank(bonusRules)){
+            card.put("bonusRules",bonusRules);
+        }
+        String bonusUrl = memberUpdateReqData.getBonusUrl();
+        if (StringUtils.isNotBlank(bonusUrl)){
+            card.put("bonusUrl",bonusUrl);
+        }
+        String customCell1 = memberUpdateReqData.getCustomCell1();
+        if (StringUtils.isNotBlank(customCell1)){
+            JSONObject jsonObject = JSONObject.parseObject(customCell1);
+            card.put("customCell1",jsonObject);
+        }
+        String customField1 = memberUpdateReqData.getCustomField1();
+        if (StringUtils.isNotBlank(customField1)){
+            JSONObject jsonObject = JSONObject.parseObject(customField1);
+            card.put("customField1",jsonObject);
+        }
+        String customField2 = memberUpdateReqData.getCustomField2();
+        if (StringUtils.isNotBlank(customField2)){
+            JSONObject jsonObject = JSONObject.parseObject(customField2);
+            card.put("customField2",jsonObject);
+        }
+        String customField3 = memberUpdateReqData.getCustomField3();
+        if (StringUtils.isNotBlank(customField3)){
+            JSONObject jsonObject = JSONObject.parseObject(customField3);
+            card.put("customField3",jsonObject);
+        }
+        Integer discount = memberUpdateReqData.getDiscount();
+        card.put("discount",discount);
+        String prerogative = memberUpdateReqData.getPrerogative();
+        if (StringUtils.isNotBlank(prerogative)){
+            card.put("prerogative",prerogative);
+        }
+        Boolean supplyBalance = memberUpdateReqData.getSupplyBalance();
+        card.put("supplyBalance",supplyBalance);
+        Boolean supplyBonus = memberUpdateReqData.getSupplyBonus();
+        card.put("supplyBonus",supplyBonus);
+        Boolean wxActivate = memberUpdateReqData.getWxActivate();
+        card.put("wxActivate",wxActivate);
+
     }
 
 }

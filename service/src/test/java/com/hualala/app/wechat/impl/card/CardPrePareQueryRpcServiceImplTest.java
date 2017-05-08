@@ -67,6 +67,7 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
     }
     @Test
     public void testQueryCouponByWhere(){
+        long l = System.currentTimeMillis();
         CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
         CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
         cardQuery.setMpID("doulaofangceshi");
@@ -75,15 +76,20 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
         cardQuery.setPageSize(2);
         CardPrePareQueryRpcService.CouponResDataList couponResDataList = rpcClient.queryCouponList(cardQuery);
         List<CardPrePareQueryRpcService.CouponResData> couponResDataList1 = couponResDataList.getCouponResDataList();
+        long l1 = System.currentTimeMillis();
+        System.out.println(l1-l+"ms");
         System.out.println(couponResDataList1.size());
     }
 
     @Test
     public void testQueryBaseInfoByKey(){
+        long l = System.currentTimeMillis();
         CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
         CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
         cardQuery.setCardKey("1203128074192cfsdfsdf");
         CardPrePareQueryRpcService.CardBaseInfoResData baseInfo = rpcClient.queryBaseInfoByCardKey(cardQuery);
+        long l1 = System.currentTimeMillis();
+        System.out.println(l1-l+"ms");
         System.out.println(baseInfo.toString());
     }
     @Test
@@ -93,5 +99,19 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
         cardQuery.setCardKey("1203128074192cfsdfsdf");
         CardPrePareQueryRpcService.CardAdvancedInfoResData advancedInfoResData = rpcClient.queryAdvancedInfoByCardKey(cardQuery);
         System.out.println(advancedInfoResData.toString());
+    }
+    @Test
+    public void testSyncCouponInfo(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
+        cardSyncReqData.setCardKey("sffgaergfdgadsg123");
+        rpcClient.syncCouponInfo(cardSyncReqData);
+    }
+    @Test
+    public void testSyncMemberInfo(){
+        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
+        CardPrePareQueryRpcService.CardSyncReqData cardSyncReqData = new CardPrePareQueryRpcService.CardSyncReqData();
+        cardSyncReqData.setCardKey("5678aerzc12adssg123");
+        rpcClient.syncMemberInfo(cardSyncReqData);
     }
 }
