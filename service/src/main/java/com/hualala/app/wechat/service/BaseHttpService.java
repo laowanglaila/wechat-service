@@ -253,6 +253,10 @@ public class BaseHttpService {
         String url = WechatBaseApi.ACTIVATE_CARD;
         return this.commonHttpPost(url, map, mpID);
     }
+    public JSONObject activate(String json, String mpID) {
+        String url = WechatBaseApi.ACTIVATE_CARD;
+        return this.commonHttpPost(url, json, mpID);
+    }
 
     /**
      * 更新会员信息

@@ -63,5 +63,7 @@ public interface ErrorCodes {
     String WECHAT_CARD_KEY_NONE = "00112136";
     //cardID不能为空
     String WECHAT_CARD_ID_NULL = "00112137";
+ //membershipID不能为空
+    String WECHAT_CARD_MEMBER_NUM_NULL = "00112138";
 
 }

@@ -16,6 +16,7 @@ import com.hualala.core.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,7 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     @Autowired
     private WechatQrcodeMapper qrcodeMapper;
 
-//    @Autowired
-//    private RedisTemplate<String,Integer> redisTemplate;
+
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
