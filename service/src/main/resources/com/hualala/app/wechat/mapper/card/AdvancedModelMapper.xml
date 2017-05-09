@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hualala.app.wechat.mapper.card.AdvancedModelMapper" >
   <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.AdvancedModel" >
-    <id column="cardKey" property="cardKey" jdbcType="VARCHAR" />
+    <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
     <result column="abstractInfo" property="abstractInfo" jdbcType="VARCHAR" />
     <result column="businessService" property="businessService" jdbcType="VARCHAR" />
     <result column="textImage" property="textImage" jdbcType="LONGVARCHAR" />
@@ -96,15 +96,15 @@
       limit #{startRow} , #{pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     cardKey,abstractInfo,businessService,textImage,timeLimit,useCodition,action,actionTime,createTime
     from tbl_shop_wechat_card_advanced
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_shop_wechat_card_advanced
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.AdvancedModelQuery" >
     delete from tbl_shop_wechat_card_advanced
@@ -117,7 +117,7 @@
       textImage, timeLimit, useCodition, 
       action, actionTime, createTime
       )
-    values (#{cardKey,jdbcType=VARCHAR}, #{abstractInfo,jdbcType=VARCHAR}, #{businessService,jdbcType=VARCHAR}, 
+    values (#{cardKey,jdbcType=BIGINT}, #{abstractInfo,jdbcType=VARCHAR}, #{businessService,jdbcType=VARCHAR}, 
       #{textImage,jdbcType=LONGVARCHAR}, #{timeLimit,jdbcType=LONGVARCHAR}, #{useCodition,jdbcType=VARCHAR},
       #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
       )
@@ -155,7 +155,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
-        #{cardKey,jdbcType=VARCHAR},
+        #{cardKey,jdbcType=BIGINT},
       </if>
       <if test="abstractInfo != null" >
         #{abstractInfo,jdbcType=VARCHAR},
@@ -193,7 +193,7 @@
     update tbl_shop_wechat_card_advanced
     <set >
       <if test="record.cardKey != null" >
-        cardKey = #{record.cardKey,jdbcType=VARCHAR},
+        cardKey = #{record.cardKey,jdbcType=BIGINT},
       </if>
       <if test="record.abstractInfo != null" >
         abstractInfo = #{record.abstractInfo,jdbcType=VARCHAR},
@@ -224,7 +224,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tbl_shop_wechat_card_advanced
-    set cardKey = #{record.cardKey,jdbcType=VARCHAR},
+    set cardKey = #{record.cardKey,jdbcType=BIGINT},
       abstractInfo = #{record.abstractInfo,jdbcType=VARCHAR},
       businessService = #{record.businessService,jdbcType=VARCHAR},
       textImage = #{record.textImage,jdbcType=LONGVARCHAR},
@@ -262,7 +262,7 @@
       </if>
 
     </set>
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.AdvancedModel" >
     update tbl_shop_wechat_card_advanced
@@ -273,6 +273,6 @@
       useCodition = #{useCodition,jdbcType=VARCHAR},
       action = #{action,jdbcType=TINYINT},
       actionTime = #{actionTime,jdbcType=BIGINT}
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

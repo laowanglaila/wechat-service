@@ -13,7 +13,7 @@ public class CardUpdateRpcServiceImplTest extends BaseRpcTest {
     public void test() {
         CardUpdateRpcService rpcClient = super.baseRpcClient.getRpcClient(CardUpdateRpcService.class);
         CardUpdateRpcService.MemberUpdateReqData memberUpdateReqData = new CardUpdateRpcService.MemberUpdateReqData();
-        memberUpdateReqData.setCardKey("5678aerzc12adssg123");
+        memberUpdateReqData.setCardKey(123123213L);
         memberUpdateReqData.setTitle("哗啦啦钻石会员");
         memberUpdateReqData.setBalanceRules("adsfasdf");
         CardUpdateRpcService.CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = memberUpdateReqData.buildBaseInfo();
@@ -26,7 +26,7 @@ public class CardUpdateRpcServiceImplTest extends BaseRpcTest {
     public void testSku() {
         CardUpdateRpcService rpcClient = super.baseRpcClient.getRpcClient(CardUpdateRpcService.class);
         CardUpdateRpcService.CardSkuUpdateReqData cardSkuUpdateReqData = new CardUpdateRpcService.CardSkuUpdateReqData();
-        cardSkuUpdateReqData.setCardKey("5678aerzc12adssg123");
+        cardSkuUpdateReqData.setCardKey(123123123L);
         cardSkuUpdateReqData.setIncreaseStockValue(100);
         cardSkuUpdateReqData.setReduceStockValue(0);
         CardUpdateRpcService.CardUpdateResData cardUpdateResData = rpcClient.updateMemberSku(cardSkuUpdateReqData);

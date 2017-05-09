@@ -78,24 +78,22 @@ public interface CardSyncRpcService {
 
     @Data
     class CardSyncReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
 
     }
 
     @Data
     class CardDownloadReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
-        @Protocol(fieldType = FieldType.STRING, order = 3, description = "微信卡券唯一ID")
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "微信卡券唯一ID")
         private String cardID;
-        @Protocol(fieldType = FieldType.STRING, order = 4, description = "微信公众号唯一标识")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "微信公众号唯一标识")
         private String mpID;
     }
     @Data
     class CardDownloadResData extends ResultInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
     }
 
 

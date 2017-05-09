@@ -9,7 +9,7 @@ public class MemberModel extends BaseItem implements Serializable {
     /**
      * 会员端产生的唯一主键
      */
-    private String cardKey;
+    private Long cardKey;
 
     /**
      * 微信返回的卡券ID
@@ -130,8 +130,6 @@ public class MemberModel extends BaseItem implements Serializable {
      * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审合通过，4：审核失败，5：已投放
      */
     private Integer cardStatus;
-
-
 
     private static final long serialVersionUID = 1L;
 

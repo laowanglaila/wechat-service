@@ -1,18 +1,13 @@
 package com.hualala.app.wechat.impl.card;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
-import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
 import com.hualala.app.wechat.service.BaseHttpService;
-import com.hualala.app.wechat.util.ResultUtil;
-import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by renjianfei on 2017/4/26.
@@ -47,11 +41,15 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
      */
     @Override
     public MemberResData queryMemberByCardKey(CardQuery cardQuery) {
-        String cardKey = cardQuery.getCardKey();
-        if (StringUtils.isBlank(cardKey)) {
+        Long cardKey = cardQuery.getCardKey();
+
+        if (cardKey == null) {
             return new MemberResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空");
         }
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardQuery.getCardKey());
+        if (memberModel == null){
+            return new MemberResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "该cardKey没有找到对应数据");
+        }
         return DataUtils.copyProperties(memberModel, MemberResData.class);
     }
 
@@ -101,8 +99,6 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
     }
 
 
-
-
     /**
      * 查一个
      *
@@ -111,8 +107,8 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
      */
     @Override
     public CouponResData queryCouponByCardKey(CardQuery cardQuery) {
-        String cardKey = cardQuery.getCardKey();
-        if (StringUtils.isBlank(cardKey)) {
+        Long cardKey = cardQuery.getCardKey();
+        if (cardKey == null) {
             return new CouponResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空");
         }
         CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
@@ -126,6 +122,7 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
 
     /**
      * 查多个
+     *
      * @param cardQuery
      * @return
      */
@@ -173,12 +170,10 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
     }
 
 
-
-
     @Override
     public CardBaseInfoResData queryBaseInfoByCardKey(CardQuery cardQuery) {
-        String cardKey = cardQuery.getCardKey();
-        if (StringUtils.isBlank(cardKey)) {
+        Long cardKey = cardQuery.getCardKey();
+        if (cardKey == null) {
             return new CardBaseInfoResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空");
         }
         BaseInfoModel baseInfoModel = baseInfoModelMapper.selectByPrimaryKey(cardKey);
@@ -187,8 +182,9 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
 
     @Override
     public CardAdvancedInfoResData queryAdvancedInfoByCardKey(CardQuery cardQuery) {
-        String cardKey = cardQuery.getCardKey();
-        if (StringUtils.isBlank(cardKey)) {
+        Long cardKey = cardQuery.getCardKey();
+
+        if (cardKey == null) {
             return new CardAdvancedInfoResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空");
         }
         AdvancedModel advancedModel = advancedModelMapper.selectByPrimaryKey(cardKey);

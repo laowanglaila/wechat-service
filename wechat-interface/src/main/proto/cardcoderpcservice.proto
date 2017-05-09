@@ -3,10 +3,11 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardCodeRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message CardCodeImportReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 需导入微信卡券后台的自定义code，上限为100个。
    repeated string code=3;
    // 请求公共字段
@@ -20,10 +21,45 @@ message CardCodeImportResData {
    // 响应公共字段
    ResultHeader result=1;
 }
+message CardCodeDecodingReqData {  
+   // 公众号mpID
+   string mpID=2;
+   // 经过加密的Code码
+   string encryptCode=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDecodingResData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeDestroyReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string code=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDestroyResData {  
+   // 唯一ID
+   string openId=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string cardId=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 //
 service CardCodeRpcService{
     //
     rpc importMemberCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
     //
     rpc importCouponCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+    rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
+    //
+    rpc destoryMemberCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
+    //
+    rpc destoryCouponCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
 }

@@ -36,8 +36,8 @@ public interface CardEventRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "领取会员卡用户获得的code")
         private String code;
         //        card_id                               否     	        string（32）    	        卡券ID,自定义code卡券必填
-        @Protocol(fieldType = FieldType.STRING, order = 4, description = "卡券唯一键")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "卡券唯一键")
+        private Long cardKey;
         //        background_pic_url                    否   	        string（128）               商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范")
         private String backgroundPicUrl;

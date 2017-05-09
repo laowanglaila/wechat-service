@@ -2,7 +2,6 @@ package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.BaseRpcTest;
 import com.hualala.app.wechat.CardEventRpcService;
-import org.junit.Test;
 
 /**
  * Created by renjianfei on 2017/5/5.
@@ -17,7 +16,7 @@ public class CardEventRpcServiceImplTest extends BaseRpcTest {
     public void test() {
         CardEventRpcService rpcClient = super.baseRpcClient.getRpcClient(CardEventRpcService.class);
         CardEventRpcService.ActivateMemberCardReqData activateMemberCardReqData = new CardEventRpcService.ActivateMemberCardReqData();
-        activateMemberCardReqData.setCardKey("");
+        activateMemberCardReqData.setCardKey(12312L);
         activateMemberCardReqData.setCode("");
         activateMemberCardReqData.setMembershipNumber("");
         activateMemberCardReqData.setBackgroundPicUrl("");

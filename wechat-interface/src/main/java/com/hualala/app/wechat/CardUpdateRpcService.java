@@ -44,8 +44,8 @@ public interface CardUpdateRpcService {
      */
     @Data
     class CardSkuUpdateReqData extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         //        increase_stock_value	否	int	1231231	增加多少库存，支持不填或填0。
         @Protocol(fieldType = FieldType.INT, order = 3, description = "增加多少库存，支持不填或填0。")
         private int increaseStockValue;
@@ -57,8 +57,8 @@ public interface CardUpdateRpcService {
 
     @Data
     class MemberUpdateReqData extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         //        supply_bonus	                    是	            bool   	是否支持积分，仅支持从false变为true，默认为false
         @Protocol(fieldType = FieldType.BOOL, order = 3, description = "显示积分，填写true或false，如填写true，积分相关字段均为必填。")
         private Boolean supplyBonus;
@@ -131,8 +131,8 @@ public interface CardUpdateRpcService {
 
     @Data
     class CouponInfoUpdateReqData extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         //        title	                            是	            string(27)	            微信会员卡	会员卡标题，字数上限为9个汉字
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "卡券名称")
         private String title;

@@ -3,20 +3,21 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardDeleteRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message CardDeleteReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 请求公共字段
    RequestHeader header=1;
 }
-message ResultInfo {  
+message CardDeleteAndUnAbailableResData {  
    // 响应公共字段
    ResultHeader result=1;
 }
 message CardUnAvailableReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // code码
    string code=3;
    // 请求公共字段
@@ -25,11 +26,11 @@ message CardUnAvailableReqData {
 //
 service CardDeleteRpcService{
     //
-    rpc deleteMemberInfo(CardDeleteReqData) returns (ResultInfo) {}
+    rpc deleteMemberInfo(CardDeleteReqData) returns (CardDeleteAndUnAbailableResData) {}
     //
-    rpc deleteCouponInfo(CardDeleteReqData) returns (ResultInfo) {}
+    rpc deleteCouponInfo(CardDeleteReqData) returns (CardDeleteAndUnAbailableResData) {}
     //
-    rpc unAvailableCouponInfo(CardUnAvailableReqData) returns (ResultInfo) {}
+    rpc unAvailableMemberInfo(CardUnAvailableReqData) returns (CardDeleteAndUnAbailableResData) {}
     //
-    rpc unAvailableMemberInfo(CardUnAvailableReqData) returns (ResultInfo) {}
+    rpc unAvailableCouponInfo(CardUnAvailableReqData) returns (CardDeleteAndUnAbailableResData) {}
 }

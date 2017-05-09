@@ -27,7 +27,11 @@ public class CardEventRpcServiceImpl implements CardEventRpcService {
     @Override
     public ActivateMemberCardResData activateMemberCard(ActivateMemberCardReqData activateMemberCardReqData) {
 
-        String cardKey = activateMemberCardReqData.getCardKey();
+        Long cardKey = activateMemberCardReqData.getCardKey();
+        if (null == cardKey){
+            return new ActivateMemberCardResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不能为空！");
+        }
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
         if (null == memberModel){
             return new ActivateMemberCardResData()

@@ -27,13 +27,13 @@ public interface CardDeleteRpcService {
 
     @Data
     class CardDeleteReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
     }
     @Data
     class CardUnAvailableReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "code码")
         private String code;
     }

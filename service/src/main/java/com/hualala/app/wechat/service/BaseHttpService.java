@@ -213,6 +213,14 @@ public class BaseHttpService {
     }
 
     /**
+     * code解码接口
+     * :https://api.weixin.qq.com/card/code/decrypt
+     */
+    public JSONObject decodingCardCode(String json, String mpId) {
+        return this.commonHttpPost(WechatBaseApi.DECRYPT_CARD_CODE, json, mpId);
+    }
+
+    /**
      * 修改卡面信息
      * 支持更新所有卡券类型的部分通用字段及特殊卡券（会员卡、飞机票、电影票、会议门票）中特定字段的信息。
      */

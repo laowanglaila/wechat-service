@@ -12,16 +12,19 @@ import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
 import com.hualala.app.wechat.service.BaseHttpService;
+import com.hualala.app.wechat.service.card.CreateCardKeyService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
+import org.omg.CORBA.LongHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by renjianfei on 2017/5/4.
@@ -39,6 +42,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
     @Autowired
     private WechatMpMapper wechatMpMapper;
+    @Autowired
+    private CreateCardKeyService createCardKeyService;
+
     @Autowired
     private BaseHttpService baseHttpService;
 
@@ -64,7 +70,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
     @Override
     public CardSyncResData syncMemberInfo(CardSyncReqData cardSyncReqData) {
-        String cardKey = cardSyncReqData.getCardKey();
+        Long cardKey = cardSyncReqData.getCardKey();
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
         if (null == memberModel) {
             return new CardSyncResData()
@@ -158,7 +164,11 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
     @Override
     public CardSyncResData syncCouponInfo(CardSyncReqData cardSyncReqData) {
-        String cardKey = cardSyncReqData.getCardKey();
+        Long cardKey = cardSyncReqData.getCardKey();
+        if (cardKey == null) {
+            return new CardSyncResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不能为空！");
+        }
         CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
         if (null == couponModel) {
             return new CardSyncResData()
@@ -241,9 +251,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
     public CardDownloadResData downloadCardInfo(CardDownloadReqData cardSyncReqData) {
         String mpID = cardSyncReqData.getMpID();
         String cardID = cardSyncReqData.getCardID();
-        String cardKey = cardSyncReqData.getCardKey();
+
         if (StringUtils.isBlank(cardID)) {
-            return new CardSyncResData()
+            return new CardDownloadResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_ID_NULL, "cardID不能为空");
         }
         String params = "{\"card_id\":\"" + cardID + "\"}";
@@ -254,10 +264,23 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         JSONObject card = cardInfo.getJSONObject("card");
         String cardType = card.getString("card_type");
         //判断卡类型，决定存入哪张表
+        Long cardKey = null;
         if ("MEMBER_CARD".equals(cardType)) {
-            cardKey = saveMemberInfo(mpID, cardKey, cardID, cardInfo);
+            try {
+                cardKey = saveMemberInfo(mpID, cardID, cardInfo);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                return new CardDownloadResData()
+                        .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey获取失败\r\n"+e.getMessage());
+            }
         } else {
-            cardKey = saveCoupon(mpID, cardKey, cardID, cardInfo);
+            try {
+                cardKey = saveCoupon(mpID, cardID, cardInfo);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                return new CardDownloadResData()
+                        .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey获取失败:\r\n"+e.getMessage());
+            }
         }
 
         CardDownloadResData resultInfoBean = ResultUtil.getResultInfoBean(cardInfo, CardDownloadResData.class);
@@ -271,7 +294,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
      * @param cardID
      * @param cardInfo
      */
-    private String saveCoupon(String mpID, String cardKey, String cardID, JSONObject cardInfo) {
+    private Long saveCoupon(String mpID, String cardID, JSONObject cardInfo) throws ExecutionException {
         JSONObject card = (JSONObject) cardInfo.get("card");
         String cardType = (String) card.get("card_type");
         JSONObject coupon = (JSONObject) card.get(cardType.toLowerCase());
@@ -332,6 +355,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         couponModelQuery.createCriteria()
                 .andCardIDEqualTo(cardID);
         List<CouponModel> couponModels = couponModelMapper.selectByExample(couponModelQuery);
+        Long cardKey = null;
         if (couponModels != null && couponModels.size() > 0) {
             //如果已经存在就更新
             cardKey = couponModels.get(0).getCardKey();
@@ -350,6 +374,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
                 //GroupID是不能为空的
                 Integer groupIDs = (Integer) maps.get(0).get("groupID");
                 couponModel1.setGroupID(groupIDs.longValue());
+                cardKey = createCardKeyService.createCardKey(groupIDs.longValue());
             }
             couponModel1.setMpID(mpID);
             couponModel1.setCardKey(cardKey);
@@ -364,7 +389,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         return cardKey;
     }
 
-    private String saveMemberInfo(String mpID, String cardKey, String cardID, JSONObject cardInfo) {
+    private Long saveMemberInfo(String mpID, String cardID, JSONObject cardInfo) throws ExecutionException {
         JSONObject card = (JSONObject) cardInfo.get("card");
         String cardType = (String) card.get("card_type");
         JSONObject memberCard = (JSONObject) card.get(cardType.toLowerCase());
@@ -439,6 +464,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         memberModelQuery.createCriteria()
                 .andCardIDEqualTo(cardID);
         List<MemberModel> memberModels = memberModelMapper.selectByExample(memberModelQuery);
+        Long cardKey = null;
         if (memberModels != null && memberModels.size() > 0) {
             //如果已经存在就更新
             cardKey = memberModels.get(0).getCardKey();
@@ -450,13 +476,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             advancedModelMapper.updateByPrimaryKeySelective(advancedModel);
         } else {
             //否则就插入
-            Map<String, Object> params = new HashMap<>();
+                    Map < String, Object > params = new HashMap<>();
             params.put("mpID", mpID);
             List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
             if (maps.size() > 0) {
                 //GroupID是不能为空的
                 Integer groupIDs = (Integer) maps.get(0).get("groupID");
                 memberModel1.setGroupID(groupIDs.longValue());
+                cardKey = createCardKeyService.createCardKey(groupIDs.longValue());
             }
             memberModel1.setMpID(mpID);
             memberModel1.setCardKey(cardKey);

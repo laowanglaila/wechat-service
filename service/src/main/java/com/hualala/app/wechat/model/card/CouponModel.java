@@ -9,7 +9,7 @@ public class CouponModel extends BaseItem implements Serializable {
     /**
      * 会员端产生的唯一主键
      */
-    private String cardKey;
+    private Long cardKey;
 
     /**
      * 微信返回的卡券ID
@@ -72,7 +72,7 @@ public class CouponModel extends BaseItem implements Serializable {
     private Integer cardStatus;
 
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
 
 }

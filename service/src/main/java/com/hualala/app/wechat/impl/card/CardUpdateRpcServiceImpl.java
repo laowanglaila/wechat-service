@@ -1,9 +1,7 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.CardPrePareQueryRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
-import com.hualala.app.wechat.CodeTypeEnum;
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -16,7 +14,6 @@ import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
-import jdk.nashorn.internal.ir.IfNode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,8 +43,8 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     @Override
     public CardUpdateResData updateMemberInfo(MemberUpdateReqData memberUpdateReqData) {
         //获取mpID
-        String cardKey = memberUpdateReqData.getCardKey();
-        if (StringUtils.isBlank(cardKey)){
+        Long cardKey = memberUpdateReqData.getCardKey();
+        if (cardKey == null){
             return new CardUpdateResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
@@ -112,8 +109,8 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     @Override
     public CardUpdateResData updateCouponInfo(CouponInfoUpdateReqData couponInfoUpdateReqData) {
         //获取mpID
-        String cardKey = couponInfoUpdateReqData.getCardKey();
-        if (StringUtils.isBlank(cardKey)){
+        Long cardKey = couponInfoUpdateReqData.getCardKey();
+        if (cardKey == null){
             return new CardUpdateResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
@@ -178,8 +175,8 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
      */
     @Override
     public CardUpdateResData updateCouponSku(CardSkuUpdateReqData cardSkuUpdateReqData) {
-        String cardKey = cardSkuUpdateReqData.getCardKey();
-        if (StringUtils.isBlank(cardKey)){
+        Long cardKey = cardSkuUpdateReqData.getCardKey();
+        if (cardKey == null){
             return new CardUpdateResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
@@ -195,8 +192,8 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     }
    @Override
     public CardUpdateResData updateMemberSku(CardSkuUpdateReqData cardSkuUpdateReqData) {
-        String cardKey = cardSkuUpdateReqData.getCardKey();
-       if (StringUtils.isBlank(cardKey)){
+       Long cardKey = cardSkuUpdateReqData.getCardKey();
+       if (cardKey == null){
            return new CardUpdateResData()
                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
        }

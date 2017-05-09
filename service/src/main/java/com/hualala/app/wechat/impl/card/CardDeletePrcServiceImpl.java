@@ -2,7 +2,6 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardDeleteRpcService;
-import com.hualala.app.wechat.CreateCardCouponRpcService;
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
@@ -13,7 +12,6 @@ import com.hualala.app.wechat.model.card.CouponModel;
 import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
-import com.hualala.core.base.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +34,11 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
 
     @Override
     public CardDeleteAndUnAbailableResData deleteMemberInfo(CardDeleteReqData cardDeleteReqData) {
-        String cardKey = cardDeleteReqData.getCardKey();
+        Long cardKey = cardDeleteReqData.getCardKey();
+        if (cardKey == null){
+            return new CardDeleteAndUnAbailableResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
+        }
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
         if (null == memberModel){
             return new CardDeleteAndUnAbailableResData()
@@ -58,7 +60,11 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
 
     @Override
     public CardDeleteAndUnAbailableResData unAvailableMemberInfo(CardUnAvailableReqData cardUnAvailableReqData) {
-        String cardKey = cardUnAvailableReqData.getCardKey();
+        Long cardKey = cardUnAvailableReqData.getCardKey();
+        if (cardKey == null){
+            return new CardDeleteAndUnAbailableResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
+        }
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
         if (null == memberModel){
             return new CardDeleteAndUnAbailableResData()
@@ -75,7 +81,11 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
 
     @Override
     public CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData) {
-        String cardKey = cardDeleteReqData.getCardKey();
+        Long cardKey = cardDeleteReqData.getCardKey();
+        if (cardKey == null){
+            return new CardDeleteAndUnAbailableResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
+        }
         CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
         if (null == couponModel){
             return new CardDeleteAndUnAbailableResData()
@@ -97,7 +107,11 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
 
     @Override
     public CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData) {
-        String cardKey = cardUnAvailableReqData.getCardKey();
+        Long cardKey = cardUnAvailableReqData.getCardKey();
+        if (cardKey == null){
+            return new CardDeleteAndUnAbailableResData()
+                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
+        }
         CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
         if (null == couponModel){
             return new CardDeleteAndUnAbailableResData()

@@ -19,7 +19,7 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
         for (int i = 0 ; i < 100 ; i++){
             codes.add(""+i);
         }
-        cardCodeImportReqData.setCardKey("ren5671243fdsgsvg25");
+        cardCodeImportReqData.setCardKey(123123L);
         cardCodeImportReqData.setCode(codes);
         CardCodeRpcService.CardCodeImportResData cardCodeImportResData = rpcClient.importMemberCode(cardCodeImportReqData);
         System.out.println(cardCodeImportResData.getMessage());
@@ -29,5 +29,20 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
     public void testCodeDestory() {
         CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
 
+        CardCodeRpcService.CardCodeDestroyReqData cardCodeDestroyReqData = new CardCodeRpcService.CardCodeDestroyReqData();
+        cardCodeDestroyReqData.setCode("410947662432");
+        cardCodeDestroyReqData.setCardKey(123123L);
+        CardCodeRpcService.CardCodeDestroyResData cardCodeDestroyResData = rpcClient.destoryCouponCode(cardCodeDestroyReqData);
+        System.out.println(cardCodeDestroyResData.getMessage());
+    }
+    @Test
+    public void testDecodingCode() {
+        CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
+
+        CardCodeRpcService.CardCodeDecodingReqData cardCodeDecodingReqData = new CardCodeRpcService.CardCodeDecodingReqData();
+        cardCodeDecodingReqData.setMpID("hualala_com");
+        cardCodeDecodingReqData.setEncryptCode("XXIzTtMqCxwOaawoE91+VJdsFmv7b8g0VZIZkqf4GWA60Fzpc8ksZ/5ZZ0DVkXdE");
+        CardCodeRpcService.CardCodeDecodingResData cardCodeDecodingResData = rpcClient.decodingCardCode(cardCodeDecodingReqData);
+        System.out.println(cardCodeDecodingResData.getMessage());
     }
 }

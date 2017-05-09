@@ -47,6 +47,8 @@ public class WechatBaseApi {
     public static final String GET_HTML_MESSAGE = "https://api.weixin.qq.com/card/mpnews/gethtml";
     //核销code接口
     public static final String CONSUME_CARD_CODE = "https://api.weixin.qq.com/card/code/consume";
+    //解码code接口
+    public static final String DECRYPT_CARD_CODE = "https://api.weixin.qq.com/card/code/decrypt";
     //微信会员卡微信激活接口
     public static final String ACTIVATE_CARD = "https://api.weixin.qq.com/card/membercard/activate";
     //微信会员卡更新会员信息

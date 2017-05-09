@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hualala.app.wechat.mapper.card.CouponModelMapper" >
   <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.CouponModel" >
-    <id column="cardKey" property="cardKey" jdbcType="VARCHAR" />
+    <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
     <result column="cardID" property="cardID" jdbcType="VARCHAR" />
     <result column="groupID" property="groupID" jdbcType="BIGINT" />
     <result column="mpID" property="mpID" jdbcType="VARCHAR" />
@@ -103,15 +103,15 @@
       limit #{startRow} , #{pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     cardKey,cardID,groupID,mpID,title,cardType,defaultDetail,dealDetail,leastCost,reduceCost,discount,gift,cardStatus,action,actionTime,createTime
     from tbl_shop_wechat_card_coupon
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_shop_wechat_card_coupon
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.CouponModelQuery" >
     delete from tbl_shop_wechat_card_coupon
@@ -126,7 +126,7 @@
       reduceCost, discount, gift, 
       cardStatus, action, actionTime, 
       createTime)
-    values (#{cardKey,jdbcType=VARCHAR}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
+    values (#{cardKey,jdbcType=BIGINT}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
       #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
       #{defaultDetail,jdbcType=VARCHAR}, #{dealDetail,jdbcType=VARCHAR}, #{leastCost,jdbcType=INTEGER}, 
       #{reduceCost,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{gift,jdbcType=VARCHAR}, 
@@ -187,7 +187,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
-        #{cardKey,jdbcType=VARCHAR},
+        #{cardKey,jdbcType=BIGINT},
       </if>
       <if test="cardID != null" >
         #{cardID,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
     update tbl_shop_wechat_card_coupon
     <set >
       <if test="record.cardKey != null" >
-        cardKey = #{record.cardKey,jdbcType=VARCHAR},
+        cardKey = #{record.cardKey,jdbcType=BIGINT},
       </if>
       <if test="record.cardID != null" >
         cardID = #{record.cardID,jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tbl_shop_wechat_card_coupon
-    set cardKey = #{record.cardKey,jdbcType=VARCHAR},
+    set cardKey = #{record.cardKey,jdbcType=BIGINT},
       cardID = #{record.cardID,jdbcType=VARCHAR},
       groupID = #{record.groupID,jdbcType=BIGINT},
       mpID = #{record.mpID,jdbcType=VARCHAR},
@@ -364,7 +364,7 @@
       </if>
 
     </set>
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
     update tbl_shop_wechat_card_coupon
@@ -382,6 +382,6 @@
       cardStatus = #{cardStatus,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
       actionTime = #{actionTime,jdbcType=BIGINT}
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

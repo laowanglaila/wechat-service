@@ -24,18 +24,26 @@ public interface CardCodeRpcService {
      */
     @RpcMethod
     CardCodeImportResData importMemberCode(CardCodeImportReqData cardCodeImportReqData);
+
     @RpcMethod
     CardCodeImportResData importCouponCode(CardCodeImportReqData cardCodeImportReqData);
 
     /**
      * 核销code方法
+     *
      * @param
      * @return
      */
     @RpcMethod
     CardCodeDestroyResData destoryMemberCode(CardCodeDestroyReqData cardCodeDestroyReqData);
+
     @RpcMethod
     CardCodeDestroyResData destoryCouponCode(CardCodeDestroyReqData cardCodeDestroyReqData);
+
+    /**
+     * code解码
+     */
+    CardCodeDecodingResData decodingCardCode(CardCodeDecodingReqData cardCodeDecodingReqData);
 
     /**
      * 导入code
@@ -44,8 +52,8 @@ public interface CardCodeRpcService {
     @Data
     class CardCodeImportReqData extends RequestInfo {
         //    card_id	需要进行导入code的卡券ID。	是
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         //    code	需导入微信卡券后台的自定义code，上限为100个。	是
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "需导入微信卡券后台的自定义code，上限为100个。")
         private List<String> code;
@@ -60,6 +68,7 @@ public interface CardCodeRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "没有存入的code")
         private List<String> notExistCode;
     }
+
     /**
      * 核销code
      */
@@ -67,8 +76,8 @@ public interface CardCodeRpcService {
     @Data
     class CardCodeDestroyReqData extends RequestInfo {
         //    card_id	否	string(32) 卡券ID。创建卡券时use_custom_code填写true时必填。非自定义Code不必填写。
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         //    code	是	string(20)	1231231	需核销的Code码。
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "需导入微信卡券后台的自定义code，上限为100个。")
         private String code;
@@ -85,16 +94,51 @@ public interface CardCodeRpcService {
     }
 
 
-/**
- * code解码
- */
-//encrypt_code	是	string(128)  经过加密的Code码。
-//code	解密后获取的真实Code码、
+    /**
+     * code解码
+     */
+    @Data
+    class CardCodeDecodingReqData extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号mpID")
+        private String mpID;
+        //encrypt_code	是	string(128)  经过加密的Code码。
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "经过加密的Code码")
+        private String encryptCode;
+
+    }
+
+    @Data
+    class CardCodeDecodingResData extends ResultInfo {
+        //code	解密后获取的真实Code码、
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
+        private String cardCode;
+    }
 
 
-/**
- * 查询code接口
- */
+    /**
+     * 查询code接口
+     */
+    @Data
+    class CardCodeQueryReqData {
+        //    code	            是	string(20)	    110201201245	单张卡券的唯一标准。
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
+        private String cardCode;
+        //    card_id	        否	string(32)      pFS7Fjg8kV1I    dDz01r4SQwMkuCKc 卡券ID代表一类卡券。自定义code卡券必填。
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "卡券ID代表一类卡券。自定义code卡券必填")
+        private Long cardKey;
+        //    check_consume	    否	bool	        true	        是否校验code核销状态，填入true和false时的code异常状态返回数据不同。
 
+    }
+    @Data
+    class CardCodeQueryResData {
+        //    code	            是	string(20)	    110201201245	单张卡券的唯一标准。
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
+        private String cardCode;
+        //    card_id	        否	string(32)      pFS7Fjg8kV1I    dDz01r4SQwMkuCKc 卡券ID代表一类卡券。自定义code卡券必填。
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "卡券ID代表一类卡券。自定义code卡券必填")
+        private Long cardKey;
+        //    check_consume	    否	bool	        true	        是否校验code核销状态，填入true和false时的code异常状态返回数据不同。
+
+    }
 
 }

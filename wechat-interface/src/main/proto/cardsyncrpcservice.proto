@@ -26,24 +26,22 @@ message CardListResData {
    ResultHeader result=1;
 }
 message CardDownloadReqData {  
-   // 唯一ID
-   string cardKey=2;
    // 微信卡券唯一ID
-   string cardID=3;
+   string cardID=2;
    // 微信公众号唯一标识
-   string mpID=4;
+   string mpID=3;
    // 请求公共字段
    RequestHeader header=1;
 }
 message CardDownloadResData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 响应公共字段
    ResultHeader result=1;
 }
 message CardSyncReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 请求公共字段
    RequestHeader header=1;
 }

@@ -3,10 +3,11 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardUpdateRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message CardSkuUpdateReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 增加多少库存，支持不填或填0。
    int32 increaseStockValue=3;
    // 减少多少库存，可以不填或填0。
@@ -22,7 +23,7 @@ message CardUpdateResData {
 }
 message CouponInfoUpdateReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 卡券名称
    string title=3;
    // 卡券基本信息
@@ -80,7 +81,7 @@ message CardBaseInfoUpdateReqData {
 }
 message MemberUpdateReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
    bool supplyBonus=3;
    // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
@@ -127,11 +128,11 @@ message MemberUpdateReqData {
 //
 service CardUpdateRpcService{
     //
-    rpc updateMemberSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
+    rpc updateCouponSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
     //
     rpc updateCouponInfo(CouponInfoUpdateReqData) returns (CardUpdateResData) {}
     //
-    rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
+    rpc updateMemberSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
     //
-    rpc updateCouponSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
+    rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
 }

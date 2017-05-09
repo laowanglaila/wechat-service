@@ -12,7 +12,7 @@ public interface AdvancedModelMapper {
 
     int deleteByExample(AdvancedModelQuery example);
 
-    int deleteByPrimaryKey(String cardKey);
+    int deleteByPrimaryKey(Long cardKey);
 
     int insert(AdvancedModel record);
 
@@ -20,7 +20,7 @@ public interface AdvancedModelMapper {
 
     List<AdvancedModel> selectByExample(AdvancedModelQuery example);
 
-    AdvancedModel selectByPrimaryKey(String cardKey);
+    AdvancedModel selectByPrimaryKey(Long cardKey);
 
     int updateByExampleSelective(@Param("record") AdvancedModel record, @Param("example") AdvancedModelQuery example);
 

@@ -17,6 +17,7 @@ import com.hualala.app.wechat.model.card.CouponModel;
 import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
+import com.hualala.app.wechat.service.card.CreateCardKeyService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.app.Logger;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by renjianfei on 2017/4/25.
@@ -44,6 +46,8 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
     @Autowired
     private CouponModelMapper couponModelMapper;
 
+    @Autowired
+    private CreateCardKeyService createCardKeyService;
     @Override
     public PreCardResData createCoupon(PreCouponReqData preCouponReqData) {
         //判断mpID,没有则调方法获取
@@ -78,9 +82,13 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
         }
         preCouponReqData.setGroupID(groupID);
         preCouponReqData.setMpID(mpID);
-        //cardKey
-        if (StringUtils.isBlank(preCouponReqData.getCardKey())) {
-            return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
+        //获取去cardKey
+        Long cardKey = null;
+        try {
+            cardKey = createCardKeyService.createCardKey(groupID);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "获取CardKey失败:\r\n"+e.getMessage());
         }
         //title
         if (StringUtils.isBlank(preCouponReqData.getTitle())) {
@@ -93,10 +101,11 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
 
         CouponModel couponModel = DataUtils.copyProperties(preCouponReqData, CouponModel.class);
         couponModel.setCardStatus(1);
+        couponModel.setCardKey(cardKey);
         couponModelMapper.insertSelective(couponModel);
 
         PreCardResData cardCouponResData = new PreCardResData();
-        cardCouponResData.setCardKey(preCouponReqData.getCardKey());
+        cardCouponResData.setCardKey(cardKey);
         cardCouponResData.setResultInfo(ErrorCodes.WECHAT_SUCCESS_CODE, "请求成功");
         return cardCouponResData;
     }
@@ -145,9 +154,14 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
         preCardReqData.setGroupID(groupID);
         preCardReqData.setMpID(mpID);
         //cardKey
-        if (StringUtils.isBlank(preCardReqData.getCardKey())) {
-            return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
+        Long cardKey = null;
+        try {
+            cardKey = createCardKeyService.createCardKey(groupID);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "获取CardKey失败:\r\n"+e.getMessage());
         }
+
         //title
         if (StringUtils.isBlank(preCardReqData.getTitle())) {
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_TITLE_NULL, "参数title为空！");
@@ -159,10 +173,11 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
 
         MemberModel memberModel = DataUtils.copyProperties(preCardReqData, MemberModel.class);
         memberModel.setCardStatus(1);
+        memberModel.setCardKey(cardKey);
             memberModelMapper.insertSelective(memberModel);
 
         PreCardResData cardCouponResData = new PreCardResData();
-        cardCouponResData.setCardKey(preCardReqData.getCardKey());
+        cardCouponResData.setCardKey(cardKey);
         cardCouponResData.setResultInfo(ErrorCodes.WECHAT_SUCCESS_CODE, "请求成功");
         return cardCouponResData;
     }
@@ -176,7 +191,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
     @Override
     public PreCardResData createBaseInfo(PreCardBaseInfoData preCardBaseInfoData) {
         //cardKey
-        if (StringUtils.isBlank(preCardBaseInfoData.getCardKey())) {
+        if (preCardBaseInfoData.getCardKey() == null) {
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
         BaseInfoModel baseInfoModel = DataUtils.copyProperties(preCardBaseInfoData, BaseInfoModel.class);
@@ -196,7 +211,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
     @Override
     public PreCardResData createAdvancedInfo(PreAdvancedInfoData preAdvancedInfoData) {
         //cardKey
-        if (StringUtils.isBlank(preAdvancedInfoData.getCardKey())) {
+        if (preAdvancedInfoData.getCardKey() == null) {
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
         AdvancedModel advancedModel = DataUtils.copyProperties(preAdvancedInfoData, AdvancedModel.class);
@@ -217,8 +232,8 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
      */
     @Override
     public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey) {
-        String cardKey = cardPrimaryKey.getCardKey();
-        if (StringUtils.isBlank(cardKey)) {
+        Long cardKey = cardPrimaryKey.getCardKey();
+        if (cardKey == null) {
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
         Map<String, Object> card = new HashMap<>();
@@ -465,8 +480,8 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
      */
     @Override
     public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey) {
-        String cardKey = cardPrimaryKey.getCardKey();
-        if (StringUtils.isBlank(cardKey)) {
+        Long cardKey = cardPrimaryKey.getCardKey();
+        if (cardKey == null) {
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
         Map<String, Object> card = new HashMap<>();

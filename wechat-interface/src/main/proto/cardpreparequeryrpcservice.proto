@@ -3,6 +3,7 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardPrePareQueryRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message CardQuery {  
    // 公众号编码
@@ -18,7 +19,7 @@ message CardQuery {
    // 优惠券类型
    string cardType=7;
    // 唯一ID
-   string cardKey=8;
+   int64 cardKey=8;
    // 分页起始索引
    int32 pageNO=9;
    // 每页结果数
@@ -52,7 +53,7 @@ message MemberResData {
    // 优惠券类型
    string cardType=7;
    // 会员端产生的唯一主键ID
-   string cardKey=8;
+   int64 cardKey=8;
    // 折扣，该会员卡享受的折扣优惠,填10就是九折。
    int32 discount=9;
    // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
@@ -92,16 +93,6 @@ message MemberResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-//message CardSyncReqData {
-//   // 唯一ID
-//   string cardKey=2;
-//   // 请求公共字段
-//   RequestHeader header=1;
-//}
-//message CardSyncResData {
-//   // 响应公共字段
-//   ResultHeader result=1;
-//}
 message CouponResDataList {  
    // 优惠券集合
    repeated CouponResData couponResDataList=2;
@@ -128,7 +119,7 @@ message CouponResData {
    // 优惠券类型
    string cardType=7;
    // 唯一ID
-   string cardKey=8;
+   int64 cardKey=8;
    // 优惠券专用，填写优惠详情。
    string defaultDetail=9;
    // 团购券专用，填写团购详情。
@@ -146,7 +137,7 @@ message CouponResData {
 }
 message CardBaseInfoResData {  
    // card唯一键
-   string cardKey=2;
+   int64 cardKey=2;
    // 卡券的商户logo，建议像素为300*300
    string logoUrl=3;
    // Code展示类型
@@ -214,7 +205,7 @@ message CardBaseInfoResData {
 }
 message CardAdvancedInfoResData {  
    // card唯一键
-   string cardKey=2;
+   int64 cardKey=2;
    // 封面摘要结构体名称
    string abstractInfo=3;
    // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
@@ -232,12 +223,8 @@ message CardAdvancedInfoResData {
 service CardPrePareQueryRpcService{
     //查询多个会员卡数据
     rpc queryMemberList(CardQuery) returns (MemberResDataList) {}
-    //
-//    rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}
     //查询多个优惠券数据
     rpc queryCouponList(CardQuery) returns (CouponResDataList) {}
-    //
-//    rpc syncCouponInfo(CardSyncReqData) returns (CardSyncResData) {}
     //查询会员卡数据
     rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
     //查询优惠券数据
