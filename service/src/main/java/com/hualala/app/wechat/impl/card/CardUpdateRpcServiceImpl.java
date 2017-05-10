@@ -176,6 +176,8 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
     @Override
     public CardUpdateResData updateCouponSku(CardSkuUpdateReqData cardSkuUpdateReqData) {
         Long cardKey = cardSkuUpdateReqData.getCardKey();
+        int increaseStockValue = cardSkuUpdateReqData.getIncreaseStockValue();
+        int reduceStockValue = cardSkuUpdateReqData.getReduceStockValue();
         if (cardKey == null){
             return new CardUpdateResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
@@ -188,7 +190,24 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         String cardID = couponModel.getCardID();
         String mpID = couponModel.getMpID();
 
-        return null;
+        String params =  "{" +
+                            "\"card_id\": \""+cardID+"\"," +
+                            "\"increase_stock_value\": "+increaseStockValue+"," +
+                            "\"reduce_stock_value\": "+reduceStockValue +
+                        "}";
+
+        JSONObject jsonObject = baseHttpService.setCardSku(params, mpID);
+
+        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+                BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+                BaseInfoModel baseInfoModel = new BaseInfoModel();
+                baseInfoModel.setCardKey(cardKey);
+                Integer sku = baseInfoModel1.getSku();
+                baseInfoModel.setSku(sku+increaseStockValue-reduceStockValue);
+                baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+        }
+
+        return ResultUtil.getResultInfoBean(jsonObject,CardUpdateResData.class);
     }
    @Override
     public CardUpdateResData updateMemberSku(CardSkuUpdateReqData cardSkuUpdateReqData) {
@@ -214,13 +233,12 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
        JSONObject jsonObject = baseHttpService.setCardSku(params, mpID);
 
        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
-           BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
-
-           BaseInfoModel baseInfoModel = new BaseInfoModel();
-           baseInfoModel.setCardKey(cardKey);
-           Integer sku = baseInfoModel1.getSku();
-           baseInfoModel.setSku(sku+increaseStockValue-reduceStockValue);
-           baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+               BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+               BaseInfoModel baseInfoModel = new BaseInfoModel();
+               baseInfoModel.setCardKey(cardKey);
+               Integer sku = baseInfoModel1.getSku();
+               baseInfoModel.setSku(sku+increaseStockValue-reduceStockValue);
+               baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
        }
 
        return ResultUtil.getResultInfoBean(jsonObject,CardUpdateResData.class);

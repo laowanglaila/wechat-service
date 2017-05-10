@@ -5,12 +5,12 @@
     <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
     <result column="abstractInfo" property="abstractInfo" jdbcType="VARCHAR" />
     <result column="businessService" property="businessService" jdbcType="VARCHAR" />
-    <result column="textImage" property="textImage" jdbcType="LONGVARCHAR" />
-    <result column="timeLimit" property="timeLimit" jdbcType="LONGVARCHAR" />
+    <result column="textImage" property="textImage" jdbcType="VARCHAR" />
+    <result column="timeLimit" property="timeLimit" jdbcType="VARCHAR" />
     <result column="useCodition" property="useCodition" jdbcType="VARCHAR" />
     <result column="action" property="action" jdbcType="TINYINT" />
-    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
-    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+    <result column="actionStamp" property="actionStamp" jdbcType="TIMESTAMP" />
+    <result column="createStamp" property="createStamp" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List" >
     <if test="fields == null" >
       cardKey, abstractInfo, businessService, textImage, timeLimit, useCodition, action, 
-      actionTime, createTime
+      actionStamp, createStamp
     </if>
     <if test="fields != null" >
       ${fields}
@@ -98,7 +98,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,abstractInfo,businessService,textImage,timeLimit,useCodition,action,actionTime,createTime
+    cardKey,abstractInfo,businessService,textImage,timeLimit,useCodition,action,actionStamp,createStamp
     from tbl_shop_wechat_card_advanced
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
@@ -115,11 +115,11 @@
   <insert id="insert" parameterType="com.hualala.app.wechat.model.card.AdvancedModel" >
     insert into tbl_shop_wechat_card_advanced (cardKey, abstractInfo, businessService, 
       textImage, timeLimit, useCodition, 
-      action, actionTime, createTime
+      action, actionStamp, createStamp
       )
     values (#{cardKey,jdbcType=BIGINT}, #{abstractInfo,jdbcType=VARCHAR}, #{businessService,jdbcType=VARCHAR}, 
-      #{textImage,jdbcType=LONGVARCHAR}, #{timeLimit,jdbcType=LONGVARCHAR}, #{useCodition,jdbcType=VARCHAR},
-      #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
+      #{textImage,jdbcType=VARCHAR}, #{timeLimit,jdbcType=VARCHAR}, #{useCodition,jdbcType=VARCHAR}, 
+      #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, #{createStamp,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.AdvancedModel" >
@@ -146,11 +146,11 @@
       <if test="action != null" >
         action,
       </if>
-      <if test="actionTime != null" >
-        actionTime,
+      <if test="actionStamp != null" >
+        actionStamp,
       </if>
-      <if test="createTime != null" >
-        createTime,
+      <if test="createStamp != null" >
+        createStamp,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -164,10 +164,10 @@
         #{businessService,jdbcType=VARCHAR},
       </if>
       <if test="textImage != null" >
-        #{textImage,jdbcType=LONGVARCHAR},
+        #{textImage,jdbcType=VARCHAR},
       </if>
       <if test="timeLimit != null" >
-        #{timeLimit,jdbcType=LONGVARCHAR},
+        #{timeLimit,jdbcType=VARCHAR},
       </if>
       <if test="useCodition != null" >
         #{useCodition,jdbcType=VARCHAR},
@@ -175,11 +175,11 @@
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=BIGINT},
+      <if test="createStamp != null" >
+        #{createStamp,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -202,10 +202,10 @@
         businessService = #{record.businessService,jdbcType=VARCHAR},
       </if>
       <if test="record.textImage != null" >
-        textImage = #{record.textImage,jdbcType=LONGVARCHAR},
+        textImage = #{record.textImage,jdbcType=VARCHAR},
       </if>
       <if test="record.timeLimit != null" >
-        timeLimit = #{record.timeLimit,jdbcType=LONGVARCHAR},
+        timeLimit = #{record.timeLimit,jdbcType=VARCHAR},
       </if>
       <if test="record.useCodition != null" >
         useCodition = #{record.useCodition,jdbcType=VARCHAR},
@@ -213,10 +213,12 @@
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
-      <if test="record.actionTime != null" >
-        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      <if test="record.actionStamp != null" >
+        actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="record.createStamp != null" >
+        createStamp = #{record.createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -227,11 +229,12 @@
     set cardKey = #{record.cardKey,jdbcType=BIGINT},
       abstractInfo = #{record.abstractInfo,jdbcType=VARCHAR},
       businessService = #{record.businessService,jdbcType=VARCHAR},
-      textImage = #{record.textImage,jdbcType=LONGVARCHAR},
-      timeLimit = #{record.timeLimit,jdbcType=LONGVARCHAR},
+      textImage = #{record.textImage,jdbcType=VARCHAR},
+      timeLimit = #{record.timeLimit,jdbcType=VARCHAR},
       useCodition = #{record.useCodition,jdbcType=VARCHAR},
       action = #{record.action,jdbcType=TINYINT},
-      actionTime = #{record.actionTime,jdbcType=BIGINT}
+      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{record.createStamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -246,10 +249,10 @@
         businessService = #{businessService,jdbcType=VARCHAR},
       </if>
       <if test="textImage != null" >
-        textImage = #{textImage,jdbcType=LONGVARCHAR},
+        textImage = #{textImage,jdbcType=VARCHAR},
       </if>
       <if test="timeLimit != null" >
-        timeLimit = #{timeLimit,jdbcType=LONGVARCHAR},
+        timeLimit = #{timeLimit,jdbcType=VARCHAR},
       </if>
       <if test="useCodition != null" >
         useCodition = #{useCodition,jdbcType=VARCHAR},
@@ -257,10 +260,12 @@
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        actionTime = #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="createStamp != null" >
+        createStamp = #{createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
@@ -268,11 +273,12 @@
     update tbl_shop_wechat_card_advanced
     set abstractInfo = #{abstractInfo,jdbcType=VARCHAR},
       businessService = #{businessService,jdbcType=VARCHAR},
-      textImage = #{textImage,jdbcType=LONGVARCHAR},
-      timeLimit = #{timeLimit,jdbcType=LONGVARCHAR},
+      textImage = #{textImage,jdbcType=VARCHAR},
+      timeLimit = #{timeLimit,jdbcType=VARCHAR},
       useCodition = #{useCodition,jdbcType=VARCHAR},
       action = #{action,jdbcType=TINYINT},
-      actionTime = #{actionTime,jdbcType=BIGINT}
+      actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{createStamp,jdbcType=TIMESTAMP}
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

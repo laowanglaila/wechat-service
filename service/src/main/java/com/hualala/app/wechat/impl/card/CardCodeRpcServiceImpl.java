@@ -203,14 +203,12 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
                         "}";
         JSONObject jsonObject = baseHttpService.getCodeStatus(params, couponModel.getMpID());
         if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
-            new Thread(() -> {
                 CouponModel couponModel1 = new CouponModel();
                 couponModel1.setCardKey(cardKey);
                 String status = jsonObject.getString("user_card_status");
                 CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
                 couponModel1.setCardStatus(cardStatusEnum.getValue());
                 couponModelMapper.updateByPrimaryKeySelective(couponModel1);
-            }).start();
         }
         CardCodeQueryResData resultInfoBean = ResultUtil.getResultInfoBean(jsonObject, CardCodeQueryResData.class);
         resultInfoBean.setCardKey(cardKey);

@@ -329,6 +329,10 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         locationList = StringUtils.isBlank(locationList) ? null : locationList;
         baseInfo.replace("locationIdList", locationList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
+        baseInfoModel.setCardStatus(cardStatusEnum.getValue());
+        baseInfoModel.setMpID(mpID);
+        baseInfoModel.setCardID(cardID);
+        baseInfoModel.setCardType(cardType);
 
         JSONObject advancedInfo = (JSONObject) JSONObject.toJSON(map.get("advancedInfo"));
         String timeLimit = advancedInfo.getString("timeLimit");
@@ -338,10 +342,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         Boolean shareFriends = advancedInfo.getBoolean("shareFriends");
         String anAbstract = advancedInfo.getString("abstract");
         String useCodition = advancedInfo.getString("useCodition");
-        advancedInfo.replace("timeLimit", timeLimit);
+//        advancedInfo.replace("timeLimit", timeLimit);
+//        advancedInfo.remove("textImage");
+//        advancedInfo.put("textImageList", textImageList);
+//        advancedInfo.replace("businessService", businessService);
+        advancedInfo.replace("timeLimit", timeLimit.trim().length() == 2 ? "" : timeLimit);
         advancedInfo.remove("textImage");
         advancedInfo.put("textImageList", textImageList);
-        advancedInfo.replace("businessService", businessService);
+        advancedInfo.replace("businessService", businessService.trim().length() == 2 ? "" : businessService);
         //TODO Advanced 选项 consumeShareCardList, shareFriends  待处理 创建字段中没有 查询字段中出现的
         advancedInfo.replace("consumeShareCardList", consumeShareCardList);
         advancedInfo.replace("shareFriends", shareFriends);
@@ -374,6 +382,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
                 //GroupID是不能为空的
                 Integer groupIDs = (Integer) maps.get(0).get("groupID");
                 couponModel1.setGroupID(groupIDs.longValue());
+                baseInfoModel.setGroupID(groupIDs.longValue());
                 cardKey = createCardKeyService.createCardKey(groupIDs.longValue());
             }
             couponModel1.setMpID(mpID);
@@ -438,7 +447,10 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         locationList = StringUtils.isBlank(locationList) ? null : locationList;
         baseInfo.replace("locationIdList", locationList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
-
+        baseInfoModel.setCardStatus(cardStatusEnum.getValue());
+        baseInfoModel.setMpID(mpID);
+        baseInfoModel.setCardID(cardID);
+        baseInfoModel.setCardType(cardType);
 
         JSONObject advancedInfo = (JSONObject) JSONObject.toJSON(map.get("advancedInfo"));
         String timeLimit = advancedInfo.getString("timeLimit");
@@ -448,10 +460,10 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         Boolean shareFriends = advancedInfo.getBoolean("shareFriends");
         String anAbstract = advancedInfo.getString("abstract");
         String useCodition = advancedInfo.getString("useCodition");
-        advancedInfo.replace("timeLimit", timeLimit);
+        advancedInfo.replace("timeLimit", timeLimit.trim().length() == 2 ? "" : timeLimit);
         advancedInfo.remove("textImage");
         advancedInfo.put("textImageList", textImageList);
-        advancedInfo.replace("businessService", businessService);
+        advancedInfo.replace("businessService", businessService.trim().length() == 2 ? "" : businessService);
         //TODO Advanced 选项 consumeShareCardList, shareFriends  待处理 创建字段中没有 查询字段中出现的
         advancedInfo.replace("consumeShareCardList", consumeShareCardList);
         advancedInfo.replace("shareFriends", shareFriends);
@@ -483,6 +495,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
                 //GroupID是不能为空的
                 Integer groupIDs = (Integer) maps.get(0).get("groupID");
                 memberModel1.setGroupID(groupIDs.longValue());
+                baseInfoModel.setGroupID(groupIDs.longValue());
                 cardKey = createCardKeyService.createCardKey(groupIDs.longValue());
             }
             memberModel1.setMpID(mpID);

@@ -42,8 +42,8 @@
     <result column="isSwipeCard" property="isSwipeCard" jdbcType="TINYINT" />
     <result column="isPayAndQrcode" property="isPayAndQrcode" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
-    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
-    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+    <result column="actionStamp" property="actionStamp" jdbcType="TIMESTAMP" />
+    <result column="createStamp" property="createStamp" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -110,7 +110,7 @@
       servicePhone, locationIdList, source, customUrlName, customUrl, customUrlSubTitle, 
       promotionUrlName, promotionUrl, promotionUrlSubTitle, getLimit, canShare, canGiveFriend, 
       needPushOnView, customCodeMode, useAllLocations, centerTitle, centerSubTitle, centerUrl, 
-      useLimit, isSwipeCard, isPayAndQrcode, action, actionTime, createTime
+      useLimit, isSwipeCard, isPayAndQrcode, action, actionStamp, createStamp
     </if>
     <if test="fields != null" >
       ${fields}
@@ -135,7 +135,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,itemID,cardID,groupID,mpID,title,cardType,cardStatus,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,isSwipeCard,isPayAndQrcode,action,actionTime,createTime
+    cardKey,itemID,cardID,groupID,mpID,title,cardType,cardStatus,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,isSwipeCard,isPayAndQrcode,action,actionStamp,createStamp
     from tbl_shop_wechat_card_base
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
@@ -163,7 +163,7 @@
       needPushOnView, customCodeMode, useAllLocations, 
       centerTitle, centerSubTitle, centerUrl, 
       useLimit, isSwipeCard, isPayAndQrcode, 
-      action, actionTime, createTime
+      action, actionStamp, createStamp
       )
     values (#{cardKey,jdbcType=BIGINT}, #{itemID,jdbcType=INTEGER}, #{cardID,jdbcType=VARCHAR}, 
       #{groupID,jdbcType=BIGINT}, #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
@@ -178,7 +178,7 @@
       #{needPushOnView,jdbcType=TINYINT}, #{customCodeMode,jdbcType=VARCHAR}, #{useAllLocations,jdbcType=TINYINT}, 
       #{centerTitle,jdbcType=VARCHAR}, #{centerSubTitle,jdbcType=VARCHAR}, #{centerUrl,jdbcType=VARCHAR}, 
       #{useLimit,jdbcType=INTEGER}, #{isSwipeCard,jdbcType=TINYINT}, #{isPayAndQrcode,jdbcType=TINYINT}, 
-      #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
+      #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, #{createStamp,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
@@ -304,11 +304,11 @@
       <if test="action != null" >
         action,
       </if>
-      <if test="actionTime != null" >
-        actionTime,
+      <if test="actionStamp != null" >
+        actionStamp,
       </if>
-      <if test="createTime != null" >
-        createTime,
+      <if test="createStamp != null" >
+        createStamp,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -432,11 +432,11 @@
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=BIGINT},
+      <if test="createStamp != null" >
+        #{createStamp,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -569,10 +569,12 @@
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
-      <if test="record.actionTime != null" >
-        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      <if test="record.actionStamp != null" >
+        actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="record.createStamp != null" >
+        createStamp = #{record.createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -620,7 +622,8 @@
       isSwipeCard = #{record.isSwipeCard,jdbcType=TINYINT},
       isPayAndQrcode = #{record.isPayAndQrcode,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
-      actionTime = #{record.actionTime,jdbcType=BIGINT}
+      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{record.createStamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -745,10 +748,12 @@
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        actionTime = #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="createStamp != null" >
+        createStamp = #{createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
@@ -793,7 +798,8 @@
       isSwipeCard = #{isSwipeCard,jdbcType=TINYINT},
       isPayAndQrcode = #{isPayAndQrcode,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
-      actionTime = #{actionTime,jdbcType=BIGINT}
+      actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{createStamp,jdbcType=TIMESTAMP}
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

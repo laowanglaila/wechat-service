@@ -28,8 +28,8 @@
     <result column="bonusRules" property="bonusRules" jdbcType="VARCHAR" />
     <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
-    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
-    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+    <result column="actionStamp" property="actionStamp" jdbcType="TIMESTAMP" />
+    <result column="createStamp" property="createStamp" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -94,7 +94,7 @@
       cardKey, cardID, groupID, mpID, title, cardType, discount, backgroundPicUrl, prerogative, 
       autoActivate, activateUrl, wxActivate, supplyBonus, bonusUrl, bonusCleared, supplyBalance, 
       balanceUrl, balanceRules, customField1, customField2, customField3, customCell1, 
-      bonusRule, bonusRules, cardStatus, action, actionTime, createTime
+      bonusRule, bonusRules, cardStatus, action, actionStamp, createStamp
     </if>
     <if test="fields != null" >
       ${fields}
@@ -119,7 +119,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,bonusRules,cardStatus,action,actionTime,createTime
+    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,bonusRules,cardStatus,action,actionStamp,createStamp
     from tbl_shop_wechat_card_member
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
@@ -142,8 +142,8 @@
       supplyBalance, balanceUrl, balanceRules, 
       customField1, customField2, customField3, 
       customCell1, bonusRule, bonusRules, 
-      cardStatus, action, actionTime, 
-      createTime)
+      cardStatus, action, actionStamp, 
+      createStamp)
     values (#{cardKey,jdbcType=BIGINT}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
       #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
       #{discount,jdbcType=INTEGER}, #{backgroundPicUrl,jdbcType=VARCHAR}, #{prerogative,jdbcType=VARCHAR}, 
@@ -152,8 +152,8 @@
       #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, #{balanceRules,jdbcType=VARCHAR}, 
       #{customField1,jdbcType=VARCHAR}, #{customField2,jdbcType=VARCHAR}, #{customField3,jdbcType=VARCHAR}, 
       #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, #{bonusRules,jdbcType=VARCHAR}, 
-      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=BIGINT})
+      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, 
+      #{createStamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
     insert into tbl_shop_wechat_card_member
@@ -236,11 +236,11 @@
       <if test="action != null" >
         action,
       </if>
-      <if test="actionTime != null" >
-        actionTime,
+      <if test="actionStamp != null" >
+        actionStamp,
       </if>
-      <if test="createTime != null" >
-        createTime,
+      <if test="createStamp != null" >
+        createStamp,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -322,11 +322,11 @@
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=BIGINT},
+      <if test="createStamp != null" >
+        #{createStamp,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -417,10 +417,12 @@
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
-      <if test="record.actionTime != null" >
-        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      <if test="record.actionStamp != null" >
+        actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="record.createStamp != null" >
+        createStamp = #{record.createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -454,7 +456,8 @@
       bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
       cardStatus = #{record.cardStatus,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
-      actionTime = #{record.actionTime,jdbcType=BIGINT}
+      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{record.createStamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -537,10 +540,12 @@
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        actionTime = #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="createStamp != null" >
+        createStamp = #{createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
@@ -571,7 +576,8 @@
       bonusRules = #{bonusRules,jdbcType=VARCHAR},
       cardStatus = #{cardStatus,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
-      actionTime = #{actionTime,jdbcType=BIGINT}
+      actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{createStamp,jdbcType=TIMESTAMP}
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

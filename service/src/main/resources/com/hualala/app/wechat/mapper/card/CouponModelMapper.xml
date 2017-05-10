@@ -16,8 +16,8 @@
     <result column="gift" property="gift" jdbcType="VARCHAR" />
     <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
-    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
-    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+    <result column="actionStamp" property="actionStamp" jdbcType="TIMESTAMP" />
+    <result column="createStamp" property="createStamp" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,7 +80,7 @@
   <sql id="Base_Column_List" >
     <if test="fields == null" >
       cardKey, cardID, groupID, mpID, title, cardType, defaultDetail, dealDetail, leastCost, 
-      reduceCost, discount, gift, cardStatus, action, actionTime, createTime
+      reduceCost, discount, gift, cardStatus, action, actionStamp, createStamp
     </if>
     <if test="fields != null" >
       ${fields}
@@ -105,7 +105,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,cardID,groupID,mpID,title,cardType,defaultDetail,dealDetail,leastCost,reduceCost,discount,gift,cardStatus,action,actionTime,createTime
+    cardKey,cardID,groupID,mpID,title,cardType,defaultDetail,dealDetail,leastCost,reduceCost,discount,gift,cardStatus,action,actionStamp,createStamp
     from tbl_shop_wechat_card_coupon
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
@@ -124,14 +124,14 @@
       mpID, title, cardType, 
       defaultDetail, dealDetail, leastCost, 
       reduceCost, discount, gift, 
-      cardStatus, action, actionTime, 
-      createTime)
+      cardStatus, action, actionStamp, 
+      createStamp)
     values (#{cardKey,jdbcType=BIGINT}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
       #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
       #{defaultDetail,jdbcType=VARCHAR}, #{dealDetail,jdbcType=VARCHAR}, #{leastCost,jdbcType=INTEGER}, 
       #{reduceCost,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{gift,jdbcType=VARCHAR}, 
-      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=BIGINT})
+      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, 
+      #{createStamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
     insert into tbl_shop_wechat_card_coupon
@@ -178,11 +178,11 @@
       <if test="action != null" >
         action,
       </if>
-      <if test="actionTime != null" >
-        actionTime,
+      <if test="actionStamp != null" >
+        actionStamp,
       </if>
-      <if test="createTime != null" >
-        createTime,
+      <if test="createStamp != null" >
+        createStamp,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -228,11 +228,11 @@
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=BIGINT},
+      <if test="createStamp != null" >
+        #{createStamp,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -287,10 +287,12 @@
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
-      <if test="record.actionTime != null" >
-        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      <if test="record.actionStamp != null" >
+        actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="record.createStamp != null" >
+        createStamp = #{record.createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -312,7 +314,8 @@
       gift = #{record.gift,jdbcType=VARCHAR},
       cardStatus = #{record.cardStatus,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
-      actionTime = #{record.actionTime,jdbcType=BIGINT}
+      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{record.createStamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -359,10 +362,12 @@
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        actionTime = #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-
+      <if test="createStamp != null" >
+        createStamp = #{createStamp,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
@@ -381,7 +386,8 @@
       gift = #{gift,jdbcType=VARCHAR},
       cardStatus = #{cardStatus,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
-      actionTime = #{actionTime,jdbcType=BIGINT}
+      actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
+      createStamp = #{createStamp,jdbcType=TIMESTAMP}
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

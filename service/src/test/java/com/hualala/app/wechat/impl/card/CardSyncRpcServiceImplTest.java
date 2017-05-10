@@ -65,11 +65,12 @@ public class CardSyncRpcServiceImplTest extends BaseRpcTest {
 private CreateCardKeyService createCardKeyService;
     @Test
     public void testDonwloadCardList() throws ExecutionException {
+        String mpID = "hualala_com";
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();
         cardListReqData.setCount(50);
         cardListReqData.setOffset(0);
-        cardListReqData.setMpID("doulaofangceshi");
+        cardListReqData.setMpID(mpID);
         List<String> cardStatusEnums = new ArrayList<>();
         cardStatusEnums.add(CardStatusEnum.CARD_STATUS_NOT_VERIFY.name());
         cardStatusEnums.add(CardStatusEnum.CARD_STATUS_VERIFY_FAIL.name());
@@ -80,7 +81,7 @@ private CreateCardKeyService createCardKeyService;
         CardSyncRpcService.CardListResData cardList = rpcClient.getCardList(cardListReqData);
         List<String> cardIdList = cardList.getCardIdList();
         CardSyncRpcService.CardDownloadReqData cardDownloadReqData = new CardSyncRpcService.CardDownloadReqData();
-        cardDownloadReqData.setMpID("doulaofangceshi");
+        cardDownloadReqData.setMpID(mpID);
         for (String cardID : cardIdList) {
             cardDownloadReqData.setCardID(cardID);
             CardSyncRpcService.CardDownloadResData cardDownloadResData = rpcClient.downloadCardInfo(cardDownloadReqData);
