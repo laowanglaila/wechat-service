@@ -46,6 +46,11 @@ public interface CardCodeRpcService {
     CardCodeDecodingResData decodingCardCode(CardCodeDecodingReqData cardCodeDecodingReqData);
 
     /**
+     * 查询优惠券code状态
+     */
+    CardCodeQueryResData queryCouponStatus(CardCodeQueryReqData cardCodeQueryReqData);
+
+    /**
      * 导入code
      */
 
@@ -119,7 +124,7 @@ public interface CardCodeRpcService {
      * 查询code接口
      */
     @Data
-    class CardCodeQueryReqData {
+    class CardCodeQueryReqData extends RequestInfo  {
         //    code	            是	string(20)	    110201201245	单张卡券的唯一标准。
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
         private String cardCode;
@@ -127,17 +132,25 @@ public interface CardCodeRpcService {
         @Protocol(fieldType = FieldType.LONG, order = 3, description = "卡券ID代表一类卡券。自定义code卡券必填")
         private Long cardKey;
         //    check_consume	    否	bool	        true	        是否校验code核销状态，填入true和false时的code异常状态返回数据不同。
+//        无论check_consume填写的是true还是false,当code未被添加或者code被转赠领取是统一报错：invalid serial code
 
     }
     @Data
-    class CardCodeQueryResData {
+    class CardCodeQueryResData extends ResultInfo {
         //    code	            是	string(20)	    110201201245	单张卡券的唯一标准。
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
-        private String cardCode;
-        //    card_id	        否	string(32)      pFS7Fjg8kV1I    dDz01r4SQwMkuCKc 卡券ID代表一类卡券。自定义code卡券必填。
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "卡券ID代表一类卡券。自定义code卡券必填")
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "解密后获取的真实Code码")
         private Long cardKey;
-        //    check_consume	    否	bool	        true	        是否校验code核销状态，填入true和false时的code异常状态返回数据不同。
+        //    card_id	        否	string(32)      pFS7Fjg8kV1I    dDz01r4SQwMkuCKc 卡券ID代表一类卡券。自定义code卡券必填。
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "卡券ID代表一类卡券。自定义code卡券必填")
+        private String openId;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "起始使用时间")
+        private Long beginTime;
+        @Protocol(fieldType = FieldType.LONG, order = 5, description = "结束时间")
+        private Long endTime;
+        @Protocol(fieldType = FieldType.BOOL, order = 6, description = "是否可以核销")
+        private Boolean canConsume;
+        @Protocol(fieldType = FieldType.STRING, order = 7, description = "当前code对应卡券的状态")
+        private String userCardStatus;
 
     }
 

@@ -99,6 +99,10 @@ public class BaseHttpService {
         return this.commonHttpPost(WechatBaseApi.GET_CODE_STATUS, map, mpId);
     }
 
+    public JSONObject getCodeStatus(String json, String mpId) {
+        return this.commonHttpPost(WechatBaseApi.GET_CODE_STATUS, json, mpId);
+    }
+
     /**
      * Created by renjianfei on 2017/4/7.
      * 用于获取用户卡包里的，属于该appid下所有可用卡券，包括正常状态和未生效状态。
