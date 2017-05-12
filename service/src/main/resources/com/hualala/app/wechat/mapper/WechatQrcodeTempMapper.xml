@@ -50,8 +50,28 @@
     select IFNULL(max(sceneID),100000000) sceneID from tbl_shop_wechat_qrcode_temp
 		where mpID=#{value} and action in(0,1);
     </select>
+	<select id="queryCacheQrcode" resultType="com.hualala.app.wechat.model.WechatQrcodeTempModel" parameterType="java.util.Map">
+		select
+		<include refid="queryField"/>
+		from (select <include refid="queryField"/> from tbl_shop_wechat_qrcode_temp where mpID=#{mpID})
+		where qrcodeStatus = 1
+		and qrcodeType > #{qrcodeType}
+		and deadTime > #{deadTime}
+		order by deadTime
+		limit 0, #{size};
+    </select>
+	<update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.WechatQrcodeTempModel">
+		select
+		<include refid="queryField"/>
+		from (select <include refid="queryField"/> from tbl_shop_wechat_qrcode_temp where mpID=#{mpID})
+		where qrcodeStatus = 1
+		and deadTime > #{deadTime}
+		order by deadTime
+		limit 0, #{size};
+    </update>
 
     <sql id="queryField">
-        itemID,        mpID,        qrcodeType,        sceneID,        qrcodeName,        description,        param1,        param2,        param3,        locationName,        shopID,        ticket,        wxUrl,        qrcodeIP,        isLog,        deadTime
+        itemID,mpID,qrcodeType,sceneID,qrcodeName,description,param1,param2,param3,
+        locationName,shopID,ticket,wxUrl,qrcodeIP,isLog,deadTime,qrcodeStatus
     </sql>
 </mapper>
