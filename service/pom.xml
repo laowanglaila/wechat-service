@@ -11,13 +11,13 @@
 
     <artifactId>service</artifactId>
     <packaging>jar</packaging>
-    <name>${project.artifactId}</name>
     <description>service for wechat</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
+        <finalName>wechat-service</finalName>
         <plugins>
             <plugin>
                 <!--skip deploy -->
