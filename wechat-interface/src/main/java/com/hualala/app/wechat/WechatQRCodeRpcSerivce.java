@@ -31,8 +31,34 @@ public interface WechatQRCodeRpcSerivce {
         private String brandID;
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "店铺ID")
         private String shopID;
-        @Protocol(fieldType = FieldType.OBJECT, order = 6, description = "微信二维码请求参数集合")
-        private List<WechatQRCodeReq> wechatQRCodeReqList;
+        @Protocol(fieldType = FieldType.ENUM, order = 6, description = "二维码类型")
+        private WechatQRTypeEnum qrcodeType;
+        @Protocol(fieldType = FieldType.INT, order = 7, description = "缓存数量，集合内容为空时必须填写，")
+        private Integer size;
+        //    expire_seconds	该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
+        @Protocol(fieldType = FieldType.INT, order = 8, description = "该二维码有效时间/秒")
+        private int expireSeconds;
+        @Protocol(fieldType = FieldType.OBJECT, order = 9, description = "微信二维码请求参数集合")
+        private List<WechatQRCodeData> wechatQRCodeDataList;
+    }
+    @Data
+    public class WechatQRCodeData {
+        @Protocol(fieldType = FieldType.STRING, order = 1, description = "二维码描述")
+        private String description;
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "二维码名称")
+        private String qrcodeName;
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "param1冗余")
+        private String param1;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "param2冗余")
+        private String param2;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "param3冗余")
+        private String param3;
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "locationName二维码使用场景地址")
+        private String locationName;
+        @Protocol(fieldType = FieldType.STRING, order= 7, description = "店铺名称")
+        private String shopName;
+
+
     }
     @Data
     public class WechatQRCodeListRes extends ResultInfo {

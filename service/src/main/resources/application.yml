@@ -27,6 +27,13 @@ spring:
     port: 5672
     username: guest
     password: guest
+#    listener:
+#      retry:
+#        enabled: true
+#        max-attempts:
+#    template:
+#      receive-timeout:
+#      reply-timeout:
 
   # REDIS (RedisProperties)
   redis:
