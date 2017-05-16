@@ -8,6 +8,8 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Created by renjianfei on 2017/4/12.
  */
@@ -16,8 +18,27 @@ public interface WechatQRCodeRpcSerivce {
 
 
     @RpcMethod
-    public WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq);
+    WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq);
+    WechatQRCodeListRes createQRCodeList(WechatQRCodeListReq qrCodeReqList);
 
+    @Data
+    public class WechatQRCodeListReq extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
+        private String mpID;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
+        private String groupID;
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "品牌ID")
+        private String brandID;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "店铺ID")
+        private String shopID;
+        @Protocol(fieldType = FieldType.OBJECT, order = 6, description = "微信二维码请求参数集合")
+        private List<WechatQRCodeReq> wechatQRCodeReqList;
+    }
+    @Data
+    public class WechatQRCodeListRes extends ResultInfo {
+        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "微信二维码返回参数集合")
+        private List<WechatQRCodeRes> wechatQRCodeResList;
+    }
     @Data
     public class WechatQRCodeReq extends RequestInfo {
 
@@ -66,12 +87,13 @@ public interface WechatQRCodeRpcSerivce {
         private int expireSeconds;
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "二维码图片解析后的地址")
         private String wxUrl;
-
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "param1冗余")
         private String param1;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "param2冗余")
         private String param2;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "param3冗余")
         private String param3;
+        @Protocol(fieldType = FieldType.LONG, order = 8, description = "二维码唯一ID")
+        private Long itemID;
     }
 }

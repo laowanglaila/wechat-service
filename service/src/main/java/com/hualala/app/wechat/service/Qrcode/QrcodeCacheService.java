@@ -7,6 +7,7 @@ import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.service.BaseHttpService;
+import javassist.compiler.ast.Expr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,32 +39,41 @@ public class QrcodeCacheService {
      * @param expireSeconds 二位码存活时间，单位秒
      */
     public void cache(WechatQRTypeEnum qrcodeType, int cacheNo, int expireSeconds, String mpID) {
-
-        int tempSenceID = qrcodeCreateSceneIDService.getTempSenceID(mpID);
-        String params = "{\"expire_seconds\": " + expireSeconds + "," +
-                " \"action_name\": \"" + qrcodeType.getWechatType() + "\"," +
-                " \"action_info\": {\"scene\": {\"scene_id\": " + tempSenceID + "}}}";
-        JSONObject jsonObject = baseHttpService.createQrCode(params, mpID);
-        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
+        for (int i = 0;i < cacheNo; i++) {
+            switch (qrcodeType) {
+                case INVOICE:
+                    expireSeconds = qrcodeType.getDeadTime();
+                    break;
+                case QUEUE:
+                    expireSeconds = qrcodeType.getDeadTime();
+                    break;
+                case LOGIN:
+                    expireSeconds = qrcodeType.getDeadTime();
+            }
+            int tempSenceID = qrcodeCreateSceneIDService.getTempSenceID(mpID);
+            String params = "{\"expire_seconds\": " + expireSeconds + "," +
+                    " \"action_name\": \"" + qrcodeType.getWechatType() + "\"," +
+                    " \"action_info\": {\"scene\": {\"scene_id\": " + tempSenceID + "}}}";
+            JSONObject jsonObject = baseHttpService.createQrCode(params, mpID);
+            if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
 //            //插入数据库
-            WechatQrcodeTempModel qrcodeTempModel = new WechatQrcodeTempModel();
-            qrcodeTempModel
-                    .setMpID(mpID)
-                    .setQrcodeType(qrcodeType.getValue())
-                    .setDeadTime(getDate(expireSeconds))
-                    .setTicket(jsonObject.getString("ticket"))
-                    .setWxUrl(jsonObject.getString("url"))
-                    .setSceneID(tempSenceID)
-                    .setQrcodeStatus(1);
-            qrcodeTempMapper.insert(qrcodeTempModel);
-        } else {
-            logger.warn("二维码缓存获取失败：" + jsonObject.toJSONString());
+                WechatQrcodeTempModel qrcodeTempModel = new WechatQrcodeTempModel();
+                qrcodeTempModel
+                        .setMpID(mpID)
+                        .setQrcodeType(qrcodeType.getValue())
+                        .setDeadTime(getCacheDate(expireSeconds))
+                        .setTicket(jsonObject.getString("ticket"))
+                        .setWxUrl(jsonObject.getString("url"))
+                        .setSceneID(tempSenceID)
+                        .setQrcodeStatus(1);
+                qrcodeTempMapper.insert(qrcodeTempModel);
+            } else {
+                logger.warn("二维码缓存获取失败：" + jsonObject.toJSONString());
+            }
         }
-
-
     }
 
-    private Long getDate(Integer second) {
+    private Long getCacheDate(Integer second) {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.SECOND, second);
         SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");

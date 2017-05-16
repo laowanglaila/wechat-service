@@ -1,7 +1,5 @@
 package com.hualala.app.wechat;
 
-import com.hualala.app.wechat.impl.WechatQRCodeRpcSerivceImpl;
-import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.service.HttpApiService;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;
@@ -19,11 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class WechatQrcodeTempRpcServiceTest {
 
     @Autowired
-    private WechatQrcodeTempMapper wechatTemplateMapper;
-    @Autowired
-    private WechatQRCodeRpcSerivceImpl wechatQRCodeRpcSerivce;
-
-    @Autowired
     BaseRpcClient baseRpcClient;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(HttpApiService.class);
@@ -31,27 +24,33 @@ public class WechatQrcodeTempRpcServiceTest {
 
     @Test
     public void  test(){
-        int i = 0;
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeReq wechatQRCodeReq = new WechatQRCodeRpcSerivce.WechatQRCodeReq();
-        wechatQRCodeReq.setQrcodeName("123");
-        wechatQRCodeReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
+//        ArrayList<String> list = new ArrayList<>();
+//        for (int i = 0; i<40 ;i++) {
+            wechatQRCodeReq.setQrcodeName("123");
+            wechatQRCodeReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
 
-        String param1 = "任鉴非"+i++;
-        wechatQRCodeReq.setParam1(param1);
-        wechatQRCodeReq.setParam2("测试二维码:Param2");
-        wechatQRCodeReq.setParam3("测试二维码:Param3");
-        wechatQRCodeReq.setExpireSeconds(3600*24);
-        wechatQRCodeReq.setShopID("５");
-        wechatQRCodeReq.setBrandID("5");
-        wechatQRCodeReq.setGroupID("5");
-        wechatQRCodeReq.setShopName("测试二维码:ShopName");
+            String param1 = "任鉴非" + 0;
+            wechatQRCodeReq.setParam1(param1);
+            wechatQRCodeReq.setParam2("测试二维码:Param2");
+            wechatQRCodeReq.setParam3("测试二维码:Param3");
+            wechatQRCodeReq.setExpireSeconds(3600 * 12);
+            wechatQRCodeReq.setShopID("５");
+            wechatQRCodeReq.setBrandID("5");
+            wechatQRCodeReq.setGroupID("5");
+            wechatQRCodeReq.setShopName("测试二维码:ShopName");
 //        wechatQRCodeReq.setMpID("doulaofang");
-        wechatQRCodeReq.setDescription("测试二维码:Description");
-        wechatQRCodeReq.setLocationName("测试二维码:LocationName");
+            wechatQRCodeReq.setDescription("测试二维码:Description");
+            wechatQRCodeReq.setLocationName("测试二维码:LocationName");
 
-        WechatQRCodeRpcSerivce.WechatQRCodeRes qrCode = rpcClient.createQRCode(wechatQRCodeReq);
-        String param11 = qrCode.getParam1();
-        System.out.println("------------------------------->"+param11);
+            long start = System.currentTimeMillis();
+            WechatQRCodeRpcSerivce.WechatQRCodeRes qrCode = rpcClient.createQRCode(wechatQRCodeReq);
+            long end = System.currentTimeMillis();
+            String param11 = qrCode.getParam1();
+            System.out.println("-------------" + (end - start) + "ms------------------>" + param11);
+//            list.add("-------------" + (end - start) + "ms------------------>" + param11);
+//        }
+//        System.out.println(list);
     }
 }
