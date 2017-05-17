@@ -56,6 +56,7 @@ public interface CardSyncRpcService {
     /**
      * 根据CardKey和card_id导入数据到本地
      */
+    @RpcMethod
     CardDownloadResData downloadCardInfo(CardDownloadReqData cardSyncReqData);
     /**
      * 与微信同步会员数据

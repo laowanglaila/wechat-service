@@ -3,7 +3,6 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardSyncRpcData";
 import "commons.proto";
-import "wechatcommons.proto";
 
 message CardListReqData {  
    // 公众号mpid
@@ -53,6 +52,7 @@ message CardSyncResData {
 service CardSyncRpcService{
     //
     rpc getCardList(CardListReqData) returns (CardListResData) {}
+    //
     rpc downloadCardInfo(CardDownloadReqData) returns (CardDownloadResData) {}
     //
     rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}

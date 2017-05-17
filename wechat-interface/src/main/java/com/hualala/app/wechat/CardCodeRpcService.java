@@ -43,11 +43,13 @@ public interface CardCodeRpcService {
     /**
      * code解码
      */
+    @RpcMethod
     CardCodeDecodingResData decodingCardCode(CardCodeDecodingReqData cardCodeDecodingReqData);
 
     /**
      * 查询优惠券code状态
      */
+    @RpcMethod
     CardCodeQueryResData queryCouponStatus(CardCodeQueryReqData cardCodeQueryReqData);
 
     /**

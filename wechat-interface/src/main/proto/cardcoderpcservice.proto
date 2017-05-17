@@ -3,7 +3,6 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardCodeRpcData";
 import "commons.proto";
-import "wechatcommons.proto";
 
 message CardCodeImportReqData {  
    // 唯一ID
@@ -18,20 +17,6 @@ message CardCodeImportResData {
    repeated string existCode=2;
    // 没有存入的code
    repeated string notExistCode=3;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CardCodeDecodingReqData {  
-   // 公众号mpID
-   string mpID=2;
-   // 经过加密的Code码
-   string encryptCode=3;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message CardCodeDecodingResData {  
-   // 解密后获取的真实Code码
-   string cardCode=2;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -51,15 +36,56 @@ message CardCodeDestroyResData {
    // 响应公共字段
    ResultHeader result=1;
 }
+message CardCodeQueryReqData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   int64 cardKey=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeQueryResData {  
+   // 解密后获取的真实Code码
+   int64 cardKey=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   string openId=3;
+   // 起始使用时间
+   int64 beginTime=4;
+   // 结束时间
+   int64 endTime=5;
+   // 是否可以核销
+   bool canConsume=6;
+   // 当前code对应卡券的状态
+   string userCardStatus=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeDecodingReqData {  
+   // 公众号mpID
+   string mpID=2;
+   // 经过加密的Code码
+   string encryptCode=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDecodingResData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 //
 service CardCodeRpcService{
     //
     rpc importMemberCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
     //
-    rpc importCouponCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
-    rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
-    //
     rpc destoryMemberCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
     //
     rpc destoryCouponCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
+    //
+    rpc queryCouponStatus(CardCodeQueryReqData) returns (CardCodeQueryResData) {}
+    //
+    rpc importCouponCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+    //
+    rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
 }

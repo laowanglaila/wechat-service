@@ -15,6 +15,8 @@ import com.hualala.app.wechat.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
+
 /**
  * Created by renjianfei on 2017/5/2.
  */
@@ -76,6 +78,13 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
         String code = cardUnAvailableReqData.getCode();
         String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\"}";
         JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
+        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+            //修改状态
+            MemberModel memberModel1 = new MemberModel();
+            memberModel1.setCardKey(cardKey);
+            memberModel.setCardStatus(0);
+            memberModelMapper.updateByPrimaryKeySelective(memberModel);
+        }
         return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);
     }
 
@@ -123,6 +132,13 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
         String code = cardUnAvailableReqData.getCode();
         String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\"}";
         JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
+        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+            //修改状态
+            CouponModel couponModel1 = new CouponModel();
+            couponModel1.setCardKey(cardKey);
+            couponModel1.setCardStatus(0);
+            couponModelMapper.updateByPrimaryKeySelective(couponModel1);
+        }
         return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);
     }
 }

@@ -11,6 +11,6 @@ public interface WechatMemberInfoMapper {
 
 	List<WechatMemberInfoModel> queryList(Map<String, Object> params);
 
-	int queryCount(Map<String, Object> params);
+	int queryCount();
 
 }
