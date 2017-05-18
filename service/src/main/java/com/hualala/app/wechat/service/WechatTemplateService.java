@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatTemplateMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;
@@ -64,7 +65,7 @@ public class WechatTemplateService {
         String modelID = wechatTemplateModel.getModelID();
 
         JSONObject resultJson = baseHttpService.apiAddTemplate(getContent(modelID),mpID);
-        if( !resultJson.getBoolean("isSuccess")){
+        if( !resultJson.getBoolean(WechatMessageType.IS_SUCCESS)){
             logger.error(()-> "获取微信模板ID错误：" + resultJson.getString("errmsg"));
             return null;
         }

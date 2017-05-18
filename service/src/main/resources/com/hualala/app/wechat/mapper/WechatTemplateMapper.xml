@@ -41,6 +41,7 @@
 		action in (0,1)
 		AND mpID = #{mpID}
   		AND modelID = #{modelID}
+		limit 1
 	</select>
 
     <sql id="queryField">
