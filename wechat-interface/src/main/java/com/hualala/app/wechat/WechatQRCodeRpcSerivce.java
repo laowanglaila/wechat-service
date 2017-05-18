@@ -70,7 +70,6 @@ public interface WechatQRCodeRpcSerivce {
 
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
-
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
         private String groupID;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "品牌ID")

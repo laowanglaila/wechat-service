@@ -72,6 +72,12 @@ public interface ErrorCodes {
     //encryptCode不能为空
     String WECHAT_ARGUMENTS_ILLEGALITY = "00112141";
     //encryptCode不能为空
-    String WECHAT_ARGUMENTS_NULL = "00112141";
+    String WECHAT_ARGUMENTS_NULL = "00112142";
+    //QrcodeType不能为空
+    String WECHAT_QRCODE_TYPE_NULL = "00112143";
+    //二维码有效时间超出范围
+    String WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP = "00112144";
+    //二维码有效时间超出范围
+    String WECHAT_QRCODE_NOT_ENOUGH = "00112144";
 
 }

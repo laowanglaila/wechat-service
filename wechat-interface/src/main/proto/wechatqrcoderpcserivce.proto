@@ -48,6 +48,50 @@ message WechatQRCodeRes {
    string param2=6;
    // param3冗余
    string param3=7;
+   // 二维码唯一ID
+   int64 itemID=8;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message WechatQRCodeListReq {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   string groupID=4;
+   // 品牌ID
+   string brandID=3;
+   // 店铺ID
+   string shopID=5;
+   // 二维码类型
+   WechatQRTypeEnum qrcodeType=6;
+   // 缓存数量，集合内容为空时必须填写，
+   int32 size=7;
+   // 该二维码有效时间/秒
+   int32 expireSeconds=8;
+   // 微信二维码请求参数集合
+   repeated WechatQRCodeData wechatQRCodeDataList=9;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WechatQRCodeData {  
+   // 二维码描述
+   string description=1;
+   // 二维码名称
+   string qrcodeName=2;
+   // param1冗余
+   string param1=3;
+   // param2冗余
+   string param2=4;
+   // param3冗余
+   string param3=5;
+   // locationName二维码使用场景地址
+   string locationName=6;
+   // 店铺名称
+   string shopName=7;
+}
+message WechatQRCodeListRes {  
+   // 微信二维码返回参数集合
+   repeated WechatQRCodeRes wechatQRCodeResList=2;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -55,4 +99,5 @@ message WechatQRCodeRes {
 service WechatQRCodeRpcSerivce{
     //
     rpc createQRCode(WechatQRCodeReq) returns (WechatQRCodeRes) {}
+    rpc createQRCodeList(WechatQRCodeListReq) returns (WechatQRCodeListRes) {}
 }

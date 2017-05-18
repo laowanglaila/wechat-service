@@ -64,6 +64,16 @@
 		order by deadTime
 		limit 0, #{size};
     </select>
+	<select id="queryCacheQrcodeCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select
+		count(1)
+		from (select <include refid="queryField"/> from tbl_shop_wechat_qrcode_temp where mpID=#{mpID}) as a
+		where qrcodeStatus = 1
+		and qrcodeType = #{qrcodeType}
+		and deadTime > #{deadTime}
+		order by deadTime
+		limit 0, #{size};
+    </select>
 	<update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.WechatQrcodeTempModel">
 		update tbl_shop_wechat_qrcode_temp
 		<set >
