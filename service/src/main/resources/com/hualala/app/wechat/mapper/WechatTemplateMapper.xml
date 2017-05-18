@@ -9,7 +9,7 @@
 			<if test="modelTitle !=null">modelTitle,</if>
 			<if test="templateType !=null">templateType,</if>
 			<if test="templateID !=null">templateID,</if>
-        action, #{createTime}
+        action, createTime
 		) values (
 			<if test="mpID !=null">#{mpID},</if>
 			<if test="groupID !=null">#{groupID},</if>
@@ -17,7 +17,7 @@
 			<if test="modelTitle !=null">#{modelTitle},</if>
 			<if test="templateType !=null">#{templateType},</if>
 			<if test="templateID !=null">#{templateID},</if>
-        #{action}, #{createTime}
+        0, #{createTime}
 		)
 	</insert>
 
