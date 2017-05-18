@@ -33,7 +33,7 @@ public class WechatTemplateService {
      * 获取微信模板消息
      * @return
      */
-    public WechatTemplateModel getTemplate(String mpID, String modelID){
+    public WechatTemplateModel getTemplate(String mpID, String modelID, long groupID){
 
         if(StringUtils.isEmpty(mpID) || StringUtils.isEmpty(modelID)){
             return null;
@@ -44,6 +44,10 @@ public class WechatTemplateService {
         if(wechatTemplateModel != null) {
             return wechatTemplateModel;
         }
+        wechatTemplateModel = new WechatTemplateModel();
+        wechatTemplateModel.setModelID(modelID);
+        wechatTemplateModel.setMpID(mpID);
+        wechatTemplateModel.setGroupID(groupID);
 
         return initTemplate(wechatTemplateModel);
     }

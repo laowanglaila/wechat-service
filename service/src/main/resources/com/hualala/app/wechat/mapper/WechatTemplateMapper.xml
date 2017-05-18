@@ -3,7 +3,6 @@
 <mapper namespace="com.hualala.app.wechat.mapper.WechatTemplateMapper">
 	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatTemplateModel">
 		insert into tbl_shop_wechat_template (
-			<if test="itemID !=null">itemID,</if>
 			<if test="mpID !=null">mpID,</if>
 			<if test="groupID !=null">groupID,</if>
 			<if test="modelID !=null">modelID,</if>
@@ -12,7 +11,6 @@
 			<if test="templateID !=null">templateID,</if>
         action, #{createTime}
 		) values (
-			<if test="itemID !=null">#{itemID},</if>
 			<if test="mpID !=null">#{mpID},</if>
 			<if test="groupID !=null">#{groupID},</if>
 			<if test="modelID !=null">#{modelID},</if>
