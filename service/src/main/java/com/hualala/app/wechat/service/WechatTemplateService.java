@@ -67,7 +67,7 @@ public class WechatTemplateService {
 
         JSONObject resultJson = baseHttpService.apiAddTemplate(getContent(modelID),mpID);
         if( !resultJson.getBoolean(WechatMessageType.IS_SUCCESS)){
-            logger.error(()-> "获取微信模板ID错误：" + resultJson.getString("errmsg"));
+            logger.error(()-> "获取微信模板ID错误：" + resultJson.getString(WechatMessageType.MESSAGE));
             return null;
         }
         String templateID = resultJson.getString("template_id");
