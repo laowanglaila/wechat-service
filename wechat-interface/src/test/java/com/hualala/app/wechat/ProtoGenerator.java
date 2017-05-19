@@ -11,18 +11,26 @@ public class ProtoGenerator {
     @org.junit.Test
     public void generatorProto() {
         Class[] generatorClass = new Class[]{
-                CardPrePareQueryRpcService.class
-//                CardPrePareCreateRpcService.class
-//                CreateCardCouponRpcService.class,
-//                ColorEnum.class,
-//                CouponTypeEnum.class,
-//                DateInfoTypeEnum.class,
-//                CustomCodeModeEnum.class,
-//                CodeTypeEnum.class,
-//                TimelimitTypeEnum.class,
-//                MpTypeEnum.class,
-//                WechatQRTypeEnum.class,
-//                WechatTemplateTypeEnum.class
+//                CardCodeRpcService.class
+//                CardUpdateRpcService.class,
+//                CardDeleteRpcService.class,
+//                CardEventRpcService.class,
+//                CardSyncRpcService.class,
+//                CardCodeRpcService.class,
+//                CardPrePareQueryRpcService.class,
+//                CardPrePareCreateRpcService.class,
+////                CreateCardCouponRpcService.class,
+                WechatQRCodeRpcSerivce.class,
+//                CardStatusEnum.class,
+                ColorEnum.class,
+                CouponTypeEnum.class,
+                DateInfoTypeEnum.class,
+                CustomCodeModeEnum.class,
+                CodeTypeEnum.class,
+                TimelimitTypeEnum.class,
+                MpTypeEnum.class,
+                WechatQRTypeEnum.class,
+                WechatTemplateTypeEnum.class
         };
         RpcProtoGenerator.generate(generatorClass);
     }
