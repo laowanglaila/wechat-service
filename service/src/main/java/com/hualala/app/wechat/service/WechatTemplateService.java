@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatTemplateMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;
@@ -33,7 +34,7 @@ public class WechatTemplateService {
      * 获取微信模板消息
      * @return
      */
-    public WechatTemplateModel getTemplate(String mpID, String modelID){
+    public WechatTemplateModel getTemplate(String mpID, String modelID, long groupID, String modelType){
 
         if(StringUtils.isEmpty(mpID) || StringUtils.isEmpty(modelID)){
             return null;
@@ -44,6 +45,11 @@ public class WechatTemplateService {
         if(wechatTemplateModel != null) {
             return wechatTemplateModel;
         }
+        wechatTemplateModel = new WechatTemplateModel();
+        wechatTemplateModel.setModelID(modelID);
+        wechatTemplateModel.setMpID(mpID);
+        wechatTemplateModel.setGroupID(groupID);
+        wechatTemplateModel.setTemplateType(modelType);
 
         return initTemplate(wechatTemplateModel);
     }
@@ -60,8 +66,8 @@ public class WechatTemplateService {
         String modelID = wechatTemplateModel.getModelID();
 
         JSONObject resultJson = baseHttpService.apiAddTemplate(getContent(modelID),mpID);
-        if( !resultJson.getBoolean("isSuccess")){
-            logger.error(()-> "获取微信模板ID错误：" + resultJson.getString("errmsg"));
+        if( !resultJson.getBoolean(WechatMessageType.IS_SUCCESS)){
+            logger.error(()-> "获取微信模板ID错误：" + resultJson.getString(WechatMessageType.MESSAGE));
             return null;
         }
         String templateID = resultJson.getString("template_id");
