@@ -77,7 +77,7 @@ public interface ErrorCodes {
     String WECHAT_QRCODE_TYPE_NULL = "00112143";
     //二维码有效时间超出范围
     String WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP = "00112144";
-    //二维码有效时间超出范围
-    String WECHAT_QRCODE_NOT_ENOUGH = "00112144";
+    //二维码缓存数量不足
+    String WECHAT_QRCODE_NOT_ENOUGH = "00112145";
 
 }

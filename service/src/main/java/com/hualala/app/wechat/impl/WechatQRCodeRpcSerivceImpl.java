@@ -63,6 +63,11 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     @Autowired
     private RabbitQueueProps rabbitQueueProps;
 
+    /**
+     * 获取一个临时二维码，优先获取缓存
+     * @param qrCodeReq
+     * @return
+     */
     @Override
     public WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq) {
 
@@ -98,6 +103,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         WechatQrcodeTempModel wechatQrcodeTempModel = null;
         try {
             locker.lock(LOCKED_TIME_OUT, TimeUnit.SECONDS);
+
             Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
             params.put("deadTime", deadTime);
@@ -136,7 +142,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
                 locker.unlock();
             }
         }
-        //如果缓存获取失败证明已经没有缓存，发送消息多缓存一次，这样总的缓存个数就增加一个，缓存够用接永远执行不到这一句。
+        //如果缓存获取失败证明已经没有缓存，发送消息多缓存一次，这样总的缓存个数就增加一个，缓存够用就永远执行不到这一句。
         cacheQecode(mpID, expireSeconds, qrcodeType,1);
 
         //从redis获取场景值
@@ -181,7 +187,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     }
 
     /**
-     * 发送消息缓存微信二维码
+     * 发送消息缓存微信二维码，没有足够缓存返回（00112145）
      * @param mpID
      * @param expireSeconds
      * @param qrcodeType
@@ -192,6 +198,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         qrcodeInfo.setCacheNo(cacheNo);
         qrcodeInfo.setExpireSeconds(expireSeconds);
         qrcodeInfo.setQrcodeType(qrcodeType);
+//        rabbitTemplate.setReceiveTimeout(1000);
         rabbitTemplate.convertAndSend(rabbitQueueProps.getCacheQrcodeExchange(),
                 null, JSONObject.toJSONString(qrcodeInfo));
     }
@@ -210,26 +217,26 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
             String groupID = qrCodeReqList.getGroupID();
             String shopID = qrCodeReqList.getShopID();
             if (StringUtils.isBlank(brandID) || StringUtils.isBlank(groupID)) {
-                return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
+                return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
             }
             //通过上面三个属性获取mpID，调用方法待定；
             mpID = mpInfoService.queryMpIDAuth(Long.parseLong(groupID), Long.parseLong(brandID), Long.parseLong(shopID));
         }
         if (StringUtils.isBlank(mpID)) {
             //返回响应对象，设置错误信息和错误码；
-            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
         }
         WechatQRTypeEnum qrcodeType = qrCodeReqList.getQrcodeType();
         if (qrcodeType == null){
-            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_TYPE_NULL, "必须提供一个期望获得的QrcodeType！");
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_TYPE_NULL, "必须提供一个期望获得的QrcodeType！");
         }
         Integer size = qrCodeReqList.getSize();
         if (size == null){
-            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_ARGUMENTS_NULL, "必须参数size不能为空");
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_ARGUMENTS_NULL, "必须参数size不能为空");
         }
         List<WechatQRCodeData> wechatQRCodeDataList = qrCodeReqList.getWechatQRCodeDataList();
        if (wechatQRCodeDataList != null && size<wechatQRCodeDataList.size()){
-            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_ARGUMENTS_ILLEGALITY, "参数size不可以小于wechatQRCodeDataList.size()");
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_ARGUMENTS_ILLEGALITY, "参数size不可以小于wechatQRCodeDataList.size()");
         }
 
         //有效时间校验
@@ -238,11 +245,10 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         Integer defaultTime = deadTime1 - 3600;
         expireSeconds = (expireSeconds == 0 ? defaultTime : expireSeconds);
         if (expireSeconds > defaultTime){
-            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP,
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP,
                     "获取缓存（"+qrcodeType.name()+"）类型二维码最大有效时间不能超过: "+defaultTime+"s.");
         }
-        // 发消息缓存二维码
-        cacheQecode(mpID, expireSeconds, qrcodeType,size);
+
         Long deadTime = getDate(expireSeconds);
         //获取缓存好的二维码
         // 根据mpID qrcodeType getDeadTime() 查询数据库
@@ -255,12 +261,23 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
             params.put("deadTime", deadTime);
             params.put("size", size);
             params.put("qrcodeType", qrcodeType.getValue());
-            Integer queryCacheQrcodeCount = qrcodeTempMapper.queryCacheQrcodeCount(params);
-            if (queryCacheQrcodeCount == null || queryCacheQrcodeCount < size){
+            int queryCacheQrcodeCount = qrcodeTempMapper.queryCacheQrcodeCount(params);
+
+
+            if (queryCacheQrcodeCount < size){
+                //缓存数量少于期望数量的一半，获取期望数量的缓存，
+                //缓存数量多于期望数量的一半，获取期望数量一半的缓存。
+                int i = size - queryCacheQrcodeCount;
+                Double d = i > size / 2.0 ? size : size / 2.0;
+                Double ceil = Math.ceil(d);
+                // 发消息缓存二维码
+                cacheQecode(mpID, expireSeconds, qrcodeType,ceil.intValue());
                 //数量不够返回提示正在缓存稍后再试
-                return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_NOT_ENOUGH,
+                return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_NOT_ENOUGH,
                         "当前缓存数量不足，请稍后再试！");
             }
+            // 发消息缓存二维码
+            cacheQecode(mpID, expireSeconds, qrcodeType,size);
             qrcodeModelList = qrcodeTempMapper.queryCacheQrcode(params);
             ArrayList<WechatQRCodeRes> wechatQRCodeList = new ArrayList<>();
             for (int i = 0; i < size ; i++){

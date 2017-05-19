@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by renjianfei on 2017/4/13.
  */
@@ -52,5 +55,37 @@ public class WechatQrcodeTempRpcServiceTest {
 //            list.add("-------------" + (end - start) + "ms------------------>" + param11);
 //        }
 //        System.out.println(list);
+    }
+
+    /**
+     * 获取多个缓存二维码
+     */
+    @Test
+    public void  test1(){
+        WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
+        WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
+        wechatQRCodeListReq.setMpID("doulaofangceshi");
+        wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
+        wechatQRCodeListReq.setExpireSeconds(3600*24);
+        wechatQRCodeListReq.setSize(15);
+        List<WechatQRCodeRpcSerivce.WechatQRCodeData> list = new ArrayList<>();
+        for (int i = 0 ; i < 3; i++) {
+            WechatQRCodeRpcSerivce.WechatQRCodeData wechatQRCodeData = new WechatQRCodeRpcSerivce.WechatQRCodeData();
+            wechatQRCodeData.setQrcodeName("QrcodeName");
+            wechatQRCodeData.setParam1("param1");
+            list.add(wechatQRCodeData);
+        }
+        wechatQRCodeListReq.setWechatQRCodeDataList(list);
+        long start = System.currentTimeMillis();
+        WechatQRCodeRpcSerivce.WechatQRCodeListRes qrCodeList = rpcClient.createQRCodeList(wechatQRCodeListReq);
+        long end = System.currentTimeMillis();
+        System.out.println("--------------"+(end-start)+"ms");
+        System.out.println(qrCodeList.getMessage());
+        System.out.println(qrCodeList.getWechatQRCodeResList()==null?0:qrCodeList.getWechatQRCodeResList().size());
+        try {
+            Thread.sleep(300000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

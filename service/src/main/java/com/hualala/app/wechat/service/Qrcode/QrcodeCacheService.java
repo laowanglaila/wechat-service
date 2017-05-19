@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,7 +29,7 @@ public class QrcodeCacheService {
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(AccessTokenService.class);
+    private static Logger logger = LoggerFactory.getLogger(QrcodeCacheService.class);
 
     /**
      * 缓存二维码到数据库

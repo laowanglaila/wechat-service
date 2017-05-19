@@ -31,8 +31,12 @@ public class RabbitMqConfiguration {
     public Queue cacheQrcodeConsumerQueue(AmqpAdmin amqpAdmin) {
         String queueName = queueProps.getCacheQrcodeQueue();
         logger.info(() -> "init orderQuery consumer queue [" + queueName + "]");
-        Queue queue = new Queue(queueName,true);
-        amqpAdmin.declareQueue(queue);
+        Queue queue = new Queue(queueName);
+//        Queue queue  = QueueBuilder.nonDurable(queueName).build();
+//        Map<String, Object> queueArguments = new HashMap<>();
+//        queueArguments.put("x-message-ttl",5000);
+//        queueArguments.put("x-max-length",1);
+
         return queue;
     }
 

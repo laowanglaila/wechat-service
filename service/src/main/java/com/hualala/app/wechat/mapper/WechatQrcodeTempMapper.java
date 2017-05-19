@@ -17,7 +17,7 @@ public interface WechatQrcodeTempMapper {
 
 	List<WechatQrcodeTempModel> queryCacheQrcode(Map<String, Object> params);
 
-	Integer queryCacheQrcodeCount(Map<String, Object> params);
+	int queryCacheQrcodeCount(Map<String, Object> params);
 
 	int updateByPrimaryKeySelective(WechatQrcodeTempModel wechatQrcodeTempModel);
 }
