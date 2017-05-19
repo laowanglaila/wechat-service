@@ -61,5 +61,23 @@ public interface ErrorCodes {
     String WECHAT_CARD_RESULT_NULL = "00112135";
     //不存在指定的Key
     String WECHAT_CARD_KEY_NONE = "00112136";
+    //cardID不能为空
+    String WECHAT_CARD_ID_NULL = "00112137";
+    //membershipID不能为空
+    String WECHAT_CARD_MEMBER_NUM_NULL = "00112138";
+    //encryptCode不能为空
+    String WECHAT_CARD_ENCRYPT_CODE_NULL = "00112139";
+    //encryptCode不能为空
+    String WECHAT_CARD_CODE_NULL = "00112140";
+    //encryptCode不能为空
+    String WECHAT_ARGUMENTS_ILLEGALITY = "00112141";
+    //encryptCode不能为空
+    String WECHAT_ARGUMENTS_NULL = "00112142";
+    //QrcodeType不能为空
+    String WECHAT_QRCODE_TYPE_NULL = "00112143";
+    //二维码有效时间超出范围
+    String WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP = "00112144";
+    //二维码缓存数量不足
+    String WECHAT_QRCODE_NOT_ENOUGH = "00112145";
 
 }
