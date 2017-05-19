@@ -15,4 +15,9 @@ public interface WechatQrcodeTempMapper {
 
 	int queryMaxSenceID(String mpID);
 
+	List<WechatQrcodeTempModel> queryCacheQrcode(Map<String, Object> params);
+
+	int queryCacheQrcodeCount(Map<String, Object> params);
+
+	int updateByPrimaryKeySelective(WechatQrcodeTempModel wechatQrcodeTempModel);
 }

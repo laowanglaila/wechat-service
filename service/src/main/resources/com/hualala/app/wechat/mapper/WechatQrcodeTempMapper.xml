@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hualala.app.wechat.mapper.WechatQrcodeTempMapper">
-	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatQrcodeTempModel">
+	<insert id="insert" parameterType="com.hualala.app.wechat.model.WechatQrcodeTempModel" useGeneratedKeys="true" keyProperty="itemID">
 		insert into tbl_shop_wechat_qrcode_temp (
 			<if test="itemID !=null">itemID,</if>
 			<if test="mpID !=null">mpID,</if>
@@ -17,6 +17,8 @@
 			<if test="ticket !=null">ticket,</if>
 			<if test="wxUrl !=null">wxUrl,</if>
 			<if test="deadTime !=null">deadTime,</if>
+			<if test="qrcodeStatus !=null">qrcodeStatus,</if>
+			<if test="qrcodeIP !=null">qrcodeIP,</if>
         action,createTime
 		) values (
 			<if test="itemID !=null">#{itemID},</if>
@@ -33,6 +35,8 @@
 			<if test="ticket !=null">#{ticket},</if>
 			<if test="wxUrl !=null">#{wxUrl},</if>
 			<if test="deadTime !=null">#{deadTime},</if>
+			<if test="qrcodeStatus !=null">#{qrcodeStatus},</if>
+			<if test="qrcodeIP !=null">#{qrcodeIP},</if>
         #{action}, #{createTime}
 		)
 	</insert>
@@ -50,8 +54,84 @@
     select IFNULL(max(sceneID),100000000) sceneID from tbl_shop_wechat_qrcode_temp
 		where mpID=#{value} and action in(0,1);
     </select>
+	<select id="queryCacheQrcode" resultType="com.hualala.app.wechat.model.WechatQrcodeTempModel" parameterType="java.util.Map">
+		select
+		<include refid="queryField"/>
+		from (select <include refid="queryField"/> from tbl_shop_wechat_qrcode_temp where mpID=#{mpID}) as a
+		where qrcodeStatus = 1
+		and qrcodeType = #{qrcodeType}
+		and deadTime > #{deadTime}
+		order by deadTime
+		limit 0, #{size};
+    </select>
+	<select id="queryCacheQrcodeCount" resultType="int" parameterType="java.util.Map">
+		select
+		count(1)
+		from (select <include refid="queryField"/> from tbl_shop_wechat_qrcode_temp where mpID=#{mpID}) as a
+		where qrcodeStatus = 1
+		and qrcodeType = #{qrcodeType}
+		and deadTime > #{deadTime}
+		order by deadTime
+		limit 0, #{size};
+    </select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.WechatQrcodeTempModel">
+		update tbl_shop_wechat_qrcode_temp
+		<set >
+			<if test="itemID != null" >
+				itemID = #{itemID},
+			</if>
+			<if test="mpID != null">
+				mpID = #{mpID},
+			</if>
+			<if test="qrcodeType != null">
+				qrcodeType = #{qrcodeType},
+			</if>
+			<if test="qrcodeName != null">
+				qrcodeName = #{qrcodeName},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="param1 != null">
+				param1 = #{param1},
+			</if>
+			<if test="param2 != null">
+				param2 = #{param2},
+			</if>
+			<if test="param3 != null">
+				param3 = #{param3},
+			</if>
+			<if test="locationName != null">
+				locationName = #{locationName},
+			</if>
+			<if test="shopID != null">
+				shopID = #{shopID},
+			</if>
+			<if test="ticket != null">
+				ticket = #{ticket},
+			</if>
+			<if test="wxUrl != null">
+				wxUrl = #{wxUrl},
+			</if>
+			<if test="qrcodeIP != null">
+				qrcodeIP = #{qrcodeIP},
+			</if>
+			<!--<if test="isLog != null">-->
+				<!--isLog = #{isLog},-->
+			<!--</if>-->
+			<if test="deadTime != null">
+				deadTime = #{deadTime},
+			</if>
+			<if test="qrcodeStatus != null">
+				qrcodeStatus = #{qrcodeStatus},
+			</if>
+			action = #{action}, actionTime = #{actionTime}
+		</set>
+		where itemID = #{itemID}
+    </update>
 
     <sql id="queryField">
-        itemID,        mpID,        qrcodeType,        sceneID,        qrcodeName,        description,        param1,        param2,        param3,        locationName,        shopID,        ticket,        wxUrl,        qrcodeIP,        isLog,        deadTime
+        itemID,mpID,qrcodeType,sceneID,qrcodeName,description,param1,param2,param3,
+        locationName,shopID,ticket,wxUrl,qrcodeIP,isLog,deadTime,qrcodeStatus
     </sql>
 </mapper>

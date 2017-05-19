@@ -22,6 +22,18 @@ spring:
     test-while-idle: true
     time-between-eviction-runs-millis: 3600000
     min-evictable-idle-time-millis: 1800000
+  rabbitmq:
+    host: 172.16.0.29
+    port: 5672
+    username: guest
+    password: guest
+#    listener:
+#      retry:
+#        enabled: true
+#        max-attempts:
+#    template:
+#      receive-timeout:
+#      reply-timeout:
 
   # REDIS (RedisProperties)
   redis:
@@ -50,6 +62,29 @@ wechat:
   data:
     componentAppID: wx431ecb8eae767f0c
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+redisStock:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 2
+    maxWait: 10000
+    maxIdle: 1
+    minIdle: 1
+
+zookeeper:
+  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径
+
+
+
 
 ---
 spring:
@@ -73,6 +108,12 @@ spring:
     test-while-idle: true
     time-between-eviction-runs-millis: 3600000
     min-evictable-idle-time-millis: 1800000
+
+  rabbitmq:
+    host: 172.16.0.29
+    port: 5672
+    username: guest
+    password: guest
 
   # REDIS (RedisProperties)
   redis:
@@ -102,54 +143,19 @@ wechat:
     componentAppID: wx431ecb8eae767f0c
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
 
+redisStock:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 2
+    maxWait: 10000
+    maxIdle: 1
+    minIdle: 1
 
----
-spring:
-  profiles: production
-  aop:
-    auto: true
-  mvc:
-    throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: false
-  datasource:
-    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
-    username: myhualashopol
-    password: gppwd@dldshopol
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 10
-    max-active: 100
-    min-idle: 2
-    validation-query: SELECT 1
-    test-on-borrow: ture
-    test-while-idle: true
-    time-between-eviction-runs-millis: 3600000
-    min-evictable-idle-time-millis: 1800000
-
-  # REDIS (RedisProperties)
-  redis:
-    database: 0
-    host: redis1.api.hualala.com
-    port: 21379
-    pool:
-      max-idle: 50
-      min-idle: 30
-      max-active: 200
-      max-wait: 10000
-
-mybatis:
-   config-location: classpath:mybatis-config.xml
-
-grpc:
-  port: 6567
-  client:
-     hosts:
-        idgen: id.gen.hualala.com:32243
-        sem: service.short.message.hualala.com:7081
-
-wechat:
-  data:
-    componentAppID: wx01482fd383628bee
-    componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
-
-
+zookeeper:
+  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径

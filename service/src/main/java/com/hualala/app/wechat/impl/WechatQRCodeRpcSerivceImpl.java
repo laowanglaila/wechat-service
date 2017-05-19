@@ -5,42 +5,48 @@ import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.config.RabbitQueueProps;
 import com.hualala.app.wechat.mapper.WechatQrcodeMapper;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
+import com.hualala.app.wechat.model.mq.QrcodeInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
+import com.hualala.app.wechat.service.Qrcode.QrcodeCacheService;
+import com.hualala.app.wechat.service.Qrcode.QrcodeCreateSceneIDService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
-import com.hualala.core.utils.DateUtils;
+import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by renjianfei on 2017/4/12.
  */
 @Service
-public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
+class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
 
+    private static final String WECHAT_QR_QUERY_CACHE_LOCK = "Wechat_QrCode_QueryLock";
+    private static final String COLON = ":";
     private Logger logger = Logger.of(WechatQRCodeRpcSerivceImpl.class);
+    private static final int SIZE = 1;
+    private static final int USED_QRCODE_STATUS = 2;
+    private static final int LOCKED_TIME_OUT = 10;
 
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
 
     @Autowired
-    private WechatQrcodeMapper qrcodeMapper;
-
-//    @Autowired
-//    private RedisTemplate<String,Integer> redisTemplate;
-
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private QrcodeCreateSceneIDService qrcodeCreateSceneIDService;
 
     @Autowired
     private BaseHttpService baseHttpService;
@@ -48,6 +54,20 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     @Autowired
     private MpInfoService mpInfoService;
 
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private RabbitQueueProps rabbitQueueProps;
+
+    /**
+     * 获取一个临时二维码，优先获取缓存
+     * @param qrCodeReq
+     * @return
+     */
     @Override
     public WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq) {
 
@@ -69,14 +89,65 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         }
 
         WechatQRTypeEnum qrcodeType = qrCodeReq.getQrcodeType();
+        if (qrcodeType == null){
+            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_TYPE_NULL, "必须提供一个期望获得的QrcodeType！");
+        }
         //有效时间
         int expireSeconds = qrCodeReq.getExpireSeconds();
         expireSeconds = (expireSeconds == 0 ? qrcodeType.getDeadTime() : expireSeconds);
+        Long deadTime = getDate(expireSeconds);
+        // 发消息缓存一个二维码qrcodeCacheService.cache(qrcodeType, 1, expireSeconds, mpID);
+        cacheQecode(mpID, expireSeconds, qrcodeType,1);
+        // 根据mpID qrcodeType getDeadTime() 查询数据库
+        RLock locker = redissonClient.getLock(WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name());
+        WechatQrcodeTempModel wechatQrcodeTempModel = null;
+        try {
+            locker.lock(LOCKED_TIME_OUT, TimeUnit.SECONDS);
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("mpID", mpID);
+            params.put("deadTime", deadTime);
+            params.put("size", SIZE);
+            params.put("qrcodeType", qrcodeType.getValue());
+            List<WechatQrcodeTempModel> qrcodeModelList = qrcodeTempMapper.queryCacheQrcode(params);
+            int listSize = qrcodeModelList.size();
+            if (listSize > 0) {
+                wechatQrcodeTempModel = qrcodeModelList.get(0);
+                wechatQrcodeTempModel.setQrcodeStatus(USED_QRCODE_STATUS)
+                        .setQrcodeType(qrcodeType.getValue())
+                        .setDeadTime(deadTime)
+                        .setDescription(qrCodeReq.getDescription())
+                        .setLocationName(qrCodeReq.getLocationName())
+                        .setParam1(qrCodeReq.getParam1())
+                        .setParam2(qrCodeReq.getParam2())
+                        .setParam3(qrCodeReq.getParam3())
+                        .setShopID(qrCodeReq.getShopID())
+                        .setQrcodeName(qrCodeReq.getQrcodeName());
+                qrcodeTempMapper.updateByPrimaryKeySelective(wechatQrcodeTempModel);
+
+                //返回参数
+                WechatQRCodeRes wechatQRCodeRes = new WechatQRCodeRes();
+                wechatQRCodeRes.setItemID(wechatQrcodeTempModel.getItemID());
+                wechatQRCodeRes.setTicket(wechatQrcodeTempModel.getTicket());
+                wechatQRCodeRes.setWxUrl(wechatQrcodeTempModel.getWxUrl());
+                wechatQRCodeRes.setExpireSeconds(qrCodeReq.getExpireSeconds());
+                wechatQRCodeRes.setParam1(qrCodeReq.getParam1());
+                wechatQRCodeRes.setParam2(qrCodeReq.getParam2());
+                wechatQRCodeRes.setParam3(qrCodeReq.getParam3());
+                return wechatQRCodeRes;
+            }
+
+        } finally {
+            if (locker != null) {
+                locker.unlock();
+            }
+        }
+        //如果缓存获取失败证明已经没有缓存，发送消息多缓存一次，这样总的缓存个数就增加一个，缓存够用就永远执行不到这一句。
+        cacheQecode(mpID, expireSeconds, qrcodeType,1);
+
         //从redis获取场景值
-        int tempSenceID = getTempSenceID(mpID);
-
-
-        JSONObject jsonObject = baseHttpService.createQrCode(getModel(expireSeconds,qrcodeType.getWechatType(),tempSenceID), mpID);
+        int tempSenceID = qrcodeCreateSceneIDService.getTempSenceID(mpID);
+        JSONObject jsonObject = baseHttpService.createQrCode(getModel(expireSeconds, qrcodeType.getWechatType(), tempSenceID), mpID);
 
         if (!jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
             return ResultUtil.getResultInfoBean(jsonObject, WechatQRCodeRes.class);
@@ -96,55 +167,153 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
                 .setTicket(jsonObject.getString("ticket"))
                 .setWxUrl(jsonObject.getString("url"))
                 .setSceneID(tempSenceID)
-                .setQrcodeName(qrCodeReq.getQrcodeName());
+                .setQrcodeName(qrCodeReq.getQrcodeName())
+                .setQrcodeStatus(USED_QRCODE_STATUS);
 
-        qrcodeTempModel.setAction(0);
-        qrcodeTempModel.setCreateTime(DateUtils.getCurrentDateTimeLong());
+
         qrcodeTempMapper.insert(qrcodeTempModel);
 
 
         //返回参数
         WechatQRCodeRes wechatQRCodeRes = new WechatQRCodeRes();
+        wechatQRCodeRes.setItemID(qrcodeTempModel.getItemID());
         wechatQRCodeRes.setTicket(qrcodeTempModel.getTicket());
         wechatQRCodeRes.setWxUrl(qrcodeTempModel.getWxUrl());
-        wechatQRCodeRes.setExpireSeconds(qrCodeReq.getExpireSeconds());
+        wechatQRCodeRes.setExpireSeconds(expireSeconds);
         wechatQRCodeRes.setParam1(qrCodeReq.getParam1());
         wechatQRCodeRes.setParam2(qrCodeReq.getParam2());
         wechatQRCodeRes.setParam3(qrCodeReq.getParam3());
         return wechatQRCodeRes;
     }
 
-    //    public int getTempSenceID(){
-////        临时Wechat_SenceID_Temp
-//        BoundValueOperations<String, Integer> ops = redisTemplate.boundValueOps("Wechat_SenceID_Temp");
-//        //获取去之前先判断redis是否存在key值==0
-//        if(ops.get() == 0 ){
-//            //加锁，数据库获取SenceID最大值
-//            synchronized (qrcodeTempMapper){
-//                //获取SenceID最大值存入redis
-//                int i = qrcodeTempMapper.queryMacSenceID();
-//                if(ops.get() == 0){
-//                    ops.set(i);
-//                }
-//            }
-//        }
-//        return ops.increment(1L).intValue();
-//    }
-    private int getTempSenceID(String mpID) {
-//        临时Wechat_SenceID_Temp
-        BoundValueOperations<String, String> ops = stringRedisTemplate.boundValueOps("Wechat_SenceID_Temp:" + mpID);
-        //获取去之前先判断redis是否存在key值==0
-        if (StringUtils.isBlank(ops.get())) {
-            //加分布式锁，数据库获取SenceID最大值
-            //获取SenceID最大值存入redis
-            int i = qrcodeTempMapper.queryMaxSenceID(mpID);
-            if (StringUtils.isBlank(ops.get())) {
-                ops.set("" + i);
-            }
-        }
-        return ops.increment(1L).intValue();
+    /**
+     * 发送消息缓存微信二维码，没有足够缓存返回（00112145）
+     * @param mpID
+     * @param expireSeconds
+     * @param qrcodeType
+     */
+    private void cacheQecode(String mpID, int expireSeconds, WechatQRTypeEnum qrcodeType,int cacheNo) {
+        QrcodeInfoModel qrcodeInfo = new QrcodeInfoModel();
+        qrcodeInfo.setMpID(mpID);
+        qrcodeInfo.setCacheNo(cacheNo);
+        qrcodeInfo.setExpireSeconds(expireSeconds);
+        qrcodeInfo.setQrcodeType(qrcodeType);
+//        rabbitTemplate.setReceiveTimeout(1000);
+        rabbitTemplate.convertAndSend(rabbitQueueProps.getCacheQrcodeExchange(),
+                null, JSONObject.toJSONString(qrcodeInfo));
     }
 
+    /**
+     * 批量获取缓存二维码，
+     * @param qrCodeReqList
+     * @return
+     */
+    @Override
+    public WechatQRCodeListRes createQRCodeList(WechatQRCodeListReq qrCodeReqList) {
+        //判断mpID,没有则调方法获取
+        String mpID = qrCodeReqList.getMpID();
+        if (StringUtils.isBlank(mpID)) {
+            String brandID = qrCodeReqList.getBrandID();
+            String groupID = qrCodeReqList.getGroupID();
+            String shopID = qrCodeReqList.getShopID();
+            if (StringUtils.isBlank(brandID) || StringUtils.isBlank(groupID)) {
+                return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
+            }
+            //通过上面三个属性获取mpID，调用方法待定；
+            mpID = mpInfoService.queryMpIDAuth(Long.parseLong(groupID), Long.parseLong(brandID), Long.parseLong(shopID));
+        }
+        if (StringUtils.isBlank(mpID)) {
+            //返回响应对象，设置错误信息和错误码；
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
+        }
+        WechatQRTypeEnum qrcodeType = qrCodeReqList.getQrcodeType();
+        if (qrcodeType == null){
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_TYPE_NULL, "必须提供一个期望获得的QrcodeType！");
+        }
+        Integer size = qrCodeReqList.getSize();
+        if (size == null){
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_ARGUMENTS_NULL, "必须参数size不能为空");
+        }
+        List<WechatQRCodeData> wechatQRCodeDataList = qrCodeReqList.getWechatQRCodeDataList();
+       if (wechatQRCodeDataList != null && size<wechatQRCodeDataList.size()){
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_ARGUMENTS_ILLEGALITY, "参数size不可以小于wechatQRCodeDataList.size()");
+        }
+
+        //有效时间校验
+        int expireSeconds = qrCodeReqList.getExpireSeconds();
+        Integer deadTime1 = qrcodeType.getDeadTime();
+        Integer defaultTime = deadTime1 - 3600;
+        expireSeconds = (expireSeconds == 0 ? defaultTime : expireSeconds);
+        if (expireSeconds > defaultTime){
+            return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP,
+                    "获取缓存（"+qrcodeType.name()+"）类型二维码最大有效时间不能超过: "+defaultTime+"s.");
+        }
+
+        Long deadTime = getDate(expireSeconds);
+        //获取缓存好的二维码
+        // 根据mpID qrcodeType getDeadTime() 查询数据库
+        RLock locker = redissonClient.getLock(WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name());
+        List<WechatQrcodeTempModel> qrcodeModelList;
+        try {
+            locker.lock(LOCKED_TIME_OUT, TimeUnit.SECONDS);
+            Map<String, Object> params = new HashMap<>();
+            params.put("mpID", mpID);
+            params.put("deadTime", deadTime);
+            params.put("size", size);
+            params.put("qrcodeType", qrcodeType.getValue());
+            int queryCacheQrcodeCount = qrcodeTempMapper.queryCacheQrcodeCount(params);
+
+
+            if (queryCacheQrcodeCount < size){
+                //缓存数量少于期望数量的一半，获取期望数量的缓存，
+                //缓存数量多于期望数量的一半，获取期望数量一半的缓存。
+                int i = size - queryCacheQrcodeCount;
+                Double d = i > size / 2.0 ? size : size / 2.0;
+                Double ceil = Math.ceil(d);
+                // 发消息缓存二维码
+                cacheQecode(mpID, expireSeconds, qrcodeType,ceil.intValue());
+                //数量不够返回提示正在缓存稍后再试
+                return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_NOT_ENOUGH,
+                        "当前缓存数量不足，请稍后再试！");
+            }
+            // 发消息缓存二维码
+            cacheQecode(mpID, expireSeconds, qrcodeType,size);
+            qrcodeModelList = qrcodeTempMapper.queryCacheQrcode(params);
+            ArrayList<WechatQRCodeRes> wechatQRCodeList = new ArrayList<>();
+            for (int i = 0; i < size ; i++){
+                WechatQrcodeTempModel wechatQrcodeTempModel = qrcodeModelList.get(i);
+                wechatQrcodeTempModel.setQrcodeStatus(USED_QRCODE_STATUS)
+                        .setDeadTime(deadTime);
+                if (i < wechatQRCodeDataList.size()){
+                    WechatQRCodeData wechatQRCodeData = wechatQRCodeDataList.get(i);
+                    String description = wechatQRCodeData.getDescription();
+                    String locationName = wechatQRCodeData.getLocationName();
+                    String param1 = wechatQRCodeData.getParam1();
+                    String param2 = wechatQRCodeData.getParam2();
+                    String param3 = wechatQRCodeData.getParam3();
+                    String qrcodeName = wechatQRCodeData.getQrcodeName();
+//                    String shopName = wechatQRCodeData.getShopName();
+                    wechatQrcodeTempModel
+                            .setDescription(description)
+                            .setLocationName(locationName)
+                            .setParam1(param1)
+                            .setParam2(param2)
+                            .setParam3(param3)
+                            .setQrcodeName(qrcodeName);
+                }
+                qrcodeTempMapper.updateByPrimaryKeySelective(wechatQrcodeTempModel);
+                WechatQRCodeRes wechatQRCodeRes = DataUtils.copyProperties(wechatQrcodeTempModel, WechatQRCodeRes.class);
+                wechatQRCodeList.add(wechatQRCodeRes);
+            }
+            WechatQRCodeListRes wechatQRCodeListRes = new WechatQRCodeListRes();
+            wechatQRCodeListRes.setWechatQRCodeResList(wechatQRCodeList);
+            return wechatQRCodeListRes;
+        } finally {
+            if (locker != null) {
+                locker.unlock();
+            }
+        }
+    }
 
     private Long getDate(Integer second) {
         Calendar c = Calendar.getInstance();
@@ -155,6 +324,7 @@ public class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
 
     /**
      * 获取二维码，微信返回三个参数
+     *
      * @param expireSeconds
      * @param WechatType
      * @param tempSenceID
