@@ -8,6 +8,7 @@ import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
+import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.CouponModel;
 import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.service.BaseHttpService;
@@ -21,7 +22,7 @@ import java.lang.reflect.Member;
  * Created by renjianfei on 2017/5/2.
  */
 @Service
-public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
+public class CardDeleteRpcServiceImpl implements CardDeleteRpcService {
 
     @Autowired
     private BaseHttpService baseHttpService;
@@ -53,9 +54,19 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
         JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
 
         if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
-            advancedModelMapper.deleteByPrimaryKey(cardKey);
-            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
-            memberModelMapper.deleteByPrimaryKey(cardKey);
+            MemberModel memberModel1 = new MemberModel();
+            memberModel1.setCardKey(cardKey);
+            memberModel1.setCardStatus(0);
+            memberModel1.setAction(3);
+            BaseInfoModel baseInfoModel = new BaseInfoModel();
+            baseInfoModel.setCardKey(cardKey);
+            baseInfoModel.setCardStatus(0);
+            baseInfoModel.setAction(3);
+            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+            memberModelMapper.updateByPrimaryKeySelective(memberModel);
+//            advancedModelMapper.deleteByPrimaryKey(cardKey);
+//            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
+//            memberModelMapper.deleteByPrimaryKey(cardKey);
         }
         return ResultUtil.getResultInfoBean(jsonObject, CardDeleteAndUnAbailableResData.class);
     }
@@ -82,7 +93,7 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
             //修改状态
             MemberModel memberModel1 = new MemberModel();
             memberModel1.setCardKey(cardKey);
-            memberModel.setCardStatus(0);
+            memberModel.setCardStatus(6);
             memberModelMapper.updateByPrimaryKeySelective(memberModel);
         }
         return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);
@@ -107,9 +118,19 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
         JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
 
         if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
-            advancedModelMapper.deleteByPrimaryKey(cardKey);
-            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
-            couponModelMapper.deleteByPrimaryKey(cardKey);
+            CouponModel couponModel1 = new CouponModel();
+            couponModel1.setCardKey(cardKey);
+            couponModel1.setCardStatus(0);
+            couponModel1.setAction(3);
+            BaseInfoModel baseInfoModel = new BaseInfoModel();
+            baseInfoModel.setCardKey(cardKey);
+            baseInfoModel.setCardStatus(0);
+            baseInfoModel.setAction(3);
+            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+            couponModelMapper.updateByPrimaryKeySelective(couponModel1);
+//            advancedModelMapper.deleteByPrimaryKey(cardKey);
+//            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
+//            couponModelMapper.deleteByPrimaryKey(cardKey);
         }
         return ResultUtil.getResultInfoBean(jsonObject, CardDeleteAndUnAbailableResData.class);
     }
@@ -136,7 +157,7 @@ public class CardDeletePrcServiceImpl implements CardDeleteRpcService {
             //修改状态
             CouponModel couponModel1 = new CouponModel();
             couponModel1.setCardKey(cardKey);
-            couponModel1.setCardStatus(0);
+            couponModel1.setCardStatus(6);
             couponModelMapper.updateByPrimaryKeySelective(couponModel1);
         }
         return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);

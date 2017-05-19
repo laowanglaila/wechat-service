@@ -7,7 +7,7 @@ import com.hualala.core.base.ResultInfo;
 /**
  * Created by renjianfei on 2017/5/2.
  */
-public class CardDeletePrcServiceImplTest extends BaseRpcTest {
+public class CardDeleteRpcServiceImplTest extends BaseRpcTest {
     @Override
     public void test() {
         long l = System.currentTimeMillis();
