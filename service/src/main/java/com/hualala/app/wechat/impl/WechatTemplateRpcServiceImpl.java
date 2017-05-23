@@ -77,7 +77,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         }
         Map<String, Object> map = DataUtils.beanToMap(reqData);
         //  获取模板ID
-        WechatTemplateModel wechatTemplateModel = wechatTemplateService.getTemplate(mpID, modelID);
+        WechatTemplateModel wechatTemplateModel = wechatTemplateService.getTemplate(mpID, modelID,reqData.getGroupID(),modelType);
         if (wechatTemplateModel == null) {
             return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_TEMPLATE_ERROR, "初始化微信模板消息异常");
         }

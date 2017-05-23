@@ -12,6 +12,7 @@ public class WechatTemplateModel extends BaseItem {
     private String modelTitle;
     private String templateType;
     private String templateID;
+    private long groupID;
     private int action;
     private long actionTime;
     private long createTime;
