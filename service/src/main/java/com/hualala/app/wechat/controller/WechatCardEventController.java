@@ -1,6 +1,8 @@
 package com.hualala.app.wechat.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 public class WechatCardEventController {
-
+    private static Logger logger = LoggerFactory.getLogger(WechatCardEventController.class);
     @RequestMapping("/card/event")
     public JSONObject event(HttpServletRequest request){
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -45,6 +47,7 @@ public class WechatCardEventController {
 
     }
         String json = sb.toString();
+        logger.debug("json: "+json);
         JSONObject jsonObject = JSONObject.parseObject(json);
         return jsonObject;
     }
