@@ -142,7 +142,10 @@ wechat:
   data:
     componentAppID: wx431ecb8eae767f0c
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
-
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
   host: 172.16.0.27
   port: 19000
