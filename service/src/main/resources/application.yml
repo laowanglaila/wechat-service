@@ -67,8 +67,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: 172.16.0.27
-  port: 19000
+  host: dohko.redis.hualala.com
+  port: 6379
   db: 0
   pool:
     maxActive: 2
@@ -147,8 +147,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: 172.16.0.27
-  port: 19000
+  host: dohko.redis.hualala.com
+  port: 6379
   db: 0
   pool:
     maxActive: 2
