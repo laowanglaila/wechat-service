@@ -37,7 +37,7 @@ public class CardSyncRpcServiceImplTest extends BaseRpcTest {
     public void testSyncCouponInfo() {
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardSyncReqData cardSyncReqData = new CardSyncRpcService.CardSyncReqData();
-        cardSyncReqData.setCardKey(123123123L);
+        cardSyncReqData.setCardKey(6423578788981908485L);
         CardSyncRpcService.CardSyncResData cardSyncResData = rpcClient.syncCouponInfo(cardSyncReqData);
         System.out.println(cardSyncResData.getMessage());
     }
@@ -46,7 +46,7 @@ public class CardSyncRpcServiceImplTest extends BaseRpcTest {
     public void testSyncMemberInfo() {
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardSyncReqData cardSyncReqData = new CardSyncRpcService.CardSyncReqData();
-        cardSyncReqData.setCardKey(6418061147575952389L);
+        cardSyncReqData.setCardKey(6423579467586765937L);
         CardSyncRpcService.CardSyncResData cardSyncResData = rpcClient.syncMemberInfo(cardSyncReqData);
         System.out.println(cardSyncResData.getMessage());
     }
@@ -56,8 +56,8 @@ public class CardSyncRpcServiceImplTest extends BaseRpcTest {
     public void testDonwloadCard() {
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardDownloadReqData cardDownloadReqData = new CardSyncRpcService.CardDownloadReqData();
-        cardDownloadReqData.setCardID("pACwGs5bzfYrLQw3aMXrhr_30RVg");
-        cardDownloadReqData.setMpID("doulaofnagceshi");
+        cardDownloadReqData.setCardID("p7FjEuE1pK-wZ_RedZXFGpr-142g");
+        cardDownloadReqData.setMpID("doulaofangceshi");
         CardSyncRpcService.CardDownloadResData cardDownloadResData = rpcClient.downloadCardInfo(cardDownloadReqData);
         System.out.println(cardDownloadResData.getMessage());
     }
@@ -66,6 +66,7 @@ private CreateCardKeyService createCardKeyService;
     @Test
     public void testDonwloadCardList() throws ExecutionException {
         String mpID = "hualala_com";
+//        String mpID = "doulaofangceshi";
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();
         cardListReqData.setCount(50);

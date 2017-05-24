@@ -17,20 +17,20 @@ public class ProtoGenerator {
 //                CardEventRpcService.class,
 //                CardSyncRpcService.class,
 //                CardCodeRpcService.class,
-//                CardPrePareQueryRpcService.class,
+                CardPrePareQueryRpcService.class,
 //                CardPrePareCreateRpcService.class,
 ////                CreateCardCouponRpcService.class,
-                WechatQRCodeRpcSerivce.class,
-                CardStatusEnum.class,
-                ColorEnum.class,
-                CouponTypeEnum.class,
-                DateInfoTypeEnum.class,
-                CustomCodeModeEnum.class,
-                CodeTypeEnum.class,
-                TimelimitTypeEnum.class,
-                MpTypeEnum.class,
-                WechatQRTypeEnum.class,
-                WechatTemplateTypeEnum.class
+//                WechatQRCodeRpcSerivce.class,
+//                CardStatusEnum.class,
+//                ColorEnum.class,
+//                CouponTypeEnum.class,
+//                DateInfoTypeEnum.class,
+//                CustomCodeModeEnum.class,
+//                CodeTypeEnum.class,
+//                TimelimitTypeEnum.class,
+//                MpTypeEnum.class,
+//                WechatQRTypeEnum.class,
+//                WechatTemplateTypeEnum.class
         };
         RpcProtoGenerator.generate(generatorClass);
     }

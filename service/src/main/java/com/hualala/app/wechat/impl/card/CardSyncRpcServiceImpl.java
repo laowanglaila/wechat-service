@@ -71,14 +71,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
     @Override
     public CardSyncResData syncMemberInfo(CardSyncReqData cardSyncReqData) {
         Long cardKey = cardSyncReqData.getCardKey();
-        MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
-        if (null == memberModel) {
+        BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+        if (null == baseInfoModel1) {
             return new CardSyncResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
 
         }
-        String cardID = memberModel.getCardID();
-        String mpID = memberModel.getMpID();
+        String cardID = baseInfoModel1.getCardID();
+        String mpID = baseInfoModel1.getMpID();
         String params = "{\"card_id\":\"" + cardID + "\"}";
         JSONObject cardInfo = baseHttpService.getCardInfo(params, mpID);
         if (!cardInfo.getBoolean(WechatMessageType.IS_SUCCESS)) {
@@ -108,11 +108,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
 
         JSONObject baseInfo = memberInfo.getJSONObject("baseInfo");
-        //判断会员卡状态
-        String status = baseInfo.getString("status");
-        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
+
         MemberModel memberModel1 = DataUtils.mapToBean(memberInfo, MemberModel.class);
-        memberModel1.setCardStatus(cardStatusEnum.getValue());
+//        memberModel1.setCardStatus(cardStatusEnum.getValue());
         memberModel1.setCardKey(cardKey);
 
         memberModelMapper.updateByPrimaryKeySelective(memberModel1);
@@ -132,7 +130,10 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         baseInfo.replace("locationIdList", locationList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardKey(cardKey);
-
+        //判断会员卡状态
+        String status = baseInfo.getString("status");
+        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
+        baseInfoModel.setCardStatus(cardStatusEnum.getValue());
         baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
 
         JSONObject advancedInfo = (JSONObject) JSONObject.toJSON(map.get("advancedInfo"));
@@ -169,14 +170,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             return new CardSyncResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不能为空！");
         }
-        CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
-        if (null == couponModel) {
+        BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+        if (null == baseInfoModel1) {
             return new CardSyncResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
 
         }
-        String cardID = couponModel.getCardID();
-        String mpID = couponModel.getMpID();
+        String cardID = baseInfoModel1.getCardID();
+        String mpID = baseInfoModel1.getMpID();
         String params = "{\"card_id\":\"" + cardID + "\"}";
         JSONObject cardInfo = baseHttpService.getCardInfo(params, mpID);
         if (!cardInfo.getBoolean(WechatMessageType.IS_SUCCESS)) {
@@ -193,10 +194,8 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 //“CARD_STATUS_VERIFY_OK”，通过审核；
 //“CARD_STATUS_DELETE”，卡券被商户删除；
 //“CARD_STATUS_DISPATCH”，在公众平台投放过的卡券；
-        String status = baseInfo.getString("status");
-        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
+
         CouponModel couponModel1 = DataUtils.mapToBean(map, CouponModel.class);
-        couponModel1.setCardStatus(cardStatusEnum.getValue());
         couponModel1.setCardKey(cardKey);
 
         couponModelMapper.updateByPrimaryKeySelective(couponModel1);
@@ -211,11 +210,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
 
         String locationIdList = baseInfo.getString("locationIdList");
-        String locationList = locationIdList.replace("[", "").replace("]", "");
-        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationList);
+//        String locationList = locationIdList.replace("[", "").replace("]", "");
+//        locationIdList = StringUtils.isBlank(locationIdList) ? null : locationIdList;
+        baseInfo.replace("locationIdList", locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardKey(cardKey);
+        String status = baseInfo.getString("status");
+        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
+        baseInfoModel.setCardStatus(cardStatusEnum.getValue());
 
         baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
 
@@ -306,14 +308,11 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 //“CARD_STATUS_VERIFY_OK”，通过审核；
 //“CARD_STATUS_DELETE”，卡券被商户删除；
 //“CARD_STATUS_DISPATCH”，在公众平台投放过的卡券；
-        String status = baseInfo.getString("status");
-        String title = baseInfo.getString("title");
-        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
+
         CouponModel couponModel1 = DataUtils.mapToBean(map, CouponModel.class);
-        couponModel1.setCardStatus(cardStatusEnum.getValue());
-        couponModel1.setTitle(title);
-        couponModel1.setCardType(cardType);
-        couponModel1.setCardID(cardID);
+//        couponModel1.setTitle(title);
+//        couponModel1.setCardType(cardType);
+//        couponModel1.setCardID(cardID);
 
         String dateInfo = baseInfo.getString("dateInfo");
         baseInfo.replace("dateInfo", dateInfo);
@@ -329,6 +328,8 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         locationList = StringUtils.isBlank(locationList) ? null : locationList;
         baseInfo.replace("locationIdList", locationList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
+        String status = baseInfo.getString("status");
+        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
         baseInfoModel.setCardStatus(cardStatusEnum.getValue());
         baseInfoModel.setMpID(mpID);
         baseInfoModel.setCardID(cardID);
@@ -359,14 +360,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         advancedInfo.replace("useCodition", useCodition);
         AdvancedModel advancedModel = DataUtils.mapToBean(advancedInfo, AdvancedModel.class);
 
-        CouponModelQuery couponModelQuery = new CouponModelQuery();
-        couponModelQuery.createCriteria()
+        BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
+        baseInfoModelQuery.createCriteria()
                 .andCardIDEqualTo(cardID);
-        List<CouponModel> couponModels = couponModelMapper.selectByExample(couponModelQuery);
+        List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample(baseInfoModelQuery);
         Long cardKey = null;
-        if (couponModels != null && couponModels.size() > 0) {
+        if (baseInfoModels != null && baseInfoModels.size() > 0) {
             //如果已经存在就更新
-            cardKey = couponModels.get(0).getCardKey();
+            cardKey = baseInfoModels.get(0).getCardKey();
             couponModel1.setCardKey(cardKey);
             baseInfoModel.setCardKey(cardKey);
             advancedModel.setCardKey(cardKey);
@@ -381,11 +382,11 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             if (maps.size() > 0) {
                 //GroupID是不能为空的
                 Integer groupIDs = (Integer) maps.get(0).get("groupID");
-                couponModel1.setGroupID(groupIDs.longValue());
+//                couponModel1.setGroupID(groupIDs.longValue());
                 baseInfoModel.setGroupID(groupIDs.longValue());
                 cardKey = createCardKeyService.createCardKey(groupIDs.longValue());
             }
-            couponModel1.setMpID(mpID);
+//            couponModel1.setMpID(mpID);
             couponModel1.setCardKey(cardKey);
             baseInfoModel.setCardKey(cardKey);
             advancedModel.setCardKey(cardKey);
@@ -422,17 +423,20 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         memberInfo.replace("bonusRule", bonusRule);
 
 
-        JSONObject baseInfo = memberInfo.getJSONObject("baseInfo");
-        //判断会员卡状态
-        String status = baseInfo.getString("status");
-        String title = baseInfo.getString("title");
-        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
-        MemberModel memberModel1 = DataUtils.mapToBean(memberInfo, MemberModel.class);
-        memberModel1.setCardStatus(cardStatusEnum.getValue());
-        memberModel1.setTitle(title);
-        memberModel1.setCardType(cardType);
-        memberModel1.setCardID(cardID);
 
+        //判断会员卡状态
+
+        MemberModel memberModel1 = DataUtils.mapToBean(memberInfo, MemberModel.class);
+//        memberModel1.setCardStatus(cardStatusEnum.getValue());
+//        memberModel1.setTitle(title);
+//        memberModel1.setCardType(cardType);
+//        memberModel1.setCardID(cardID);
+
+
+        JSONObject baseInfo = memberInfo.getJSONObject("baseInfo");
+        String status = baseInfo.getString("status");
+        CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
+//        String title = baseInfo.getString("title");
         String dateInfo = baseInfo.getString("dateInfo");
         baseInfo.replace("dateInfo", dateInfo);
         JSONObject sku = baseInfo.getJSONObject("sku");
@@ -472,14 +476,14 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         advancedInfo.put("abstractInfo", anAbstract);
         advancedInfo.replace("useCodition", useCodition);
         AdvancedModel advancedModel = DataUtils.mapToBean(advancedInfo, AdvancedModel.class);
-        MemberModelQuery memberModelQuery = new MemberModelQuery();
-        memberModelQuery.createCriteria()
+        BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
+        baseInfoModelQuery.createCriteria()
                 .andCardIDEqualTo(cardID);
-        List<MemberModel> memberModels = memberModelMapper.selectByExample(memberModelQuery);
+        List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample(baseInfoModelQuery);
         Long cardKey = null;
-        if (memberModels != null && memberModels.size() > 0) {
+        if (baseInfoModels != null && baseInfoModels.size() > 0) {
             //如果已经存在就更新
-            cardKey = memberModels.get(0).getCardKey();
+            cardKey = baseInfoModels.get(0).getCardKey();
             memberModel1.setCardKey(cardKey);
             baseInfoModel.setCardKey(cardKey);
             advancedModel.setCardKey(cardKey);
@@ -494,11 +498,11 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             if (maps.size() > 0) {
                 //GroupID是不能为空的
                 Integer groupIDs = (Integer) maps.get(0).get("groupID");
-                memberModel1.setGroupID(groupIDs.longValue());
+//                memberModel1.setGroupID(groupIDs.longValue());
                 baseInfoModel.setGroupID(groupIDs.longValue());
                 cardKey = createCardKeyService.createCardKey(groupIDs.longValue());
             }
-            memberModel1.setMpID(mpID);
+//            memberModel1.setMpID(mpID);
             memberModel1.setCardKey(cardKey);
             baseInfoModel.setCardKey(cardKey);
             advancedModel.setCardKey(cardKey);

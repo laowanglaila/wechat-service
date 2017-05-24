@@ -3,8 +3,8 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardEventRpcService;
 import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.mapper.card.MemberModelMapper;
-import com.hualala.app.wechat.model.card.MemberModel;
+import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
+import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import org.apache.commons.lang.StringUtils;
@@ -18,7 +18,7 @@ public class CardEventRpcServiceImpl implements CardEventRpcService {
     @Autowired
     private BaseHttpService baseHttpService;
     @Autowired
-    private MemberModelMapper memberModelMapper;
+    private BaseInfoModelMapper baseInfoModelMapper;
     /**
      * 激活会员卡接口
      * @param activateMemberCardReqData
@@ -32,13 +32,13 @@ public class CardEventRpcServiceImpl implements CardEventRpcService {
             return new ActivateMemberCardResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不能为空！");
         }
-        MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
-        if (null == memberModel){
+        BaseInfoModel baseInfoModel = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+        if (null == baseInfoModel){
             return new ActivateMemberCardResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的cardKey！");
         }
-        String cardID = memberModel.getCardID();
-        String mpID = memberModel.getMpID();
+        String cardID = baseInfoModel.getCardID();
+        String mpID = baseInfoModel.getMpID();
         String membershipNumber = activateMemberCardReqData.getMembershipNumber();
         if (StringUtils.isBlank(membershipNumber)){
             return new ActivateMemberCardResData()

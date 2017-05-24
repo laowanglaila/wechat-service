@@ -13,6 +13,7 @@ import com.hualala.app.wechat.model.card.CouponModel;
 import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
+import com.hualala.core.base.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,43 +28,33 @@ public class CardDeleteRpcServiceImpl implements CardDeleteRpcService {
     @Autowired
     private BaseHttpService baseHttpService;
     @Autowired
-    private MemberModelMapper memberModelMapper;
-    @Autowired
-    private CouponModelMapper couponModelMapper;
-    @Autowired
     private BaseInfoModelMapper baseInfoModelMapper;
-    @Autowired
-    private AdvancedModelMapper advancedModelMapper;
 
     @Override
-    public CardDeleteAndUnAbailableResData deleteMemberInfo(CardDeleteReqData cardDeleteReqData) {
+    public CardDeleteAndUnAbailableResData deleteCard(CardDeleteReqData cardDeleteReqData) {
         Long cardKey = cardDeleteReqData.getCardKey();
         if (cardKey == null){
             return new CardDeleteAndUnAbailableResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
         }
-        MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
-        if (null == memberModel){
+        BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+        if (null == baseInfoModel1){
             return new CardDeleteAndUnAbailableResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
 
         }
-        String cardID = memberModel.getCardID();
-        String mpID = memberModel.getMpID();
+        String cardID = baseInfoModel1.getCardID();
+        String mpID = baseInfoModel1.getMpID();
         String params = "{\"card_id\": \"" + cardID + "\"}";
         JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
 
         if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
-            MemberModel memberModel1 = new MemberModel();
-            memberModel1.setCardKey(cardKey);
-            memberModel1.setCardStatus(0);
-            memberModel1.setAction(3);
+
             BaseInfoModel baseInfoModel = new BaseInfoModel();
             baseInfoModel.setCardKey(cardKey);
             baseInfoModel.setCardStatus(0);
             baseInfoModel.setAction(3);
             baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
-            memberModelMapper.updateByPrimaryKeySelective(memberModel);
 //            advancedModelMapper.deleteByPrimaryKey(cardKey);
 //            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
 //            memberModelMapper.deleteByPrimaryKey(cardKey);
@@ -72,94 +63,88 @@ public class CardDeleteRpcServiceImpl implements CardDeleteRpcService {
     }
 
     @Override
-    public CardDeleteAndUnAbailableResData unAvailableMemberInfo(CardUnAvailableReqData cardUnAvailableReqData) {
+    public CardDeleteAndUnAbailableResData unAvailableCard(CardUnAvailableReqData cardUnAvailableReqData) {
         Long cardKey = cardUnAvailableReqData.getCardKey();
         if (cardKey == null){
             return new CardDeleteAndUnAbailableResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
         }
-        MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardKey);
-        if (null == memberModel){
+        BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+        if (null == baseInfoModel1){
             return new CardDeleteAndUnAbailableResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
 
         }
-        String cardID = memberModel.getCardID();
-        String mpID = memberModel.getMpID();
+        String cardID = baseInfoModel1.getCardID();
+        String mpID = baseInfoModel1.getMpID();
         String code = cardUnAvailableReqData.getCode();
         String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\"}";
         JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
-        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
-            //修改状态
-            MemberModel memberModel1 = new MemberModel();
-            memberModel1.setCardKey(cardKey);
-            memberModel.setCardStatus(6);
-            memberModelMapper.updateByPrimaryKeySelective(memberModel);
-        }
+//        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+//            //修改状态
+//            BaseInfoModel baseInfoModel = new BaseInfoModel();
+//            baseInfoModel.setCardKey(cardKey);
+//            baseInfoModel.setCardStatus(6);
+//            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+//        }
         return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);
     }
-
-    @Override
-    public CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData) {
-        Long cardKey = cardDeleteReqData.getCardKey();
-        if (cardKey == null){
-            return new CardDeleteAndUnAbailableResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
-        }
-        CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
-        if (null == couponModel){
-            return new CardDeleteAndUnAbailableResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-
-        }
-        String cardID = couponModel.getCardID();
-        String mpID = couponModel.getMpID();
-        String params = "{\"card_id\": \"" + cardID + "\"}";
-        JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
-
-        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
-            CouponModel couponModel1 = new CouponModel();
-            couponModel1.setCardKey(cardKey);
-            couponModel1.setCardStatus(0);
-            couponModel1.setAction(3);
-            BaseInfoModel baseInfoModel = new BaseInfoModel();
-            baseInfoModel.setCardKey(cardKey);
-            baseInfoModel.setCardStatus(0);
-            baseInfoModel.setAction(3);
-            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
-            couponModelMapper.updateByPrimaryKeySelective(couponModel1);
-//            advancedModelMapper.deleteByPrimaryKey(cardKey);
-//            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
-//            couponModelMapper.deleteByPrimaryKey(cardKey);
-        }
-        return ResultUtil.getResultInfoBean(jsonObject, CardDeleteAndUnAbailableResData.class);
-    }
-
-    @Override
-    public CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData) {
-        Long cardKey = cardUnAvailableReqData.getCardKey();
-        if (cardKey == null){
-            return new CardDeleteAndUnAbailableResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
-        }
-        CouponModel couponModel = couponModelMapper.selectByPrimaryKey(cardKey);
-        if (null == couponModel){
-            return new CardDeleteAndUnAbailableResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-
-        }
-        String cardID = couponModel.getCardID();
-        String mpID = couponModel.getMpID();
-        String code = cardUnAvailableReqData.getCode();
-        String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\"}";
-        JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
-        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
-            //修改状态
-            CouponModel couponModel1 = new CouponModel();
-            couponModel1.setCardKey(cardKey);
-            couponModel1.setCardStatus(6);
-            couponModelMapper.updateByPrimaryKeySelective(couponModel1);
-        }
-        return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);
-    }
+//
+//    @Override
+//    public CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData) {
+//        Long cardKey = cardDeleteReqData.getCardKey();
+//        if (cardKey == null){
+//            return new CardDeleteAndUnAbailableResData()
+//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
+//        }
+//        BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+//        if (null == baseInfoModel1){
+//            return new CardDeleteAndUnAbailableResData()
+//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+//
+//        }
+//        String cardID = baseInfoModel1.getCardID();
+//        String mpID = baseInfoModel1.getMpID();
+//        String params = "{\"card_id\": \"" + cardID + "\"}";
+//        JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
+//
+//        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
+//
+//            BaseInfoModel baseInfoModel = new BaseInfoModel();
+//            baseInfoModel.setCardKey(cardKey);
+//            baseInfoModel.setCardStatus(0);
+//            baseInfoModel.setAction(3);
+//            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+//
+//        }
+//        return ResultUtil.getResultInfoBean(jsonObject, CardDeleteAndUnAbailableResData.class);
+//    }
+//
+//    @Override
+//    public CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData) {
+//        Long cardKey = cardUnAvailableReqData.getCardKey();
+//        if (cardKey == null){
+//            return new CardDeleteAndUnAbailableResData()
+//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "CardKey不能为空！");
+//        }
+//        BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
+//        if (null == baseInfoModel1){
+//            return new CardDeleteAndUnAbailableResData()
+//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+//
+//        }
+//        String cardID = baseInfoModel1.getCardID();
+//        String mpID = baseInfoModel1.getMpID();
+//        String code = cardUnAvailableReqData.getCode();
+//        String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\"}";
+//        JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
+//        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+//            //修改状态
+//            BaseInfoModel baseInfoModel = new BaseInfoModel();
+//            baseInfoModel.setCardKey(cardKey);
+//            baseInfoModel.setCardStatus(6);
+//            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+//        }
+//        return ResultUtil.getResultInfoBean(jsonObject,CardDeleteAndUnAbailableResData.class);
+//    }
 }

@@ -156,15 +156,6 @@ redisStock:
     maxIdle: 1
     minIdle: 1
 
-redisStock:
-  host: 172.16.0.27
-  port: 19000
-  db: 0
-  pool:
-    maxActive: 2
-    maxWait: 10000
-    maxIdle: 1
-    minIdle: 1
 
 zookeeper:
   zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181

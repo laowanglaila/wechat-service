@@ -21,7 +21,7 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
         }
         cardCodeImportReqData.setCardKey(123123L);
         cardCodeImportReqData.setCode(codes);
-        CardCodeRpcService.CardCodeImportResData cardCodeImportResData = rpcClient.importMemberCode(cardCodeImportReqData);
+        CardCodeRpcService.CardCodeImportResData cardCodeImportResData = rpcClient.importCode(cardCodeImportReqData);
         System.out.println(cardCodeImportResData.getMessage());
     }
 
@@ -32,7 +32,7 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
         CardCodeRpcService.CardCodeDestroyReqData cardCodeDestroyReqData = new CardCodeRpcService.CardCodeDestroyReqData();
         cardCodeDestroyReqData.setCode("410947662432");
         cardCodeDestroyReqData.setCardKey(123123L);
-        CardCodeRpcService.CardCodeDestroyResData cardCodeDestroyResData = rpcClient.destoryCouponCode(cardCodeDestroyReqData);
+        CardCodeRpcService.CardCodeDestroyResData cardCodeDestroyResData = rpcClient.destoryCode(cardCodeDestroyReqData);
         System.out.println(cardCodeDestroyResData.getMessage());
     }
     @Test

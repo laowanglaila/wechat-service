@@ -23,10 +23,10 @@ public interface CardCodeRpcService {
      * 导入code方法
      */
     @RpcMethod
-    CardCodeImportResData importMemberCode(CardCodeImportReqData cardCodeImportReqData);
+    CardCodeImportResData importCode(CardCodeImportReqData cardCodeImportReqData);
 
-    @RpcMethod
-    CardCodeImportResData importCouponCode(CardCodeImportReqData cardCodeImportReqData);
+//    @RpcMethod
+//    CardCodeImportResData importCouponCode(CardCodeImportReqData cardCodeImportReqData);
 
     /**
      * 核销code方法
@@ -35,10 +35,10 @@ public interface CardCodeRpcService {
      * @return
      */
     @RpcMethod
-    CardCodeDestroyResData destoryMemberCode(CardCodeDestroyReqData cardCodeDestroyReqData);
+    CardCodeDestroyResData destoryCode(CardCodeDestroyReqData cardCodeDestroyReqData);
 
-    @RpcMethod
-    CardCodeDestroyResData destoryCouponCode(CardCodeDestroyReqData cardCodeDestroyReqData);
+//    @RpcMethod
+//    CardCodeDestroyResData destoryCouponCode(CardCodeDestroyReqData cardCodeDestroyReqData);
 
     /**
      * code解码

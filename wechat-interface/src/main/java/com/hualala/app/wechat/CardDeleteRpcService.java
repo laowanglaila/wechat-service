@@ -15,15 +15,15 @@ import lombok.Data;
 public interface CardDeleteRpcService {
 
     @RpcMethod
-    CardDeleteAndUnAbailableResData deleteMemberInfo(CardDeleteReqData cardDeleteReqData);
+    CardDeleteAndUnAbailableResData deleteCard(CardDeleteReqData cardDeleteReqData);
 
     @RpcMethod
-    CardDeleteAndUnAbailableResData unAvailableMemberInfo(CardUnAvailableReqData cardUnAvailableReqData);
-    @RpcMethod
-    CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData);
-
-    @RpcMethod
-    CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData);
+    CardDeleteAndUnAbailableResData unAvailableCard(CardUnAvailableReqData cardUnAvailableReqData);
+//    @RpcMethod
+//    CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData);
+//
+//    @RpcMethod
+//    CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData);
 
     @Data
     class CardDeleteReqData extends RequestInfo{

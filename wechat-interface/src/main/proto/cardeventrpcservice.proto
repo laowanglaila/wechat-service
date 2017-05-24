@@ -3,7 +3,6 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardEventRpcData";
 import "commons.proto";
-import "wechatcommons.proto";
 
 message ActivateMemberCardReqData {  
    // 会员卡编号，由开发者填入，作为序列号显示在用户的卡包里。可与Code码保持等值
