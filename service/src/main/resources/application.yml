@@ -67,8 +67,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: 172.16.0.27
-  port: 19000
+  host: dohko.redis.hualala.com
+  port: 6379
   db: 0
   pool:
     maxActive: 2
@@ -148,8 +148,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: 172.16.0.27
-  port: 19000
+  host: dohko.redis.hualala.com
+  port: 6379
   db: 0
   pool:
     maxActive: 2
@@ -165,7 +165,7 @@ zookeeper:
   lockPath: /wechat/card/lock  #分布式锁路径
 
 
-
+---
 spring:
   profiles: pre
   aop:
@@ -187,6 +187,12 @@ spring:
     test-while-idle: true
     time-between-eviction-runs-millis: 3600000
     min-evictable-idle-time-millis: 1800000
+
+  rabbitmq:
+    host: 172.16.0.29
+    port: 5672
+    username: guest
+    password: guest
 
   # REDIS (RedisProperties)
   redis:
@@ -214,6 +220,26 @@ wechat:
   data:
     componentAppID: wx431ecb8eae767f0c
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: pre_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
+redisStock:
+  host: dohko.redis.hualala.com
+  port: 6379
+  db: 0
+  pool:
+    maxActive: 2
+    maxWait: 10000
+    maxIdle: 1
+    minIdle: 1
+
+zookeeper:
+  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径
 
 
 ---
@@ -238,6 +264,12 @@ spring:
     test-while-idle: true
     time-between-eviction-runs-millis: 3600000
     min-evictable-idle-time-millis: 1800000
+
+  rabbitmq:
+    username: admin
+    password: hualalaadmin
+    host: inner.rabbitmq.hualala.com
+    port: 5672
 
   # REDIS (RedisProperties)
   redis:
@@ -264,4 +296,24 @@ wechat:
   data:
     componentAppID: wx01482fd383628bee
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 
+redisStock:
+    host: redis1.api.hualala.com
+    port: 21379
+    db: 0
+  pool:
+    maxActive: 2
+    maxWait: 10000
+    maxIdle: 1
+    minIdle: 1
+
+zookeeper:
+  zookeeperAddress: 192.168.1.64:2181,192.168.1.65:2181,192.168.1.69:2181,192.168.1.67:2181,192.168.1.68:2181  #zookeeper uri
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径
