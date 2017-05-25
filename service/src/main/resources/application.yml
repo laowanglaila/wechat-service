@@ -67,8 +67,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: 172.16.0.27
-  port: 19000
+  host: dohko.redis.hualala.com
+  port: 6379
   db: 0
   pool:
     maxActive: 2
@@ -147,8 +147,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: 172.16.0.27
-  port: 19000
+  host: dohko.redis.hualala.com
+  port: 6379
   db: 0
   pool:
     maxActive: 2
@@ -163,3 +163,159 @@ zookeeper:
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
   lockPath: /wechat/card/lock  #分布式锁路径
+
+
+---
+spring:
+  profiles: pre
+  aop:
+    auto: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=com.github.kristofa.brave.mysql.MySQLStatementInterceptor
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
+
+  rabbitmq:
+    host: 172.16.0.29
+    port: 5672
+    username: guest
+    password: guest
+
+  # REDIS (RedisProperties)
+  redis:
+    database: 0
+    host: dohko.redis.hualala.com
+    port: 6379
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
+
+mybatis:
+   config-location: classpath:mybatis-config.xml
+
+grpc:
+  port: 6567
+  client:
+     hosts:
+        #wechat: localhost:6567
+        idgen: dohko.id.gen.hualala.com:31249
+#        sem: localhost:6466
+        sem: mu.service.short.message.hualala.com:32272
+
+wechat:
+  data:
+    componentAppID: wx431ecb8eae767f0c
+    componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+redisStock:
+  host: dohko.redis.hualala.com
+  port: 6379
+  db: 0
+  pool:
+    maxActive: 2
+    maxWait: 10000
+    maxIdle: 1
+    minIdle: 1
+
+zookeeper:
+  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径
+
+
+---
+spring:
+  profiles: production
+  aop:
+    auto: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
+    username: myhualashopol
+    password: gppwd@dldshopol
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 10
+    max-active: 100
+    min-idle: 2
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
+
+  rabbitmq:
+    username: admin
+    password: hualalaadmin
+    host: inner.rabbitmq.hualala.com
+    port: 5672
+
+  # REDIS (RedisProperties)
+  redis:
+    database: 0
+    host: redis1.api.hualala.com
+    port: 21379
+    pool:
+      max-idle: 50
+      min-idle: 30
+      max-active: 200
+      max-wait: 10000
+
+mybatis:
+   config-location: classpath:mybatis-config.xml
+
+grpc:
+  port: 6567
+  client:
+     hosts:
+        idgen: id.gen.hualala.com:32243
+        sem: service.short.message.hualala.com:7081
+
+wechat:
+  data:
+      componentAppID: wx01482fd383628bee
+      componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+
+redisStock:
+    host: redis1.api.hualala.com
+    port: 21379
+    db: 0
+  pool:
+    maxActive: 2
+    maxWait: 10000
+    maxIdle: 1
+    minIdle: 1
+
+zookeeper:
+  zookeeperAddress: 192.168.1.64:2181,192.168.1.65:2181,192.168.1.69:2181,192.168.1.67:2181,192.168.1.68:2181  #zookeeper uri
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径
+
