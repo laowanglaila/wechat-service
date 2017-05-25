@@ -298,8 +298,8 @@ wechat:
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
-        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
-        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+        cacheQrcodeExchange: hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
 
 redisStock:
     host: redis1.api.hualala.com
