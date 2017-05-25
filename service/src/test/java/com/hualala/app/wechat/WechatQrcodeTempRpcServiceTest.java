@@ -1,6 +1,8 @@
 package com.hualala.app.wechat;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.service.HttpApiService;
+import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,5 +89,47 @@ public class WechatQrcodeTempRpcServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void  test3(){
+
+        WechatQRCodeRpcSerivce.WechatQRCodeReq wechatQRCodeReq = new WechatQRCodeRpcSerivce.WechatQRCodeReq();
+
+        wechatQRCodeReq.setQrcodeName("123");
+        wechatQRCodeReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
+
+        String param1 = "任鉴非" + 0;
+        wechatQRCodeReq.setParam1(param1);
+        wechatQRCodeReq.setParam2("测试二维码:Param2");
+        wechatQRCodeReq.setParam3("测试二维码:Param3");
+        wechatQRCodeReq.setExpireSeconds(3600 * 12);
+        wechatQRCodeReq.setShopID("５");
+        wechatQRCodeReq.setBrandID("5");
+        wechatQRCodeReq.setGroupID("5");
+        wechatQRCodeReq.setShopName("测试二维码:ShopName");
+//        wechatQRCodeReq.setMpID("doulaofang");
+        wechatQRCodeReq.setDescription("测试二维码:Description");
+        wechatQRCodeReq.setLocationName("测试二维码:LocationName");
+
+        String jsonString = JSONObject.toJSONString(wechatQRCodeReq);
+        long start = System.currentTimeMillis();
+//        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcode.html", jsonString);
+        JSONObject jsonObject = HttpApiUtil.httpGet("http://127.0.0.1:8090/wechat/getQrcode.html" +
+                "?brandID=5" +
+                "&description=Description" +
+                "&expireSeconds=43200" +
+                "&groupID=5&locationName=LocationName" +
+                "&param1=任鉴非0" +
+                "&param2=Param2" +
+                "&param3=Param3" +
+                "&qrcodeName=123" +
+                "&qrcodeType=QUEUE" +
+                "&shopID=５" +
+                "&shopName=ShopName");
+        long end = System.currentTimeMillis();
+
+        System.out.println("-------------" + (end - start) + "ms------------------>" +jsonObject.toJSONString());
+
     }
 }
