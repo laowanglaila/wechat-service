@@ -102,6 +102,56 @@ wechat:
     componentAppID: wx431ecb8eae767f0c
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
 
+---
+spring:
+  profiles: pre
+  aop:
+    auto: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=com.github.kristofa.brave.mysql.MySQLStatementInterceptor
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
+
+  # REDIS (RedisProperties)
+  redis:
+    database: 0
+    host: dohko.redis.hualala.com
+    port: 6379
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
+
+mybatis:
+   config-location: classpath:mybatis-config.xml
+
+grpc:
+  port: 6567
+  client:
+     hosts:
+        #wechat: localhost:6567
+        idgen: dohko.id.gen.hualala.com:31249
+        sem: pre.service.short.message.hualala.com:31524
+
+wechat:
+  data:
+    componentAppID: wx431ecb8eae767f0c
+    componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+
 
 ---
 spring:
