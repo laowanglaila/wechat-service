@@ -305,11 +305,11 @@ redisStock:
     host: redis1.api.hualala.com
     port: 21379
     db: 0
-  pool:
-    maxActive: 2
-    maxWait: 10000
-    maxIdle: 1
-    minIdle: 1
+    pool:
+      maxActive: 2
+      maxWait: 10000
+      maxIdle: 1
+      minIdle: 1
 
 zookeeper:
   zookeeperAddress: 192.168.1.64:2181,192.168.1.65:2181,192.168.1.69:2181,192.168.1.67:2181,192.168.1.68:2181  #zookeeper uri
