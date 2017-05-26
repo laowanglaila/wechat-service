@@ -156,7 +156,6 @@ redisStock:
     maxIdle: 10
     minIdle: 1
 
-
 zookeeper:
   zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
   serviceName: wechat-card  #服务名称
@@ -215,7 +214,7 @@ grpc:
         #wechat: localhost:6567
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
-        sem: mu.service.short.message.hualala.com:32272
+        sem: pre.service.short.message.hualala.com:31524
 
 wechat:
   data:
@@ -223,8 +222,8 @@ wechat:
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
-        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
-        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+        cacheQrcodeExchange: pre_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
 redisStock:
   host: 172.16.0.27
   port: 19000
@@ -299,8 +298,8 @@ wechat:
       componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
-        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
-        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+        cacheQrcodeExchange: hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
 
 redisStock:
     host: sjhl.codis.hualala.com
