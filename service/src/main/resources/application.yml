@@ -67,8 +67,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: dohko.redis.hualala.com
-  port: 6379
+  host: 172.16.0.27
+  port: 19000
   db: 0
   pool:
     maxActive: 2
@@ -147,13 +147,13 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: dohko.redis.hualala.com
-  port: 6379
+  host: 172.16.0.27
+  port: 19000
   db: 0
   pool:
-    maxActive: 2
+    maxActive: 50
     maxWait: 10000
-    maxIdle: 1
+    maxIdle: 10
     minIdle: 1
 
 
@@ -226,13 +226,13 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: dohko.redis.hualala.com
-  port: 6379
+  host: 172.16.0.27
+  port: 19000
   db: 0
   pool:
-    maxActive: 2
+    maxActive: 50
     maxWait: 10000
-    maxIdle: 1
+    maxIdle: 10
     minIdle: 1
 
 zookeeper:
@@ -303,14 +303,14 @@ wechat:
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 
 redisStock:
-    host: redis1.api.hualala.com
-    port: 21379
+    host: sjhl.codis.hualala.com
+    port: 19000
     db: 0
-  pool:
-    maxActive: 2
-    maxWait: 10000
-    maxIdle: 1
-    minIdle: 1
+    pool:
+      maxActive: 50
+      maxWait: 10000
+      maxIdle: 10
+      minIdle: 1
 
 zookeeper:
   zookeeperAddress: 192.168.1.64:2181,192.168.1.65:2181,192.168.1.69:2181,192.168.1.67:2181,192.168.1.68:2181  #zookeeper uri
