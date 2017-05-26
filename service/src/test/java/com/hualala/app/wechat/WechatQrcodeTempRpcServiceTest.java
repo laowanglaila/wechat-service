@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by renjianfei on 2017/4/13.
@@ -89,6 +91,9 @@ public class WechatQrcodeTempRpcServiceTest {
         }
     }
 
+    /**
+     * 获取去一个二维码Http接口测试
+     */
     @Test
     public void  test3(){
 
@@ -114,21 +119,50 @@ public class WechatQrcodeTempRpcServiceTest {
         long start = System.currentTimeMillis();
 //        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcode.html", jsonString);
         JSONObject jsonObject = HttpApiUtil.httpGet("http://127.0.0.1:8090/wechat/getQrcode.html" +
-                "?async=true"+
-                "&brandID=5" +
-                "&description=Description" +
-                "&expireSeconds=43200" +
-                "&groupID=5&locationName=LocationName" +
-                "&param1=任鉴非0" +
-                "&param2=Param2" +
-                "&param3=Param3" +
-                "&qrcodeName=123" +
+//                "?async=true"+
+                "?brandID=5" +
+//                "&description=Description" +
+//                "&expireSeconds=43200" +
+                "&groupID=5" +
+//                 &locationName=LocationName" +
+//                "&param1=任鉴非0" +
+//                "&param2=Param2" +
+//                "&param3=Param3" +
+//                "&qrcodeName=123" +
                 "&qrcodeType=QUEUE" +
-                "&shopID=５" +
-                "&shopName=ShopName");
+                "&shopID=５");
         long end = System.currentTimeMillis();
-
+String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&description=Description&expireSeconds=43200&groupID=5&locationName=LocationName&param1=任鉴非0&param2=Param2&param3=Param3&qrcodeName=123&qrcodeType=QUEUE&shopID=５&shopName=ShopName";
         System.out.println("-------------" + (end - start) + "ms------------------>" +jsonObject.toJSONString());
+
+    }
+
+
+    /**
+     * Http接口获取多个缓存二维码
+     */
+    @Test
+    public void  test4(){
+        long start = System.currentTimeMillis();
+        Map<String,String> params = new HashMap<>();
+        params.put("async","false");
+        params.put("expireSeconds","86400");
+        params.put("size","5");
+        params.put("mpID","doulaofangceshi");
+        params.put("qrcodeType","QUEUE");
+        params.put("wechatQRCodeDataList",
+                "[" +
+                        "{\"param1\":\"param1\",\"qrcodeName\":\"QrcodeName\"}," +
+                        "{\"param1\":\"param1\",\"qrcodeName\":\"QrcodeName\"}," +
+                        "{\"param1\":\"param1\",\"qrcodeName\":\"QrcodeName\"}" +
+                "]");
+
+        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcodeList.html", params);
+        System.out.println(jsonObject.toJSONString());
+
+        long end = System.currentTimeMillis();
+        System.out.println("--------------"+(end-start)+"ms");
+
 
     }
 }
