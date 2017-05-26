@@ -130,7 +130,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
                 wechatQRCodeRes.setItemID(wechatQrcodeTempModel.getItemID());
                 wechatQRCodeRes.setTicket(wechatQrcodeTempModel.getTicket());
                 wechatQRCodeRes.setWxUrl(wechatQrcodeTempModel.getWxUrl());
-                wechatQRCodeRes.setExpireSeconds(qrCodeReq.getExpireSeconds());
+                wechatQRCodeRes.setExpireSeconds(expireSeconds);
                 wechatQRCodeRes.setParam1(qrCodeReq.getParam1());
                 wechatQRCodeRes.setParam2(qrCodeReq.getParam2());
                 wechatQRCodeRes.setParam3(qrCodeReq.getParam3());
@@ -303,6 +303,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
                 }
                 qrcodeTempMapper.updateByPrimaryKeySelective(wechatQrcodeTempModel);
                 WechatQRCodeRes wechatQRCodeRes = DataUtils.copyProperties(wechatQrcodeTempModel, WechatQRCodeRes.class);
+                wechatQRCodeRes.setExpireSeconds(expireSeconds);
                 wechatQRCodeList.add(wechatQRCodeRes);
             }
             WechatQRCodeListRes wechatQRCodeListRes = new WechatQRCodeListRes();
