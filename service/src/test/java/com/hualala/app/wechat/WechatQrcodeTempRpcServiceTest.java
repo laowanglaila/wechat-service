@@ -5,11 +5,9 @@ import com.hualala.app.wechat.service.HttpApiService;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 /**
  * Created by renjianfei on 2017/4/13.
  */
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class WechatQrcodeTempRpcServiceTest {
 
@@ -116,7 +114,8 @@ public class WechatQrcodeTempRpcServiceTest {
         long start = System.currentTimeMillis();
 //        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcode.html", jsonString);
         JSONObject jsonObject = HttpApiUtil.httpGet("http://127.0.0.1:8090/wechat/getQrcode.html" +
-                "?brandID=5" +
+                "?async=true"+
+                "&brandID=5" +
                 "&description=Description" +
                 "&expireSeconds=43200" +
                 "&groupID=5&locationName=LocationName" +
