@@ -67,8 +67,8 @@ wechat:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: dohko.redis.hualala.com
-  port: 6379
+  host: 172.16.0.27
+  port: 19000
   db: 0
   pool:
     maxActive: 2
@@ -142,19 +142,18 @@ wechat:
   data:
     componentAppID: wx431ecb8eae767f0c
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
-
   mq:
       rabbitmq:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: dohko.redis.hualala.com
-  port: 6379
+  host: 172.16.0.27
+  port: 19000
   db: 0
   pool:
-    maxActive: 2
+    maxActive: 50
     maxWait: 10000
-    maxIdle: 1
+    maxIdle: 10
     minIdle: 1
 
 zookeeper:
@@ -214,6 +213,7 @@ grpc:
      hosts:
         #wechat: localhost:6567
         idgen: dohko.id.gen.hualala.com:31249
+#        sem: localhost:6466
         sem: pre.service.short.message.hualala.com:31524
 
 wechat:
@@ -225,13 +225,13 @@ wechat:
         cacheQrcodeExchange: pre_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
 redisStock:
-  host: dohko.redis.hualala.com
-  port: 6379
+  host: 172.16.0.27
+  port: 19000
   db: 0
   pool:
-    maxActive: 2
+    maxActive: 50
     maxWait: 10000
-    maxIdle: 1
+    maxIdle: 10
     minIdle: 1
 
 zookeeper:
@@ -294,21 +294,21 @@ grpc:
 
 wechat:
   data:
-    componentAppID: wx01482fd383628bee
-    componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+      componentAppID: wx01482fd383628bee
+      componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
         cacheQrcodeExchange: hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
 
 redisStock:
-    host: redis1.api.hualala.com
-    port: 21379
+    host: sjhl.codis.hualala.com
+    port: 19000
     db: 0
     pool:
-      maxActive: 2
+      maxActive: 50
       maxWait: 10000
-      maxIdle: 1
+      maxIdle: 10
       minIdle: 1
 
 zookeeper:
@@ -317,3 +317,4 @@ zookeeper:
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
   lockPath: /wechat/card/lock  #分布式锁路径
+
