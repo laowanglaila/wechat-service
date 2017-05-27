@@ -79,6 +79,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
             } else {
                 return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_GROUP_ID_NULL, "获取GroupID失败！");
             }
+
         }
         preCouponReqData.setGroupID(groupID);
         preCouponReqData.setMpID(mpID);
