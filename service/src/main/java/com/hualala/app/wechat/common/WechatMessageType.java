@@ -52,5 +52,6 @@ public class WechatMessageType {
 	public static final String CARD_TYPE_DISCOUNT = "DISCOUNT";
 	public static final String CARD_TYPE_GIFT = "GIFT";
 	public static final String CARD_TYPE_GENERAL_COUPON = "GENERAL_COUPON";
+	public static final String CARD_TYPE_MEMBER_CARD = "MEMBER_CARD";
 
 }
