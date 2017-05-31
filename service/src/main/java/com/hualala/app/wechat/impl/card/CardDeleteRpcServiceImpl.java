@@ -4,20 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardDeleteRpcService;
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
-import com.hualala.app.wechat.mapper.card.CouponModelMapper;
-import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
-import com.hualala.app.wechat.model.card.CouponModel;
-import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
-import com.hualala.core.base.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Member;
 
 /**
  * Created by renjianfei on 2017/5/2.

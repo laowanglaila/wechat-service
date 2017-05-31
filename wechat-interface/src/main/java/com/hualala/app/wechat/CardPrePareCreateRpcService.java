@@ -25,12 +25,12 @@ public interface CardPrePareCreateRpcService {
     @RpcMethod(description = "高级信息")
     public PreCardResData createAdvancedInfo(PreAdvancedInfoData preAdvancedInfoData);
 
-    @RpcMethod(description = "提交优惠券")
-    public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey);
+//    @RpcMethod(description = "提交优惠券")
+//    public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey);
+//
 
-
-    @RpcMethod(description = "提交会员卡信息")
-    public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey);
+//    @RpcMethod(description = "提交会员卡信息")
+//    public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey);
     @RpcMethod(description = "提交卡券到微信")
     public PreCardResData submitCardInfo(CardPrimaryKey cardPrimaryKey);
 

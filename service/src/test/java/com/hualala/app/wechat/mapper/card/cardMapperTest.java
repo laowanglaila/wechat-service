@@ -28,10 +28,10 @@ public class cardMapperTest {
     public void testMemberMapperInsert() throws MySQLIntegrityConstraintViolationException {
         MemberModel memberModel = new MemberModel();
         memberModel.setCardKey(123123L);
-        memberModel.setMpID("adsf");
-        memberModel.setGroupID(12321L);
-        memberModel.setCardType("asdfasdf");
-        memberModel.setTitle("海底捞测试");
+//        memberModel.setMpID("adsf");
+//        memberModel.setGroupID(12321L);
+//        memberModel.setCardType("asdfasdf");
+//        memberModel.setTitle("海底捞测试");
         memberModelMapper.insertSelective(memberModel);
     }
     @Test
@@ -70,7 +70,7 @@ public class cardMapperTest {
     public void testMemberMapperLike(){
         MemberModelQuery memberModelQuery = new MemberModelQuery();
         MemberModelQuery.Criteria criteria = memberModelQuery.createCriteria();
-        criteria.andTitleLike("%测试");
+//        criteria.andTitleLike("%测试");
         List<MemberModel> memberModels = memberModelMapper.selectByExample(memberModelQuery);
         System.out.println("+++++++++++++++++++++++++++++++++++++"+memberModels.get(0).toString());
         String s = JSONObject.toJSONString(memberModels.get(0));

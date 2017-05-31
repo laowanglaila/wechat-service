@@ -17,7 +17,6 @@ import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
-import org.omg.CORBA.LongHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

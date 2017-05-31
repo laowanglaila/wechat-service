@@ -145,13 +145,13 @@ public class CardPrePareCreateRpcServiceImplTest {
 
 }
 
-    @Test
-    public void testSubmitCoupon(){
-        CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(2342343242L);
-        CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCouponInfo(cardPrimaryKey);
-        System.out.println(preCardResData.getMessage());
-    }
+//    @Test
+//    public void testSubmitCoupon(){
+//        CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
+//        cardPrimaryKey.setCardKey(2342343242L);
+//        CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCouponInfo(cardPrimaryKey);
+//        System.out.println(preCardResData.getMessage());
+//    }
 
     @Test
     public void testMemberInfo(){
