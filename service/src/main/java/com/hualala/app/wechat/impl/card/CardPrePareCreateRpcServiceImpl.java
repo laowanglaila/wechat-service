@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
         MemberModel memberModel = DataUtils.copyProperties(preCardReqData, MemberModel.class);
+
         memberModelMapper.insertSelective(memberModel);
 
         PreCardResData cardCouponResData = new PreCardResData();
@@ -140,7 +142,8 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_TYPE_NULL, "参数cardType为空！");
         }
         BaseInfoModel baseInfoModel = DataUtils.copyProperties(preCardBaseInfoData, BaseInfoModel.class);
-
+        baseInfoModel.setCardStatus(1);
+        PreCardResData cardCouponResData = new PreCardResData();
         //cardKey
         if (cardKey == null) {
             try {
@@ -150,11 +153,13 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
                 return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "获取CardKey失败:\r\n" + e.getMessage());
             }
             baseInfoModel.setCardKey(cardKey);
-            baseInfoModelMapper.insertSelective(baseInfoModel);
+
+                baseInfoModelMapper.insertSelective(baseInfoModel);
+
+        }else {
+            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
         }
-        baseInfoModel.setCardStatus(1);
-        baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
-        PreCardResData cardCouponResData = new PreCardResData();
+
         cardCouponResData.setCardKey(cardKey);
         cardCouponResData.setResultInfo(ErrorCodes.WECHAT_SUCCESS_CODE, "请求成功");
         return cardCouponResData;
