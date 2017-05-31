@@ -3,11 +3,6 @@
 <mapper namespace="com.hualala.app.wechat.mapper.card.MemberModelMapper" >
   <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.MemberModel" >
     <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
-    <result column="cardID" property="cardID" jdbcType="VARCHAR" />
-    <result column="groupID" property="groupID" jdbcType="BIGINT" />
-    <result column="mpID" property="mpID" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="cardType" property="cardType" jdbcType="VARCHAR" />
     <result column="discount" property="discount" jdbcType="INTEGER" />
     <result column="backgroundPicUrl" property="backgroundPicUrl" jdbcType="VARCHAR" />
     <result column="prerogative" property="prerogative" jdbcType="VARCHAR" />
@@ -26,7 +21,6 @@
     <result column="customCell1" property="customCell1" jdbcType="VARCHAR" />
     <result column="bonusRule" property="bonusRule" jdbcType="VARCHAR" />
     <result column="bonusRules" property="bonusRules" jdbcType="VARCHAR" />
-    <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
     <result column="actionStamp" property="actionStamp" jdbcType="TIMESTAMP" />
     <result column="createStamp" property="createStamp" jdbcType="TIMESTAMP" />
@@ -91,10 +85,10 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      cardKey, cardID, groupID, mpID, title, cardType, discount, backgroundPicUrl, prerogative, 
-      autoActivate, activateUrl, wxActivate, supplyBonus, bonusUrl, bonusCleared, supplyBalance, 
-      balanceUrl, balanceRules, customField1, customField2, customField3, customCell1, 
-      bonusRule, bonusRules, cardStatus, action, actionStamp, createStamp
+      cardKey, discount, backgroundPicUrl, prerogative, autoActivate, activateUrl, wxActivate, 
+      supplyBonus, bonusUrl, bonusCleared, supplyBalance, balanceUrl, balanceRules, customField1, 
+      customField2, customField3, customCell1, bonusRule, bonusRules, action, actionStamp, 
+      createStamp
     </if>
     <if test="fields != null" >
       ${fields}
@@ -119,7 +113,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,cardID,groupID,mpID,title,cardType,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,bonusRules,cardStatus,action,actionStamp,createStamp
+    cardKey,discount,backgroundPicUrl,prerogative,autoActivate,activateUrl,wxActivate,supplyBonus,bonusUrl,bonusCleared,supplyBalance,balanceUrl,balanceRules,customField1,customField2,customField3,customCell1,bonusRule,bonusRules,action,actionStamp,createStamp
     from tbl_shop_wechat_card_member
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
@@ -134,25 +128,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
-    insert into tbl_shop_wechat_card_member (cardKey, cardID, groupID, 
-      mpID, title, cardType, 
-      discount, backgroundPicUrl, prerogative, 
-      autoActivate, activateUrl, wxActivate, 
-      supplyBonus, bonusUrl, bonusCleared, 
-      supplyBalance, balanceUrl, balanceRules, 
-      customField1, customField2, customField3, 
-      customCell1, bonusRule, bonusRules, 
-      cardStatus, action, actionStamp, 
+    insert into tbl_shop_wechat_card_member (cardKey, discount, backgroundPicUrl, 
+      prerogative, autoActivate, activateUrl, 
+      wxActivate, supplyBonus, bonusUrl, 
+      bonusCleared, supplyBalance, balanceUrl, 
+      balanceRules, customField1, customField2, 
+      customField3, customCell1, bonusRule, 
+      bonusRules, action, actionStamp, 
       createStamp)
-    values (#{cardKey,jdbcType=BIGINT}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
-      #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
-      #{discount,jdbcType=INTEGER}, #{backgroundPicUrl,jdbcType=VARCHAR}, #{prerogative,jdbcType=VARCHAR}, 
-      #{autoActivate,jdbcType=TINYINT}, #{activateUrl,jdbcType=VARCHAR}, #{wxActivate,jdbcType=TINYINT}, 
-      #{supplyBonus,jdbcType=TINYINT}, #{bonusUrl,jdbcType=VARCHAR}, #{bonusCleared,jdbcType=VARCHAR}, 
-      #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, #{balanceRules,jdbcType=VARCHAR}, 
-      #{customField1,jdbcType=VARCHAR}, #{customField2,jdbcType=VARCHAR}, #{customField3,jdbcType=VARCHAR}, 
-      #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, #{bonusRules,jdbcType=VARCHAR}, 
-      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, 
+    values (#{cardKey,jdbcType=BIGINT}, #{discount,jdbcType=INTEGER}, #{backgroundPicUrl,jdbcType=VARCHAR}, 
+      #{prerogative,jdbcType=VARCHAR}, #{autoActivate,jdbcType=TINYINT}, #{activateUrl,jdbcType=VARCHAR}, 
+      #{wxActivate,jdbcType=TINYINT}, #{supplyBonus,jdbcType=TINYINT}, #{bonusUrl,jdbcType=VARCHAR}, 
+      #{bonusCleared,jdbcType=VARCHAR}, #{supplyBalance,jdbcType=TINYINT}, #{balanceUrl,jdbcType=VARCHAR}, 
+      #{balanceRules,jdbcType=VARCHAR}, #{customField1,jdbcType=VARCHAR}, #{customField2,jdbcType=VARCHAR}, 
+      #{customField3,jdbcType=VARCHAR}, #{customCell1,jdbcType=VARCHAR}, #{bonusRule,jdbcType=VARCHAR}, 
+      #{bonusRules,jdbcType=VARCHAR}, #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, 
       #{createStamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
@@ -160,21 +150,6 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
         cardKey,
-      </if>
-      <if test="cardID != null" >
-        cardID,
-      </if>
-      <if test="groupID != null" >
-        groupID,
-      </if>
-      <if test="mpID != null" >
-        mpID,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="cardType != null" >
-        cardType,
       </if>
       <if test="discount != null" >
         discount,
@@ -230,9 +205,6 @@
       <if test="bonusRules != null" >
         bonusRules,
       </if>
-      <if test="cardStatus != null" >
-        cardStatus,
-      </if>
       <if test="action != null" >
         action,
       </if>
@@ -246,21 +218,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
         #{cardKey,jdbcType=BIGINT},
-      </if>
-      <if test="cardID != null" >
-        #{cardID,jdbcType=VARCHAR},
-      </if>
-      <if test="groupID != null" >
-        #{groupID,jdbcType=BIGINT},
-      </if>
-      <if test="mpID != null" >
-        #{mpID,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null" >
-        #{cardType,jdbcType=VARCHAR},
       </if>
       <if test="discount != null" >
         #{discount,jdbcType=INTEGER},
@@ -316,9 +273,6 @@
       <if test="bonusRules != null" >
         #{bonusRules,jdbcType=VARCHAR},
       </if>
-      <if test="cardStatus != null" >
-        #{cardStatus,jdbcType=TINYINT},
-      </if>
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
       </if>
@@ -341,21 +295,6 @@
     <set >
       <if test="record.cardKey != null" >
         cardKey = #{record.cardKey,jdbcType=BIGINT},
-      </if>
-      <if test="record.cardID != null" >
-        cardID = #{record.cardID,jdbcType=VARCHAR},
-      </if>
-      <if test="record.groupID != null" >
-        groupID = #{record.groupID,jdbcType=BIGINT},
-      </if>
-      <if test="record.mpID != null" >
-        mpID = #{record.mpID,jdbcType=VARCHAR},
-      </if>
-      <if test="record.title != null" >
-        title = #{record.title,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cardType != null" >
-        cardType = #{record.cardType,jdbcType=VARCHAR},
       </if>
       <if test="record.discount != null" >
         discount = #{record.discount,jdbcType=INTEGER},
@@ -411,17 +350,11 @@
       <if test="record.bonusRules != null" >
         bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
       </if>
-      <if test="record.cardStatus != null" >
-        cardStatus = #{record.cardStatus,jdbcType=TINYINT},
-      </if>
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
       <if test="record.actionStamp != null" >
         actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createStamp != null" >
-        createStamp = #{record.createStamp,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -431,11 +364,6 @@
   <update id="updateByExample" parameterType="map" >
     update tbl_shop_wechat_card_member
     set cardKey = #{record.cardKey,jdbcType=BIGINT},
-      cardID = #{record.cardID,jdbcType=VARCHAR},
-      groupID = #{record.groupID,jdbcType=BIGINT},
-      mpID = #{record.mpID,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
-      cardType = #{record.cardType,jdbcType=VARCHAR},
       discount = #{record.discount,jdbcType=INTEGER},
       backgroundPicUrl = #{record.backgroundPicUrl,jdbcType=VARCHAR},
       prerogative = #{record.prerogative,jdbcType=VARCHAR},
@@ -454,10 +382,8 @@
       customCell1 = #{record.customCell1,jdbcType=VARCHAR},
       bonusRule = #{record.bonusRule,jdbcType=VARCHAR},
       bonusRules = #{record.bonusRules,jdbcType=VARCHAR},
-      cardStatus = #{record.cardStatus,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
-      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
-      createStamp = #{record.createStamp,jdbcType=TIMESTAMP}
+      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -465,21 +391,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
     update tbl_shop_wechat_card_member
     <set >
-      <if test="cardID != null" >
-        cardID = #{cardID,jdbcType=VARCHAR},
-      </if>
-      <if test="groupID != null" >
-        groupID = #{groupID,jdbcType=BIGINT},
-      </if>
-      <if test="mpID != null" >
-        mpID = #{mpID,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null" >
-        cardType = #{cardType,jdbcType=VARCHAR},
-      </if>
       <if test="discount != null" >
         discount = #{discount,jdbcType=INTEGER},
       </if>
@@ -534,29 +445,18 @@
       <if test="bonusRules != null" >
         bonusRules = #{bonusRules,jdbcType=VARCHAR},
       </if>
-      <if test="cardStatus != null" >
-        cardStatus = #{cardStatus,jdbcType=TINYINT},
-      </if>
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
       <if test="actionStamp != null" >
         actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="createStamp != null" >
-        createStamp = #{createStamp,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.MemberModel" >
     update tbl_shop_wechat_card_member
-    set cardID = #{cardID,jdbcType=VARCHAR},
-      groupID = #{groupID,jdbcType=BIGINT},
-      mpID = #{mpID,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      cardType = #{cardType,jdbcType=VARCHAR},
-      discount = #{discount,jdbcType=INTEGER},
+    set discount = #{discount,jdbcType=INTEGER},
       backgroundPicUrl = #{backgroundPicUrl,jdbcType=VARCHAR},
       prerogative = #{prerogative,jdbcType=VARCHAR},
       autoActivate = #{autoActivate,jdbcType=TINYINT},
@@ -574,10 +474,8 @@
       customCell1 = #{customCell1,jdbcType=VARCHAR},
       bonusRule = #{bonusRule,jdbcType=VARCHAR},
       bonusRules = #{bonusRules,jdbcType=VARCHAR},
-      cardStatus = #{cardStatus,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
-      actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
-      createStamp = #{createStamp,jdbcType=TIMESTAMP}
+      actionStamp = #{actionStamp,jdbcType=TIMESTAMP}
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

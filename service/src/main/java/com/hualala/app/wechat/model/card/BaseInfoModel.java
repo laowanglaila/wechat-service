@@ -22,6 +22,11 @@ public class BaseInfoModel extends BaseItem implements Serializable {
     private String cardID;
 
     /**
+     * 店铺ID
+     */
+    private Long shopID;
+
+    /**
      * 集团ID
      */
     private Long groupID;
@@ -42,7 +47,7 @@ public class BaseInfoModel extends BaseItem implements Serializable {
     private String cardType;
 
     /**
-     * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审合通过，4：审核失败，5：已投放
+     * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审合通过，4：审核失败，5：已投放， 6：失效
      */
     private Integer cardStatus;
 
@@ -201,9 +206,6 @@ public class BaseInfoModel extends BaseItem implements Serializable {
      */
     private Boolean isPayAndQrcode;
 
-
-
     private static final long serialVersionUID = 1L;
-
 
 }

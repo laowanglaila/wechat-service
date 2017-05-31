@@ -12,31 +12,6 @@ public class CouponModel extends BaseItem implements Serializable {
     private Long cardKey;
 
     /**
-     * 微信返回的卡券ID
-     */
-    private String cardID;
-
-    /**
-     * 集团ID
-     */
-    private Long groupID;
-
-    /**
-     * 公众平台微信号
-     */
-    private String mpID;
-
-    /**
-     * 卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)
-     */
-    private String title;
-
-    /**
-     * 卡券类型
-     */
-    private String cardType;
-
-    /**
      * 优惠券专用，填写优惠详情。
      */
     private String defaultDetail;
@@ -66,13 +41,7 @@ public class CouponModel extends BaseItem implements Serializable {
      */
     private String gift;
 
-    /**
-     * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审合通过，4：审核失败，5：已投放
-     */
-    private Integer cardStatus;
-
-
-
     private static final long serialVersionUID = 1L;
+
 
 }

@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.model.card;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BaseInfoModelQuery {
@@ -333,6 +334,66 @@ public class BaseInfoModelQuery {
 
         public Criteria andCardIDNotBetween(String value1, String value2) {
             addCriterion("cardID not between", value1, value2, "cardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDIsNull() {
+            addCriterion("shopID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDIsNotNull() {
+            addCriterion("shopID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDEqualTo(Long value) {
+            addCriterion("shopID =", value, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDNotEqualTo(Long value) {
+            addCriterion("shopID <>", value, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDGreaterThan(Long value) {
+            addCriterion("shopID >", value, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDGreaterThanOrEqualTo(Long value) {
+            addCriterion("shopID >=", value, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDLessThan(Long value) {
+            addCriterion("shopID <", value, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDLessThanOrEqualTo(Long value) {
+            addCriterion("shopID <=", value, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDIn(List<Long> values) {
+            addCriterion("shopID in", values, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDNotIn(List<Long> values) {
+            addCriterion("shopID not in", values, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDBetween(Long value1, Long value2) {
+            addCriterion("shopID between", value1, value2, "shopID");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIDNotBetween(Long value1, Long value2) {
+            addCriterion("shopID not between", value1, value2, "shopID");
             return (Criteria) this;
         }
 
@@ -2786,123 +2847,123 @@ public class BaseInfoModelQuery {
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeIsNull() {
-            addCriterion("actionTime is null");
+        public Criteria andActionStampIsNull() {
+            addCriterion("actionStamp is null");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeIsNotNull() {
-            addCriterion("actionTime is not null");
+        public Criteria andActionStampIsNotNull() {
+            addCriterion("actionStamp is not null");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeEqualTo(Long value) {
-            addCriterion("actionTime =", value, "actionTime");
+        public Criteria andActionStampEqualTo(Date value) {
+            addCriterion("actionStamp =", value, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeNotEqualTo(Long value) {
-            addCriterion("actionTime <>", value, "actionTime");
+        public Criteria andActionStampNotEqualTo(Date value) {
+            addCriterion("actionStamp <>", value, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeGreaterThan(Long value) {
-            addCriterion("actionTime >", value, "actionTime");
+        public Criteria andActionStampGreaterThan(Date value) {
+            addCriterion("actionStamp >", value, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeGreaterThanOrEqualTo(Long value) {
-            addCriterion("actionTime >=", value, "actionTime");
+        public Criteria andActionStampGreaterThanOrEqualTo(Date value) {
+            addCriterion("actionStamp >=", value, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeLessThan(Long value) {
-            addCriterion("actionTime <", value, "actionTime");
+        public Criteria andActionStampLessThan(Date value) {
+            addCriterion("actionStamp <", value, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeLessThanOrEqualTo(Long value) {
-            addCriterion("actionTime <=", value, "actionTime");
+        public Criteria andActionStampLessThanOrEqualTo(Date value) {
+            addCriterion("actionStamp <=", value, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeIn(List<Long> values) {
-            addCriterion("actionTime in", values, "actionTime");
+        public Criteria andActionStampIn(List<Date> values) {
+            addCriterion("actionStamp in", values, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeNotIn(List<Long> values) {
-            addCriterion("actionTime not in", values, "actionTime");
+        public Criteria andActionStampNotIn(List<Date> values) {
+            addCriterion("actionStamp not in", values, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeBetween(Long value1, Long value2) {
-            addCriterion("actionTime between", value1, value2, "actionTime");
+        public Criteria andActionStampBetween(Date value1, Date value2) {
+            addCriterion("actionStamp between", value1, value2, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andActionTimeNotBetween(Long value1, Long value2) {
-            addCriterion("actionTime not between", value1, value2, "actionTime");
+        public Criteria andActionStampNotBetween(Date value1, Date value2) {
+            addCriterion("actionStamp not between", value1, value2, "actionStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeIsNull() {
-            addCriterion("createTime is null");
+        public Criteria andCreateStampIsNull() {
+            addCriterion("createStamp is null");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeIsNotNull() {
-            addCriterion("createTime is not null");
+        public Criteria andCreateStampIsNotNull() {
+            addCriterion("createStamp is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeEqualTo(Long value) {
-            addCriterion("createTime =", value, "createTime");
+        public Criteria andCreateStampEqualTo(Date value) {
+            addCriterion("createStamp =", value, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeNotEqualTo(Long value) {
-            addCriterion("createTime <>", value, "createTime");
+        public Criteria andCreateStampNotEqualTo(Date value) {
+            addCriterion("createStamp <>", value, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeGreaterThan(Long value) {
-            addCriterion("createTime >", value, "createTime");
+        public Criteria andCreateStampGreaterThan(Date value) {
+            addCriterion("createStamp >", value, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeGreaterThanOrEqualTo(Long value) {
-            addCriterion("createTime >=", value, "createTime");
+        public Criteria andCreateStampGreaterThanOrEqualTo(Date value) {
+            addCriterion("createStamp >=", value, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeLessThan(Long value) {
-            addCriterion("createTime <", value, "createTime");
+        public Criteria andCreateStampLessThan(Date value) {
+            addCriterion("createStamp <", value, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeLessThanOrEqualTo(Long value) {
-            addCriterion("createTime <=", value, "createTime");
+        public Criteria andCreateStampLessThanOrEqualTo(Date value) {
+            addCriterion("createStamp <=", value, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeIn(List<Long> values) {
-            addCriterion("createTime in", values, "createTime");
+        public Criteria andCreateStampIn(List<Date> values) {
+            addCriterion("createStamp in", values, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeNotIn(List<Long> values) {
-            addCriterion("createTime not in", values, "createTime");
+        public Criteria andCreateStampNotIn(List<Date> values) {
+            addCriterion("createStamp not in", values, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeBetween(Long value1, Long value2) {
-            addCriterion("createTime between", value1, value2, "createTime");
+        public Criteria andCreateStampBetween(Date value1, Date value2) {
+            addCriterion("createStamp between", value1, value2, "createStamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeNotBetween(Long value1, Long value2) {
-            addCriterion("createTime not between", value1, value2, "createTime");
+        public Criteria andCreateStampNotBetween(Date value1, Date value2) {
+            addCriterion("createStamp not between", value1, value2, "createStamp");
             return (Criteria) this;
         }
     }
