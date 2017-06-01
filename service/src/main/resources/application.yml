@@ -66,6 +66,9 @@ wechat:
       rabbitmq:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+  card:
+      skuQuantity: mu_hll:service:wechat:card:sku_quantity
+
 redisStock:
   host: 172.16.0.27
   port: 19000
@@ -144,8 +147,10 @@ wechat:
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
-        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
-        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+        cacheQrcodeExchange: dohko_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: dohko_hll:service:wechat:queue:cacheQrcode
+  card:
+      skuQuantity: dohko_hll:service:wechat:card:sku_quantity
 redisStock:
   host: 172.16.0.27
   port: 19000
@@ -224,6 +229,8 @@ wechat:
       rabbitmq:
         cacheQrcodeExchange: pre_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
+  card:
+      skuQuantity: pre_hll:service:wechat:card:sku_quantity
 redisStock:
   host: 172.16.0.27
   port: 19000
@@ -300,7 +307,8 @@ wechat:
       rabbitmq:
         cacheQrcodeExchange: hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
-
+  card:
+      skuQuantity: hll:service:wechat:card:sku_quantity
 redisStock:
     host: sjhl.codis.hualala.com
     port: 19000

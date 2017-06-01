@@ -18,6 +18,9 @@ import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -30,6 +33,20 @@ import java.util.concurrent.ExecutionException;
  */
 @Service
 public class CardSyncRpcServiceImpl implements CardSyncRpcService {
+    @Value("${wechat.card.skuQuantity}")
+    private String skuQuantityKey;
+
+    public void setSkuQuantity(String skuQuantityKey) {
+        this.skuQuantityKey = skuQuantityKey;
+    }
+
+    public String getSkuQuantity() {
+        return skuQuantityKey;
+    }
+
+    private static final String COLON = ":";
+    @Autowired
+    private StringRedisTemplate skuRedisTemplate;
     @Autowired
     private MemberModelMapper memberModelMapper;
     @Autowired
@@ -119,10 +136,12 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         JSONObject sku = baseInfo.getJSONObject("sku");
         Integer totalQuantity = sku.getInteger("totalQuantity");
         baseInfo.replace("sku", totalQuantity);
-        //TODO 将实时库存放入Redis中保存
-//        Integer quantity = sku.getInteger("quantity");
-
-
+        //todo 将实时库存放入Redis中保存
+        Integer quantity = sku.getInteger("quantity");
+        BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps(skuQuantityKey + COLON + cardKey);
+        if (quantity != null){
+            valueOps.set(quantity.toString());
+        }
         String locationIdList = baseInfo.getString("locationIdList");
         String locationList = locationIdList.replace("[", "").replace("]", "");
         locationList = StringUtils.isBlank(locationList) ? null : locationList;
@@ -204,10 +223,12 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         JSONObject sku = baseInfo.getJSONObject("sku");
         Integer totalQuantity = sku.getInteger("totalQuantity");
         baseInfo.replace("sku", totalQuantity);
-        //TODO 将实时库存放入Redis中保存
-//        Integer quantity = sku.getInteger("quantity");
-
-
+        // 将实时库存放入Redis中保存
+        Integer quantity = sku.getInteger("quantity");
+        BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps(skuQuantityKey + COLON + cardKey);
+        if (quantity != null){
+            valueOps.set(quantity.toString());
+        }
         String locationIdList = baseInfo.getString("locationIdList");
 //        String locationList = locationIdList.replace("[", "").replace("]", "");
 //        locationIdList = StringUtils.isBlank(locationIdList) ? null : locationIdList;
@@ -272,7 +293,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             } catch (ExecutionException e) {
                 e.printStackTrace();
                 return new CardDownloadResData()
-                        .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey获取失败\r\n"+e.getMessage());
+                        .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey获取失败\r\n" + e.getMessage());
             }
         } else {
             try {
@@ -280,7 +301,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             } catch (ExecutionException e) {
                 e.printStackTrace();
                 return new CardDownloadResData()
-                        .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey获取失败:\r\n"+e.getMessage());
+                        .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey获取失败:\r\n" + e.getMessage());
             }
         }
 
@@ -318,9 +339,6 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         JSONObject sku = baseInfo.getJSONObject("sku");
         Integer totalQuantity = sku.getInteger("totalQuantity");
         baseInfo.replace("sku", totalQuantity);
-        //TODO 将实时库存放入Redis中保存
-//        Integer quantity = sku.getInteger("quantity");
-
 
         String locationIdList = baseInfo.getString("locationIdList");
         String locationList = locationIdList.replace("[", "").replace("]", "");
@@ -392,8 +410,12 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             couponModelMapper.insertSelective(couponModel1);
             baseInfoModelMapper.insertSelective(baseInfoModel);
             advancedModelMapper.insertSelective(advancedModel);
-
-
+        }
+        // 将实时库存放入Redis中保存
+        Integer quantity = sku.getInteger("quantity");
+        BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps(skuQuantityKey + COLON + cardKey);
+        if (quantity != null){
+            valueOps.set(quantity.toString());
         }
         return cardKey;
     }
@@ -422,7 +444,6 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         memberInfo.replace("bonusRule", bonusRule);
 
 
-
         //判断会员卡状态
 
         MemberModel memberModel1 = DataUtils.mapToBean(memberInfo, MemberModel.class);
@@ -441,9 +462,6 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         JSONObject sku = baseInfo.getJSONObject("sku");
         Integer totalQuantity = sku.getInteger("totalQuantity");
         baseInfo.replace("sku", totalQuantity);
-        //TODO 将实时库存放入Redis中保存
-//        Integer quantity = sku.getInteger("quantity");
-
 
         String locationIdList = baseInfo.getString("locationIdList");
         String locationList = locationIdList.replace("[", "").replace("]", "");
@@ -491,7 +509,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             advancedModelMapper.updateByPrimaryKeySelective(advancedModel);
         } else {
             //否则就插入
-                    Map < String, Object > params = new HashMap<>();
+            Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
             List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
             if (maps.size() > 0) {
@@ -508,6 +526,12 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             memberModelMapper.insertSelective(memberModel1);
             baseInfoModelMapper.insertSelective(baseInfoModel);
             advancedModelMapper.insertSelective(advancedModel);
+        }
+        //将实时库存放入Redis中保存
+        Integer quantity = sku.getInteger("quantity");
+        BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps(skuQuantityKey + COLON + cardKey);
+        if (quantity != null){
+            valueOps.set(quantity.toString());
         }
         return cardKey;
     }
