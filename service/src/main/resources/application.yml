@@ -78,6 +78,15 @@ redisStock:
     maxWait: 10000
     maxIdle: 1
     minIdle: 1
+redisSku:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 50
+    maxWait: 10000
+    maxIdle: 10
+    minIdle: 1
 
 zookeeper:
   zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
@@ -152,6 +161,15 @@ wechat:
   card:
       skuQuantity: dohko_hll:service:wechat:card:sku_quantity
 redisStock:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 50
+    maxWait: 10000
+    maxIdle: 10
+    minIdle: 1
+redisSku:
   host: 172.16.0.27
   port: 19000
   db: 0
@@ -240,6 +258,15 @@ redisStock:
     maxWait: 10000
     maxIdle: 10
     minIdle: 1
+redisSku:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 50
+    maxWait: 10000
+    maxIdle: 10
+    minIdle: 1
 
 zookeeper:
   zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
@@ -318,7 +345,15 @@ redisStock:
       maxWait: 10000
       maxIdle: 10
       minIdle: 1
-
+redisSku:
+  host: sjhl.codis.hualala.com
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 50
+    maxWait: 10000
+    maxIdle: 20
+    minIdle: 10
 zookeeper:
   zookeeperAddress: 192.168.1.64:2181,192.168.1.65:2181,192.168.1.69:2181,192.168.1.67:2181,192.168.1.68:2181  #zookeeper uri
   serviceName: wechat-card  #服务名称

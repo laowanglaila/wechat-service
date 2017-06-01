@@ -51,10 +51,10 @@ public class RedisTemplateTest {
         int i = 1;
         for (BaseInfoModel baseInfoModel : baseInfoModels){
             cardKey = baseInfoModel.getCardKey();
+//            skuRedisTemplate.delete(skuQuantityKey + COLON + cardKey);
             BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps(skuQuantityKey + COLON + cardKey);
             String value = valueOps.get();
             System.out.println("第 "+(i++)+" 个value: ["+value+"]");
-
         }
 
     }

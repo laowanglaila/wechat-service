@@ -13,7 +13,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "redisStock")
+@ConfigurationProperties(prefix = "redisSku")
 public class RedisTemplateConfig {
     public static final String COLON = ":";
     private String host;
