@@ -54,4 +54,31 @@ public class WechatMessageType {
 	public static final String CARD_TYPE_GENERAL_COUPON = "GENERAL_COUPON";
 	public static final String CARD_TYPE_MEMBER_CARD = "MEMBER_CARD";
 
+	//卡券通过审核
+	public static final String EVENT_CARD_PASS_CHECK = "card_pass_check";
+	//卡券未通过审核
+	public static final String EVENT_CARD_NOT_PASS_CHECK = "card_not_pass_check";
+	//用户领取事件
+	public static final String EVENT_CARD_USER_GET = "user_get_card";
+	//用户转赠事件
+	public static final String EVENT_CARD_USER_GIFTING = "user_gifting_card";
+	//用户删除事件
+	public static final String EVENT_CARD_USER_DEL = "user_del_card";
+	//用户核销事件
+	public static final String EVENT_CARD_USER_CONSUME = "user_consume_card";
+	//用户买单事件
+	public static final String EVENT_CARD_USER_PAY_FROM_PAY_CELL = "user_pay_from_pay_cell";
+	//用户进入会员卡事件（暂不接受压力大）
+	public static final String EVENT_CARD_USER_VIEW = "user_view_card";
+	//用户从卡券进入公众号会话事件推送
+	public static final String EVENT_CARD_USER_ENTER = "user_enter_session_from_card";
+	//会员卡内容更新事件
+	public static final String EVENT_CARD_UPDATE_MEMBER = "update_member_card";
+	//库存报警事件
+	public static final String EVENT_CARD_SKU_REMIND = "card_sku_remind";
+	//券点流水详情事件
+	public static final String EVENT_CARD_PAY_ORDER = "card_pay_order";
+	//会员卡激活事件推送
+	public static final String EVENT_CARD_MEMBER_ACTIVE = "submit_membercard_user_info";
+
 }

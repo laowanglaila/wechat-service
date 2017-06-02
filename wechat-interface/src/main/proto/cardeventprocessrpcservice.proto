@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardEventProcessRpcData";
+import "commons.proto";
+
+message EventProcessReq {  
+   // 事件推送json
+   string json=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message EventProcessRes {  
+   // json
+   string json=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service CardEventProcessRpcService{
+    //
+    rpc process(EventProcessReq) returns (EventProcessRes) {}
+}

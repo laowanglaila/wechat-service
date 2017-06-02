@@ -29,7 +29,7 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     private BaseInfoModelMapper baseInfoModel;
 
     /**
-     * 导入会员卡code
+     * 导入code
      * @param cardCodeImportReqData
      * @return
      */
@@ -85,7 +85,7 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
 //    }
 
     /**
-     * 核销会员卡
+     * 核销卡券
      * @param cardCodeDestroyReqData
      * @return
      */
