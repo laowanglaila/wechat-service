@@ -19,10 +19,10 @@
         <!-- 服务器上使用的appender start -->
         <!-- 默认的file appender，按天切分日志 -->
         <appender name="ROLLING_FILE_DEFAULT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>/home/logs/wechat-service/application.log</file>
+            <file>/home/logs/wechat-service/${HOSTNAME}_application.log</file>
             <append>true</append>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>/home/logs/wechat-service/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>/home/logs/wechat-service/${HOSTNAME}_application.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <maxHistory>${MAX_HISTORY}</maxHistory>
             </rollingPolicy>
             <encoder>
@@ -38,10 +38,10 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-            <file>/home/logs/wechat-service/application_error.log</file>
+            <file>/home/logs/wechat-service/${HOSTNAME}_application_error.log</file>
             <append>true</append>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>/home/logs/wechat-service/application_error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>/home/logs/wechat-service/${HOSTNAME}_application_error.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <maxHistory>${MAX_HISTORY}</maxHistory>
             </rollingPolicy>
             <encoder>
