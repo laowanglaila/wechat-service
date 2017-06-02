@@ -54,7 +54,7 @@ public class RedisTemplateTest {
 //            skuRedisTemplate.delete(skuQuantityKey + COLON + cardKey);
             BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps(skuQuantityKey + COLON + cardKey);
             String value = valueOps.get();
-            System.out.println("第 "+(i++)+" 个value: ["+value+"]");
+            System.out.println("第 "+(i++)+" 个CardKey[ "+cardKey+" ]名称["+baseInfoModel.getTitle()+"]当前库存:"+value+"个");
         }
 
     }

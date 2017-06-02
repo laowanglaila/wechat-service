@@ -298,7 +298,7 @@ public interface CardPrePareQueryRpcService {
         private String servicePhone;
         //-----------------------------------------------------------------------
 //        location_id_list 	     否 	array 	        1234，2312 	门店位置ID。调用POI门店管理接口获取门店位置ID。
-        @Protocol(fieldType = FieldType.STRING, order = 20, description = "门店位置ID集合。调用POI门店管理接口获取门店位置ID。多个使用( ','+'空格' )分割")
+        @Protocol(fieldType = FieldType.STRING, order = 20, description = "门店位置ID集合。调用POI门店管理接口获取门店位置ID的list集合，JSON格式")
         private String locationIdList;
         //-----------------------------------------------------------------------
 //        source 	             否 	string（36） 	大众点评 	第三方来源名，例如同程旅游、大众点评。

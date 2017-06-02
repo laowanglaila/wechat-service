@@ -143,9 +143,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
             valueOps.set(quantity.toString());
         }
         String locationIdList = baseInfo.getString("locationIdList");
-        String locationList = locationIdList.replace("[", "").replace("]", "");
-        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationList);
+//        String locationList = locationIdList.replace("[", "").replace("]", "");
+//        locationList = StringUtils.isBlank(locationList) ? null : locationList;
+        baseInfo.replace("locationIdList", locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardKey(cardKey);
         //判断会员卡状态
@@ -341,9 +341,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         baseInfo.replace("sku", totalQuantity);
 
         String locationIdList = baseInfo.getString("locationIdList");
-        String locationList = locationIdList.replace("[", "").replace("]", "");
-        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationList);
+//        String locationList = locationIdList.replace("[", "").replace("]", "");
+//        locationList = StringUtils.isBlank(locationList) ? null : locationList;
+        baseInfo.replace("locationIdList", locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         String status = baseInfo.getString("status");
         CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
@@ -464,9 +464,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         baseInfo.replace("sku", totalQuantity);
 
         String locationIdList = baseInfo.getString("locationIdList");
-        String locationList = locationIdList.replace("[", "").replace("]", "");
-        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationList);
+//        String locationList = locationIdList.replace("[", "").replace("]", "");
+//        locationList = StringUtils.isBlank(locationList) ? null : locationList;
+        baseInfo.replace("locationIdList", locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardStatus(cardStatusEnum.getValue());
         baseInfoModel.setMpID(mpID);
