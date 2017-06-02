@@ -36,7 +36,7 @@ public class ResultUtil {
      * @param jsonObject 必须是经过判断是否成功 ，使用toResultJson包装过对象
      * @param clazz  grpc期望返回参数的class
      * @param <T> grpc期望返回参数的class
-     * @return 一个包含成功，失败以及返回参数的完整对象
+     * @return T 一个包含成功，失败以及返回参数的完整对象
      */
     public static <T extends ResultInfo> T getResultInfoBean(JSONObject jsonObject, Class<T> clazz) {
         Map<String, Object> stringObjectMap = WechatNameConverterUtil.convertToJavaStyle(jsonObject);
