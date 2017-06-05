@@ -19,6 +19,7 @@ public interface WechatQRCodeRpcSerivce {
 
     @RpcMethod
     WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq);
+    @RpcMethod
     WechatQRCodeListRes createQRCodeList(WechatQRCodeListReq qrCodeReqList);
 
     @Data
