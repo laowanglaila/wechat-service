@@ -80,7 +80,7 @@ public class MsgPublishRpcServiceTest {
         textMsgReq.setUserIds(list);
         textMsgReq.setMpID("doulaofangceshi");
         textMsgReq.setText("群发消息");
-        MsgPublishRpcService.TextMsgRes textMsgRes = rpcClient.publishTextByOpenID(textMsgReq);
+        MsgPublishRpcService.TextMsgRes textMsgRes = rpcClient.publishTextByUserList(textMsgReq);
 
 
         System.out.println(textMsgRes.getMessage());
