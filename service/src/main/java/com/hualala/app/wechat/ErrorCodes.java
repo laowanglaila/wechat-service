@@ -79,5 +79,7 @@ public interface ErrorCodes {
     String WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP = "00112144";
     //二维码缓存数量不足
     String WECHAT_QRCODE_NOT_ENOUGH = "00112145";
+    //根据openid群发消息 , 2<数量<10000
+    String WECHAT_MESSAGE_PUBLISH_WRONG_SIZE = "00112145";
 
 }

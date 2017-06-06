@@ -1,6 +1,5 @@
 package com.hualala.app.wechat.config.client;
 
-import com.github.kristofa.brave.Brave;
 import com.hualala.core.app.Logger;
 import com.hualala.core.grpc.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +25,12 @@ public class GrpcClientConfiguration {
         return client;
     }
 
-    @Bean
-    public GrpcIdgenClient idgenClient(Brave brave) {
-        logger.info(() -> "initializing idgen client ... [" + grpcClientProperties.getIdgen() + "]");
-        GrpcIdgenClient client = new GrpcIdgenClient(grpcClientProperties.getIdgen(), brave);
-        return client;
-    }
+//    @Bean
+//    public GrpcIdgenClient idgenClient(Brave brave) {
+//        logger.info(() -> "initializing idgen client ... [" + grpcClientProperties.getIdgen() + "]");
+//        GrpcIdgenClient client = new GrpcIdgenClient(grpcClientProperties.getIdgen(), brave);
+//        return client;
+//    }
 
     @Bean (name = "com.hualala.message", destroyMethod="clean")
     public SemServiceClient semServiceClient() {

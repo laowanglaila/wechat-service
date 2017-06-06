@@ -10,7 +10,7 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=com.github.kristofa.brave.mysql.MySQLStatementInterceptor
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
     username: root
     password: hualaladev
     driver-class-name: com.mysql.jdbc.Driver
@@ -108,7 +108,7 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=com.github.kristofa.brave.mysql.MySQLStatementInterceptor
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
     username: root
     password: hualaladev
     driver-class-name: com.mysql.jdbc.Driver
@@ -197,7 +197,7 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=com.github.kristofa.brave.mysql.MySQLStatementInterceptor
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
     username: root
     password: hualaladev
     driver-class-name: com.mysql.jdbc.Driver
