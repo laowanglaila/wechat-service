@@ -18,12 +18,12 @@ public class GrpcClientConfiguration {
     @Autowired
     private GrpcClientProperties grpcClientProperties;
 
-//    @Bean(name = "com.hualala.app.wechat", destroyMethod = "clean")
-//    public GrpcClient grpcClient() {
-//        logger.info(() -> "Initializing com.hualala.app.pay gRpc client... [" + grpcClientProperties.getWechat() + "]");
-//        GrpcClient client = new GrpcClient(grpcClientProperties.getWechat());
-//        return client;
-//    }
+    @Bean(name = "com.hualala.app.wechat", destroyMethod = "clean")
+    public GrpcClient grpcClient() {
+        logger.info(() -> "Initializing com.hualala.app.pay gRpc client... [" + grpcClientProperties.getWechat() + "]");
+        GrpcClient client = new GrpcClient(grpcClientProperties.getWechat());
+        return client;
+    }
 
 //    @Bean
 //    public GrpcIdgenClient idgenClient(Brave brave) {
