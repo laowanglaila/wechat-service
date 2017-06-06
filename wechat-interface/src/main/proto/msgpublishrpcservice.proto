@@ -29,5 +29,5 @@ message TextMsgRes {
 //群发图文消息
 service MsgPublishRpcService{
     //
-    rpc publishTextByOpenID(TextMsgReq) returns (TextMsgRes) {}
+    rpc publishTextByUserList(TextMsgReq) returns (TextMsgRes) {}
 }
