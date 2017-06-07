@@ -180,7 +180,7 @@ redisSku:
     minIdle: 1
 
 zookeeper:
-  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  zookeeperAddress: 172.16.0.25:3181,172.16.0.26:3181,172.16.0.27:3181  #zookeeper uri  e.g.:127.0.0.1:2181
   serviceName: wechat-card  #服务名称
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
@@ -269,7 +269,7 @@ redisSku:
     minIdle: 1
 
 zookeeper:
-  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  zookeeperAddress: 172.16.0.25:3181,172.16.0.26:3181,172.16.0.27:3181  #zookeeper uri  e.g.:127.0.0.1:2181
   serviceName: wechat-card  #服务名称
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
