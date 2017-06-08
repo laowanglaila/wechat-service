@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.service.HttpApiService;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.core.client.BaseRpcClient;
+import lombok.Data;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.Map;
  * Created by renjianfei on 2017/4/13.
  */
 //@RunWith(SpringRunner.class)
+@Data
 @SpringBootTest
 public class WechatQrcodeTempRpcServiceTest {
 
@@ -84,11 +86,11 @@ public class WechatQrcodeTempRpcServiceTest {
         System.out.println("--------------"+(end-start)+"ms");
         System.out.println(qrCodeList.getMessage());
         System.out.println(qrCodeList.getWechatQRCodeResList()==null?0:qrCodeList.getWechatQRCodeResList().size());
-        try {
-            Thread.sleep(300000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(300000L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -146,10 +148,13 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
         long start = System.currentTimeMillis();
         Map<String,String> params = new HashMap<>();
         params.put("async","false");
-        params.put("expireSeconds","86400");
-        params.put("size","5");
-        params.put("mpID","doulaofangceshi");
-        params.put("qrcodeType","QUEUE");
+        params.put("expireSeconds","1296000");
+        params.put("size","200");
+//        params.put("mpID","doulaofangceshi");
+        params.put("groupID","5");
+        params.put("brandID","0");
+        params.put("shopID","76022898");
+        params.put("qrcodeType","INVOICE");
         params.put("wechatQRCodeDataList",
                 "[" +
                         "{\"param1\":\"param1\",\"qrcodeName\":\"QrcodeName\"}," +
@@ -157,8 +162,8 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
                         "{\"param1\":\"param1\",\"qrcodeName\":\"QrcodeName\"}" +
                 "]");
 
-//        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcodeList.html", params);
-        JSONObject jsonObject = HttpApiUtil.httpPost("http://dohko.eshopapi.hualala.com/wechat/getQrcodeList.html", params);
+        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcodeList.html", params);
+//        JSONObject jsonObject = HttpApiUtil.httpPost("http://dohko.eshopapi.hualala.com/wechat/getQrcodeList.html", params);
         System.out.println(jsonObject.toJSONString());
 
         long end = System.currentTimeMillis();

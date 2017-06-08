@@ -38,7 +38,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     public void testBaseInfo(){
 
         CardPrePareCreateRpcService.PreCardBaseInfoData preCardBaseInfoData = new CardPrePareCreateRpcService.PreCardBaseInfoData();
-        preCardBaseInfoData.setCardKey(6424712067642565637L);
+//        preCardBaseInfoData.setCardKey(6424712067642565637L);
         preCardBaseInfoData.setMpID("doulaofangceshi");
         preCardBaseInfoData.setTitle("玛莎2拉蒂");
         preCardBaseInfoData.setCardType("MEMBER_CARD");
@@ -271,7 +271,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         prePareCreateCardRpcService.createMemberCard(memberInfo);
         advancedInfo.setCardKey(cardKey);
         prePareCreateCardRpcService.createAdvancedInfo(advancedInfo);
-
+        System.out.println("---------------------------------------------------"+cardKey);
     }
 
     @Test

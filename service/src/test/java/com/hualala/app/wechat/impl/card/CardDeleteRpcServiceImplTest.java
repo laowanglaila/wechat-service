@@ -14,7 +14,7 @@ public class CardDeleteRpcServiceImplTest extends BaseRpcTest {
         long l = System.currentTimeMillis();
         CardDeleteRpcService rpcClient = super.baseRpcClient.getRpcClient(CardDeleteRpcService.class);
         CardDeleteRpcService.CardDeleteReqData cardDeleteReqData = new CardDeleteRpcService.CardDeleteReqData();
-        cardDeleteReqData.setCardKey(6423578836226565125L);
+        cardDeleteReqData.setCardKey(6429086015092172805l);
         ResultInfo resultInfo = rpcClient.deleteCard(cardDeleteReqData);
         long l1 = System.currentTimeMillis();
         System.out.println("[ "+(l1-l)+" ]ms");

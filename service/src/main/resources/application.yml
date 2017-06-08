@@ -1,5 +1,6 @@
 spring:
-  profiles.active: local
+#  profiles.active: local
+  profiles.active: dohko
 ---
 spring:
   profiles: local
@@ -54,6 +55,8 @@ grpc:
   client:
      hosts:
         wechat: localhost:6567
+#        wechat: dohko.wechat.service.hualala.com:31558
+#        wechat: 192.168.5.204:6567
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272
@@ -146,6 +149,7 @@ grpc:
   client:
      hosts:
         #wechat: localhost:6567
+        wechat: dohko.wechat.service.hualala.com:31558
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272

@@ -169,7 +169,11 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
 //        return couponResData;
 //    }
 
-
+    /**
+     * 查一个
+     * @param cardQuery
+     * @return
+     */
     @Override
     public CardBaseInfoResData queryBaseInfoByCardKey(CardQuery cardQuery) {
         Long cardKey = cardQuery.getCardKey();
@@ -180,7 +184,7 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
         return DataUtils.copyProperties(baseInfoModel, CardBaseInfoResData.class);
     }
     /**
-     * 查所有  目前只支持mpID
+     * 查多个  目前只支持mpID
      *
      * @param cardQuery
      * @return
@@ -223,6 +227,10 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
         cardBaseInfoResDataList.setBaseInfoList(list);
         return cardBaseInfoResDataList;
     }
+
+
+
+
     @Override
     public CardAdvancedInfoResData queryAdvancedInfoByCardKey(CardQuery cardQuery) {
         Long cardKey = cardQuery.getCardKey();

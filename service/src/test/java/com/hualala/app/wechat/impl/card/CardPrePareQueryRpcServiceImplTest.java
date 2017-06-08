@@ -2,8 +2,11 @@ package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.BaseRpcTest;
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
+import com.hualala.app.wechat.grpc.CardPrePareQueryRpcData;
+import com.hualala.app.wechat.grpc.CardPrePareQueryRpcServiceGrpc;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -17,15 +20,31 @@ import java.util.List;
 public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
 //    @Autowired
 //    private CardPrePareQueryRpcService prePareQueryCardRpcService;
-
+//@Resource
+//private GrpcClient wechatGrpcClient;
 
     @Test
     public void testQueryByKey(){
         CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
         CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
-        cardQuery.setCardKey(12535216799220737L);
-        CardPrePareQueryRpcService.CouponResData couponResData = rpcClient.queryCouponByCardKey(cardQuery);
-        System.out.println(couponResData.getMessage());
+        cardQuery.setCardKey(6426933076835705861L);
+
+        CardPrePareQueryRpcService.CardBaseInfoResData cardBaseInfoResData = rpcClient.queryBaseInfoByCardKey(cardQuery);
+        System.out.println(cardBaseInfoResData.getMessage());
+
+
+    }
+    @Autowired
+    private CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub stub;
+    @Test
+    public void testQueryByKeyStub(){
+//        CardPrePareQueryRpcServiceGrpc stub = (CardPrePareQueryRpcServiceGrpc)wechatClient.getBlockingStub(CardPrePareQueryRpcServiceGrpc.class);
+//        wechatClient.
+        CardPrePareQueryRpcData.CardQuery.Builder builder = CardPrePareQueryRpcData.CardQuery.newBuilder();
+        builder.setCardKey(6426933076835705861L);
+        CardPrePareQueryRpcData.CardQuery build = builder.build();
+        CardPrePareQueryRpcData.CardBaseInfoResData cardBaseInfoResData = stub.queryBaseInfoByCardKey(build);
+        System.out.println(cardBaseInfoResData.getResult().getMessage());
 
 
     }
@@ -35,7 +54,7 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
     public void test() {
         CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);
         CardPrePareQueryRpcService.CardQuery cardQuery = new CardPrePareQueryRpcService.CardQuery();
-        cardQuery.setCardKey(12535216799220737L);
+        cardQuery.setCardKey(6426933076835705861L);
         CardPrePareQueryRpcService.MemberResData memberResData = rpcClient.queryMemberByCardKey(cardQuery);
         System.out.println(memberResData.getMessage());
     }

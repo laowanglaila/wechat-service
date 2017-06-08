@@ -28,15 +28,21 @@ public class MsgPublishRpcServiceTest {
 
     @Test
     public void test(){
-        String text = "群发测试Hellow word!";
-        String mpID = "doulaofangceshi";
+        String text = "群发测试Hellow word!\r\n<a url=\"http://www.hualala.com/\">hualala<a/>";
+        String mpID = "hualala_com";
 
         String url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview";
-        String params = "{ " +
-                "    \"towxname\":\"xukai80231314\"," +
-                "    \"text\":{\"content\":\""+text+"\"}," +
-                "    \"msgtype\":\"text\"" +
-                "}";
+//        String params = "{ " +
+//                "    \"towxname\":\"renfeifei_1314\"," +
+//                "    \"text\":{\"content\":\""+text+"\"}," +
+//                "    \"msgtype\":\"text\"" +
+//                "}";
+        String params = "{\n" +
+//                        "  \"touser\":\"o7FjEuBvkjdVaJBkrQt8GNqMuSIQ\", \n" +
+                      "    \"towxname\":\"renfeifei_1314\"," +
+                        "  \"msgtype\":\"wxcard\",\n" +
+                        "  \"wxcard\":{\"card_id\":\"pACwGs9SukuPsEQ42U4DYdJJxOjw\"},\n" +
+                        "}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
         System.out.println(jsonObject);
     }
