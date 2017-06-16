@@ -16,7 +16,9 @@ public class WechatBaseApi {
 
 
     //微信卡券上传背景图片
-    public static final String API_UPLOAD_MEDIA = ROOT + "/media/uploadimg";
+    public static final String API_UPLOAD_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/uploadimg";
+    //微信上传临时素材
+    public static final String API_UPLOAD_TEMP_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/upload";
     //微信卡券创建卡券
     public static final String CREATE_CARD_URL = "https://api.weixin.qq.com/card/create";
     //微信卡券设置自助核销

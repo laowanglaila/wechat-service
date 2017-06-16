@@ -138,6 +138,12 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dld.hualala</groupId>
+            <artifactId>hualala-util</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
 

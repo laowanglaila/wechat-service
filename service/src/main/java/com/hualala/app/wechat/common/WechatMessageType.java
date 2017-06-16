@@ -5,7 +5,9 @@ public class WechatMessageType {
 	public static final String TEXT = "text";
 	
 	public static final String IMAGE = "image";
-	
+
+	public static final String THUMB = "thumb";
+
 	public static final String LOCATION = "location";
 	
 	public static final String LINK = "link";

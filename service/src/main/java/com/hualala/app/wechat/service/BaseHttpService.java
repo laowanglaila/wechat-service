@@ -66,7 +66,7 @@ public class BaseHttpService {
         }
         logger.debug(() -> "微信响应参数 ：" + responseJson.toJSONString());
         String errcode = responseJson.getString(WechatMessageType.WECHAT_ERR_CODE);
-        if (!"0".equals(errcode)) {
+        if (StringUtils.isNotBlank(errcode) && !"0".equals(errcode)) {
             String errmassage = WechatErrorCode.wechatError.get(errcode);
             String errorcode = errmassage == null ? "[ errcode:"+errcode+" ]" : errmassage;
             return ResultUtil.toResultJson(responseJson, false, null, errorcode+":[ "+responseJson.getString(WechatMessageType.WECHAT_ERR_MESSAGE)+" ]");
