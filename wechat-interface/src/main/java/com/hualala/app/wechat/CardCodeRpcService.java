@@ -22,7 +22,7 @@ public interface CardCodeRpcService {
     /**
      * 导入code方法
      */
-    @RpcMethod
+    @RpcMethod(description = "导入code方法")
     CardCodeImportResData importCode(CardCodeImportReqData cardCodeImportReqData);
 
 //    @RpcMethod
@@ -34,7 +34,7 @@ public interface CardCodeRpcService {
      * @param
      * @return
      */
-    @RpcMethod
+    @RpcMethod(description = "核销code方法")
     CardCodeDestroyResData destoryCode(CardCodeDestroyReqData cardCodeDestroyReqData);
 
 //    @RpcMethod
@@ -43,14 +43,21 @@ public interface CardCodeRpcService {
     /**
      * code解码
      */
-    @RpcMethod
+    @RpcMethod(description = "code解码")
     CardCodeDecodingResData decodingCardCode(CardCodeDecodingReqData cardCodeDecodingReqData);
 
     /**
      * 查询优惠券code状态
      */
-    @RpcMethod
+    @RpcMethod(description = "查询优惠券code状态")
     CardCodeQueryResData queryCouponStatus(CardCodeQueryReqData cardCodeQueryReqData);
+
+    /**
+     * 修改会员积分余额等信息
+     */
+    @RpcMethod(description = "修改会员积分余额等信息")
+    MemberItemUpdateRes updateMemberItem(MemberItemUpdateReq memberItemUpdateReq);
+
 
     /**
      * 导入code
@@ -126,7 +133,7 @@ public interface CardCodeRpcService {
      * 查询code接口
      */
     @Data
-    class CardCodeQueryReqData extends RequestInfo  {
+    class CardCodeQueryReqData extends RequestInfo {
         //    code	            是	string(20)	    110201201245	单张卡券的唯一标准。
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
         private String cardCode;
@@ -137,6 +144,7 @@ public interface CardCodeRpcService {
 //        无论check_consume填写的是true还是false,当code未被添加或者code被转赠领取是统一报错：invalid serial code
 
     }
+
     @Data
     class CardCodeQueryResData extends ResultInfo {
         //    code	            是	string(20)	    110201201245	单张卡券的唯一标准。
@@ -153,6 +161,73 @@ public interface CardCodeRpcService {
         private Boolean canConsume;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "当前code对应卡券的状态")
         private String userCardStatus;
+
+    }
+
+    @Data
+    class MemberItemUpdateReq extends RequestInfo {
+        //        code            	        是            	string(20)            	1231123            	                        卡券Code码。
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "解密后获取的真实Code码")
+        private String cardCode;
+        //    card_id	        否	string(32)      pFS7Fjg8kV1I    dDz01r4SQwMkuCKc 卡券ID代表一类卡券。自定义code卡券必填。
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "卡券ID代表一类卡券。自定义code卡券必填")
+        private Long cardKey;
+        //        background_pic_url        否            	string（128）           https://mmbiz.qlogo.cn/                     支持商家激活时针对单个会员卡分配自定义的会员卡背景。
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "支持商家激活时针对单个会员卡分配自定义的会员卡背景")
+        private String backgroundPicUrl;
+        //        bonus                     否              int            	        100            	                            需要设置的积分全量值，传入的数值会直接显示
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "需要设置的积分全量值，传入的数值会直接显示")
+        private String bonus;
+        //        add_bonus   	            否	            int     	            100	                                        本次积分变动值，传负数代表减少
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "本次积分变动值，传负数代表减少")
+        private String addBonus;
+        //        record_bonus            	否 	            string(42)            	消费30元，获得3积分            	            商家自定义积分消耗记录，不超过14个汉字
+        @Protocol(fieldType = FieldType.STRING, order = 7, description = "商家自定义积分消耗记录，不超过14个汉字")
+        private String recordBonus;
+        //        balance                   否              int            	        100            	                            需要设置的余额全量值，传入的数值会直接显示在卡面
+        @Protocol(fieldType = FieldType.STRING, order = 8, description = "需要设置的余额全量值，传入的数值会直接显示在卡面")
+        private String balance;
+        //        add_balance	            否	            int     	            100	                                        本次余额变动值，传负数代表减少
+        @Protocol(fieldType = FieldType.STRING, order = 9, description = "本次余额变动值，传负数代表减少")
+        private String addBalance;
+        //        record_balance            否            	string(42)              购买焦糖玛琪朵一杯，扣除金额30元。          商家自定义金额消耗记录，不超过14个汉字。
+        @Protocol(fieldType = FieldType.STRING, order = 10, description = "商家自定义金额消耗记录，不超过14个汉字。")
+        private String recordBalance;
+        //        custom_field_value1       否            	string（12）            白金            	                        创建时字段custom_field1定义类型的最新数值，限制为4个汉字，12字节。
+        @Protocol(fieldType = FieldType.STRING, order = 11, description = "创建时字段custom_field1定义类型的最新数值，限制为4个汉字，12字节。")
+        private String customFieldValue1;
+        //        custom_field_value2       否            	string（12）            8折            	                            创建时字段custom_field2定义类型的最新数值，限制为4个汉字，12字节。
+        @Protocol(fieldType = FieldType.STRING, order = 12, description = "创建时字段custom_field2定义类型的最新数值，限制为4个汉字，12字节。")
+        private String customFieldValue2;
+        //        custom_field_value3       否            	string（12）            500            	                            创建时字段custom_field3定义类型的最新数值，限制为4个汉字，12字节。
+        @Protocol(fieldType = FieldType.STRING, order = 13, description = "创建时字段custom_field3定义类型的最新数值，限制为4个汉字，12字节。")
+        private String customFieldValue3;
+        //        is_notify_bonus           否	            bool	                true	                                    积分变动时是否触发系统模板消息，默认为true
+        @Protocol(fieldType = FieldType.STRING, order = 14, description = "积分变动时是否触发系统模板消息，默认为true")
+        private String isNotifyBonus;
+        //        is_notify_balance	        否	            bool	                true	                                    余额变动时是否触发系统模板消息，默认为true
+        @Protocol(fieldType = FieldType.STRING, order = 15, description = "余额变动时是否触发系统模板消息，默认为true")
+        private String isNotifyBalance;
+        //        is_notify_custom_field1	否	            bool	                false                                   	自定义group1变动时是否触发系统模板消息，默认为false。（2、3同理）
+        @Protocol(fieldType = FieldType.BOOL, order = 16, description = "自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）")
+        private boolean isNotifyCustomField1;
+        @Protocol(fieldType = FieldType.BOOL, order = 17, description = "自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）")
+        private boolean isNotifyCustomField2;
+        @Protocol(fieldType = FieldType.BOOL, order = 18, description = "自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）")
+        private boolean isNotifyCustomField3;
+    }
+
+    @Data
+    class MemberItemUpdateRes extends ResultInfo {
+        //        openid            	用户openid
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "用户openid")
+        private String openid;
+        //        result_bonus            	当前用户积分总额
+        @Protocol(fieldType = FieldType.INT, order = 3, description = "当前用户积分总额")
+        private int resultBonus;
+        //        result_balance            	当前用户预存总金额
+        @Protocol(fieldType = FieldType.INT, order = 4, description = "当前用户预存总金额")
+        private int resultBalance;
 
     }
 

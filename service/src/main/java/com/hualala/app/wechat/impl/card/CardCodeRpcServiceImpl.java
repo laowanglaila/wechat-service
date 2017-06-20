@@ -210,4 +210,81 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         resultInfoBean.setEndTime(jsonObject.getLong("end_time"));
         return resultInfoBean;
     }
+
+    /**
+     * 更新会员实例信息
+     * @param memberItemUpdateReq
+     * @return
+     */
+    @Override
+    public MemberItemUpdateRes updateMemberItem(MemberItemUpdateReq memberItemUpdateReq) {
+        String cardCode = memberItemUpdateReq.getCardCode();
+        Long cardKey = memberItemUpdateReq.getCardKey();
+        if (cardKey == null) {
+            return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+        }
+        if (StringUtils.isBlank(cardCode)){
+            return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_CODE_NULL, "cardCode不允许为空！");
+        }
+        BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
+        if (null == baseInfoModel) {
+            return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+        }
+        String addBonus = memberItemUpdateReq.getAddBonus();
+        String bonus = memberItemUpdateReq.getBonus();
+        String addBalance = memberItemUpdateReq.getAddBalance();
+        String balance = memberItemUpdateReq.getBalance();
+        String backgroundPicUrl = memberItemUpdateReq.getBackgroundPicUrl();
+        String customFieldValue1 = memberItemUpdateReq.getCustomFieldValue1();
+        String customFieldValue2 = memberItemUpdateReq.getCustomFieldValue2();
+        String customFieldValue3 = memberItemUpdateReq.getCustomFieldValue3();
+        String recordBalance = memberItemUpdateReq.getRecordBalance();
+        String recordBonus = memberItemUpdateReq.getRecordBonus();
+        String isNotifyBalance = memberItemUpdateReq.getIsNotifyBalance();
+        String isNotifyBonus = memberItemUpdateReq.getIsNotifyBonus();
+        boolean notifyCustomField1 = memberItemUpdateReq.isNotifyCustomField1();
+        boolean notifyCustomField2 = memberItemUpdateReq.isNotifyCustomField2();
+        boolean notifyCustomField3 = memberItemUpdateReq.isNotifyCustomField3();
+
+        String json = "{" +
+                "    \"code\": \""+cardCode+"\"," +
+                "    \"card_id\": \""+baseInfoModel.getCardID()+"\", ";
+
+        StringBuilder sb = new StringBuilder(json);
+        if (StringUtils.isNotBlank(bonus))
+            sb.append("\"bonus\": "+bonus+",");
+        if (StringUtils.isNotBlank(addBonus))
+            sb.append("\"add_bonus\": "+addBonus+",");
+        if (StringUtils.isNotBlank(balance))
+            sb.append("\"balance\": "+balance+",");
+        if (StringUtils.isNotBlank(addBalance))
+            sb.append("\"add_balance\": "+addBalance+",");
+        if (StringUtils.isNotBlank(backgroundPicUrl))
+            sb.append("\"background_pic_url\": \""+backgroundPicUrl+"\",");
+        if (StringUtils.isNotBlank(recordBonus))
+            sb.append("\"record_bonus\": \""+recordBonus+"\",");
+        if (StringUtils.isNotBlank(recordBalance))
+            sb.append("\"record_balance\": \""+recordBalance+"\",");
+        if (StringUtils.isNotBlank(customFieldValue1))
+            sb.append("\"custom_field_value1\": \""+customFieldValue1+"\"，");
+        if (StringUtils.isNotBlank(customFieldValue2))
+            sb.append("\"custom_field_value2\": \""+customFieldValue2+"\"，");
+        if (StringUtils.isNotBlank(customFieldValue3))
+            sb.append("\"custom_field_value3\": \""+customFieldValue3+"\"，");
+        sb.append("\"notify_optional\": {");
+        if (StringUtils.isNotBlank(isNotifyBonus) && "false".equals(isNotifyBonus))
+            sb.append("  \"is_notify_bonus\": false,");
+        else
+            sb.append("  \"is_notify_bonus\": true,");
+        if (StringUtils.isNotBlank(isNotifyBalance) && "false".equals(isNotifyBalance))
+            sb.append("  \"is_notify_balance\": false,");
+        else
+            sb.append("  \"is_notify_balance\": true,");
+        sb.append("  \"is_notify_custom_field1\":"+notifyCustomField1+",");
+        sb.append("  \"is_notify_custom_field2\":"+notifyCustomField2+",");
+        sb.append("  \"is_notify_custom_field3\":"+notifyCustomField3+",");
+        sb.replace(sb.length()-1,sb.length(),"    } }");
+        JSONObject jsonObject = baseHttpService.updateMemberInfo(sb.toString(), baseInfoModel.getMpID());
+        return ResultUtil.getResultInfoBean(jsonObject,MemberItemUpdateRes.class);
+    }
 }

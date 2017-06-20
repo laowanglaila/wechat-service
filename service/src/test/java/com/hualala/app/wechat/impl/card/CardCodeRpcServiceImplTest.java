@@ -36,13 +36,21 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
         System.out.println(cardCodeDestroyResData.getMessage());
     }
     @Test
-    public void testDecodingCode() {
+    public void testUpdateMemberItem() {
         CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
+        CardCodeRpcService.MemberItemUpdateReq memberItemUpdateReq = new CardCodeRpcService.MemberItemUpdateReq();
+        memberItemUpdateReq.setCardCode("628039740870");
+        memberItemUpdateReq.setCardKey(6430987246790256753L);
+        memberItemUpdateReq.setBonus("400");
+        memberItemUpdateReq.setAddBonus("-89");
+//        memberItemUpdateReq.setBalance("100");
+//        memberItemUpdateReq.setAddBalance("100");
+        memberItemUpdateReq.setRecordBonus("哗啦啦测试消费积分");
+        memberItemUpdateReq.setRecordBalance("哗啦啦测试储值");
 
-        CardCodeRpcService.CardCodeDecodingReqData cardCodeDecodingReqData = new CardCodeRpcService.CardCodeDecodingReqData();
-        cardCodeDecodingReqData.setMpID("hualala_com");
-        cardCodeDecodingReqData.setEncryptCode("XXIzTtMqCxwOaawoE91+VJdsFmv7b8g0VZIZkqf4GWA60Fzpc8ksZ/5ZZ0DVkXdE");
-        CardCodeRpcService.CardCodeDecodingResData cardCodeDecodingResData = rpcClient.decodingCardCode(cardCodeDecodingReqData);
-        System.out.println(cardCodeDecodingResData.getMessage());
+        CardCodeRpcService.MemberItemUpdateRes memberItemUpdateRes = rpcClient.updateMemberItem(memberItemUpdateReq);
+        System.out.println(memberItemUpdateRes.toString());
+        System.out.println(memberItemUpdateRes.getMessage());
     }
+
 }

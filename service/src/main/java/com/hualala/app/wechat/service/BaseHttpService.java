@@ -277,6 +277,10 @@ public class BaseHttpService {
         String url = WechatBaseApi.UPDATE_MEMBER_INFO;
         return this.commonHttpPost(url, map, mpID);
     }
+    public JSONObject updateMemberInfo(String params, String mpID) {
+        String url = WechatBaseApi.UPDATE_MEMBER_INFO;
+        return this.commonHttpPost(url, params, mpID);
+    }
 
     /**
      * 拉取会员信息（积分）
