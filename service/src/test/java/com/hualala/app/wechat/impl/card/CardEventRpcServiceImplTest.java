@@ -22,7 +22,7 @@ public class CardEventRpcServiceImplTest extends BaseRpcTest {
         activateMemberCardReqData.setBackgroundPicUrl("");
         activateMemberCardReqData.setActivateBeginTime(0);
         activateMemberCardReqData.setActivateEndTime(0);
-        activateMemberCardReqData.setInitBonus(0);
+        activateMemberCardReqData.setInitBonus(100);
         activateMemberCardReqData.setInitBonusRecord("");
         activateMemberCardReqData.setInitBalance(0);
         activateMemberCardReqData.setInitCustomFieldValue1("");

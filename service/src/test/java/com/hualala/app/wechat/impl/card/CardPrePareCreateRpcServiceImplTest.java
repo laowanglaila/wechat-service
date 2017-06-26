@@ -95,7 +95,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     baseInfo.setCustomUrlName("立即使用");
     baseInfo.setCenterSubTitle("6个汉字tips");
     baseInfo.setDescription("不可与其他优惠同享如需团购券发票，请在消费时向商户提出店内均可使用，仅限堂食");
-    baseInfo.setGetLimit(3);
+    baseInfo.setGetLimit(1);
     baseInfo.setLogoUrl("http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0");
     baseInfo.setNotice("使用时向服务员出示此券");
     baseInfo.setPromotionUrl("http://www.hualala.com");
@@ -184,16 +184,18 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("Prerogative");
-
+        memberInfo.setPrerogative("哗啦啦小卖部");
+        memberInfo.setAutoActivate(true);
+        memberInfo.setSupplyBonus(true);
+        memberInfo.setSupplyBalance(true);
         memberInfo.setCustomCell1("{\n" +
                 "   \"name\" : \"name\",\n" +
                 "   \"tips\" : \"tips\",\n" +
-                "   \"url\" : \"http://www.xxx.com\"\n" +
+                "   \"url\" : \"http://www.hualala.com\"\n" +
                 "}\n");
         memberInfo.setCustomField1("{\n" +
                 "   \"name_type\" : \"FIELD_NAME_TYPE_LEVEL\",\n" +
-                "   \"url\" : \"http://www.qq.com\"\n" +
+                "   \"url\" : \"http://www.hualala.com\"\n" +
                 "}\n");
         //设置baseInfo
         CardPrePareCreateRpcService.PreCardBaseInfoData baseInfo = new CardPrePareCreateRpcService.PreCardBaseInfoData();
@@ -206,8 +208,8 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(5L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("哗啦啦尊享火锅套餐");
-        baseInfo.setMpID("doulaofangceshi");
+        baseInfo.setTitle("哗啦啦至尊会员103");
+        baseInfo.setMpID("hualala_com");
         baseInfo.setDateInfo("{\"begin_timestamp\" : "+startTime+",\"end_timestamp\" : "+endTime+",\n\"type\" : \"DATE_TYPE_FIX_TIME_RANGE\"}");
         baseInfo.setBindOpenid(false);
         baseInfo.setBrandName("BrandName");
@@ -222,15 +224,14 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setCustomUrlName("CustomUrlName");
         baseInfo.setCenterSubTitle("6个汉字tips");
         baseInfo.setDescription("Description");
-        baseInfo.setGetLimit(3);
+        baseInfo.setGetLimit(1);
         baseInfo.setLogoUrl("http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0");
         baseInfo.setNotice("Notice");
         baseInfo.setPromotionUrl("http://www.hualala.com");
         baseInfo.setPromotionUrlName("PromoUrlName");
         baseInfo.setServicePhone("17614430096");
         baseInfo.setSource("Source");
-
-        baseInfo.setUseCustomCode(true);
+        baseInfo.setUseCustomCode(false);
 //        baseInfo.setCustomCodeMode("GET_CUSTOM_CODE_MODE_DEPOSIT");
         baseInfo.setUseLimit(0);
         baseInfo.setUseAllLocations(false);
@@ -277,7 +278,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6424707918704157701L);
+        cardPrimaryKey.setCardKey(6434399349198825477L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }

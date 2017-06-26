@@ -63,7 +63,7 @@ grpc:
 
 wechat:
   data:
-    componentAppID: wx431ecb8eae767f0c
+    componentAppID: wx8ed9d715cdd52b1d
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
@@ -156,7 +156,8 @@ grpc:
 
 wechat:
   data:
-    componentAppID: wx431ecb8eae767f0c
+#    componentAppID: wx431ecb8eae767f0c  #mu环境
+    componentAppID: wx8ed9d715cdd52b1d  #dohko环境
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
@@ -245,7 +246,7 @@ grpc:
 
 wechat:
   data:
-    componentAppID: wx431ecb8eae767f0c
+    componentAppID: wx8ed9d715cdd52b1d
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:

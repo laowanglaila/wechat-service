@@ -4,11 +4,9 @@ option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardDeleteRpcData";
 import "commons.proto";
 
-message CardUnAvailableReqData {  
+message CardDeleteReqData {  
    // 唯一ID
    int64 cardKey=2;
-   // code码
-   string code=3;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -16,16 +14,20 @@ message CardDeleteAndUnAbailableResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-message CardDeleteReqData {  
+message CardUnAvailableReqData {  
    // 唯一ID
    int64 cardKey=2;
+   // code码
+   string code=3;
+   // 失效原因
+   string reason=4;
    // 请求公共字段
    RequestHeader header=1;
 }
 //
 service CardDeleteRpcService{
     //
-    rpc unAvailableCard(CardUnAvailableReqData) returns (CardDeleteAndUnAbailableResData) {}
-    //
     rpc deleteCard(CardDeleteReqData) returns (CardDeleteAndUnAbailableResData) {}
+    //
+    rpc unAvailableCard(CardUnAvailableReqData) returns (CardDeleteAndUnAbailableResData) {}
 }

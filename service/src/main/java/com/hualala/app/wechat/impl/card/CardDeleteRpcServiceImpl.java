@@ -70,8 +70,9 @@ public class CardDeleteRpcServiceImpl implements CardDeleteRpcService {
         String cardID = baseInfoModel1.getCardID();
         String mpID = baseInfoModel1.getMpID();
         String code = cardUnAvailableReqData.getCode();
-        String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\"}";
-        JSONObject jsonObject = baseHttpService.deleteCard(params, mpID);
+        String reason = cardUnAvailableReqData.getReason();
+        String params = "{\"code\": \""+code+"\",\"card_id\": \""+cardID+"\",\"reason\":\""+reason+"\"}";
+        JSONObject jsonObject = baseHttpService.setCardUnavailable(params, mpID);
 //        if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)){
 //            //修改状态
 //            BaseInfoModel baseInfoModel = new BaseInfoModel();

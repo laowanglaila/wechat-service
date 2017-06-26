@@ -775,7 +775,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
             cardInfo.put("prerogative", prerogative);
             //选填     自动激活
             Boolean autoActivate = memberModel.getAutoActivate();
-
+            cardInfo.put("auto_activate",autoActivate);
             String activateUrl = memberModel.getActivateUrl();
             if (StringUtils.isNotBlank(activateUrl)) {
                 cardInfo.put("activate_url", activateUrl);
@@ -799,8 +799,10 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
             if (supplyBalance) {
                 String balanceRules = memberModel.getBalanceRules();
                 String balanceUrl = memberModel.getBalanceUrl();
-                cardInfo.put("balance_rules", balanceRules);
-                cardInfo.put("balance_url", balanceUrl);
+                if (StringUtils.isNotBlank(balanceRules))
+                  cardInfo.put("balance_rules", balanceRules);
+                if (StringUtils.isNotBlank(balanceUrl))
+                  cardInfo.put("balance_url", balanceUrl);
             }
             //supply_bonus            	是            	bool            	显示积分，填写true或false，如填写true，积分相关字段均为必填。
             Boolean supplyBonus = memberModel.getSupplyBonus();
@@ -944,7 +946,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
         //        use_custom_code        否 	bool 	        true 	是否自定义Code码。填写true或false，默认为false。通常自有优惠码系统的开发者选择自定义Code码，在卡券投放时带入。
         baseInfoMap.put("use_custom_code", baseInfo.getUseCustomCode());
         //        bind_openid 	         否 	bool 	        true 	是否指定用户领取，填写true或false。默认为false。
-        baseInfoMap.put("bind_openid", true);
+        baseInfoMap.put("bind_openid", baseInfo.getBindOpenid());
         //        service_phone 	     否 	string（24） 	40012234 	客服电话。
         String servicePhone = baseInfo.getServicePhone();
         if (StringUtils.isNotBlank(servicePhone)) {

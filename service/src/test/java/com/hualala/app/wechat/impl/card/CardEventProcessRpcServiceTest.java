@@ -15,7 +15,7 @@ public class CardEventProcessRpcServiceTest extends BaseRpcTest {
         CardEventProcessRpcService.EventProcessReq eventProcessReq = new CardEventProcessRpcService.EventProcessReq();
         eventProcessReq.setJson(json);
         CardEventProcessRpcService.EventProcessRes process = rpcClient.process(eventProcessReq);
-        System.out.println(process);
+        System.out.println(process.getJson());
     }
     @Test
     public void testImpl() {

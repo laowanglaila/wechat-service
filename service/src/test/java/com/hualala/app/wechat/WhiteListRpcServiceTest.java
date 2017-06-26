@@ -11,7 +11,7 @@ public class WhiteListRpcServiceTest extends BaseRpcTest {
 
         WhiteListRpcService rpcClient = baseRpcClient.getRpcClient(WhiteListRpcService.class);
         WhiteListRpcService.ReqData reqData = new WhiteListRpcService.ReqData();
-        reqData.setMpID("doulaofangceshi");
+        reqData.setMpID("hualala_com");
         reqData.setUserName("renfeifei_1314");
         WhiteListRpcService.ResData resData = rpcClient.addToWhiteList(reqData);
 

@@ -36,6 +36,8 @@ public interface CardDeleteRpcService {
         private Long cardKey;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "code码")
         private String code;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "失效原因")
+        private String reason;
     }
 
     @Data

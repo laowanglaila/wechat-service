@@ -162,6 +162,9 @@ public class BaseHttpService {
     public JSONObject setCardUnavailable(Map<String, Object> map, String mpId) {
         return this.commonHttpPost(WechatBaseApi.UNAVAILABLE_CARD, map, mpId);
     }
+    public JSONObject setCardUnavailable(String json, String mpId) {
+        return this.commonHttpPost(WechatBaseApi.UNAVAILABLE_CARD, json, mpId);
+    }
 
     /**
      * reated by renjianfei on 2017/4/7.

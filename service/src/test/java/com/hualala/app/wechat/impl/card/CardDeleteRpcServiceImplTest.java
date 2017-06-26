@@ -22,13 +22,15 @@ public class CardDeleteRpcServiceImplTest extends BaseRpcTest {
     }
     @Test
     public void test1() {
-//        long l = System.currentTimeMillis();
-//        CardDeleteRpcService rpcClient = super.baseRpcClient.getRpcClient(CardDeleteRpcService.class);
-//        CardDeleteRpcService.CardDeleteReqData cardDeleteReqData = new CardDeleteRpcService.CardDeleteReqData();
-//        cardDeleteReqData.setCardKey(6423579463291790449L);
-//        ResultInfo resultInfo = rpcClient.unAvailableCard(cardDeleteReqData);
-//        long l1 = System.currentTimeMillis();
-//        System.out.println("[ "+(l1-l)+" ]ms");
-//        System.out.println(resultInfo.getMessage());
+        long l = System.currentTimeMillis();
+        CardDeleteRpcService rpcClient = super.baseRpcClient.getRpcClient(CardDeleteRpcService.class);
+        CardDeleteRpcService.CardUnAvailableReqData cardUnAvailableReqData = new CardDeleteRpcService.CardUnAvailableReqData();
+        cardUnAvailableReqData.setCardKey(6434399349198825477L);
+        cardUnAvailableReqData.setCode("489746517381");
+        cardUnAvailableReqData.setReason("测试设置失效");
+        ResultInfo resultInfo = rpcClient.unAvailableCard(cardUnAvailableReqData);
+        long l1 = System.currentTimeMillis();
+        System.out.println("[ "+(l1-l)+" ]ms");
+        System.out.println(resultInfo.getMessage());
     }
 }

@@ -13,9 +13,9 @@ public class ProtoGenerator {
         Class[] generatorClass = new Class[]{
 //                MsgPublishRpcService.class
 //                CardEventProcessRpcService.class
-                CardCodeRpcService.class
+//                CardCodeRpcService.class
 //                CardUpdateRpcService.class,
-//                CardDeleteRpcService.class,
+                CardDeleteRpcService.class,
 //                CardEventRpcService.class,
 //                CardSyncRpcService.class,
 //                CardCodeRpcService.class,

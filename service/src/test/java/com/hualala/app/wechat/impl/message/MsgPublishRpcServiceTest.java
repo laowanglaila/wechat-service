@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -28,23 +29,25 @@ public class MsgPublishRpcServiceTest {
 
     @Test
     public void test(){
-        String text = "群发测试Hellow word!\r\n<a url=\"http://www.hualala.com/\">hualala<a/>";
+        String text = "温馨提示：\n恭喜您获得【优惠券名称】，\n【数量】张\n" +
+                "详情点击：\n【优惠券列表地址】\n" +
+                "【集团名称】";
         String mpID = "doulaofangceshi";
 //        String mpID = "hualala_com";
 
         String url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview";
-//        String params = "{ " +
-//                "    \"towxname\":\"renfeifei_1314\"," +
-//                "    \"text\":{\"content\":\""+text+"\"}," +
-//                "    \"msgtype\":\"text\"" +
-//                "}";
-        String params = "{\n" +
-//                        "  \"touser\":\"o7FjEuBvkjdVaJBkrQt8GNqMuSIQ\", \n" +
-                      "    \"towxname\":\"renfeifei_1314\"," +
-                        "  \"msgtype\":\"wxcard\",\n" +
-//                        "  \"wxcard\":{\"card_id\":\"pACwGs9SukuPsEQ42U4DYdJJxOjw\"},\n" +
-                        "  \"wxcard\":{\"card_id\":\"p7FjEuKXEJY0ktzCj_R7J5xY0KAI\"},\n" +
-                        "}";
+        String params = "{ " +
+                "    \"towxname\":\"renfeifei_1314\"," +
+                "    \"text\":{\"content\":\""+text+"\"}," +
+                "    \"msgtype\":\"text\"" +
+                "}";
+//        String params = "{\n" +
+////                        "  \"touser\":\"o7FjEuBvkjdVaJBkrQt8GNqMuSIQ\", \n" +
+//                      "    \"towxname\":\"renfeifei_1314\"," +
+//                        "  \"msgtype\":\"wxcard\",\n" +
+////                        "  \"wxcard\":{\"card_id\":\"pACwGs9SukuPsEQ42U4DYdJJxOjw\"},\n" +
+//                        "  \"wxcard\":{\"card_id\":\"p7FjEuKXEJY0ktzCj_R7J5xY0KAI\"},\n" +
+//                        "}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
         System.out.println(jsonObject);
     }
@@ -67,9 +70,9 @@ public class MsgPublishRpcServiceTest {
         String params = "{\n" +
 //                        "  \"touser\":\"o7FjEuBvkjdVaJBkrQt8GNqMuSIQ\", \n" +
                       "    \"towxname\":\"renfeifei_1314\"," +
-                        "  \"msgtype\":\"mpnews\",\n" +
-//                        "  \"wxcard\":{\"card_id\":\"pACwGs9SukuPsEQ42U4DYdJJxOjw\"},\n" +
-                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
+//                        "  \"msgtype\":\"mpnews\",\n" +
+                        "  \"wxcard\":{\"card_id\":\"pACwGswc-Pr6d1_nB4WKw4nxW3Po\"},\n" +
+//                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
                         "}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
         System.out.println(jsonObject);
