@@ -1,5 +1,8 @@
 package com.hualala.app.wechat.impl.card;
 
+import com.hualala.app.crm.bean.cardChannel.CardChannelReq;
+import com.hualala.app.crm.bean.cardChannel.CardChannelRes;
+import com.hualala.app.crm.service.CardChannelService;
 import com.hualala.app.wechat.BaseRpcTest;
 import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.CardSyncRpcService;
@@ -90,5 +93,13 @@ private CreateCardKeyService createCardKeyService;
         }
     }
 
+    @Test
+    public void testaddCardChannel(){
+        CardChannelService rpcClient = super.baseRpcClient.getRpcClient(CardChannelService.class);
+        CardChannelReq cardChannelReq = new CardChannelReq();
+//        cardChannelReq.set
+        CardChannelRes cardChannelRes = rpcClient.addCardChannel(cardChannelReq);
+        System.out.println(cardChannelRes.getMessage());
+    }
 
 }

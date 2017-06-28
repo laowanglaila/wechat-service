@@ -1,10 +1,10 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dld.hualala.util.FileUtil;
 import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.BaseMediaService;
+import com.hualala.app.wechat.util.FileUtil;
 import com.hualala.core.app.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;

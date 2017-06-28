@@ -117,6 +117,29 @@ public class WechatCacheUtil {
         String keyName = "wechat_acToken_" + key;
         return redisTemplateStatic.opsForValue().get(keyName);
     }
+    /**
+     * 更新apiTicket缓存
+     *
+     * @param key
+     * @param value
+     * @param timeout
+     */
+    public static void setCacheApiTicket(String key, String value, Long timeout,String type) {
+
+        String keyName = "wechat:api_ticket:" + type+":" + key;
+        setData(keyName, value, timeout);
+    }
+
+    /**
+     * 获取apiTicket缓存
+     *
+     * @param key
+     * @return
+     */
+    public static String getCacheApiTicket(String key,String type) {
+        String keyName = "wechat:api_ticket:" + type+":" + key;
+        return redisTemplateStatic.opsForValue().get(keyName);
+    }
 
     /**
      * 删除redis缓存

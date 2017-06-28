@@ -15,4 +15,5 @@ public class GrpcClientProperties {
     private String wechat;
 //    private String idgen;
     private String sem;
+    private String shopcrm;
 }

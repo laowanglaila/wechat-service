@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "JsApiSignRpcData";
+import "commons.proto";
+
+message JsApiSignReqData {  
+   // 当前网页的URL，不包含#及其后面部分
+   string url=2;
+   // 微信公众号ID
+   int64 mpID=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message JsApiSignResData {  
+   // 时间戳，商户生成从1970年1月1日00:00:00至今的秒数,即当前的时间,且最终需要转换为字符串形式;由商户生成后传入,不同添加请求的时间戳须动态生成，若重复将会导致领取失败！
+   string timeStamp=2;
+   // 随机字符串，由开发者设置传入，加强安全性（若不填写可能被重放请求）。随机字符串，不长于32位。推荐使用大小写字母和数字，不同添加请求的nonce须动态生成，若重复将会导致领取失败。
+   string nonceStr=3;
+   // 签名，商户将接口列表中的参数按照指定方式进行签名,签名方式使用SHA1,具体签名方案参见下文;由商户按照规范签名后传入
+   string signature=4;
+   // 必填，公众号的唯一标识
+   string appId=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//获取jsapi签名相关
+service JsApiSignRpcService{
+    //获取h5jsapi签名
+    rpc getSign(JsApiSignReqData) returns (JsApiSignResData) {}
+}

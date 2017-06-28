@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardSignRpcData";
+import "commons.proto";
+
+message CardSignReqData {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 哗啦啦会员卡ID
+   int64 hualalaCardID=5;
+   // 指定的卡券code码，只能被领一次。自定义code模式的卡券必须填写，非自定义code和预存code模式的卡券不必填写
+   string code=6;
+   // 指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，bind_openid字段为false不必填写
+   string openid=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardSignResData {  
+   // 时间戳，商户生成从1970年1月1日00:00:00至今的秒数,即当前的时间,且最终需要转换为字符串形式;由商户生成后传入,不同添加请求的时间戳须动态生成，若重复将会导致领取失败！
+   string timeStamp=2;
+   // 随机字符串，由开发者设置传入，加强安全性（若不填写可能被重放请求）。随机字符串，不长于32位。推荐使用大小写字母和数字，不同添加请求的nonce须动态生成，若重复将会导致领取失败。
+   string nonceStr=3;
+   // 签名，商户将接口列表中的参数按照指定方式进行签名,签名方式使用SHA1,具体签名方案参见下文;由商户按照规范签名后传入
+   string signature=4;
+   // 微信cardID
+   string cardID=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//获取api签名相关
+service CardSignRpcService{
+    //获取h5投放卡券签名和必传参数
+    rpc getSign(CardSignReqData) returns (CardSignResData) {}
+}

@@ -337,6 +337,66 @@ public class BaseInfoModelQuery {
             return (Criteria) this;
         }
 
+        public Criteria andHualalaCardIDIsNull() {
+            addCriterion("hualalaCardID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDIsNotNull() {
+            addCriterion("hualalaCardID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDEqualTo(Long value) {
+            addCriterion("hualalaCardID =", value, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDNotEqualTo(Long value) {
+            addCriterion("hualalaCardID <>", value, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDGreaterThan(Long value) {
+            addCriterion("hualalaCardID >", value, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDGreaterThanOrEqualTo(Long value) {
+            addCriterion("hualalaCardID >=", value, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDLessThan(Long value) {
+            addCriterion("hualalaCardID <", value, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDLessThanOrEqualTo(Long value) {
+            addCriterion("hualalaCardID <=", value, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDIn(List<Long> values) {
+            addCriterion("hualalaCardID in", values, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDNotIn(List<Long> values) {
+            addCriterion("hualalaCardID not in", values, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDBetween(Long value1, Long value2) {
+            addCriterion("hualalaCardID between", value1, value2, "hualalaCardID");
+            return (Criteria) this;
+        }
+
+        public Criteria andHualalaCardIDNotBetween(Long value1, Long value2) {
+            addCriterion("hualalaCardID not between", value1, value2, "hualalaCardID");
+            return (Criteria) this;
+        }
+
         public Criteria andShopIDIsNull() {
             addCriterion("shopID is null");
             return (Criteria) this;

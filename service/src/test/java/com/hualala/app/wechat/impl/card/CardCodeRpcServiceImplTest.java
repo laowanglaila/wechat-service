@@ -40,8 +40,8 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
         CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
         CardCodeRpcService.MemberItemUpdateReq memberItemUpdateReq = new CardCodeRpcService.MemberItemUpdateReq();
 //        memberItemUpdateReq.setCardCode("154096919594");
-        memberItemUpdateReq.setCardCode("489746517381");
-        memberItemUpdateReq.setCardKey(6434399349198825477L);
+        memberItemUpdateReq.setCardCode("177839940248");
+        memberItemUpdateReq.setCardKey(6435763117279446021L);
         memberItemUpdateReq.setBonus("400");
         memberItemUpdateReq.setAddBonus("6");
         memberItemUpdateReq.setBalance("100");

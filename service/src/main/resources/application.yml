@@ -60,7 +60,7 @@ grpc:
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272
-
+        shopcrm: dohko.shop.crm.service.hualala.com:31537
 wechat:
   data:
     componentAppID: wx8ed9d715cdd52b1d
@@ -153,7 +153,7 @@ grpc:
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272
-
+        shopcrm: dohko.shop.crm.service.hualala.com:31537
 wechat:
   data:
 #    componentAppID: wx431ecb8eae767f0c  #mu环境

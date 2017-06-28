@@ -138,10 +138,21 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.dld.hualala</groupId>-->
+            <!--<artifactId>hualala-util</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>com.dld.hualala</groupId>
-            <artifactId>hualala-util</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.hualala.shop.crm</groupId>
+            <artifactId>shopcrm-interface</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.2</version>
         </dependency>
 
     </dependencies>

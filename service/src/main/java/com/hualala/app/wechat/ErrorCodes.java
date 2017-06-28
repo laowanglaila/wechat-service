@@ -81,5 +81,6 @@ public interface ErrorCodes {
     String WECHAT_QRCODE_NOT_ENOUGH = "00112145";
     //根据openid群发消息 , 2<数量<10000
     String WECHAT_MESSAGE_PUBLISH_WRONG_SIZE = "00112145";
-
+    //签名服务的url不允许为空
+    String WECHAT_SIGN_URL_EMPTY = "00112146";
 }

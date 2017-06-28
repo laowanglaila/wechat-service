@@ -40,6 +40,12 @@ public class GrpcClientConfiguration {
         SemServiceClient semServiceClient = new SemServiceClient(grpcClientProperties.getSem());
         return semServiceClient;
     }
+    @Bean (name = "com.hualala.app.crm.service", destroyMethod="clean")
+    public ShopCrmClient shopCrmClient() {
+        logger.info(() -> "initializing idgen client ... [" + grpcClientProperties.getShopcrm() + "]");
+        ShopCrmClient shopCrmClient = new ShopCrmClient(grpcClientProperties.getShopcrm());
+        return shopCrmClient;
+    }
 
     @Bean(destroyMethod = "clean")
     public GrpcClient wechatGrpcClient() {
