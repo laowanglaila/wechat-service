@@ -27,6 +27,8 @@ message CardSignResData {
    string signature=4;
    // 微信cardID
    string cardID=5;
+   // 领取渠道参数，用于标识本次领取的渠道值
+   string outerStr=6;
    // 响应公共字段
    ResultHeader result=1;
 }
