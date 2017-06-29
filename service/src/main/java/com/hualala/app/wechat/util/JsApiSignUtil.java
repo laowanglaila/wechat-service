@@ -13,8 +13,7 @@ import java.util.UUID;
  * @author zhangzichang
  *
  */
-public class Sign {
-	
+public class JsApiSignUtil {
     public static Map<String, String> sign(String jsapi_ticket, String url) {
         Map<String, String> ret = new HashMap<String, String>();
         String nonce_str = create_nonce_str();

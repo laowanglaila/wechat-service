@@ -83,4 +83,6 @@ public interface ErrorCodes {
     String WECHAT_MESSAGE_PUBLISH_WRONG_SIZE = "00112145";
     //签名服务的url不允许为空
     String WECHAT_SIGN_URL_EMPTY = "00112146";
+    //公众号mpID不允许为空
+    String WECHAT_MPID_NOT_FOUND = "00112147";
 }
