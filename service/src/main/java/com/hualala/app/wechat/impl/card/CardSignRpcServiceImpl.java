@@ -5,7 +5,10 @@ import com.hualala.app.wechat.CardSignRpcService;
 import com.hualala.app.wechat.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
+import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapperEXT;
+import com.hualala.app.wechat.model.card.BaseInfoModel;
+import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
 import com.hualala.app.wechat.service.ApiTicketService;
 import com.hualala.app.wechat.service.HttpApiService;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -33,20 +36,35 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
     private BaseInfoModelMapperEXT baseInfoModelMapperEXT;
     @Autowired
     private ApiTicketService apiTicketService;
+    @Autowired
+    private BaseInfoModelMapper baseInfoModelMapper;
     @Override
     public CardSignResData getSign(CardSignReqData cardSignReqData) {
         //判断mpID,没有则调方法获取
         String mpID = cardSignReqData.getMpID();
-        if (StringUtils.isBlank(mpID)) {
-                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID不能为空！");
-        }
+        //groupID
+        Long groupID = cardSignReqData.getGroupID();
         Long hualalaCardID = cardSignReqData.getHualalaCardID();
         if (hualalaCardID == null){
             return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "hualalaCardID不能为空！");
         }
-        //groupID
-        Long groupID = null;
-        groupID = cardSignReqData.getGroupID();
+        if (StringUtils.isBlank(mpID)) {
+            if (groupID == null || hualalaCardID == null){
+                if (logger.isErrorEnabled())
+                    logger.error("非法参数:groupID["+groupID+"],hualalaCardID["+hualalaCardID+"]！");
+                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS, "非法参数:groupID["+groupID+"],mpID["+mpID+"]！");
+            }
+            BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
+            baseInfoModelQuery.createCriteria().andHualalaCardIDEqualTo(hualalaCardID).andGroupIDEqualTo(groupID);
+            List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample(baseInfoModelQuery);
+            if (baseInfoModels.size() > 0){
+                BaseInfoModel baseInfoModel = baseInfoModels.get(0);
+                mpID = baseInfoModel.getMpID();
+            }
+            if (StringUtils.isBlank(mpID)) {
+                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID不能为空！");
+            }
+        }
         if (groupID == null) {
             Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
