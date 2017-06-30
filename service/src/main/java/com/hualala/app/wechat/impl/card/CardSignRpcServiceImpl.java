@@ -60,7 +60,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         }
         WxCardSign signer = new WxCardSign();
         // api_ticket、timestamp、card_id、code、openid、nonce_str
-        JSONObject ticketObject = apiTicketService.getWxCardApiTicket("hualala_com");
+        JSONObject ticketObject = apiTicketService.getWxCardApiTicket(mpID);
         if (!ticketObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
             return ResultUtil.getResultInfoBean(ticketObject,CardSignResData.class);
         }
