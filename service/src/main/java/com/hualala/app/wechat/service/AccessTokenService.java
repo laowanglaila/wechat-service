@@ -64,7 +64,7 @@ public class AccessTokenService {
             param.put("mpID",mpID);
             param.put("appID",appID);
             result = initAccessToken(param);
-            if(WechatMessageType.FALSE.equals(result.getString(WechatMessageType.IS_SUCCESS))){
+            if(!result.getBoolean(WechatMessageType.IS_SUCCESS)){
                 return ResultUtil.toResultJson(result,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_ERROR,"缓存中获取accessToken is null");
             }
             //accessToken = WechatCacheUtil.getCacheAccessToken(mpID);

@@ -32,7 +32,7 @@ import java.util.concurrent.*;
 @Service
 public class FastMemberInfoService {
 
-    private Logger logger = LoggerFactory.getLogger(ComponentTokenService.class);
+    private Logger logger = LoggerFactory.getLogger(FastMemberInfoService.class);
 
     private String accessToken = null;
     private Long iflush = 0L;

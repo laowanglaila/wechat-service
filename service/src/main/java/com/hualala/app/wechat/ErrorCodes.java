@@ -85,4 +85,6 @@ public interface ErrorCodes {
     String WECHAT_SIGN_URL_EMPTY = "00112146";
     //公众号mpID不允许为空
     String WECHAT_MPID_NOT_FOUND = "00112147";
+    //非法参数
+    String WECHAT_ILLEGAL_ARGUMENTS = "00112148";
 }

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,11 +28,11 @@ public class WechatCardEventController {
     public JSONObject event(HttpServletRequest request) {
 //        Map<String, String[]> parameterMap = request.getParameterMap();
 //        System.out.println(JSONObject.toJSONString(parameterMap));
-        ServletInputStream is = null;
+        InputStreamReader is = null;
         StringBuilder sb = null;
         try {
-            is = request.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            is = new InputStreamReader(request.getInputStream());
+            BufferedReader reader = new BufferedReader(is);
             sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {

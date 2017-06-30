@@ -41,7 +41,7 @@ public class MsgPublishRpcServiceImpl implements MsgPublishRpcService {
             Long brandID = textMsgReq.getBrandID();
             Long groupID = textMsgReq.getGroupID();
             Long shopID = textMsgReq.getShopID();
-            if (null != brandID || null != groupID) {
+            if (null == brandID || null == groupID) {
                 return new MsgPublishRpcService.TextMsgRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
             }
             //通过上面三个属性获取mpID，调用方法待定；

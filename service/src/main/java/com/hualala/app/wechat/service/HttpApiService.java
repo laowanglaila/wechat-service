@@ -37,7 +37,7 @@ public class HttpApiService {
         if(split.length ==1 || !url.contains("access_token")){
 
             JSONObject result = accessTokenService.getAccessToken(mpID);
-            if(WechatMessageType.FALSE.equals(result.getString(WechatMessageType.IS_SUCCESS))){
+            if(!result.getBoolean(WechatMessageType.IS_SUCCESS)){
                 return result;
             }else {
                 String accessToken = result.getString("accessToken");

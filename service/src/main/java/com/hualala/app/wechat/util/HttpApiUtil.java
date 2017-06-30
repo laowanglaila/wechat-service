@@ -114,7 +114,7 @@ public class HttpApiUtil {
             }
             HttpEntity httpEntity = httpResponse.getEntity();
             if (httpEntity != null) {
-                String result = result = EntityUtils.toString(httpEntity, ENCODE);
+                String result = EntityUtils.toString(httpEntity, ENCODE);
                 logger.info(result);
                 return JSON.parseObject(result);
             }

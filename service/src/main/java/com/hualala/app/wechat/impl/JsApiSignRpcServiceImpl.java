@@ -23,6 +23,7 @@ public class JsApiSignRpcServiceImpl implements JsApiSignRpcService {
 
     @Autowired
     private ApiTicketService apiTicketService;
+    @Autowired
     private MpInfoService mpInfoService;
 
     private static final String HUALALA_COM = "hualala_com";
