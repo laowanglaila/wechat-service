@@ -74,7 +74,7 @@ public class WechatQrcodeTempRpcServiceTest {
         wechatQRCodeListReq.setMpID("doulaofangceshi");
         wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
         wechatQRCodeListReq.setExpireSeconds(3600*24);
-        wechatQRCodeListReq.setSize(15);
+        wechatQRCodeListReq.setSize(200);
         List<WechatQRCodeRpcSerivce.WechatQRCodeData> list = new ArrayList<>();
         for (int i = 0 ; i < 3; i++) {
             WechatQRCodeRpcSerivce.WechatQRCodeData wechatQRCodeData = new WechatQRCodeRpcSerivce.WechatQRCodeData();
@@ -165,8 +165,8 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
                         "{\"param1\":\"param1\",\"qrcodeName\":\"QrcodeName\"}" +
                 "]");
 
-        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcodeList.html", params);
-//        JSONObject jsonObject = HttpApiUtil.httpPost("http://dohko.eshopapi.hualala.com/wechat/getQrcodeList.html", params);
+//        JSONObject jsonObject = HttpApiUtil.httpPost("http://127.0.0.1:8090/wechat/getQrcodeList.html", params);
+        JSONObject jsonObject = HttpApiUtil.httpPost("http://dohko.eshopapi.hualala.com/wechat/getQrcodeList.html", params);
         System.out.println(jsonObject.toJSONString());
 
         long end = System.currentTimeMillis();

@@ -87,4 +87,6 @@ public interface ErrorCodes {
     String WECHAT_MPID_NOT_FOUND = "00112147";
     //非法参数
     String WECHAT_ILLEGAL_ARGUMENTS = "00112148";
+    //卡券信息无法匹配
+    String WECHAT_CARD_MISMATCH = "00112149";
 }

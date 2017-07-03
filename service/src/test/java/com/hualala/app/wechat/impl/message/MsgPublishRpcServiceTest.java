@@ -116,7 +116,7 @@ public class MsgPublishRpcServiceTest {
         list.add(3574383L);
         textMsgReq.setUserIds(list);
         textMsgReq.setMpID("doulaofangceshi");
-        textMsgReq.setText("群发消息");
+        textMsgReq.setText("群发消息1");
         MsgPublishRpcService.TextMsgRes textMsgRes = rpcClient.publishTextByUserList(textMsgReq);
 
 

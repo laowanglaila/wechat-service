@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.BaseRpcTest;
+import com.hualala.app.wechat.CardCodeRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
 import org.junit.Test;
 
@@ -58,6 +59,25 @@ public class CardUpdateRpcServiceImplTest extends BaseRpcTest {
         CardUpdateRpcService.CardUpdateResData cardUpdateResData = rpcClient.updateCouponSku(cardSkuUpdateReqData);
 
         System.out.println(cardUpdateResData.getMessage());
+    }
+
+    @Test
+    public void testUpdateMemberItem() {
+        CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
+        CardCodeRpcService.MemberItemUpdateReq memberItemUpdateReq = new CardCodeRpcService.MemberItemUpdateReq();
+//        memberItemUpdateReq.setCardCode("154096919594");
+        memberItemUpdateReq.setCardCode("177839940248");
+        memberItemUpdateReq.setCardKey(6435763117279446021L);
+        memberItemUpdateReq.setBonus("400");
+        memberItemUpdateReq.setAddBonus("6");
+        memberItemUpdateReq.setBalance("100");
+        memberItemUpdateReq.setAddBalance("100");
+        memberItemUpdateReq.setRecordBonus("哗啦啦测试消费积分");
+        memberItemUpdateReq.setRecordBalance("哗啦啦测试储值");
+
+        CardCodeRpcService.MemberItemUpdateRes memberItemUpdateRes = rpcClient.updateMemberItem(memberItemUpdateReq);
+        System.out.println(memberItemUpdateRes.toString());
+        System.out.println(memberItemUpdateRes.getMessage());
     }
 
 }

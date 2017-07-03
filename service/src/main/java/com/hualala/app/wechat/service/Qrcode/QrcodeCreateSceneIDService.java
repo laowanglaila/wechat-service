@@ -2,8 +2,6 @@ package com.hualala.app.wechat.service.Qrcode;
 
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import org.apache.commons.lang.StringUtils;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;

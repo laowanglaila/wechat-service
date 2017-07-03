@@ -15,15 +15,16 @@ public class RedisLockHandler {
 
     private static final Long Lock_Timeout = 30000L;
     private Logger logger = Logger.getLogger(this.getClass());
-
+    private ThreadLocal<Jedis>jedisThreadLocal ;
     @Autowired
     @Qualifier("jedisPool")JedisPool jedisPool;
-//    private RedisLockHandler(){
-//        jedis = jedisPool.getResource();
-//    }
+    private RedisLockHandler(){
+        jedisThreadLocal = new ThreadLocal<>();
+    }
     private boolean innerTryLock(String lockKey){
-        Jedis jedis = jedisPool.getResource();
-        try {
+        Jedis jedis = jedisThreadLocal.get();
+        ThreadLocal<Jedis>jedisThreadLocal = new ThreadLocal<>();
+        jedisThreadLocal.set(jedis);
             long currentTime = System.currentTimeMillis();
             String lockTimeDuration = String.valueOf(currentTime + Lock_Timeout);
             Long result = jedis.setnx(lockKey, lockTimeDuration);
@@ -39,13 +40,16 @@ public class RedisLockHandler {
                 }
                 return false;
             }
-        }finally {
-            jedis.close();
-        }
     }
 
 
     public boolean tryLock(String lockKey, Long timeout){
+        Jedis jedis = jedisPool.getResource();
+        if (jedis == null || !jedis.isConnected()){
+            logger.info("Execute jedisPool.getResource method, erro.");
+            return false;
+        }
+        jedisThreadLocal.set(jedis);
         try{
             Long currentTime = System.currentTimeMillis();
             boolean result = false;
@@ -73,7 +77,7 @@ public class RedisLockHandler {
 
 
     public void realseLock(String lockKey) {
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = jedisThreadLocal.get();
         try {
             jedis.del(lockKey);
         }finally {
@@ -83,18 +87,13 @@ public class RedisLockHandler {
 
 
     public boolean checkIfLockTimeout(Long currentTime, String lockKey){
-        Jedis jedis = jedisPool.getResource();
-        try {
+        Jedis jedis = jedisThreadLocal.get();
             String s = jedis.get(lockKey);
             if(currentTime > Long.valueOf(s==null?"0":s)){
                 return true;
             }else {
                 return false;
             }
-        }finally {
-            jedis.close();
-        }
-
     }
 
 }

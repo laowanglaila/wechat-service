@@ -103,12 +103,12 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         map.put("groupID",groupID);
         List<String> cardIds = baseInfoModelMapperEXT.giveOutCardId(map);
         if (cardIds == null || cardIds.size() == 0){
-            return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "在此公众号下没有找到对应的微信会员卡！");
+            return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_CARD_MISMATCH, "在此公众号下没有找到对应的微信会员卡！");
         }else if (cardIds.size() > 1){
             if (logger.isInfoEnabled()) {
                 logger.error("在此公众号下找到了多张匹配的微信会员卡！", cardIds.toString());
             }
-            return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "在此公众号下找到了多张匹配的微信会员卡！");
+            return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_CARD_MISMATCH, "在此公众号下找到了多张匹配的微信会员卡！");
         }
         signer.AddData(cardIds.get(0));
         String signature = signer.GetSignature();
