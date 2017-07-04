@@ -34,7 +34,7 @@ public class RedisLockHandler {
             }else {
                 if(checkIfLockTimeout(currentTime, lockKey)){
                     String preLockTimeDuration = jedis.getSet(lockKey,lockTimeDuration);
-                    if(currentTime > Long.valueOf(preLockTimeDuration==null?"0":preLockTimeDuration)){
+                    if(currentTime > Long.parseLong(preLockTimeDuration==null?"0":preLockTimeDuration)){
                         return true;
                     }
                 }
@@ -89,7 +89,7 @@ public class RedisLockHandler {
     public boolean checkIfLockTimeout(Long currentTime, String lockKey){
         Jedis jedis = jedisThreadLocal.get();
             String s = jedis.get(lockKey);
-            if(currentTime > Long.valueOf(s==null?"0":s)){
+            if(currentTime > Long.parseLong(s==null?"0":s)){
                 return true;
             }else {
                 return false;
