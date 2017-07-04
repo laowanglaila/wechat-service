@@ -68,7 +68,8 @@ public class CardSyncRpcServiceImplTest extends BaseRpcTest {
 private CreateCardKeyService createCardKeyService;
     @Test
     public void testDonwloadCardList() throws ExecutionException {
-        String mpID = "hualala_com";
+        String mpID = "wangxiangyuanceshi";
+//        String mpID = "hualala_com";
 //        String mpID = "doulaofangceshi";
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();

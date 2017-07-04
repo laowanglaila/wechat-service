@@ -184,7 +184,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("哗啦啦小卖部");
+        memberInfo.setPrerogative("望湘园测试会员");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -208,8 +208,8 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(5L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("哗啦啦至尊会员103");
-        baseInfo.setMpID("hualala_com");
+        baseInfo.setTitle("望湘园测试会员01");
+        baseInfo.setMpID("wangxiangyuanceshi");
         baseInfo.setDateInfo("{\"begin_timestamp\" : "+startTime+",\"end_timestamp\" : "+endTime+",\n\"type\" : \"DATE_TYPE_FIX_TIME_RANGE\"}");
         baseInfo.setBindOpenid(false);
         baseInfo.setBrandName("BrandName");
@@ -278,7 +278,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6434399349198825477L);
+        cardPrimaryKey.setCardKey(6438821395987179525L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }
