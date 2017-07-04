@@ -4,12 +4,9 @@ import com.hualala.app.wechat.service.RedisLockHandler;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by renjianfei on 2017/7/3.
@@ -23,8 +20,8 @@ public class RedisLockTest {
     @Autowired
     private RedisLockHandler redisLockHandler;
     private String key = "test_redis_key";
-    @Autowired
-    private RedissonClient redissonClient;
+//    @Autowired
+//    private RedissonClient redissonClient;
 
     private int count = 5000;
 

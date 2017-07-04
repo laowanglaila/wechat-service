@@ -12,21 +12,18 @@ import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.model.mq.QrcodeInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
-import com.hualala.app.wechat.service.Qrcode.QrcodeCacheService;
 import com.hualala.app.wechat.service.Qrcode.QrcodeCreateSceneIDService;
 import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
-import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by renjianfei on 2017/4/12.
@@ -53,8 +50,8 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     @Autowired
     private MpInfoService mpInfoService;
 
-    @Autowired
-    private RedissonClient redissonClient;
+//    @Autowired
+//    private RedissonClient redissonClient;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
