@@ -127,10 +127,10 @@
         </dependency>
 
         <!-- JDK 1.8+ compatible -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.redisson</groupId>-->
+            <!--<artifactId>redisson</artifactId>-->
+        <!--</dependency>-->
 
         <!--mq-->
         <dependency>
