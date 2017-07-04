@@ -4,7 +4,6 @@ import com.hualala.app.wechat.service.RedisLockHandler;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,21 +45,17 @@ public class RedisLockTest {
         }
     }
 
-    public void testRedissionLock(String name) {
-        RLock locker = redissonClient.getLock(key);
-        try {
-            locker.lock(10L, TimeUnit.SECONDS);
-
-
-            work(name);
-
-
-        } finally {
-            if (locker != null && locker.isLocked()) {
-                locker.unlock();
-            }
-        }
-    }
+//    public void testRedissionLock(String name) {
+//        RLock locker = redissonClient.getLock(key);
+//        try {
+//            locker.lock(10L, TimeUnit.SECONDS);
+//            work(name);
+//        } finally {
+//            if (locker != null && locker.isLocked()) {
+//                locker.unlock();
+//            }
+//        }
+//    }
 
 
     public void testLockedWork(String name) {

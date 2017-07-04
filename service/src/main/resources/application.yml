@@ -72,15 +72,15 @@ wechat:
   card:
       skuQuantity: mu_hll:service:wechat:card:sku_quantity
 
-redisStock:
-  host: 172.16.0.27
-  port: 19000
-  db: 0
-  pool:
-    maxActive: 2
-    maxWait: 10000
-    maxIdle: 1
-    minIdle: 1
+#redisStock:
+#  host: 172.16.0.27
+#  port: 19000
+#  db: 0
+#  pool:
+#    maxActive: 2
+#    maxWait: 10000
+#    maxIdle: 1
+#    minIdle: 1
 redisSku:
   host: 172.16.0.27
   port: 19000
@@ -174,15 +174,15 @@ wechat:
         cacheQrcodeQueue: dohko_hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: dohko_hll:service:wechat:card:sku_quantity
-redisStock:
-  host: 172.16.0.27
-  port: 19000
-  db: 0
-  pool:
-    maxActive: 50
-    maxWait: 10000
-    maxIdle: 10
-    minIdle: 1
+#redisStock:
+#  host: 172.16.0.27
+#  port: 19000
+#  db: 0
+#  pool:
+#    maxActive: 50
+#    maxWait: 10000
+#    maxIdle: 10
+#    minIdle: 1
 redisSku:
   host: 172.16.0.27
   port: 19000
@@ -272,15 +272,15 @@ wechat:
         cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: pre_hll:service:wechat:card:sku_quantity
-redisStock:
-  host: 172.16.0.27
-  port: 19000
-  db: 0
-  pool:
-    maxActive: 50
-    maxWait: 10000
-    maxIdle: 10
-    minIdle: 1
+#redisStock:
+#  host: 172.16.0.27
+#  port: 19000
+#  db: 0
+#  pool:
+#    maxActive: 50
+#    maxWait: 10000
+#    maxIdle: 10
+#    minIdle: 1
 redisSku:
   host: 172.16.0.27
   port: 19000
