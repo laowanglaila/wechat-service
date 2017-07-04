@@ -14,15 +14,14 @@ import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.Qrcode.QrcodeCacheService;
 import com.hualala.app.wechat.service.Qrcode.QrcodeCreateSceneIDService;
+import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
-import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +39,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     private Logger logger = Logger.of(WechatQRCodeRpcSerivceImpl.class);
     private static final int SIZE = 1;
     private static final int USED_QRCODE_STATUS = 2;
-    private static final int LOCKED_TIME_OUT = 10;
+    private static final Long LOCKED_TIME_OUT_SECONDS = 10L;
 
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
@@ -63,6 +62,8 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
     @Autowired
     private RabbitQueueProps rabbitQueueProps;
 
+    @Autowired
+    private RedisLockHandler redisLockHandler;
     /**
      * 获取一个临时二维码，优先获取缓存
      * @param qrCodeReq
@@ -99,11 +100,13 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         // 发消息缓存一个二维码qrcodeCacheService.cache(qrcodeType, 1, expireSeconds, mpID);
         cacheQecode(mpID, expireSeconds, qrcodeType,1);
         // 根据mpID qrcodeType getDeadTime() 查询数据库
-        RLock locker = redissonClient.getLock(WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name());
+        String locdKey = WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name();
+        boolean isLock = redisLockHandler.tryLock(locdKey, LOCKED_TIME_OUT_SECONDS);
+        if (!isLock){
+            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WAIT_LOCK_TIMEOUT, "等待同步锁超时，LOCKED_TIME_OUT：" + LOCKED_TIME_OUT_SECONDS + "s");
+        }
         WechatQrcodeTempModel wechatQrcodeTempModel = null;
         try {
-            locker.lock(LOCKED_TIME_OUT, TimeUnit.SECONDS);
-
             Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
             params.put("deadTime", deadTime);
@@ -138,8 +141,8 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
             }
 
         } finally {
-            if (locker != null) {
-                locker.unlock();
+            if (redisLockHandler != null) {
+                redisLockHandler.realseLock(locdKey);
             }
         }
         //如果缓存获取失败证明已经没有缓存，发送消息多缓存一次，这样总的缓存个数就增加一个，缓存够用就永远执行不到这一句。
@@ -252,10 +255,14 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
         Long deadTime = getDate(expireSeconds);
         //获取缓存好的二维码
         // 根据mpID qrcodeType getDeadTime() 查询数据库
-        RLock locker = redissonClient.getLock(WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name());
+        String locdKey = WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name();
+        boolean isLock = redisLockHandler.tryLock(locdKey, LOCKED_TIME_OUT_SECONDS);
+        logger.debug(() -> "isLock:" + isLock);
+        if (!isLock){
+            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WAIT_LOCK_TIMEOUT, "等待同步锁超时，LOCKED_TIME_OUT：" + LOCKED_TIME_OUT_SECONDS + "s");
+        }
         List<WechatQrcodeTempModel> qrcodeModelList;
         try {
-            locker.lock(LOCKED_TIME_OUT, TimeUnit.SECONDS);
             Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
             params.put("deadTime", deadTime);
@@ -310,8 +317,8 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce {
             wechatQRCodeListRes.setWechatQRCodeResList(wechatQRCodeList);
             return wechatQRCodeListRes;
         } finally {
-            if (locker != null) {
-                locker.unlock();
+            if (redisLockHandler != null) {
+                redisLockHandler.realseLock(locdKey);
             }
         }
     }

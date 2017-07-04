@@ -89,4 +89,6 @@ public interface ErrorCodes {
     String WECHAT_ILLEGAL_ARGUMENTS = "00112148";
     //卡券信息无法匹配
     String WECHAT_CARD_MISMATCH = "00112149";
+    //等待同步锁超时
+    String WAIT_LOCK_TIMEOUT = "00112150";
 }

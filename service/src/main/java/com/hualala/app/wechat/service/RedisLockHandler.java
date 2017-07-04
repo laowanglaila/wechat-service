@@ -43,7 +43,7 @@ public class RedisLockHandler {
     }
 
 
-    public boolean tryLock(String lockKey, Long timeout){
+    public boolean tryLock(String lockKey, Long timeoutSeconds){
         Jedis jedis = jedisPool.getResource();
         if (jedis == null || !jedis.isConnected()){
             logger.info("Execute jedisPool.getResource method, erro.");
@@ -55,7 +55,7 @@ public class RedisLockHandler {
             boolean result = false;
 
             while (true){
-                if((System.currentTimeMillis() - currentTime) > timeout){
+                if((System.currentTimeMillis() - currentTime)/1000 > timeoutSeconds){
                     logger.info("Execute RedisLockHandler.tryLock method, Time out.");
                     break;
                 }else {
