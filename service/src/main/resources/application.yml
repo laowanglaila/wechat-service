@@ -1,5 +1,5 @@
 spring:
-  profiles.active: production
+#  profiles.active: production
 #  profiles.active: local
 #  profiles.active: dohko
 ---
@@ -322,7 +322,8 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
+#    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
+    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8
     username: myhualashopol
     password: gppwd@dldshopol
     driver-class-name: com.mysql.jdbc.Driver
