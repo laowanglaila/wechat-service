@@ -64,7 +64,7 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
 
         }else if (WechatMessageType.EVENT_CARD_USER_GET.equals(event)){
             //用户领取事件
-            this.eventUserGetHandler(jsonObject);
+//            this.eventUserGetHandler(jsonObject);
         }else if (WechatMessageType.EVENT_CARD_USER_GIFTING.equals(event)){
             //用户转赠事件
 
