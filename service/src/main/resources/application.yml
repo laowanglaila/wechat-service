@@ -1,6 +1,7 @@
 spring:
+  profiles.active: production
 #  profiles.active: local
-  profiles.active: dohko
+#  profiles.active: dohko
 ---
 spring:
   profiles: local
@@ -258,9 +259,11 @@ grpc:
   client:
      hosts:
         #wechat: localhost:6567
-        idgen: dohko.id.gen.hualala.com:31249
-#        sem: localhost:6466
-        sem: pre.service.short.message.hualala.com:31524
+        wechat: dohko.wechat.service.hualala.com:31558
+#        idgen: dohko.id.gen.hualala.com:31249
+        #sem: localhost:6466
+        sem: mu.service.short.message.hualala.com:32272
+        shopcrm: pre.shop.crm.service.hualala.com:31537
 
 wechat:
   data:
@@ -356,8 +359,10 @@ grpc:
   port: 6567
   client:
      hosts:
-        idgen: id.gen.hualala.com:32243
+#        idgen: id.gen.hualala.com:32243
         sem: service.short.message.hualala.com:7081
+        wechat: wechat.service.hualala.com:32263
+        shopcrm: shop.crm.service.hualala.com:32244
 
 wechat:
   data:
@@ -369,15 +374,15 @@ wechat:
         cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: hll:service:wechat:card:sku_quantity
-redisStock:
-    host: sjhl.codis.hualala.com
-    port: 19000
-    db: 0
-    pool:
-      maxActive: 50
-      maxWait: 10000
-      maxIdle: 10
-      minIdle: 1
+#redisStock:
+#    host: sjhl.codis.hualala.com
+#    port: 19000
+#    db: 0
+#    pool:
+#      maxActive: 50
+#      maxWait: 10000
+#      maxIdle: 10
+#      minIdle: 1
 redisSku:
   host: sjhl.codis.hualala.com
   port: 19000
