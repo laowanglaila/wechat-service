@@ -3,7 +3,6 @@
 <mapper namespace="com.hualala.app.wechat.mapper.card.BaseInfoModelMapper" >
   <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.BaseInfoModel" >
     <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
-    <result column="itemID" property="itemID" jdbcType="INTEGER" />
     <result column="cardID" property="cardID" jdbcType="VARCHAR" />
     <result column="hualalaCardID" property="hualalaCardID" jdbcType="BIGINT" />
     <result column="shopID" property="shopID" jdbcType="BIGINT" />
@@ -107,7 +106,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      cardKey, itemID, cardID, hualalaCardID, shopID, groupID, mpID, title, cardType, cardStatus, 
+      cardKey, cardID, hualalaCardID, shopID, groupID, mpID, title, cardType, cardStatus, 
       logoUrl, codeType, color, brandName, notice, description, sku, dateInfo, useCustomCode, 
       bindOpenid, servicePhone, locationIdList, source, customUrlName, customUrl, customUrlSubTitle, 
       promotionUrlName, promotionUrl, promotionUrlSubTitle, getLimit, canShare, canGiveFriend, 
@@ -137,7 +136,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,itemID,cardID,hualalaCardID,shopID,groupID,mpID,title,cardType,cardStatus,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,isSwipeCard,isPayAndQrcode,action,actionStamp,createStamp
+    cardKey,cardID,hualalaCardID,shopID,groupID,mpID,title,cardType,cardStatus,logoUrl,codeType,color,brandName,notice,description,sku,dateInfo,useCustomCode,bindOpenid,servicePhone,locationIdList,source,customUrlName,customUrl,customUrlSubTitle,promotionUrlName,promotionUrl,promotionUrlSubTitle,getLimit,canShare,canGiveFriend,needPushOnView,customCodeMode,useAllLocations,centerTitle,centerSubTitle,centerUrl,useLimit,isSwipeCard,isPayAndQrcode,action,actionStamp,createStamp
     from tbl_shop_wechat_card_base
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
@@ -152,45 +151,42 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
-    insert into tbl_shop_wechat_card_base (cardKey, itemID, cardID, 
-      hualalaCardID, shopID, groupID, 
-      mpID, title, cardType, 
-      cardStatus, logoUrl, codeType, 
-      color, brandName, notice, 
-      description, sku, dateInfo, 
-      useCustomCode, bindOpenid, servicePhone, 
-      locationIdList, source, customUrlName, 
-      customUrl, customUrlSubTitle, promotionUrlName, 
-      promotionUrl, promotionUrlSubTitle, getLimit, 
-      canShare, canGiveFriend, needPushOnView, 
-      customCodeMode, useAllLocations, centerTitle, 
-      centerSubTitle, centerUrl, useLimit, 
-      isSwipeCard, isPayAndQrcode, action, 
-      actionStamp, createStamp)
-    values (#{cardKey,jdbcType=BIGINT}, #{itemID,jdbcType=INTEGER}, #{cardID,jdbcType=VARCHAR}, 
-      #{hualalaCardID,jdbcType=BIGINT}, #{shopID,jdbcType=BIGINT}, #{groupID,jdbcType=BIGINT}, 
-      #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
-      #{cardStatus,jdbcType=TINYINT}, #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, 
-      #{color,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{sku,jdbcType=INTEGER}, #{dateInfo,jdbcType=VARCHAR}, 
-      #{useCustomCode,jdbcType=TINYINT}, #{bindOpenid,jdbcType=TINYINT}, #{servicePhone,jdbcType=VARCHAR}, 
-      #{locationIdList,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{customUrlName,jdbcType=VARCHAR}, 
-      #{customUrl,jdbcType=VARCHAR}, #{customUrlSubTitle,jdbcType=VARCHAR}, #{promotionUrlName,jdbcType=VARCHAR}, 
-      #{promotionUrl,jdbcType=VARCHAR}, #{promotionUrlSubTitle,jdbcType=VARCHAR}, #{getLimit,jdbcType=INTEGER}, 
-      #{canShare,jdbcType=TINYINT}, #{canGiveFriend,jdbcType=TINYINT}, #{needPushOnView,jdbcType=TINYINT}, 
-      #{customCodeMode,jdbcType=VARCHAR}, #{useAllLocations,jdbcType=TINYINT}, #{centerTitle,jdbcType=VARCHAR}, 
-      #{centerSubTitle,jdbcType=VARCHAR}, #{centerUrl,jdbcType=VARCHAR}, #{useLimit,jdbcType=INTEGER}, 
-      #{isSwipeCard,jdbcType=TINYINT}, #{isPayAndQrcode,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, 
-      #{actionStamp,jdbcType=TIMESTAMP}, #{createStamp,jdbcType=TIMESTAMP})
+    insert into tbl_shop_wechat_card_base (cardKey, cardID, hualalaCardID, 
+      shopID, groupID, mpID, 
+      title, cardType, cardStatus, 
+      logoUrl, codeType, color, 
+      brandName, notice, description, 
+      sku, dateInfo, useCustomCode, 
+      bindOpenid, servicePhone, locationIdList, 
+      source, customUrlName, customUrl, 
+      customUrlSubTitle, promotionUrlName, promotionUrl, 
+      promotionUrlSubTitle, getLimit, canShare, 
+      canGiveFriend, needPushOnView, customCodeMode, 
+      useAllLocations, centerTitle, centerSubTitle, 
+      centerUrl, useLimit, isSwipeCard, 
+      isPayAndQrcode, action, actionStamp, 
+      createStamp)
+    values (#{cardKey,jdbcType=BIGINT}, #{cardID,jdbcType=VARCHAR}, #{hualalaCardID,jdbcType=BIGINT}, 
+      #{shopID,jdbcType=BIGINT}, #{groupID,jdbcType=BIGINT}, #{mpID,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{cardStatus,jdbcType=TINYINT}, 
+      #{logoUrl,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{brandName,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{sku,jdbcType=INTEGER}, #{dateInfo,jdbcType=VARCHAR}, #{useCustomCode,jdbcType=TINYINT}, 
+      #{bindOpenid,jdbcType=TINYINT}, #{servicePhone,jdbcType=VARCHAR}, #{locationIdList,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{customUrlName,jdbcType=VARCHAR}, #{customUrl,jdbcType=VARCHAR}, 
+      #{customUrlSubTitle,jdbcType=VARCHAR}, #{promotionUrlName,jdbcType=VARCHAR}, #{promotionUrl,jdbcType=VARCHAR}, 
+      #{promotionUrlSubTitle,jdbcType=VARCHAR}, #{getLimit,jdbcType=INTEGER}, #{canShare,jdbcType=TINYINT}, 
+      #{canGiveFriend,jdbcType=TINYINT}, #{needPushOnView,jdbcType=TINYINT}, #{customCodeMode,jdbcType=VARCHAR}, 
+      #{useAllLocations,jdbcType=TINYINT}, #{centerTitle,jdbcType=VARCHAR}, #{centerSubTitle,jdbcType=VARCHAR}, 
+      #{centerUrl,jdbcType=VARCHAR}, #{useLimit,jdbcType=INTEGER}, #{isSwipeCard,jdbcType=TINYINT}, 
+      #{isPayAndQrcode,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, 
+      #{createStamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
     insert into tbl_shop_wechat_card_base
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
         cardKey,
-      </if>
-      <if test="itemID != null" >
-        itemID,
       </if>
       <if test="cardID != null" >
         cardID,
@@ -322,9 +318,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
         #{cardKey,jdbcType=BIGINT},
-      </if>
-      <if test="itemID != null" >
-        #{itemID,jdbcType=INTEGER},
       </if>
       <if test="cardID != null" >
         #{cardID,jdbcType=VARCHAR},
@@ -466,9 +459,6 @@
       <if test="record.cardKey != null" >
         cardKey = #{record.cardKey,jdbcType=BIGINT},
       </if>
-      <if test="record.itemID != null" >
-        itemID = #{record.itemID,jdbcType=INTEGER},
-      </if>
       <if test="record.cardID != null" >
         cardID = #{record.cardID,jdbcType=VARCHAR},
       </if>
@@ -600,7 +590,6 @@
   <update id="updateByExample" parameterType="map" >
     update tbl_shop_wechat_card_base
     set cardKey = #{record.cardKey,jdbcType=BIGINT},
-      itemID = #{record.itemID,jdbcType=INTEGER},
       cardID = #{record.cardID,jdbcType=VARCHAR},
       hualalaCardID = #{record.hualalaCardID,jdbcType=BIGINT},
       shopID = #{record.shopID,jdbcType=BIGINT},
@@ -649,9 +638,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
     update tbl_shop_wechat_card_base
     <set >
-      <if test="itemID != null" >
-        itemID = #{itemID,jdbcType=INTEGER},
-      </if>
       <if test="cardID != null" >
         cardID = #{cardID,jdbcType=VARCHAR},
       </if>
@@ -775,13 +761,13 @@
       <if test="actionStamp != null" >
         actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
+
     </set>
     where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.BaseInfoModel" >
     update tbl_shop_wechat_card_base
-    set itemID = #{itemID,jdbcType=INTEGER},
-      cardID = #{cardID,jdbcType=VARCHAR},
+    set cardID = #{cardID,jdbcType=VARCHAR},
       hualalaCardID = #{hualalaCardID,jdbcType=BIGINT},
       shopID = #{shopID,jdbcType=BIGINT},
       groupID = #{groupID,jdbcType=BIGINT},

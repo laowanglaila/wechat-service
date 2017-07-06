@@ -207,66 +207,6 @@ public class BaseInfoModelQuery {
             return (Criteria) this;
         }
 
-        public Criteria andItemIDIsNull() {
-            addCriterion("itemID is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDIsNotNull() {
-            addCriterion("itemID is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDEqualTo(Integer value) {
-            addCriterion("itemID =", value, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDNotEqualTo(Integer value) {
-            addCriterion("itemID <>", value, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDGreaterThan(Integer value) {
-            addCriterion("itemID >", value, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDGreaterThanOrEqualTo(Integer value) {
-            addCriterion("itemID >=", value, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDLessThan(Integer value) {
-            addCriterion("itemID <", value, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDLessThanOrEqualTo(Integer value) {
-            addCriterion("itemID <=", value, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDIn(List<Integer> values) {
-            addCriterion("itemID in", values, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDNotIn(List<Integer> values) {
-            addCriterion("itemID not in", values, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDBetween(Integer value1, Integer value2) {
-            addCriterion("itemID between", value1, value2, "itemID");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIDNotBetween(Integer value1, Integer value2) {
-            addCriterion("itemID not between", value1, value2, "itemID");
-            return (Criteria) this;
-        }
-
         public Criteria andCardIDIsNull() {
             addCriterion("cardID is null");
             return (Criteria) this;

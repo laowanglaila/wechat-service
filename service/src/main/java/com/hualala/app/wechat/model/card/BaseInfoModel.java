@@ -7,14 +7,9 @@ import java.io.Serializable;
 @Data
 public class BaseInfoModel extends BaseItem implements Serializable {
     /**
-     * 会员端产生的唯一主键
+     * 卡券基本信息表唯一主键
      */
     private Long cardKey;
-
-    /**
-     * 卡券基本信息表自增主键
-     */
-    private Integer itemID;
 
     /**
      * 微信返回的卡券ID
