@@ -145,7 +145,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         String locationIdList = baseInfo.getString("locationIdList");
 //        String locationList = locationIdList.replace("[", "").replace("]", "");
 //        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationIdList);
+        baseInfo.replace("locationIdList", locationIdList.trim().length()==2?"":locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardKey(cardKey);
         //判断会员卡状态
@@ -162,10 +162,10 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         Boolean shareFriends = advancedInfo.getBoolean("shareFriends");
         String anAbstract = advancedInfo.getString("abstract");
         String useCodition = advancedInfo.getString("useCodition");
-        advancedInfo.replace("timeLimit", timeLimit);
-        advancedInfo.remove("textImage");
-        advancedInfo.put("textImageList", textImageList);
-        advancedInfo.replace("businessService", businessService);
+        advancedInfo.replace("timeLimit", timeLimit.trim().length() == 2 ? "" : timeLimit);
+        advancedInfo.remove("textImageList");
+        advancedInfo.put("textImage", textImageList.trim().length() == 2 ? "" : textImageList);
+        advancedInfo.replace("businessService", businessService.trim().length() == 2 ? "" : businessService);
         //TODO Advanced 选项 consumeShareCardList, shareFriends  待处理 创建字段中没有 查询字段中出现的
         advancedInfo.replace("consumeShareCardList", consumeShareCardList);
         advancedInfo.replace("shareFriends", shareFriends);
@@ -232,7 +232,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         String locationIdList = baseInfo.getString("locationIdList");
 //        String locationList = locationIdList.replace("[", "").replace("]", "");
 //        locationIdList = StringUtils.isBlank(locationIdList) ? null : locationIdList;
-        baseInfo.replace("locationIdList", locationIdList);
+        baseInfo.replace("locationIdList", locationIdList.trim().length()==2?"":locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardKey(cardKey);
         String status = baseInfo.getString("status");
@@ -250,8 +250,8 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         String anAbstract = advancedInfo.getString("abstract");
         String useCodition = advancedInfo.getString("useCodition");
         advancedInfo.replace("timeLimit", timeLimit);
-        advancedInfo.remove("textImage");
-        advancedInfo.put("textImageList", textImageList);
+        advancedInfo.remove("textImageList");
+        advancedInfo.put("textImage", textImageList.trim().length() == 2 ? "" : textImageList);
         advancedInfo.replace("businessService", businessService);
         //TODO Advanced 选项 consumeShareCardList, shareFriends  待处理 创建字段中没有 查询字段中出现的
         advancedInfo.replace("consumeShareCardList", consumeShareCardList);
@@ -273,7 +273,6 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
     public CardDownloadResData downloadCardInfo(CardDownloadReqData cardSyncReqData) {
         String mpID = cardSyncReqData.getMpID();
         String cardID = cardSyncReqData.getCardID();
-
         if (StringUtils.isBlank(cardID)) {
             return new CardDownloadResData()
                     .setResultInfo(ErrorCodes.WECHAT_CARD_ID_NULL, "cardID不能为空");
@@ -343,7 +342,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         String locationIdList = baseInfo.getString("locationIdList");
 //        String locationList = locationIdList.replace("[", "").replace("]", "");
 //        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationIdList);
+        baseInfo.replace("locationIdList", locationIdList.trim().length()==2?"":locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         String status = baseInfo.getString("status");
         CardStatusEnum cardStatusEnum = CardStatusEnum.valueOf(status);
@@ -365,8 +364,8 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 //        advancedInfo.put("textImageList", textImageList);
 //        advancedInfo.replace("businessService", businessService);
         advancedInfo.replace("timeLimit", timeLimit.trim().length() == 2 ? "" : timeLimit);
-        advancedInfo.remove("textImage");
-        advancedInfo.put("textImageList", textImageList);
+        advancedInfo.remove("textImageList");
+        advancedInfo.put("textImage", textImageList.trim().length() == 2 ? "" : textImageList);
         advancedInfo.replace("businessService", businessService.trim().length() == 2 ? "" : businessService);
         //TODO Advanced 选项 consumeShareCardList, shareFriends  待处理 创建字段中没有 查询字段中出现的
         advancedInfo.replace("consumeShareCardList", consumeShareCardList);
@@ -466,7 +465,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         String locationIdList = baseInfo.getString("locationIdList");
 //        String locationList = locationIdList.replace("[", "").replace("]", "");
 //        locationList = StringUtils.isBlank(locationList) ? null : locationList;
-        baseInfo.replace("locationIdList", locationIdList);
+        baseInfo.replace("locationIdList", locationIdList.trim().length()==2?"":locationIdList);
         BaseInfoModel baseInfoModel = DataUtils.mapToBean(baseInfo, BaseInfoModel.class);
         baseInfoModel.setCardStatus(cardStatusEnum.getValue());
         baseInfoModel.setMpID(mpID);
@@ -482,8 +481,8 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
         String anAbstract = advancedInfo.getString("abstract");
         String useCodition = advancedInfo.getString("useCodition");
         advancedInfo.replace("timeLimit", timeLimit.trim().length() == 2 ? "" : timeLimit);
-        advancedInfo.remove("textImage");
-        advancedInfo.put("textImageList", textImageList);
+        advancedInfo.remove("textImageList");
+        advancedInfo.put("textImage", textImageList.trim().length() == 2 ? "" : textImageList);
         advancedInfo.replace("businessService", businessService.trim().length() == 2 ? "" : businessService);
         //TODO Advanced 选项 consumeShareCardList, shareFriends  待处理 创建字段中没有 查询字段中出现的
         advancedInfo.replace("consumeShareCardList", consumeShareCardList);

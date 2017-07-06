@@ -176,6 +176,12 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
         if (preAdvancedInfoData.getCardKey() == null) {
             return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
+        if (StringUtils.isBlank(preAdvancedInfoData.getTextImage())){
+            preAdvancedInfoData.setTextImage("");
+        }
+        if (StringUtils.isBlank(preAdvancedInfoData.getTimeLimit())){
+            preAdvancedInfoData.setTimeLimit("");
+        }
         AdvancedModel advancedModel = DataUtils.copyProperties(preAdvancedInfoData, AdvancedModel.class);
         advancedModelMapper.insertSelective(advancedModel);
         PreCardResData cardCouponResData = new PreCardResData();
