@@ -65,12 +65,15 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
                 return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID不能为空！");
             }
         }
+        String appSecret = null;
         if (groupID == null) {
             Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
             List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
+
             if (maps.size() > 0) {
                 Integer groupID1 = (Integer) maps.get(0).get("groupID");
+                appSecret = (String) maps.get(0).get("appSecret");
                 groupID = groupID1.longValue();
             } else {
                 return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_GROUP_ID_NULL, "获取GroupID失败！");
@@ -83,7 +86,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
             return ResultUtil.getResultInfoBean(ticketObject,CardSignResData.class);
         }
         String apiTicket = ticketObject.getString("ticket");
-        signer.AddData(apiTicket);
+        signer.AddData(appSecret);
         String nonceStr = UUID.randomUUID().toString().replaceAll("-","");
         signer.AddData(nonceStr);
         String openid = cardSignReqData.getOpenid();
