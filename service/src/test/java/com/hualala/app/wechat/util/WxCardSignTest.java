@@ -36,15 +36,22 @@ public class WxCardSignTest {
     @Test
     public void test() throws Exception{
 
-        String apiTicket = apiTicketService.getWxCardApiTicket("hualala_com").getString("ticket");
+        String apiTicket = apiTicketService.getWxCardApiTicket("dohko1155").getString("ticket");
         System.out.println(apiTicket);
+        String norceStr = UUID.randomUUID().toString().replace("-","");
+        System.out.println("norceStr:"+norceStr);
+        System.out.println("norceStr.length:"+norceStr.length());
+
+        Long timeStamp = System.currentTimeMillis()/1000;
+        System.out.println("timeStamp:"+timeStamp);
         WxCardSign signer = new WxCardSign();
-            signer.AddData("test1");
-            signer.AddData(12312312);
-            signer.AddData(55312312);
-            signer.AddData(apiTicket);
+            signer.AddData(norceStr);
+            signer.AddData(timeStamp.toString());
+            signer.AddData("pFx2ovzIFj1WqzrtOebhVMGkKt6c");
+            signer.AddData("6ee61005f8bec7639d6c7dd44f6b59a4");
 //            signer.AddData("test2");
-            System.out.println(signer.GetSignature());
+        String s = signer.GetSignature();
+        System.out.println(s);
     }
 
 

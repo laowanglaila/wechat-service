@@ -73,12 +73,22 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
 
             if (maps.size() > 0) {
                 Integer groupID1 = (Integer) maps.get(0).get("groupID");
-                appSecret = (String) maps.get(0).get("appSecret");
                 groupID = groupID1.longValue();
             } else {
                 return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_GROUP_ID_NULL, "获取GroupID失败！");
             }
         }
+        if (StringUtils.isBlank(appSecret)){
+            Map<String, Object> params = new HashMap<>();
+            params.put("mpID", mpID);
+            List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
+            if (maps.size() > 0) {
+                appSecret = (String) maps.get(0).get("appSecret");
+            } else {
+                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_APPSECRET_MISSED, "获取appSecret失败！");
+            }
+        }
+
         WxCardSign signer = new WxCardSign();
         // api_ticket、timestamp、card_id、code、openid、nonce_str
         JSONObject ticketObject = apiTicketService.getWxCardApiTicket(mpID);

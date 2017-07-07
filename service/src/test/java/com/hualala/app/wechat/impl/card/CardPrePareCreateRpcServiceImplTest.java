@@ -184,13 +184,13 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("望湘园测试会员");
+        memberInfo.setPrerogative("桂圆铺会员卡01");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
         memberInfo.setCustomCell1("{\n" +
-                "   \"name\" : \"name\",\n" +
-                "   \"tips\" : \"tips\",\n" +
+                "   \"name\" : \"点击有惊喜！\",\n" +
+                "   \"tips\" : \"豪礼等着你！\",\n" +
                 "   \"url\" : \"http://www.hualala.com\"\n" +
                 "}\n");
         memberInfo.setCustomField1("{\n" +
@@ -203,34 +203,33 @@ public class CardPrePareCreateRpcServiceImplTest {
         //Json
         Long currentDateTimeLong = System.currentTimeMillis();
         Integer startTime =  (int)(currentDateTimeLong/1000L);
-        Integer endTime = startTime + 3600 * 24 * 7;
+        Integer endTime = startTime + 3600 * 24 * 365;
         baseInfo.setBrandID(5L);
-        baseInfo.setGroupID(5L);
+        baseInfo.setGroupID(1155L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("望湘园测试会员01");
-        baseInfo.setMpID("wangxiangyuanceshi");
-        baseInfo.setDateInfo("{\"begin_timestamp\" : "+startTime+",\"end_timestamp\" : "+endTime+",\n\"type\" : \"DATE_TYPE_FIX_TIME_RANGE\"}");
+        baseInfo.setTitle("桂圆铺会员卡01");
+        baseInfo.setMpID("dohko1155");
+        baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
-        baseInfo.setBrandName("BrandName");
-        baseInfo.setCanShare(true);
-        baseInfo.setCanGiveFriend(true);
-        baseInfo.setCenterSubTitle("CenterSubTitle");
+        baseInfo.setBrandName("桂源铺");
+        baseInfo.setCanShare(false);
+        baseInfo.setCanGiveFriend(false);
         baseInfo.setCenterTitle("CenterTitle");
         baseInfo.setCenterUrl("www.hualala.com");
         baseInfo.setCodeType("CODE_TYPE_QRCODE");
         baseInfo.setColor("Color010");
         baseInfo.setCustomUrl("http://www.hualala.com");
-        baseInfo.setCustomUrlName("CustomUrlName");
+        baseInfo.setCustomUrlName("自定义入口");
         baseInfo.setCenterSubTitle("6个汉字tips");
-        baseInfo.setDescription("Description");
+        baseInfo.setDescription("会员卡描述");
         baseInfo.setGetLimit(1);
         baseInfo.setLogoUrl("http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0");
-        baseInfo.setNotice("Notice");
+        baseInfo.setNotice("公告内容");
         baseInfo.setPromotionUrl("http://www.hualala.com");
-        baseInfo.setPromotionUrlName("PromoUrlName");
+        baseInfo.setPromotionUrlName("年中大促");
         baseInfo.setServicePhone("17614430096");
-        baseInfo.setSource("Source");
+        baseInfo.setSource("lingqudaokabao");
         baseInfo.setUseCustomCode(false);
 //        baseInfo.setCustomCodeMode("GET_CUSTOM_CODE_MODE_DEPOSIT");
         baseInfo.setUseLimit(0);
@@ -246,7 +245,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         advancedInfo.setAbstractInfo("{\"abstract\" : \"abstract\",\"icon_url_list\" : [\"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sj  piby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\"]}");
         advancedInfo.setBusinessService("BIZ_SERVICE_FREE_WIFI, BIZ_SERVICE_WITH_PET, BIZ_SERVICE_FREE_PARK, BIZ_SERVICE_DELIVER");
-        advancedInfo.setTextImage("[{\"image_url\" : \"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sjpiby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\",\"text\" : \"text此菜品精选食材，以独特的烹饪方法，最大程度地刺激食 客的味蕾\"},{\"image_url\" : \"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sj piby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\",\"text\" : \"此菜品迎合大众口味，老少皆宜，营养均衡\"}]");
+//        advancedInfo.setTextImage("[{\"image_url\" : \"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sjpiby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\",\"text\" : \"text此菜品精选食材，以独特的烹饪方法，最大程度地刺激食 客的味蕾\"},{\"image_url\" : \"http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sj piby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0\",\"text\" : \"此菜品迎合大众口味，老少皆宜，营养均衡\"}]");
         advancedInfo.setTimeLimit("[" +
                 "   {" +
                 "      \"begin_hour\" : 0," +
@@ -278,7 +277,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6438821395987179525L);
+        cardPrimaryKey.setCardKey(6439585775611816067L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }

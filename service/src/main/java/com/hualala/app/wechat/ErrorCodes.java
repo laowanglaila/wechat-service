@@ -91,4 +91,6 @@ public interface ErrorCodes {
     String WECHAT_CARD_MISMATCH = "00112149";
     //等待同步锁超时
     String WAIT_LOCK_TIMEOUT = "00112150";
+    //等待同步锁超时
+    String WECHAT_APPSECRET_MISSED = "00112151";
 }

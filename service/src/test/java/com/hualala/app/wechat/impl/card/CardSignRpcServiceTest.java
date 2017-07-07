@@ -36,9 +36,9 @@ public class CardSignRpcServiceTest extends BaseRpcTest {
         CardSignRpcServiceGrpc.CardSignRpcServiceBlockingStub blockingStub
                 = (CardSignRpcServiceGrpc.CardSignRpcServiceBlockingStub) grpcClient.getBlockingStub(CardSignRpcServiceGrpc.class);
         CardSignRpcData.CardSignReqData cardSignReqData = CardSignRpcData.CardSignReqData.newBuilder()
-                .setHualalaCardID(1L)
-                .setGroupID(5L)
-                .setMpID("hualala_com")
+                .setHualalaCardID(1155L)
+                .setGroupID(1155L)
+//                .setMpID("dohko1155")
                 .build();
         CardSignRpcData.CardSignResData signResData = blockingStub.getSign(cardSignReqData);
         System.out.println(signResData.getResult().getMessage());

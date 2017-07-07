@@ -72,6 +72,9 @@ public class WechatQrcodeTempRpcServiceTest {
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
         wechatQRCodeListReq.setMpID("doulaofangceshi");
+//        wechatQRCodeListReq.setBrandID("0");
+//        wechatQRCodeListReq.setGroupID("306");
+//        wechatQRCodeListReq.setShopID("76023063");
         wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
         wechatQRCodeListReq.setExpireSeconds(3600*24);
         wechatQRCodeListReq.setSize(200);
