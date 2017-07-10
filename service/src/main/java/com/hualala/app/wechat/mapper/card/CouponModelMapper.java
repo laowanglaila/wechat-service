@@ -12,7 +12,7 @@ public interface CouponModelMapper {
 
     int deleteByExample(CouponModelQuery example);
 
-    int deleteByPrimaryKey(String cardKey);
+    int deleteByPrimaryKey(Long cardKey);
 
     int insert(CouponModel record);
 
@@ -20,7 +20,7 @@ public interface CouponModelMapper {
 
     List<CouponModel> selectByExample(CouponModelQuery example);
 
-    CouponModel selectByPrimaryKey(String cardKey);
+    CouponModel selectByPrimaryKey(Long cardKey);
 
     int updateByExampleSelective(@Param("record") CouponModel record, @Param("example") CouponModelQuery example);
 

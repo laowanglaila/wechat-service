@@ -61,5 +61,36 @@ public interface ErrorCodes {
     String WECHAT_CARD_RESULT_NULL = "00112135";
     //不存在指定的Key
     String WECHAT_CARD_KEY_NONE = "00112136";
-
+    //cardID不能为空
+    String WECHAT_CARD_ID_NULL = "00112137";
+ //membershipID不能为空
+    String WECHAT_CARD_MEMBER_NUM_NULL = "00112138";
+ //encryptCode不能为空
+    String WECHAT_CARD_ENCRYPT_CODE_NULL = "00112139";
+    //encryptCode不能为空
+    String WECHAT_CARD_CODE_NULL = "00112140";
+    //encryptCode不能为空
+    String WECHAT_ARGUMENTS_ILLEGALITY = "00112141";
+    //encryptCode不能为空
+    String WECHAT_ARGUMENTS_NULL = "00112142";
+    //QrcodeType不能为空
+    String WECHAT_QRCODE_TYPE_NULL = "00112143";
+    //二维码有效时间超出范围
+    String WECHAT_QRCODE_EXPIRESECONDS_OVERSTEP = "00112144";
+    //二维码缓存数量不足
+    String WECHAT_QRCODE_NOT_ENOUGH = "00112145";
+    //根据openid群发消息 , 2<数量<10000
+    String WECHAT_MESSAGE_PUBLISH_WRONG_SIZE = "00112145";
+    //签名服务的url不允许为空
+    String WECHAT_SIGN_URL_EMPTY = "00112146";
+    //公众号mpID不允许为空
+    String WECHAT_MPID_NOT_FOUND = "00112147";
+    //非法参数
+    String WECHAT_ILLEGAL_ARGUMENTS = "00112148";
+    //卡券信息无法匹配
+    String WECHAT_CARD_MISMATCH = "00112149";
+    //等待同步锁超时
+    String WAIT_LOCK_TIMEOUT = "00112150";
+    //等待同步锁超时
+    String WECHAT_APPSECRET_MISSED = "00112151";
 }

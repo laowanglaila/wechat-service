@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardSyncRpcData";
+import "commons.proto";
+
+message CardListReqData {  
+   // 公众号mpid
+   string mpID=2;
+   // 开始位置
+   int32 offset=3;
+   // 数量，最大50
+   int32 count=4;
+   // 期望获取卡券状态列表
+   repeated string statusList=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardListResData {  
+   // 卡券ID列表
+   repeated string cardIdList=2;
+   // 该商户名下卡券ID总数
+   int32 totalNum=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardDownloadReqData {  
+   // 微信卡券唯一ID
+   string cardID=2;
+   // 微信公众号唯一标识
+   string mpID=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardDownloadResData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardSyncReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardSyncResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service CardSyncRpcService{
+    //
+    rpc getCardList(CardListReqData) returns (CardListResData) {}
+    //
+    rpc downloadCardInfo(CardDownloadReqData) returns (CardDownloadResData) {}
+    //
+    rpc syncMemberInfo(CardSyncReqData) returns (CardSyncResData) {}
+    //
+    rpc syncCouponInfo(CardSyncReqData) returns (CardSyncResData) {}
+}

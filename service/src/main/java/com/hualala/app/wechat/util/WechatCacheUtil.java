@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class WechatCacheUtil {
     //private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
+    @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
     private RedisTemplate<String, String> redisTemplate;
 
@@ -113,6 +115,29 @@ public class WechatCacheUtil {
      */
     public static String getCacheAccessToken(String key) {
         String keyName = "wechat_acToken_" + key;
+        return redisTemplateStatic.opsForValue().get(keyName);
+    }
+    /**
+     * 更新apiTicket缓存
+     *
+     * @param key
+     * @param value
+     * @param timeout
+     */
+    public static void setCacheApiTicket(String key, String value, Long timeout,String type) {
+
+        String keyName = "wechat:api_ticket:" + type+":" + key;
+        setData(keyName, value, timeout);
+    }
+
+    /**
+     * 获取apiTicket缓存
+     *
+     * @param key
+     * @return
+     */
+    public static String getCacheApiTicket(String key,String type) {
+        String keyName = "wechat:api_ticket:" + type+":" + key;
         return redisTemplateStatic.opsForValue().get(keyName);
     }
 

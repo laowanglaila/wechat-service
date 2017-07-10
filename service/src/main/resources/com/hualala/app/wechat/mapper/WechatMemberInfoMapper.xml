@@ -17,7 +17,7 @@
 		)
 	</insert>
 
-	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+	<select id="queryCount" resultType="java.lang.Integer">
     select count(1) from tbl_shop_wechat_member_info
     </select>
 

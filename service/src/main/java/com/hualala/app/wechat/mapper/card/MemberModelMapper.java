@@ -12,7 +12,7 @@ public interface MemberModelMapper {
 
     int deleteByExample(MemberModelQuery example);
 
-    int deleteByPrimaryKey(String cardKey);
+    int deleteByPrimaryKey(Long cardKey);
 
     int insert(MemberModel record);
 
@@ -20,7 +20,7 @@ public interface MemberModelMapper {
 
     List<MemberModel> selectByExample(MemberModelQuery example);
 
-    MemberModel selectByPrimaryKey(String cardKey);
+    MemberModel selectByPrimaryKey(Long cardKey);
 
     int updateByExampleSelective(@Param("record") MemberModel record, @Param("example") MemberModelQuery example);
 

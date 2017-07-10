@@ -11,6 +11,7 @@
 
     <artifactId>service</artifactId>
     <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
     <description>service for wechat</description>
 
     <properties>
@@ -113,10 +114,47 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.0.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.hualala.order</groupId>
+            <artifactId>order-key-gen</artifactId>
+            <version>1.1.beta-SNAPSHOT</version>
+        </dependency>
+
+        <!-- JDK 1.8+ compatible -->
+        <!--<dependency>-->
+            <!--<groupId>org.redisson</groupId>-->
+            <!--<artifactId>redisson</artifactId>-->
+        <!--</dependency>-->
+
+        <!--mq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.dld.hualala</groupId>-->
+            <!--<artifactId>hualala-util</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>com.hualala.shop.crm</groupId>
+            <artifactId>shopcrm-interface</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
     </dependencies>
 
 

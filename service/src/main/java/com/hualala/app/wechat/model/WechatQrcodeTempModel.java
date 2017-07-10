@@ -18,7 +18,24 @@ public class WechatQrcodeTempModel extends BaseItem {
     private String ticket;
     private String wxUrl;
     private Long deadTime;
+    private Integer qrcodeStatus;
+    private String qrcodeIP;
+    public String getQrcodeIP(){
+        return this.qrcodeIP;
+    }
 
+    public WechatQrcodeTempModel setQrcodeIP(String qrcodeIP){
+        this.qrcodeIP = qrcodeIP;
+        return this;
+    }
+    public int getQrcodeStatus(){
+        return this.qrcodeStatus;
+    }
+
+    public WechatQrcodeTempModel setQrcodeStatus(int qrcodeStatus){
+        this.qrcodeStatus = qrcodeStatus;
+        return this;
+    }
     public Long getItemID() {
         return this.itemID;
     }

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "MsgPublishRpcData";
+import "commons.proto";
+
+message TextMsgReq {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
+   // 群发用户openid列表
+   repeated string openIds=6;
+   // 群发用户userid列表
+   repeated int64 userIds=7;
+   // 文字消息内容
+   string text=8;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message TextMsgRes {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//群发图文消息
+service MsgPublishRpcService{
+    //
+    rpc publishTextByUserList(TextMsgReq) returns (TextMsgRes) {}
+}

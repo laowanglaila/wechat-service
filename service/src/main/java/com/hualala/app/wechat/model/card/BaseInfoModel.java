@@ -7,9 +7,49 @@ import java.io.Serializable;
 @Data
 public class BaseInfoModel extends BaseItem implements Serializable {
     /**
-     * 会员端产生的唯一主键
+     * 卡券基本信息表唯一主键
      */
-    private String cardKey;
+    private Long cardKey;
+
+    /**
+     * 微信返回的卡券ID
+     */
+    private String cardID;
+
+    /**
+     * 哗啦啦cardID
+     */
+    private Long hualalaCardID;
+
+    /**
+     * 店铺ID
+     */
+    private Long shopID;
+
+    /**
+     * 集团ID
+     */
+    private Long groupID;
+
+    /**
+     * 公众平台微信号
+     */
+    private String mpID;
+
+    /**
+     * 卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)
+     */
+    private String title;
+
+    /**
+     * 卡券类型
+     */
+    private String cardType;
+
+    /**
+     * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审核失败，4：审合通过，5：已投放， 6：失效
+     */
+    private Integer cardStatus;
 
     /**
      * 卡券的商户logo，建议像素为300*300
@@ -165,5 +205,7 @@ public class BaseInfoModel extends BaseItem implements Serializable {
      * 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
      */
     private Boolean isPayAndQrcode;
+
+    private static final long serialVersionUID = 1L;
 
 }

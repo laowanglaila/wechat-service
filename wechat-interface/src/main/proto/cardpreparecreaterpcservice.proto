@@ -3,29 +3,8 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardPrePareCreateRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
-message PreAdvancedInfoData {  
-   // card唯一键
-   string cardKey=2;
-   // 封面摘要结构体名称
-   string abstractInfo=3;
-   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
-   string businessService=4;
-   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
-   string textImage=5;
-   // 使用时段限制，包含以下字段
-   string timeLimit=6;
-   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
-   string useCodition=7;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message PreCardResData {  
-   // 唯一ID
-   string cardKey=2;
-   // 响应公共字段
-   ResultHeader result=1;
-}
 message PreCouponReqData {  
    // 公众号编码
    string mpID=2;
@@ -39,8 +18,6 @@ message PreCouponReqData {
    string title=6;
    // 优惠券类型
    string cardType=7;
-   // 唯一ID
-   string cardKey=8;
    // 优惠券专用，填写优惠详情。
    string defaultDetail=9;
    // 团购券专用，填写团购详情。
@@ -56,6 +33,12 @@ message PreCouponReqData {
    // 请求公共字段
    RequestHeader header=1;
 }
+message PreCardResData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message PreMemberReqData {  
    // 公众号编码
    string mpID=2;
@@ -69,8 +52,6 @@ message PreMemberReqData {
    string title=6;
    // 优惠券类型
    string cardType=7;
-   // 会员端产生的唯一主键ID
-   string cardKey=8;
    // 折扣，该会员卡享受的折扣优惠,填10就是九折。
    int32 discount=9;
    // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
@@ -112,7 +93,7 @@ message PreMemberReqData {
 }
 message PreCardBaseInfoData {  
    // card唯一键
-   string cardKey=2;
+   int64 cardKey=2;
    // 卡券的商户logo，建议像素为300*300
    string logoUrl=3;
    // Code展示类型
@@ -180,14 +161,28 @@ message PreCardBaseInfoData {
 }
 message CardPrimaryKey {  
    // 卡券主键
-   string cardKey=2;
+   int64 cardKey=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PreAdvancedInfoData {  
+   // card唯一键
+   int64 cardKey=2;
+   // 封面摘要结构体名称
+   string abstractInfo=3;
+   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
+   string businessService=4;
+   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+   string textImage=5;
+   // 使用时段限制，包含以下字段
+   string timeLimit=6;
+   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+   string useCodition=7;
    // 请求公共字段
    RequestHeader header=1;
 }
 //预创建卡券接口
 service CardPrePareCreateRpcService{
-    //高级信息
-    rpc createAdvancedInfo(PreAdvancedInfoData) returns (PreCardResData) {}
     //卡券创建必要信息方法
     rpc createCoupon(PreCouponReqData) returns (PreCardResData) {}
     //会员卡创建必要信息方法
@@ -198,4 +193,6 @@ service CardPrePareCreateRpcService{
     rpc submitCouponInfo(CardPrimaryKey) returns (PreCardResData) {}
     //提交会员卡信息
     rpc submitMemberInfo(CardPrimaryKey) returns (PreCardResData) {}
+    //高级信息
+    rpc createAdvancedInfo(PreAdvancedInfoData) returns (PreCardResData) {}
 }

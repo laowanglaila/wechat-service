@@ -4,9 +4,25 @@ option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardUpdateRpcData";
 import "commons.proto";
 
+message CardSkuUpdateReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 增加多少库存，支持不填或填0。
+   int32 increaseStockValue=3;
+   // 减少多少库存，可以不填或填0。
+   int32 reduceStockValue=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardUpdateResData {  
+   // 是否需要提审
+   bool sendCheck=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message MemberUpdateReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
    bool supplyBonus=3;
    // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
@@ -43,8 +59,6 @@ message MemberUpdateReqData {
    string bonusRule=19;
    // 积分规则
    string bonusRules=20;
-   // 卡券名称
-   string title=21;
    // 卡券基本信息
    CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=22;
    // 请求公共字段
@@ -97,25 +111,23 @@ message CardBaseInfoUpdateReqData {
    bool canGiveFriend=23;
    // 使用日期，有效期的信息
    string dateInfo=24;
-}
-message CardUpdateResData {  
-   // 是否需要提审
-   bool sendCheck=2;
-   // 响应公共字段
-   ResultHeader result=1;
+   // 卡券名称
+   string title=25;
 }
 message CouponInfoUpdateReqData {  
    // 唯一ID
-   string cardKey=2;
-   // 卡券名称
-   string title=3;
+   int64 cardKey=2;
    // 卡券基本信息
-   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=4;
+   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=3;
    // 请求公共字段
    RequestHeader header=1;
 }
 //
 service CardUpdateRpcService{
+    //
+    rpc updateMemberSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
+    //
+    rpc updateCouponSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
     //
     rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
     //

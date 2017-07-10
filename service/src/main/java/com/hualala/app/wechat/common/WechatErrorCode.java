@@ -56,7 +56,14 @@ public class WechatErrorCode {
 		wechatError.put("40050", "不合法的分组id");
 		wechatError.put("40051", "分组名字不合法");
 		wechatError.put("40052", "JSON格式错误");
-		wechatError.put("40079", "不合法的时间");
+		wechatError.put("40056", "不合法的Code码");
+		wechatError.put("40079", "有效期错误");
+		wechatError.put("40109", "code数量超过100个");
+		wechatError.put("40116", "不合法的Code码");
+		wechatError.put("40122", "不合法的库存数量");
+		wechatError.put("40124", "会员卡设置查过限制的 custom_field字段");
+		wechatError.put("40127", "卡券被用户删除或转赠中");
+		wechatError.put("40136", "请确定code数量大于卡券库存");
 		wechatError.put("41001", "缺少access_token参数");
 		wechatError.put("41002", "缺少appid参数");
 		wechatError.put("41003", "缺少refresh_token参数");
@@ -67,6 +74,7 @@ public class WechatErrorCode {
 		wechatError.put("41008", "缺少oauth code");
 		wechatError.put("41009", "缺少openid");
 		wechatError.put("41011", "缺少必须的参数");
+		wechatError.put("41012", "缺少cardid参数");
 		wechatError.put("42001", "access_token超时，请检查access_token的有效期");
 		wechatError.put("42002", "refresh_token超时");
 		wechatError.put("42003", "oauth_code超时");
@@ -75,6 +83,8 @@ public class WechatErrorCode {
 		wechatError.put("43003", "需要HTTPS请求");
 		wechatError.put("43004", "需要接收者关注");
 		wechatError.put("43005", "需要好友关系");
+		wechatError.put("43009", "自定义SN权限，请前往公众平台申请");
+		wechatError.put("43010", "无储值权限，请前往公众平台申请");
 		wechatError.put("44001", "多媒体文件为空");
 		wechatError.put("44002", "POST的数据包为空");
 		wechatError.put("44003", "图文消息内容为空");
@@ -93,6 +103,10 @@ public class WechatErrorCode {
 		wechatError.put("45016", "系统分组，不允许修改");
 		wechatError.put("45017", "分组名字过长");
 		wechatError.put("45018", "分组数量超过上限");
+		wechatError.put("45021", "字段超过长度限制，请参考相应接口的字段说明");
+		wechatError.put("45030", "该cardid无接口权限");
+		wechatError.put("45031", "库存为0");
+		wechatError.put("45033", "用户领取次数超过限制get_limit");
 		wechatError.put("46001", "不存在媒体数据");
 		wechatError.put("46002", "不存在的菜单版本");
 		wechatError.put("46003", "不存在的菜单数据");
@@ -100,6 +114,7 @@ public class WechatErrorCode {
 		wechatError.put("47001", "解析JSON/XML内容错误");
 		wechatError.put("48001", "api功能未授权");
 		wechatError.put("50001", "用户未授权该api");
+		wechatError.put("61007", "当前公众号还未获取正在操作的组件授权");
 		wechatError.put("61451", "参数错误(invalid parameter)");
 		wechatError.put("61452", "无效客服账号(invalid kf_account)");
 		wechatError.put("61453", "客服帐号已存在(kf_account exsited)");

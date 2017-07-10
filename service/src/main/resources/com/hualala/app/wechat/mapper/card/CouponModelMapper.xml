@@ -2,22 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hualala.app.wechat.mapper.card.CouponModelMapper" >
   <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.CouponModel" >
-    <id column="cardKey" property="cardKey" jdbcType="VARCHAR" />
-    <result column="cardID" property="cardID" jdbcType="VARCHAR" />
-    <result column="groupID" property="groupID" jdbcType="BIGINT" />
-    <result column="mpID" property="mpID" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="cardType" property="cardType" jdbcType="VARCHAR" />
+    <id column="cardKey" property="cardKey" jdbcType="BIGINT" />
     <result column="defaultDetail" property="defaultDetail" jdbcType="VARCHAR" />
     <result column="dealDetail" property="dealDetail" jdbcType="VARCHAR" />
     <result column="leastCost" property="leastCost" jdbcType="INTEGER" />
     <result column="reduceCost" property="reduceCost" jdbcType="INTEGER" />
     <result column="discount" property="discount" jdbcType="INTEGER" />
     <result column="gift" property="gift" jdbcType="VARCHAR" />
-    <result column="cardStatus" property="cardStatus" jdbcType="TINYINT" />
     <result column="action" property="action" jdbcType="TINYINT" />
-    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
-    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+    <result column="actionStamp" property="actionStamp" jdbcType="TIMESTAMP" />
+    <result column="createStamp" property="createStamp" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -79,8 +73,8 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      cardKey, cardID, groupID, mpID, title, cardType, defaultDetail, dealDetail, leastCost, 
-      reduceCost, discount, gift, cardStatus, action, actionTime, createTime
+      cardKey, defaultDetail, dealDetail, leastCost, reduceCost, discount, gift, action, 
+      actionStamp, createStamp
     </if>
     <if test="fields != null" >
       ${fields}
@@ -103,15 +97,15 @@
       limit #{startRow} , #{pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    cardKey,cardID,groupID,mpID,title,cardType,defaultDetail,dealDetail,leastCost,reduceCost,discount,gift,cardStatus,action,actionTime,createTime
+    cardKey,defaultDetail,dealDetail,leastCost,reduceCost,discount,gift,action,actionStamp,createStamp
     from tbl_shop_wechat_card_coupon
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_shop_wechat_card_coupon
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.CouponModelQuery" >
     delete from tbl_shop_wechat_card_coupon
@@ -120,39 +114,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
-    insert into tbl_shop_wechat_card_coupon (cardKey, cardID, groupID, 
-      mpID, title, cardType, 
-      defaultDetail, dealDetail, leastCost, 
-      reduceCost, discount, gift, 
-      cardStatus, action, actionTime, 
-      createTime)
-    values (#{cardKey,jdbcType=VARCHAR}, #{cardID,jdbcType=VARCHAR}, #{groupID,jdbcType=BIGINT}, 
-      #{mpID,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
-      #{defaultDetail,jdbcType=VARCHAR}, #{dealDetail,jdbcType=VARCHAR}, #{leastCost,jdbcType=INTEGER}, 
-      #{reduceCost,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{gift,jdbcType=VARCHAR}, 
-      #{cardStatus,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, #{actionTime,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=BIGINT})
+    insert into tbl_shop_wechat_card_coupon (cardKey, defaultDetail, dealDetail, 
+      leastCost, reduceCost, discount, 
+      gift, action, actionStamp, 
+      createStamp)
+    values (#{cardKey,jdbcType=BIGINT}, #{defaultDetail,jdbcType=VARCHAR}, #{dealDetail,jdbcType=VARCHAR}, 
+      #{leastCost,jdbcType=INTEGER}, #{reduceCost,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, 
+      #{gift,jdbcType=VARCHAR}, #{action,jdbcType=TINYINT}, #{actionStamp,jdbcType=TIMESTAMP}, 
+      #{createStamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
     insert into tbl_shop_wechat_card_coupon
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
         cardKey,
-      </if>
-      <if test="cardID != null" >
-        cardID,
-      </if>
-      <if test="groupID != null" >
-        groupID,
-      </if>
-      <if test="mpID != null" >
-        mpID,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="cardType != null" >
-        cardType,
       </if>
       <if test="defaultDetail != null" >
         defaultDetail,
@@ -172,37 +147,19 @@
       <if test="gift != null" >
         gift,
       </if>
-      <if test="cardStatus != null" >
-        cardStatus,
-      </if>
       <if test="action != null" >
         action,
       </if>
-      <if test="actionTime != null" >
-        actionTime,
+      <if test="actionStamp != null" >
+        actionStamp,
       </if>
-      <if test="createTime != null" >
-        createTime,
+      <if test="createStamp != null" >
+        createStamp,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cardKey != null" >
-        #{cardKey,jdbcType=VARCHAR},
-      </if>
-      <if test="cardID != null" >
-        #{cardID,jdbcType=VARCHAR},
-      </if>
-      <if test="groupID != null" >
-        #{groupID,jdbcType=BIGINT},
-      </if>
-      <if test="mpID != null" >
-        #{mpID,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null" >
-        #{cardType,jdbcType=VARCHAR},
+        #{cardKey,jdbcType=BIGINT},
       </if>
       <if test="defaultDetail != null" >
         #{defaultDetail,jdbcType=VARCHAR},
@@ -222,17 +179,14 @@
       <if test="gift != null" >
         #{gift,jdbcType=VARCHAR},
       </if>
-      <if test="cardStatus != null" >
-        #{cardStatus,jdbcType=TINYINT},
-      </if>
       <if test="action != null" >
         #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=BIGINT},
+      <if test="createStamp != null" >
+        #{createStamp,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -246,22 +200,7 @@
     update tbl_shop_wechat_card_coupon
     <set >
       <if test="record.cardKey != null" >
-        cardKey = #{record.cardKey,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cardID != null" >
-        cardID = #{record.cardID,jdbcType=VARCHAR},
-      </if>
-      <if test="record.groupID != null" >
-        groupID = #{record.groupID,jdbcType=BIGINT},
-      </if>
-      <if test="record.mpID != null" >
-        mpID = #{record.mpID,jdbcType=VARCHAR},
-      </if>
-      <if test="record.title != null" >
-        title = #{record.title,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cardType != null" >
-        cardType = #{record.cardType,jdbcType=VARCHAR},
+        cardKey = #{record.cardKey,jdbcType=BIGINT},
       </if>
       <if test="record.defaultDetail != null" >
         defaultDetail = #{record.defaultDetail,jdbcType=VARCHAR},
@@ -281,16 +220,12 @@
       <if test="record.gift != null" >
         gift = #{record.gift,jdbcType=VARCHAR},
       </if>
-      <if test="record.cardStatus != null" >
-        cardStatus = #{record.cardStatus,jdbcType=TINYINT},
-      </if>
       <if test="record.action != null" >
         action = #{record.action,jdbcType=TINYINT},
       </if>
-      <if test="record.actionTime != null" >
-        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      <if test="record.actionStamp != null" >
+        actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP},
       </if>
-
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -298,21 +233,15 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tbl_shop_wechat_card_coupon
-    set cardKey = #{record.cardKey,jdbcType=VARCHAR},
-      cardID = #{record.cardID,jdbcType=VARCHAR},
-      groupID = #{record.groupID,jdbcType=BIGINT},
-      mpID = #{record.mpID,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
-      cardType = #{record.cardType,jdbcType=VARCHAR},
+    set cardKey = #{record.cardKey,jdbcType=BIGINT},
       defaultDetail = #{record.defaultDetail,jdbcType=VARCHAR},
       dealDetail = #{record.dealDetail,jdbcType=VARCHAR},
       leastCost = #{record.leastCost,jdbcType=INTEGER},
       reduceCost = #{record.reduceCost,jdbcType=INTEGER},
       discount = #{record.discount,jdbcType=INTEGER},
       gift = #{record.gift,jdbcType=VARCHAR},
-      cardStatus = #{record.cardStatus,jdbcType=TINYINT},
       action = #{record.action,jdbcType=TINYINT},
-      actionTime = #{record.actionTime,jdbcType=BIGINT}
+      actionStamp = #{record.actionStamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -320,21 +249,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
     update tbl_shop_wechat_card_coupon
     <set >
-      <if test="cardID != null" >
-        cardID = #{cardID,jdbcType=VARCHAR},
-      </if>
-      <if test="groupID != null" >
-        groupID = #{groupID,jdbcType=BIGINT},
-      </if>
-      <if test="mpID != null" >
-        mpID = #{mpID,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null" >
-        cardType = #{cardType,jdbcType=VARCHAR},
-      </if>
       <if test="defaultDetail != null" >
         defaultDetail = #{defaultDetail,jdbcType=VARCHAR},
       </if>
@@ -353,35 +267,25 @@
       <if test="gift != null" >
         gift = #{gift,jdbcType=VARCHAR},
       </if>
-      <if test="cardStatus != null" >
-        cardStatus = #{cardStatus,jdbcType=TINYINT},
-      </if>
       <if test="action != null" >
         action = #{action,jdbcType=TINYINT},
       </if>
-      <if test="actionTime != null" >
-        actionTime = #{actionTime,jdbcType=BIGINT},
+      <if test="actionStamp != null" >
+        actionStamp = #{actionStamp,jdbcType=TIMESTAMP},
       </if>
-
     </set>
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.CouponModel" >
     update tbl_shop_wechat_card_coupon
-    set cardID = #{cardID,jdbcType=VARCHAR},
-      groupID = #{groupID,jdbcType=BIGINT},
-      mpID = #{mpID,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      cardType = #{cardType,jdbcType=VARCHAR},
-      defaultDetail = #{defaultDetail,jdbcType=VARCHAR},
+    set defaultDetail = #{defaultDetail,jdbcType=VARCHAR},
       dealDetail = #{dealDetail,jdbcType=VARCHAR},
       leastCost = #{leastCost,jdbcType=INTEGER},
       reduceCost = #{reduceCost,jdbcType=INTEGER},
       discount = #{discount,jdbcType=INTEGER},
       gift = #{gift,jdbcType=VARCHAR},
-      cardStatus = #{cardStatus,jdbcType=TINYINT},
       action = #{action,jdbcType=TINYINT},
-      actionTime = #{actionTime,jdbcType=BIGINT}
-    where cardKey = #{cardKey,jdbcType=VARCHAR}
+      actionStamp = #{actionStamp,jdbcType=TIMESTAMP}
+    where cardKey = #{cardKey,jdbcType=BIGINT}
   </update>
 </mapper>

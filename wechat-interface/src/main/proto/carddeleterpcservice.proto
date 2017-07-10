@@ -6,30 +6,28 @@ import "commons.proto";
 
 message CardDeleteReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // 请求公共字段
    RequestHeader header=1;
 }
-message ResultInfo {  
+message CardDeleteAndUnAbailableResData {  
    // 响应公共字段
    ResultHeader result=1;
 }
 message CardUnAvailableReqData {  
    // 唯一ID
-   string cardKey=2;
+   int64 cardKey=2;
    // code码
    string code=3;
+   // 失效原因
+   string reason=4;
    // 请求公共字段
    RequestHeader header=1;
 }
 //
 service CardDeleteRpcService{
     //
-    rpc deleteMemberInfo(CardDeleteReqData) returns (ResultInfo) {}
+    rpc deleteCard(CardDeleteReqData) returns (CardDeleteAndUnAbailableResData) {}
     //
-    rpc deleteCouponInfo(CardDeleteReqData) returns (ResultInfo) {}
-    //
-    rpc unAvailableCouponInfo(CardUnAvailableReqData) returns (ResultInfo) {}
-    //
-    rpc unAvailableMemberInfo(CardUnAvailableReqData) returns (ResultInfo) {}
+    rpc unAvailableCard(CardUnAvailableReqData) returns (CardDeleteAndUnAbailableResData) {}
 }

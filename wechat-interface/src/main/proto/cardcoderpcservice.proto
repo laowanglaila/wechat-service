@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardCodeRpcData";
+import "commons.proto";
+
+message CardCodeDecodingReqData {  
+   // 公众号mpID
+   string mpID=2;
+   // 经过加密的Code码
+   string encryptCode=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDecodingResData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeDestroyReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string code=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDestroyResData {  
+   // 唯一ID
+   string openId=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string cardId=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeImportReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   repeated string code=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeImportResData {  
+   // 已经成功存入的code
+   repeated string existCode=2;
+   // 没有存入的code
+   repeated string notExistCode=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MemberItemUpdateReq {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   int64 cardKey=3;
+   // 支持商家激活时针对单个会员卡分配自定义的会员卡背景
+   string backgroundPicUrl=4;
+   // 需要设置的积分全量值，传入的数值会直接显示
+   string bonus=5;
+   // 本次积分变动值，传负数代表减少
+   string addBonus=6;
+   // 商家自定义积分消耗记录，不超过14个汉字
+   string recordBonus=7;
+   // 需要设置的余额全量值，传入的数值会直接显示在卡面
+   string balance=8;
+   // 本次余额变动值，传负数代表减少
+   string addBalance=9;
+   // 商家自定义金额消耗记录，不超过14个汉字。
+   string recordBalance=10;
+   // 创建时字段custom_field1定义类型的最新数值，限制为4个汉字，12字节。
+   string customFieldValue1=11;
+   // 创建时字段custom_field2定义类型的最新数值，限制为4个汉字，12字节。
+   string customFieldValue2=12;
+   // 创建时字段custom_field3定义类型的最新数值，限制为4个汉字，12字节。
+   string customFieldValue3=13;
+   // 积分变动时是否触发系统模板消息，默认为true
+   string isNotifyBonus=14;
+   // 余额变动时是否触发系统模板消息，默认为true
+   string isNotifyBalance=15;
+   // 自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）
+   bool isNotifyCustomField1=16;
+   // 自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）
+   bool isNotifyCustomField2=17;
+   // 自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）
+   bool isNotifyCustomField3=18;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MemberItemUpdateRes {  
+   // 用户openid
+   string openid=2;
+   // 当前用户积分总额
+   int32 resultBonus=3;
+   // 当前用户预存总金额
+   int32 resultBalance=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeQueryReqData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   int64 cardKey=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeQueryResData {  
+   // 解密后获取的真实Code码
+   int64 cardKey=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   string openId=3;
+   // 起始使用时间
+   int64 beginTime=4;
+   // 结束时间
+   int64 endTime=5;
+   // 是否可以核销
+   bool canConsume=6;
+   // 当前code对应卡券的状态
+   string userCardStatus=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service CardCodeRpcService{
+    //code解码
+    rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
+    //核销code方法
+    rpc destoryCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
+    //导入code方法
+    rpc importCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+    //修改会员积分余额等信息
+    rpc updateMemberItem(MemberItemUpdateReq) returns (MemberItemUpdateRes) {}
+    //查询优惠券code状态
+    rpc queryCouponStatus(CardCodeQueryReqData) returns (CardCodeQueryResData) {}
+}

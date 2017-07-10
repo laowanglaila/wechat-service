@@ -9,32 +9,7 @@ public class MemberModel extends BaseItem implements Serializable {
     /**
      * 会员端产生的唯一主键
      */
-    private String cardKey;
-
-    /**
-     * 微信返回的卡券ID
-     */
-    private String cardID;
-
-    /**
-     * 集团ID
-     */
-    private Long groupID;
-
-    /**
-     * 公众平台微信号
-     */
-    private String mpID;
-
-    /**
-     * 卡券名，字数上限为9个汉字。(建议涵盖卡券属性、服务及金额)
-     */
-    private String title;
-
-    /**
-     * 卡券类型,会员卡类型
-     */
-    private String cardType;
+    private Long cardKey;
 
     /**
      * 折扣，该会员卡享受的折扣优惠,填10就是九折。
@@ -125,13 +100,6 @@ public class MemberModel extends BaseItem implements Serializable {
      * 积分规则
      */
     private String bonusRules;
-
-    /**
-     * 会员卡创建的进度，1：创建中，2：已提交，审核中，3：审合通过，4：审核失败，5：已投放
-     */
-    private Integer cardStatus;
-
-
 
     private static final long serialVersionUID = 1L;
 

@@ -25,19 +25,22 @@ public interface CardPrePareCreateRpcService {
     @RpcMethod(description = "高级信息")
     public PreCardResData createAdvancedInfo(PreAdvancedInfoData preAdvancedInfoData);
 
-    @RpcMethod(description = "提交优惠券")
-    public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey);
+//    @RpcMethod(description = "提交优惠券")
+//    public PreCardResData submitCouponInfo(CardPrimaryKey cardPrimaryKey);
+//
 
-    @RpcMethod(description = "提交会员卡信息")
-    public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey);
+//    @RpcMethod(description = "提交会员卡信息")
+//    public PreCardResData submitMemberInfo(CardPrimaryKey cardPrimaryKey);
+    @RpcMethod(description = "提交卡券到微信")
+    public PreCardResData submitCardInfo(CardPrimaryKey cardPrimaryKey);
 
     /**
      * 主键
      */
     @Data
     class CardPrimaryKey extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "卡券主键")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "卡券主键")
+        private Long cardKey;
     }
 
     /**
@@ -46,21 +49,8 @@ public interface CardPrePareCreateRpcService {
     @Data
     class PreCouponReqData extends RequestInfo {
 
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
-        private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
-        private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
-        private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
-        private Long shopID;
-        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
-        private String title;
-        //        card_type	            是	string(24)	    GENERAL_COUPON	优惠券类型。
-        @Protocol(fieldType = FieldType.STRING, order = 7, description = "优惠券类型")
-        private String cardType;
-        @Protocol(fieldType = FieldType.STRING, order = 8, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 8, description = "唯一ID")
+        private Long cardKey;
         //        default_detail	    是	string(3072)	双人套餐\n -进口红酒一支。\n孜然牛肉一份。。	优惠券专用，填写优惠详情。
         @Protocol(fieldType = FieldType.STRING, order = 9, description = "优惠券专用，填写优惠详情。")
         private String defaultDetail;
@@ -87,22 +77,8 @@ public interface CardPrePareCreateRpcService {
      */
     @Data
     class PreMemberReqData extends RequestInfo {
-
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
-        private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
-        private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
-        private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
-        private Long shopID;
-        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
-        private String title;
-        //        card_type            	是            	string(24)            	会员卡类型。
-        @Protocol(fieldType = FieldType.STRING, order = 7, description = "优惠券类型")
-        private String cardType;
-        @Protocol(fieldType = FieldType.STRING, order = 8, description = "会员端产生的唯一主键ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 8, description = "会员端产生的唯一主键ID")
+        private Long cardKey;
         //        discount            	否            	int            	折扣，该会员卡享受的折扣优惠,填10就是九折。
         @Protocol(fieldType = FieldType.INT, order = 9, description = "折扣，该会员卡享受的折扣优惠,填10就是九折。")
         private Integer discount;
@@ -164,8 +140,8 @@ public interface CardPrePareCreateRpcService {
 
     @Data
     class PreCardResData extends ResultInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
     }
 
     /**
@@ -173,9 +149,22 @@ public interface CardPrePareCreateRpcService {
      */
     @Data
     class PreCardBaseInfoData extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
+        private String mpID;
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        private Long groupID;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        private Long brandID;
+        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        private Long shopID;
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
+        private String title;
+        //        card_type            	是            	string(24)            	会员卡类型。
+        @Protocol(fieldType = FieldType.STRING, order = 7, description = "优惠券类型")
+        private String cardType;
 
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "card唯一键")
+        private Long cardKey;
         //        logo_url 	             是 	string(128) 	http://mmbiz.qpic.cn/ 	卡券的商户logo，建议像素为300*300。
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "卡券的商户logo，建议像素为300*300")
         private String logoUrl;
@@ -211,7 +200,7 @@ public interface CardPrePareCreateRpcService {
         private String servicePhone;
         //-----------------------------------------------------------------------
 //        location_id_list 	     否 	array 	        1234，2312 	门店位置ID。调用POI门店管理接口获取门店位置ID。
-        @Protocol(fieldType = FieldType.STRING, order = 14, description = "门店位置ID集合。调用POI门店管理接口获取门店位置ID。多个使用( ','+'空格' )分割")
+        @Protocol(fieldType = FieldType.STRING, order = 14, description = "门店位置ID集合。调用POI门店管理接口获取门店位置ID的list集合，JSON格式")
         private String locationIdList;
         //-----------------------------------------------------------------------
 //        source 	             否 	string（36） 	大众点评 	第三方来源名，例如同程旅游、大众点评。
@@ -280,8 +269,8 @@ public interface CardPrePareCreateRpcService {
 
     @Data
     class PreAdvancedInfoData extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "card唯一键")
+        private Long cardKey;
         //        abstract	                    否	JSON结构	        封面摘要结构体名称
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "封面摘要结构体名称")
         private String abstractInfo;

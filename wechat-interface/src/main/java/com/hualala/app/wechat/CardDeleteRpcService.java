@@ -15,27 +15,29 @@ import lombok.Data;
 public interface CardDeleteRpcService {
 
     @RpcMethod
-    CardDeleteAndUnAbailableResData deleteMemberInfo(CardDeleteReqData cardDeleteReqData);
+    CardDeleteAndUnAbailableResData deleteCard(CardDeleteReqData cardDeleteReqData);
 
     @RpcMethod
-    CardDeleteAndUnAbailableResData unAvailableMemberInfo(CardUnAvailableReqData cardUnAvailableReqData);
-    @RpcMethod
-    CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData);
-
-    @RpcMethod
-    CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData);
+    CardDeleteAndUnAbailableResData unAvailableCard(CardUnAvailableReqData cardUnAvailableReqData);
+//    @RpcMethod
+//    CardDeleteAndUnAbailableResData deleteCouponInfo(CardDeleteReqData cardDeleteReqData);
+//
+//    @RpcMethod
+//    CardDeleteAndUnAbailableResData unAvailableCouponInfo(CardUnAvailableReqData cardUnAvailableReqData);
 
     @Data
     class CardDeleteReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
     }
     @Data
     class CardUnAvailableReqData extends RequestInfo{
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
-        private String cardKey;
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "唯一ID")
+        private Long cardKey;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "code码")
         private String code;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "失效原因")
+        private String reason;
     }
 
     @Data

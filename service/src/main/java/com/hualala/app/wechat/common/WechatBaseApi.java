@@ -14,19 +14,19 @@ public class WechatBaseApi {
 
     public static final String API_AUTHORIZER_TOKEN = ROOT + "/component/api_authorizer_token";
 
-    //微信公众号错误码字段名
-    public static final String MP_ERRCODE = "errcode";
 
     //微信卡券上传背景图片
-    public static final String API_UPLOAD_MEDIA = ROOT + "/media/uploadimg";
+    public static final String API_UPLOAD_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/uploadimg";
+    //微信上传临时素材
+    public static final String API_UPLOAD_TEMP_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/upload";
     //微信卡券创建卡券
     public static final String CREATE_CARD_URL = "https://api.weixin.qq.com/card/create";
     //微信卡券设置自助核销
     public static final String SET_SELF_CONSUME = "https://api.weixin.qq.com/card/selfconsumecell/set";
     //微信卡券查看卡券详情/审核状态
     public static final String GET_CARD_INFO = "https://api.weixin.qq.com/card/get";
-    //微信卡券批量查看卡券详情/审核状态
-    public static final String BATCHGET_CARD_INFO = "https://api.weixin.qq.com/card/batchget";
+    //微信卡券批量查看卡券id
+    public static final String BATCHGET_CARD_ID = "https://api.weixin.qq.com/card/batchget";
     //微信卡券修改库存
     public static final String MODIFY_CARD_SKU = "https://api.weixin.qq.com/card/modifystock";
     //微信卡券删除卡券
@@ -49,6 +49,8 @@ public class WechatBaseApi {
     public static final String GET_HTML_MESSAGE = "https://api.weixin.qq.com/card/mpnews/gethtml";
     //核销code接口
     public static final String CONSUME_CARD_CODE = "https://api.weixin.qq.com/card/code/consume";
+    //解码code接口
+    public static final String DECRYPT_CARD_CODE = "https://api.weixin.qq.com/card/code/decrypt";
     //微信会员卡微信激活接口
     public static final String ACTIVATE_CARD = "https://api.weixin.qq.com/card/membercard/activate";
     //微信会员卡更新会员信息
@@ -67,5 +69,7 @@ public class WechatBaseApi {
     public static final String CREATE_QR_CODE = "https://api.weixin.qq.com/cgi-bin/qrcode/create";
     // 添加微信模板ID
     public static final String API_ADD_TEMPLATE = ROOT + "/template/api_add_template";
+    // 获取ApiTicket
+    public static final String GET_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
 
 }
