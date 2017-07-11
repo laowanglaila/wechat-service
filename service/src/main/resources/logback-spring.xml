@@ -52,7 +52,7 @@
     </springProfile>
 
     <logger name="com.hualala" level="DEBUG" additivity="false">
-        <springProfile name="local">
+        <springProfile name="!production">
             <appender-ref ref="STDOUT" />
         </springProfile>
         <springProfile name="!local">
@@ -62,7 +62,7 @@
     </logger>
 
     <root level="INFO">
-        <springProfile name="local">
+        <springProfile name="!production">
             <appender-ref ref="STDOUT" />
         </springProfile>
         <springProfile name="!local">
