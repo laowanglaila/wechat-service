@@ -96,6 +96,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
             return ResultUtil.getResultInfoBean(ticketObject,CardSignResData.class);
         }
         String apiTicket = ticketObject.getString("ticket");
+        //TODO 将appSecret改为apiTicket
         signer.AddData(appSecret);
         String nonceStr = UUID.randomUUID().toString().replaceAll("-","");
         signer.AddData(nonceStr);
@@ -109,7 +110,6 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         }
         Long timeStamp = System.currentTimeMillis()/1000;
         signer.AddData(timeStamp.toString());
-        //todo 根据mpID和groupID、hualalaCardID、查询cardID 单独写一个mapper xml
         Map<String,Object> map = new HashMap<>();
         map.put("hualalaCardID",hualalaCardID);
         map.put("mpID",mpID);
