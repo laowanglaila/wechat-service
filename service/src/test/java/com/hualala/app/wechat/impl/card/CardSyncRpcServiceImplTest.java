@@ -98,10 +98,10 @@ private CreateCardKeyService createCardKeyService;
     public void testaddCardChannel(){
         CardChannelService rpcClient = super.baseRpcClient.getRpcClient(CardChannelService.class);
         CardChannelReq cardChannelReq = new CardChannelReq();
-        cardChannelReq.setCardID(540L);
-        cardChannelReq.setGroupID(73L);
-        cardChannelReq.setWechatCardCode("2");
-        cardChannelReq.setWechatCardKey(1L);
+        cardChannelReq.setCardID(829187704L);
+        cardChannelReq.setGroupID(1155L);
+        cardChannelReq.setWechatCardCode("380255837377");
+        cardChannelReq.setWechatCardKey(643958577561181608L);
         CardChannelRes cardChannelRes = rpcClient.addCardChannel(cardChannelReq);
         System.out.println(cardChannelRes.getMessage());
     }

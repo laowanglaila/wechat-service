@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by xkia on 2017/4/14.
  */
@@ -38,7 +36,7 @@ public class WechatTemplateRpcServiceImplTest {
 
 //        reqData.setModelType("queue");
 //        reqData.setModelSubType("alarm");
-        //reqData.setTemplateType(WechatTemplateTypeEnum.TEMPLATE_ENUM_QUEUE);
+        reqData.setTemplateType(WechatTemplateTypeEnum.TEMPLATE_ENUM_QUEUE);
         reqData.setUserID(3573647);
         reqData.setOpenID("o7FjEuGrxL0V1qnfz2mxNCUhNxJY");
 

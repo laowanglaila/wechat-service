@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by renjianfei on 2017/6/5.
  */
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class MsgPublishRpcServiceTest {
     @Autowired
