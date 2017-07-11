@@ -71,13 +71,14 @@ public class WechatQrcodeTempRpcServiceTest {
     public void  test1(){
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
-        wechatQRCodeListReq.setMpID("doulaofangceshi");
+//        wechatQRCodeListReq.setMpID("doulaofangceshi");
+        wechatQRCodeListReq.setMpID("5fWNjiboDX32dcec");
 //        wechatQRCodeListReq.setBrandID("0");
-//        wechatQRCodeListReq.setGroupID("306");
-//        wechatQRCodeListReq.setShopID("76023063");
+//        wechatQRCodeListReq.setGroupID("5");
+//        wechatQRCodeListReq.setShopID("0");
         wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
         wechatQRCodeListReq.setExpireSeconds(3600*24);
-        wechatQRCodeListReq.setSize(200);
+        wechatQRCodeListReq.setSize(20);
         List<WechatQRCodeRpcSerivce.WechatQRCodeData> list = new ArrayList<>();
         for (int i = 0 ; i < 3; i++) {
             WechatQRCodeRpcSerivce.WechatQRCodeData wechatQRCodeData = new WechatQRCodeRpcSerivce.WechatQRCodeData();

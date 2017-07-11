@@ -130,7 +130,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         cardSignResData.setNonceStr(nonceStr);
         cardSignResData.setSignature(signature);
         cardSignResData.setTimeStamp(timeStamp.toString());
-        cardSignResData.setOuterStr("{\"groupID\":\""+groupID+"\",\"hualalaCardID\":\""+hualalaCardID+"\"}");
+        cardSignResData.setOuterStr("{\\\"groupID\\\":\\\""+groupID+"\\\",\\\"hualalaCardID\\\":\\\""+hualalaCardID+"\\\"}");
         return cardSignResData;
     }
 }
