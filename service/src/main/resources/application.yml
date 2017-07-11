@@ -1,6 +1,6 @@
 spring:
 #  profiles.active: production
-  profiles.active: local
+  profiles.active: pre
 #  profiles.active: dohko
 ---
 spring:
