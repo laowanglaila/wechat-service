@@ -64,7 +64,7 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
 
         }else if (WechatMessageType.EVENT_CARD_USER_GET.equals(event)){
             //用户领取事件
-//            this.eventUserGetHandler(jsonObject);
+            this.eventUserGetHandler(jsonObject);
         }else if (WechatMessageType.EVENT_CARD_USER_GIFTING.equals(event)){
             //用户转赠事件
 
@@ -86,15 +86,17 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
      * @param jsonObject
      */
     private void eventUserGetHandler(JSONObject jsonObject){
-        JSONObject outerStr = jsonObject.getJSONObject("OuterStr");
+        String outerStr = jsonObject.getString("OuterStr");
+        String s = outerStr.replaceAll("@%", "\"");
+        JSONObject jsonObj = JSONObject.parseObject(s);
         Long groupID = null;
-        if (outerStr.containsKey("groupID")) {
-            groupID = outerStr.getLong("groupID");
+        if (jsonObj.containsKey("groupID")) {
+            groupID = jsonObj.getLong("groupID");
 
         }
         Long hualalaCardID = null;
-        if (outerStr.containsKey("hualalaCardID")) {
-            hualalaCardID = outerStr.getLong("hualalaCardID");
+        if (jsonObj.containsKey("hualalaCardID")) {
+            hualalaCardID = jsonObj.getLong("hualalaCardID");
         }
         String userCardCode = null;
         if (jsonObject.containsKey("UserCardCode")) {
