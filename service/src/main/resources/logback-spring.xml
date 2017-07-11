@@ -52,7 +52,7 @@
     </springProfile>
 
     <logger name="com.hualala" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="STDOUT"/>-->
         <springProfile name="!local">
             <appender-ref ref="ROLLING_FILE_DEFAULT" />
             <appender-ref ref="ROLLING_FILE_ERROR" />
@@ -60,7 +60,7 @@
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
+        <!--<appender-ref ref="STDOUT" />-->
         <springProfile name="!local">
             <appender-ref ref="ROLLING_FILE_DEFAULT" />
             <appender-ref ref="ROLLING_FILE_ERROR" />
