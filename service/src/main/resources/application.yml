@@ -402,7 +402,7 @@ redisLocker:
     minIdle: 10
 
 zookeeper:
-  zookeeperAddress: 192.168.1.64:2181,192.168.1.65:2181,192.168.1.69:2181,192.168.1.67:2181,192.168.1.68:2181  #zookeeper uri
+  zookeeperAddress: 192.168.2.64:2181,192.168.2.65:2181,192.168.2.69:2181,192.168.2.67:2181,192.168.2.68:2181  #zookeeper uri
   serviceName: wechat-card  #服务名称
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
