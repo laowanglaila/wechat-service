@@ -62,7 +62,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
                 mpID = baseInfoModel.getMpID();
             }
             if (StringUtils.isBlank(mpID)) {
-                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID不能为空！");
+                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_CARD_MISMATCH, "在此公众号下没有找到对应的微信会员卡！");
             }
         }
         String appSecret = null;
