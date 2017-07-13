@@ -26,7 +26,7 @@ public interface JsApiSignRpcService {
     class JsApiSignReqData extends RequestInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "当前网页的URL，不包含#及其后面部分")
         private String url;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "微信公众号ID")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "微信公众号ID")
         private String mpID;
 
     }
