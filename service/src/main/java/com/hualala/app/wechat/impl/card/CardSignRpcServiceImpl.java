@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 @Service
 public class CardSignRpcServiceImpl implements CardSignRpcService{
-    private static Logger logger = LoggerFactory.getLogger(HttpApiService.class);
+    private static Logger logger = LoggerFactory.getLogger(CardSignRpcService.class);
     @Autowired
     private WechatMpMapper wechatMpMapper;
     @Autowired
