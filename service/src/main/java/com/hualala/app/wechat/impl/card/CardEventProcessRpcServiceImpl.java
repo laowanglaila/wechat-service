@@ -98,6 +98,10 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
         if (jsonObj.containsKey("hualalaCardID")) {
             hualalaCardID = jsonObj.getLong("hualalaCardID");
         }
+        Long hualalaCardCode = null;
+        if (jsonObj.containsKey("hualalaCardCode")) {
+            hualalaCardCode = jsonObj.getLong("hualalaCardCode");
+        }
         String userCardCode = null;
         if (jsonObject.containsKey("UserCardCode")) {
             userCardCode = jsonObject.getString("UserCardCode");
@@ -114,8 +118,8 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
                 cardKey = baseInfoModel1.getCardKey();
             }
         }
-        if (cardKey == null || userCardCode == null || hualalaCardID == null || groupID == null){
-            logger.error("缺少必须的参数：\ngroupID:["+groupID+"]\nhualalaCardID:["+hualalaCardID+"]\nuserCardCode:["+userCardCode+"]\ncardKey:["+cardKey+"]\ncardId:["+cardId+"]");
+        if (cardKey == null || userCardCode == null || hualalaCardID == null || groupID == null || hualalaCardCode == null){
+            logger.error("缺少必须的参数：\ngroupID:["+groupID+"]\nhualalaCardID:["+hualalaCardID+"]\nuserCardCode:["+userCardCode+"]\ncardKey:["+cardKey+"]\ncardId:["+cardId+"]\nhualalaCardCode:["+hualalaCardCode+"]");
             return;
         }
         CardChannelService rpcClient = baseRpcClient.getRpcClient(CardChannelService.class);
@@ -123,7 +127,7 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
         cardChannelReq.setWechatCardKey(cardKey);
         cardChannelReq.setWechatCardCode(userCardCode);
         cardChannelReq.setGroupID(groupID);
-        cardChannelReq.setCardID(hualalaCardID);
+        cardChannelReq.setCardID(hualalaCardCode);
         rpcClient.addCardChannel(cardChannelReq);
     }
 }

@@ -11,6 +11,7 @@ public class ProtoGenerator {
     @org.junit.Test
     public void generatorProto() {
         Class[] generatorClass = new Class[]{
+//                CardGiveOutRpcService.class
 //                JsApiSignRpcService.class
                 CardSignRpcService.class
 //                MsgPublishRpcService.class

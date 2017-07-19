@@ -44,6 +44,10 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         String mpID = cardSignReqData.getMpID();
         //groupID
         Long groupID = cardSignReqData.getGroupID();
+        String hualalaCardCode = cardSignReqData.getHualalaCardCode();
+        if (StringUtils.isBlank(hualalaCardCode)){
+            return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS, "非法参数:hualalaCardCode[null]！");
+        }
         Long hualalaCardID = cardSignReqData.getHualalaCardID();
         if (hualalaCardID == null){
             return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "hualalaCardID不能为空！");
@@ -65,7 +69,6 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
                 return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_CARD_MISMATCH, "在此公众号下没有找到对应的微信会员卡！");
             }
         }
-        String appSecret = null;
         if (groupID == null) {
             Map<String, Object> params = new HashMap<>();
             params.put("mpID", mpID);
@@ -78,16 +81,17 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
                 return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_GROUP_ID_NULL, "获取GroupID失败！");
             }
         }
-        if (StringUtils.isBlank(appSecret)){
-            Map<String, Object> params = new HashMap<>();
-            params.put("mpID", mpID);
-            List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
-            if (maps.size() > 0) {
-                appSecret = (String) maps.get(0).get("appSecret");
-            } else {
-                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_APPSECRET_MISSED, "获取appSecret失败！");
-            }
-        }
+//        String appSecret = null;
+//        if (StringUtils.isBlank(appSecret)){
+//            Map<String, Object> params = new HashMap<>();
+//            params.put("mpID", mpID);
+//            List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
+//            if (maps.size() > 0) {
+//                appSecret = (String) maps.get(0).get("appSecret");
+//            } else {
+//                return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_APPSECRET_MISSED, "获取appSecret失败！");
+//            }
+//        }
 
         WxCardSign signer = new WxCardSign();
         // api_ticket、timestamp、card_id、code、openid、nonce_str
@@ -96,8 +100,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
             return ResultUtil.getResultInfoBean(ticketObject,CardSignResData.class);
         }
         String apiTicket = ticketObject.getString("ticket");
-        //TODO 将appSecret改为apiTicket
-        signer.AddData(appSecret);
+        signer.AddData(apiTicket);
         String nonceStr = UUID.randomUUID().toString().replaceAll("-","");
         signer.AddData(nonceStr);
         String openid = cardSignReqData.getOpenid();
@@ -130,7 +133,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         cardSignResData.setNonceStr(nonceStr);
         cardSignResData.setSignature(signature);
         cardSignResData.setTimeStamp(timeStamp.toString());
-        cardSignResData.setOuterStr("{@%groupID@%:@%"+groupID+"@%,@%hualalaCardID@%:@%"+hualalaCardID+"@%}");
+        cardSignResData.setOuterStr("{@%groupID@%:@%"+groupID+"@%,@%hualalaCardID@%:@%"+hualalaCardID+"@%,@%hualalaCardCode@%:@%"+hualalaCardCode+"@%}");
         return cardSignResData;
     }
 }
