@@ -93,13 +93,11 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     public CardCodeDestroyResData destoryCode(CardCodeDestroyReqData cardCodeDestroyReqData) {
         Long cardKey = cardCodeDestroyReqData.getCardKey();
         if (cardKey == null) {
-            return new CardUpdateRpcService.CardUpdateResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+            return new CardCodeDestroyResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
         BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel) {
-            return new CardUpdateRpcService.CardUpdateResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+            return new CardCodeDestroyResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
         }
         String cardID = baseInfoModel.getCardID();
         String mpID = baseInfoModel.getMpID();
