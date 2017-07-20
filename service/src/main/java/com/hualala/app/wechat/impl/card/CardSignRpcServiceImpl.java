@@ -137,7 +137,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         cardSignResData.setTimeStamp(timeStamp.toString());
         StringBuilder outStr = new StringBuilder("{\"groupID\":\""+groupID+"\",\"hualalaCardID\":\""+hualalaCardID+"\",\"hualalaCardCode\":\""+hualalaCardCode+"\"");
         if (StringUtils.isNotBlank(customerID)){
-            outStr.append(",\"customerID\":"+customerID);
+            outStr.append(",\"customerID\":\""+customerID+"\"");
         }
         outStr.append("}");
         String s = outStr.toString();
