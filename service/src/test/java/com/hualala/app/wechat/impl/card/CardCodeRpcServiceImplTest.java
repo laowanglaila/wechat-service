@@ -30,11 +30,12 @@ public class CardCodeRpcServiceImplTest extends BaseRpcTest {
         CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
 
         CardCodeRpcService.CardCodeDestroyReqData cardCodeDestroyReqData = new CardCodeRpcService.CardCodeDestroyReqData();
-        cardCodeDestroyReqData.setCode("410947662432");
-        cardCodeDestroyReqData.setCardKey(123123L);
+        cardCodeDestroyReqData.setCode("724534781152");
+        cardCodeDestroyReqData.setCardKey(6444364553793842307L);
         CardCodeRpcService.CardCodeDestroyResData cardCodeDestroyResData = rpcClient.destoryCode(cardCodeDestroyReqData);
         System.out.println(cardCodeDestroyResData.getMessage());
     }
+
 
 
 }

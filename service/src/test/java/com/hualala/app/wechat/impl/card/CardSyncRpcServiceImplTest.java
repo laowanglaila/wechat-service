@@ -70,7 +70,8 @@ private CreateCardKeyService createCardKeyService;
     public void testDonwloadCardList() throws ExecutionException {
 //        String mpID = "dohko1155";
 //        String mpID = "hualala_com";
-        String mpID = "doulaofangceshi";
+        String mpID = "tut1Ceu1DX005996";
+//        String mpID = "doulaofangceshi";
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();
         cardListReqData.setCount(50);
@@ -100,7 +101,7 @@ private CreateCardKeyService createCardKeyService;
         CardChannelReq cardChannelReq = new CardChannelReq();
         cardChannelReq.setCardID(829187704L);
         cardChannelReq.setGroupID(1155L);
-        cardChannelReq.setWechatCardCode("380255837377");
+        cardChannelReq.setWechatCardCode("312160172886");
         cardChannelReq.setWechatCardKey(643958577561181608L);
         CardChannelRes cardChannelRes = rpcClient.addCardChannel(cardChannelReq);
         System.out.println(cardChannelRes.getMessage());

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "CardGiveOutRpcData";
+import "commons.proto";
+
+message PayToMemberReq {  
+   // 必填参数，要赠送的会员卡cardKey
+   int64 cardKey=2;
+   // 必填参数，规则开始时间,1970年1月1日 00:00:00开始的时间秒数
+   string beginTime=3;
+   // 必填参数，规则结束时间,1970年1月1日 00:00:00开始的时间秒数
+   string endTime=4;
+   // 必填参数，单次消费送会员卡的金额下限，以分为单位
+   string leastCost=5;
+   // 必填参数，单次消费送会员卡的金额上限，以分为单位
+   string maxCost=6;
+   // 选填参数，商户自定义领卡网页链接，填入后点击支付即会员消息会跳转至商户网页领卡
+   string jumpUrl=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PayToMemberRes {  
+   // 必填参数，要赠送的会员卡cardKey
+   int64 cardKey=2;
+   // 必填参数，规则开始时间,1970年1月1日 00:00:00开始的时间秒数
+   string beginTime=3;
+   // 必填参数，规则结束时间,1970年1月1日 00:00:00开始的时间秒数
+   string endTime=4;
+   // 必填参数，单次消费送会员卡的金额下限，以分为单位
+   string leastCost=5;
+   // 必填参数，单次消费送会员卡的金额上限，以分为单位
+   string maxCost=6;
+   // 选填参数，商户自定义领卡网页链接，填入后点击支付即会员消息会跳转至商户网页领卡
+   string jumpUrl=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message PayToGiveCouponsReq {  
+   // 必填参数，规则开始时间,1970年1月1日 00:00:00开始的时间秒数
+   string beginTime=2;
+   // 必填参数，规则结束时间,1970年1月1日 00:00:00开始的时间秒数
+   string endTime=3;
+   // 必填参数，赠送标题
+   string title=4;
+   // 必填参数，期望投放的优惠券集合
+   repeated CouponInfo couponInfoList=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CouponInfo {  
+   // 必填参数，要赠送的会员卡cardKey
+   int64 cardKey=1;
+   // 选填参数，起送金额条件，以分为单位，默认为0
+   string amount=2;
+}
+message PayToGiveCouponsRes {  
+   // 必填参数，规则开始时间,1970年1月1日 00:00:00开始的时间秒数
+   string beginTime=2;
+   // 必填参数，规则结束时间,1970年1月1日 00:00:00开始的时间秒数
+   string endTime=3;
+   // 必填参数，赠送标题
+   string title=4;
+   // 必填参数，期望投放的优惠券集合
+   repeated CouponInfo couponInfoList=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//投放卡券接口
+service CardGiveOutRpcService{
+    //支付即会员接口
+    rpc payToMember(PayToMemberReq) returns (PayToMemberRes) {}
+    //支付赠券接口
+    rpc payToGiveCoupon(PayToGiveCouponsReq) returns (PayToGiveCouponsRes) {}
+}

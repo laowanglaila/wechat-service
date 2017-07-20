@@ -191,11 +191,11 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
 //                            "\"expire_seconds\": 1800,\n" +
                             "\"action_info\": {\n" +
                                 "\"card\": {\n" +
-                                "\"card_id\": \"pACwGs3Qk-mhtzuhDnC2mPno2208\", \n" +
+                                "\"card_id\": \"pACwGs1luXlXr-12w7teqLcBA3f4\", \n" +
 //                                "\"code\": \"198372383512\"," +
 //                                "\"openid\": \"oACwGswdcsCnQgJlarC9xIqQL2YI\"," +
 //                                "\"openid\": \"oACwGs4QPjQ_JoAVBOCQgwC12yFk\"," +
-                                "\"is_unique_code\": true ,\n" +
+//                                "\"is_unique_code\": true ,\n" +
                                 "\"outer_id\":\"122134234\"\n" +
                             "  }\n" +
                             " }\n" +
