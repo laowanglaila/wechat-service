@@ -17,6 +17,8 @@ message CardSignReqData {
    string openid=7;
    // 哗啦啦用户的会员卡id
    string hualalaCardCode=8;
+   // 哗啦啦用户id
+   string customerID=9;
    // 请求公共字段
    RequestHeader header=1;
 }

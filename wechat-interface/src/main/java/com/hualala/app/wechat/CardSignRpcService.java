@@ -40,6 +40,8 @@ public interface CardSignRpcService {
         private String openid;
         @Protocol(fieldType = FieldType.STRING, order = 8, description = "哗啦啦用户的会员卡id")
         private String hualalaCardCode;
+        @Protocol(fieldType = FieldType.STRING, order = 9, description = "哗啦啦用户id")
+        private String customerID;
 
 
     }

@@ -13,6 +13,7 @@ import com.hualala.app.wechat.service.ApiTicketService;
 import com.hualala.app.wechat.service.HttpApiService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WxCardSign;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         //groupID
         Long groupID = cardSignReqData.getGroupID();
         String hualalaCardCode = cardSignReqData.getHualalaCardCode();
+        String customerID = cardSignReqData.getCustomerID();
         if (StringUtils.isBlank(hualalaCardCode)){
             return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS, "非法参数:hualalaCardCode[null]！");
         }
@@ -133,7 +135,13 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         cardSignResData.setNonceStr(nonceStr);
         cardSignResData.setSignature(signature);
         cardSignResData.setTimeStamp(timeStamp.toString());
-        cardSignResData.setOuterStr("{@%groupID@%:@%"+groupID+"@%,@%hualalaCardID@%:@%"+hualalaCardID+"@%,@%hualalaCardCode@%:@%"+hualalaCardCode+"@%}");
+        StringBuilder outStr = new StringBuilder("{\"groupID\":\""+groupID+"\",\"hualalaCardID\":\""+hualalaCardID+"\",\"hualalaCardCode\":\""+hualalaCardCode+"\"");
+        if (StringUtils.isNotBlank(customerID)){
+            outStr.append(",\"customerID\":"+customerID);
+        }
+        outStr.append("}");
+        String encodeOuterStr = Base64.encodeBase64URLSafeString(outStr.toString().getBytes());
+        cardSignResData.setOuterStr(encodeOuterStr);
         return cardSignResData;
     }
 }
