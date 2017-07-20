@@ -71,5 +71,7 @@ public class WechatBaseApi {
     public static final String API_ADD_TEMPLATE = ROOT + "/template/api_add_template";
     // 获取ApiTicket
     public static final String GET_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
+    // 支付即会员、支付赠券
+    public static final String PAY_GIFT_CARD = "https://api.weixin.qq.com/card/paygiftcard/add";
 
 }

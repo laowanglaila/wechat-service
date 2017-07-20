@@ -95,6 +95,8 @@ public interface CardCodeRpcService {
         //    code	是	string(20)	1231231	需核销的Code码。
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "需导入微信卡券后台的自定义code，上限为100个。")
         private String code;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
+        private String groupID;
     }
 
     @Data
