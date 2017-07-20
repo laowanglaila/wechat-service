@@ -140,7 +140,11 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
             outStr.append(",\"customerID\":"+customerID);
         }
         outStr.append("}");
-        String encodeOuterStr = Base64.encodeBase64URLSafeString(outStr.toString().getBytes());
+        String s = outStr.toString();
+        if (logger.isDebugEnabled()){
+            logger.debug("outStr" + s);
+        }
+        String encodeOuterStr = Base64.encodeBase64URLSafeString(s.getBytes());
         cardSignResData.setOuterStr(encodeOuterStr);
         return cardSignResData;
     }

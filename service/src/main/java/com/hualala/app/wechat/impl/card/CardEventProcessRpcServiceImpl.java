@@ -14,6 +14,7 @@ import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
 import com.hualala.core.app.Logger;
 import com.hualala.core.client.BaseRpcClient;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,9 @@ import java.util.List;
  * Created by renjianfei on 2017/6/1.
  */
 @Service
+@Slf4j
 public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcService {
-    private Logger logger = Logger.of(this.getClass());
+//    private Logger logger = Logger.of(this.getClass());
     @Autowired
     private BaseRpcClient baseRpcClient;
     @Autowired
@@ -36,7 +38,9 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
     public EventProcessRes process(EventProcessReq json) {
         String jsonStr = json.getJson();
         JSONObject jsonObject = JSONObject.parseObject(jsonStr);
-        logger.info(() -> jsonObject.toJSONString());
+        if (log.isInfoEnabled()){
+            log.info(jsonObject.toJSONString());
+        }
         String event = jsonObject.getString("event");
         EventProcessRes eventProcessRes = new EventProcessRes();
 
@@ -87,13 +91,16 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
     }
 
     /**
-     * 领取会员卡事件处理器
+     * 领取卡券事件处理器
      *
      * @param jsonObject
      */
     private void eventUserGetHandler(JSONObject jsonObject) {
         String outerStr = jsonObject.getString("OuterStr");
         JSONObject jsonObj = JSONObject.parseObject(new String(Base64.decodeBase64(outerStr)));
+        if (log.isDebugEnabled()){
+            log.debug("outStr:" + jsonObj.toJSONString());
+        }
         Long groupID = null;
         if (jsonObj.containsKey("groupID")) {
             groupID = jsonObj.getLong("groupID");
@@ -130,15 +137,17 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
         }
         if (cardKey == null || userCardCode == null || hualalaCardID == null || groupID == null
                             || hualalaCardCode == null || cardType == null ) {
-            logger.error("缺少必须的参数：\n" +
-                            "groupID:[" + groupID + "]\n" +
-                            "hualalaCardID:[" + hualalaCardID + "]\n" +
-                            "userCardCode:[" + userCardCode + "]\n" +
-                            "cardKey:[" + cardKey + "]\n" +
-                            "cardId:[" + cardId + "]\n" +
-                            "hualalaCardCode:[" + hualalaCardCode + "]\n" +
-                            "customerID:["+customerID+"]\n" +
-                            "cardType:["+cardType+"]");
+            if (log.isErrorEnabled()){
+                log.error("缺少必须的参数：\n" +
+                        "groupID:[" + groupID + "]\n" +
+                        "hualalaCardID:[" + hualalaCardID + "]\n" +
+                        "userCardCode:[" + userCardCode + "]\n" +
+                        "cardKey:[" + cardKey + "]\n" +
+                        "cardId:[" + cardId + "]\n" +
+                        "hualalaCardCode:[" + hualalaCardCode + "]\n" +
+                        "customerID:["+customerID+"]\n" +
+                        "cardType:["+cardType+"]");
+            }
             return;
         }
         if ("MEMBER_CARD".equals(cardType)){
@@ -149,11 +158,15 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
             cardChannelReq.setGroupID(groupID);
             cardChannelReq.setCardID(hualalaCardCode);
             CardChannelRes cardChannelRes = rpcClient.addCardChannel(cardChannelReq);
-            String code = cardChannelRes.getCode();
+            if (log.isDebugEnabled()){
+                log.debug(JSONObject.toJSONString(cardChannelRes.getMessageParams()));
+            }
             if (!"000".equals(cardChannelRes.getCode())){
                 Object[] messageParams = cardChannelRes.getMessageParams();
                 String s = JSONObject.toJSONString(messageParams);
-                logger.error(s);
+                if (log.isErrorEnabled()){
+                    log.error(s);
+                }
             }
 
         }else {
@@ -165,7 +178,16 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
             giftDetailChannelReq.setWechatCardCode(userCardCode);
             giftDetailChannelReq.setWechatCardKey(cardKey);
             GiftDetailChannelRes giftDetailChannelRes = rpcClient.addGiftDetailChannel(giftDetailChannelReq);
-
+            if (log.isDebugEnabled()){
+                log.debug(JSONObject.toJSONString(giftDetailChannelRes.getMessageParams()));
+            }
+            if (!"000".equals(giftDetailChannelRes.getCode())){
+                Object[] messageParams = giftDetailChannelRes.getMessageParams();
+                String s = JSONObject.toJSONString(messageParams);
+                if (log.isErrorEnabled()){
+                    log.error(s);
+                }
+            }
 
         }
 
