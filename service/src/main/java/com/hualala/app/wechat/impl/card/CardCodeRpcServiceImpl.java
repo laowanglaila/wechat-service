@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -253,10 +254,18 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
             sb.append("\"bonus\": "+bonus+",");
         if (StringUtils.isNotBlank(addBonus))
             sb.append("\"add_bonus\": "+addBonus+",");
-        if (StringUtils.isNotBlank(balance))
-            sb.append("\"balance\": "+balance+",");
-        if (StringUtils.isNotBlank(addBalance))
-            sb.append("\"add_balance\": "+addBalance+",");
+        if (StringUtils.isNotBlank(balance)) {
+            BigDecimal bigDecimal = new BigDecimal(balance);
+            BigDecimal bigDecimal1 = new BigDecimal("100");
+            BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
+            sb.append("\"balance\": "+decimal.longValue()+",");
+        }
+        if (StringUtils.isNotBlank(addBalance)) {
+            BigDecimal bigDecimal = new BigDecimal(balance);
+            BigDecimal bigDecimal1 = new BigDecimal("100");
+            BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
+            sb.append("\"add_balance\": " + decimal.longValue() + ",");
+        }
         if (StringUtils.isNotBlank(backgroundPicUrl))
             sb.append("\"background_pic_url\": \""+backgroundPicUrl+"\",");
         if (StringUtils.isNotBlank(recordBonus))

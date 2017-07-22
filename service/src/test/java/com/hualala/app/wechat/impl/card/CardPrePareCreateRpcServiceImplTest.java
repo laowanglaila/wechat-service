@@ -187,7 +187,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("沪上阿姨现煮茶饮测试会员01");
+        memberInfo.setPrerogative("沪上阿姨会员01");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -211,11 +211,11 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(1155L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("沪上阿姨现煮茶饮测试会员卡01");
+        baseInfo.setTitle("沪上阿姨测试会员01");
         baseInfo.setMpID("tut1Ceu1DX005996");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
-        baseInfo.setBrandName("沪上阿姨现煮茶饮");
+        baseInfo.setBrandName("沪上阿姨");
         baseInfo.setCanShare(false);
         baseInfo.setCanGiveFriend(false);
         baseInfo.setCenterTitle("CenterTitle");
@@ -280,7 +280,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6444395370184189059L);
+        cardPrimaryKey.setCardKey(6444812810940589187L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }
