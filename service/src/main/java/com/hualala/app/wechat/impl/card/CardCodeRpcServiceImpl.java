@@ -261,7 +261,7 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
             sb.append("\"balance\": "+decimal.longValue()+",");
         }
         if (StringUtils.isNotBlank(addBalance)) {
-            BigDecimal bigDecimal = new BigDecimal(balance);
+            BigDecimal bigDecimal = new BigDecimal(addBalance);
             BigDecimal bigDecimal1 = new BigDecimal("100");
             BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
             sb.append("\"add_balance\": " + decimal.longValue() + ",");
