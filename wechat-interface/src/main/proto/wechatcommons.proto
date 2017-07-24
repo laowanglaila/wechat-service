@@ -41,6 +41,7 @@ enum WechatTemplateTypeEnum {
    TEMPLATE_ENUM_DEFAULT=0;
    TEMPLATE_ENUM_QUEUE=1;
    TEMPLATE_ENUM_ORDER=2;
+   TEMPLATE_ENUM_ORDER_BOOK=3;
 }
 enum CardStatusEnum {  
    CARD_STATUS_DEFULT=0;
