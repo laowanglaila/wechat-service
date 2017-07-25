@@ -4,21 +4,17 @@ option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardCodeRpcData";
 import "commons.proto";
 
-message CardCodeDestroyReqData {  
-   // 唯一ID
-   int64 cardKey=2;
-   // 需导入微信卡券后台的自定义code，上限为100个。
-   string code=3;
-   // 集团ID
-   string groupID=4;
+message CardCodeDecodingReqData {  
+   // 公众号mpID
+   string mpID=2;
+   // 经过加密的Code码
+   string encryptCode=3;
    // 请求公共字段
    RequestHeader header=1;
 }
-message CardCodeDestroyResData {  
-   // 唯一ID
-   string openId=2;
-   // 需导入微信卡券后台的自定义code，上限为100个。
-   string cardId=3;
+message CardCodeDecodingResData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -38,17 +34,21 @@ message CardCodeImportResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-message CardCodeDecodingReqData {  
-   // 公众号mpID
-   string mpID=2;
-   // 经过加密的Code码
-   string encryptCode=3;
+message CardCodeDestroyReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string code=3;
+   // 集团ID
+   string groupID=4;
    // 请求公共字段
    RequestHeader header=1;
 }
-message CardCodeDecodingResData {  
-   // 解密后获取的真实Code码
-   string cardCode=2;
+message CardCodeDestroyResData {  
+   // 唯一ID
+   string openId=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string cardId=3;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -87,6 +87,8 @@ message MemberItemUpdateReq {
    bool isNotifyCustomField2=17;
    // 自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）
    bool isNotifyCustomField3=18;
+   // 集团ID
+   string groupID=19;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -126,12 +128,12 @@ message CardCodeQueryResData {
 }
 //
 service CardCodeRpcService{
-    //核销code方法
-    rpc destoryCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
-    //导入code方法
-    rpc importCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
     //code解码
     rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
+    //导入code方法
+    rpc importCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+    //核销code方法
+    rpc destoryCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
     //修改会员积分余额等信息
     rpc updateMemberItem(MemberItemUpdateReq) returns (MemberItemUpdateRes) {}
     //查询优惠券code状态

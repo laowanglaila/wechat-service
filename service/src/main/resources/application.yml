@@ -110,7 +110,112 @@ zookeeper:
   lockPath: /wechat/card/lock  #分布式锁路径
 
 
+---
+spring:
+  profiles: mu
+  aop:
+    auto: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
+  rabbitmq:
+    host: 172.16.0.29
+    port: 5672
+    username: guest
+    password: guest
+#    listener:
+#      retry:
+#        enabled: true
+#        max-attempts:
+#    template:
+#      receive-timeout:
+#      reply-timeout:
 
+  # REDIS (RedisProperties)
+  redis:
+    database: 0
+    host: dohko.redis.hualala.com
+    port: 6379
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
+
+mybatis:
+   config-location: classpath:mybatis-config.xml
+
+grpc:
+  port: 6567
+  client:
+     hosts:
+        wechat: localhost:6567
+#        wechat: dohko.wechat.service.hualala.com:31558
+#        wechat: 192.168.5.204:6567
+        idgen: dohko.id.gen.hualala.com:31249
+#        sem: localhost:6466
+        sem: mu.service.short.message.hualala.com:32272
+        shopcrm: 172.16.32.46:6656
+#        shopcrm: dohko.shop.crm.service.hualala.com:31537
+wechat:
+  data:
+    componentAppID: wx8ed9d715cdd52b1d
+    componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
+  mq:
+      rabbitmq:
+        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+  card:
+      skuQuantity: mu_hll:service:wechat:card:sku_quantity
+
+#redisStock:
+#  host: 172.16.0.27
+#  port: 19000
+#  db: 0
+#  pool:
+#    maxActive: 2
+#    maxWait: 10000
+#    maxIdle: 1
+#    minIdle: 1
+redisSku:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 50
+    maxWait: 10000
+    maxIdle: 10
+    minIdle: 1
+redisLocker:
+  host: 172.16.0.27
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 50
+    maxWait: 10000
+    maxIdle: 20
+    minIdle: 10
+
+zookeeper:
+  zookeeperAddress: 172.16.0.25:2181,172.16.0.26:2181,172.16.0.27:2181  #zookeeper uri  e.g.:127.0.0.1:2181
+  serviceName: wechat-card  #服务名称
+  basePath: /wechat-service   #服务根路径
+  servicePath: /wechat-services  #服务注册路径
+  lockPath: /wechat/card/lock  #分布式锁路径
 
 ---
 spring:

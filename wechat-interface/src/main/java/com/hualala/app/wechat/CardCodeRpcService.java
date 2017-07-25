@@ -166,6 +166,9 @@ public interface CardCodeRpcService {
 
     }
 
+    /**
+     * 同步会员余额积分
+     */
     @Data
     class MemberItemUpdateReq extends RequestInfo {
         //        code            	        是            	string(20)            	1231123            	                        卡券Code码。
@@ -217,6 +220,8 @@ public interface CardCodeRpcService {
         private boolean isNotifyCustomField2;
         @Protocol(fieldType = FieldType.BOOL, order = 18, description = "自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）")
         private boolean isNotifyCustomField3;
+        @Protocol(fieldType = FieldType.STRING, order = 19, description = "集团ID")
+        private String groupID;
     }
 
     @Data
