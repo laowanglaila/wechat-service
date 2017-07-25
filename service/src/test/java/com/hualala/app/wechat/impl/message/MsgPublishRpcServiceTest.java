@@ -122,4 +122,25 @@ public class MsgPublishRpcServiceTest {
 
         System.out.println(textMsgRes.getMessage());
     }
+
+
+    @Test
+    public void test5(){
+        String text = "<![CDATA[<a href='http://www.hualala.com'>hualala<a/>>]]>";
+//        String mpID = "doulaofangceshi";
+        String mpID = "hualala_com";
+
+        String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
+
+        String params = "{" +
+                "    \"touser\":\"oACwGs4QPjQ_JoAVBOCQgwC12yFk\"," +
+                "    \"msgtype\":\"text\"," +
+                "    \"text\":" +
+                "    {" +
+                "         \"content\":\""+text+"\"" +
+                "    }" +
+                "}";
+        JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
+        System.out.println(jsonObject);
+    }
 }

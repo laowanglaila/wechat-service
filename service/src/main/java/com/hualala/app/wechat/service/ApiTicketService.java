@@ -56,7 +56,7 @@ public class ApiTicketService {
         String accessTocken = tockenObject.getString("accessToken");
         JSONObject jsonObject = HttpApiUtil.httpGet(WechatBaseApi.GET_API_TICKET+"?access_token="+accessTocken+"&type="+type);
         if (null == jsonObject){
-            ResultUtil.toResultJson(null,false,"获取ticket失败");
+            return ResultUtil.toResultJson(null,false,"获取ticket失败");
         }
         if (logger.isInfoEnabled()){
             logger.info("缓存api_ticket过期，重新获取！",jsonObject);

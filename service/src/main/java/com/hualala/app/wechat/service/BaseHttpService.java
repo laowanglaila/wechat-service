@@ -355,4 +355,19 @@ public class BaseHttpService {
     public JSONObject apiAddTemplate(JSONObject jsonObject, String mpID) {
         return this.commonHttpPost(WechatBaseApi.API_ADD_TEMPLATE, jsonObject, mpID);
     }
+
+    /**
+     * 支付即会员、支付赠券
+     * @param jsonObject
+     * @param mpID
+     * @return
+     */
+    public JSONObject payGiftCard(JSONObject jsonObject , String mpID){
+        return this.commonHttpPost(WechatBaseApi.PAY_GIFT_CARD, jsonObject, mpID);
+    }
+    public JSONObject payGiftCard(String json , String mpID){
+        return this.commonHttpPost(WechatBaseApi.PAY_GIFT_CARD, json, mpID);
+    }
+
+
 }

@@ -1,6 +1,6 @@
 spring:
-#  profiles.active: production
-#  profiles.active: local
+  profiles.active: local
+#  profiles.active: pre
 #  profiles.active: dohko
 ---
 spring:
@@ -61,6 +61,7 @@ grpc:
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272
+#        shopcrm: 172.16.32.46:6656
         shopcrm: dohko.shop.crm.service.hualala.com:31537
 wechat:
   data:
@@ -161,8 +162,7 @@ grpc:
         #wechat: localhost:6567
         wechat: dohko.wechat.service.hualala.com:31558
         idgen: dohko.id.gen.hualala.com:31249
-#        sem: localhost:6466
-        sem: mu.service.short.message.hualala.com:32272
+        sem: dohko.service.short.message.hualala.com:31524
         shopcrm: dohko.shop.crm.service.hualala.com:31537
 wechat:
   data:
@@ -258,11 +258,9 @@ grpc:
   port: 6567
   client:
      hosts:
-        #wechat: localhost:6567
         wechat: dohko.wechat.service.hualala.com:31558
 #        idgen: dohko.id.gen.hualala.com:31249
-        #sem: localhost:6466
-        sem: mu.service.short.message.hualala.com:32272
+        sem: pre.service.short.message.hualala.com:31524
         shopcrm: pre.shop.crm.service.hualala.com:31537
 
 wechat:

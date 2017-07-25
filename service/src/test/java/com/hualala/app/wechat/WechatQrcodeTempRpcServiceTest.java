@@ -71,10 +71,14 @@ public class WechatQrcodeTempRpcServiceTest {
     public void  test1(){
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
-        wechatQRCodeListReq.setMpID("doulaofangceshi");
+//        wechatQRCodeListReq.setMpID("doulaofangceshi");
+        wechatQRCodeListReq.setMpID("5fWNjiboDX32dcec");
+//        wechatQRCodeListReq.setBrandID("0");
+//        wechatQRCodeListReq.setGroupID("5");
+//        wechatQRCodeListReq.setShopID("0");
         wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
         wechatQRCodeListReq.setExpireSeconds(3600*24);
-        wechatQRCodeListReq.setSize(200);
+        wechatQRCodeListReq.setSize(20);
         List<WechatQRCodeRpcSerivce.WechatQRCodeData> list = new ArrayList<>();
         for (int i = 0 ; i < 3; i++) {
             WechatQRCodeRpcSerivce.WechatQRCodeData wechatQRCodeData = new WechatQRCodeRpcSerivce.WechatQRCodeData();
@@ -187,16 +191,16 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
 //                            "\"expire_seconds\": 1800,\n" +
                             "\"action_info\": {\n" +
                                 "\"card\": {\n" +
-                                "\"card_id\": \"pACwGs3Qk-mhtzuhDnC2mPno2208\", \n" +
+                                "\"card_id\": \"pXpuzwZdfqUSuLQJrZG_XvDXapPA\", \n" +
 //                                "\"code\": \"198372383512\"," +
 //                                "\"openid\": \"oACwGswdcsCnQgJlarC9xIqQL2YI\"," +
 //                                "\"openid\": \"oACwGs4QPjQ_JoAVBOCQgwC12yFk\"," +
-                                "\"is_unique_code\": true ,\n" +
+//                                "\"is_unique_code\": true ,\n" +
                                 "\"outer_id\":\"122134234\"\n" +
                             "  }\n" +
                             " }\n" +
                             "}";
-        String mpID = "hualala_com";
+        String mpID = "tut1Ceu1DX005996";
 
         JSONObject jsonObject = baseHttpService.commonHttpPost("https://api.weixin.qq.com/card/qrcode/create", jsonString,mpID);
 //        JSONObject jsonObject = HttpApiUtil.httpPost("http://dohko.eshopapi.hualala.com/wechat/getQrcodeList.html", params);

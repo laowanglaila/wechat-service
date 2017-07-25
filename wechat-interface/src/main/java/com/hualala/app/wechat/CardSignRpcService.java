@@ -30,7 +30,7 @@ public interface CardSignRpcService {
         private Long groupID;
 //        @Protocol(fieldType = FieldType.LONG, order = 4, description = "店铺ID")
 //        private Long shopID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "哗啦啦会员卡ID")
+        @Protocol(fieldType = FieldType.LONG, order = 5, description = "哗啦啦会员卡TypeID")
         private Long hualalaCardID;
         //        code		            否	是	指定的卡券code码，只能被领一次。自定义code模式的卡券必须填写，非自定义code和预存code模式的卡券不必填写。详情见：是否自定义code码
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "指定的卡券code码，只能被领一次。自定义code模式的卡券必须填写，非自定义code和预存code模式的卡券不必填写")
@@ -38,6 +38,10 @@ public interface CardSignRpcService {
         //        openid	            否	是	指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，bind_openid字段为false不必填写。
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，bind_openid字段为false不必填写")
         private String openid;
+        @Protocol(fieldType = FieldType.STRING, order = 8, description = "哗啦啦用户的会员卡id")
+        private String hualalaCardCode;
+        @Protocol(fieldType = FieldType.STRING, order = 9, description = "哗啦啦用户id")
+        private String customerID;
 
 
     }

@@ -38,6 +38,8 @@ public interface CardDeleteRpcService {
         private String code;
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "失效原因")
         private String reason;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "集团ID")
+        private String groupID;
     }
 
     @Data
