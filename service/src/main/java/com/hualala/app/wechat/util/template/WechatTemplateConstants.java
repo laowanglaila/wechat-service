@@ -73,8 +73,10 @@ public class WechatTemplateConstants {
 	public static final String ASSESSMENT_ALARM_REPLY_MODELID = "TM405716624";
 	// 电子发票开票结果提醒
 	public static final String INVOICE_ALARM_MODELID = "OPENTM408389786";
-
+    // 订单状态提醒
 	public static final String ORDER_MODELID = "OPENTM200833782";
+	// 预订结果通知
+	public static final String ORDER_BOOK_MODELID = "OPENTM411367320";
 
 	public static String DLD_PLACEHOLDER_PREFIX = "[";
 	public static String DLD_PLACEHOLDER_SUFFIX = "]";
@@ -87,9 +89,11 @@ public class WechatTemplateConstants {
 
 		MODELID_TITLE_MAP.put("OPENTM200568893","排队到号提醒");
 		MODELID_TITLE_MAP.put("OPENTM200833782","订单状态提醒");
+		MODELID_TITLE_MAP.put("OPENTM411367320","预订结果通知");
 
 		MODEL_TYPE_MODELID_MAP.put("queue_alarm",QUEUE_ALARM_MODELID);
 		MODEL_TYPE_MODELID_MAP.put("order_default",ORDER_MODELID);
+		MODEL_TYPE_MODELID_MAP.put("order_book",ORDER_BOOK_MODELID);
 
 	}
 }

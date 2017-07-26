@@ -9,7 +9,8 @@ import com.hualala.core.base.ValueEnum;
 public enum WechatTemplateTypeEnum implements ValueEnum {
     TEMPLATE_ENUM_DEFAULT(0,"","",""),
     TEMPLATE_ENUM_QUEUE(1, "queue", "alarm", ""),
-    TEMPLATE_ENUM_ORDER(2, "order", "default", "");
+    TEMPLATE_ENUM_ORDER(2, "order", "default", ""),
+    TEMPLATE_ENUM_ORDER_BOOK(3, "order", "book", "");
 
     private int value;
     private String modelType;
