@@ -268,7 +268,8 @@ grpc:
         wechat: dohko.wechat.service.hualala.com:31558
         idgen: dohko.id.gen.hualala.com:31249
         sem: dohko.service.short.message.hualala.com:31524
-        shopcrm: dohko.shop.crm.service.hualala.com:31537
+#        shopcrm: dohko.shop.crm.service.hualala.com:31537
+        shopcrm: dohko.shop.crm.service21.hualala.com:32313 # 会员2.1 dohko环境
 wechat:
   data:
 #    componentAppID: wx431ecb8eae767f0c  #mu环境

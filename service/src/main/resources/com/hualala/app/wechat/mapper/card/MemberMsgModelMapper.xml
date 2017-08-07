@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hualala.app.wechat.mapper.card.MemberMsgModelMapper" >
+  <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.card.MemberMsgModel" >
+    <id column="itemID" property="itemID" jdbcType="BIGINT" />
+    <result column="groupID" property="groupID" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="cardID" property="cardID" jdbcType="VARCHAR" />
+    <result column="msgCreateTime" property="msgCreateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      itemID, groupID, code, cardID, msgCreateTime
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hualala.app.wechat.model.card.MemberMsgModelQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_shop_wechat_member_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    itemID,groupID,code,cardID,msgCreateTime
+    from tbl_shop_wechat_member_msg
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_shop_wechat_member_msg
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.card.MemberMsgModelQuery" >
+    delete from tbl_shop_wechat_member_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hualala.app.wechat.model.card.MemberMsgModel" >
+    insert into tbl_shop_wechat_member_msg (itemID, groupID, code, 
+      cardID, msgCreateTime)
+    values (#{itemID,jdbcType=BIGINT}, #{groupID,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, 
+      #{cardID,jdbcType=VARCHAR}, #{msgCreateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.card.MemberMsgModel" >
+    insert into tbl_shop_wechat_member_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemID != null" >
+        itemID,
+      </if>
+      <if test="groupID != null" >
+        groupID,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="cardID != null" >
+        cardID,
+      </if>
+      <if test="msgCreateTime != null" >
+        msgCreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemID != null" >
+        #{itemID,jdbcType=BIGINT},
+      </if>
+      <if test="groupID != null" >
+        #{groupID,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="cardID != null" >
+        #{cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="msgCreateTime != null" >
+        #{msgCreateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hualala.app.wechat.model.card.MemberMsgModelQuery" resultType="java.lang.Integer" >
+    select count(*) from tbl_shop_wechat_member_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_shop_wechat_member_msg
+    <set >
+      <if test="record.itemID != null" >
+        itemID = #{record.itemID,jdbcType=BIGINT},
+      </if>
+      <if test="record.groupID != null" >
+        groupID = #{record.groupID,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardID != null" >
+        cardID = #{record.cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgCreateTime != null" >
+        msgCreateTime = #{record.msgCreateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCondition" parameterType="com.hualala.app.wechat.model.card.MemberMsgModel" >
+    update tbl_shop_wechat_member_msg
+    <set >
+      <if test="groupID != null" >
+        groupID = #{groupID,jdbcType=BIGINT},
+      </if>
+        code = #{code,jdbcType=VARCHAR},
+        cardID = #{cardID,jdbcType=VARCHAR},
+        msgCreateTime = #{msgCreateTime,jdbcType=BIGINT},
+    </set>
+    <where >
+    code = #{code,jdbcType=VARCHAR} and cardID = #{cardID,jdbcType=VARCHAR} and msgCreateTime <![CDATA[<]]> #{msgCreateTime,jdbcType=BIGINT};
+    </where>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_shop_wechat_member_msg
+    set itemID = #{itemID,jdbcType=BIGINT},
+      groupID = #{record.groupID,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      cardID = #{record.cardID,jdbcType=VARCHAR},
+      msgCreateTime = #{record.msgCreateTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.card.MemberMsgModel" >
+    update tbl_shop_wechat_member_msg
+    <set >
+      <if test="groupID != null" >
+        groupID = #{groupID,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="cardID != null" >
+        cardID = #{cardID,jdbcType=VARCHAR},
+      </if>
+      <if test="msgCreateTime != null" >
+        msgCreateTime = #{msgCreateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.card.MemberMsgModel" >
+    update tbl_shop_wechat_member_msg
+    set groupID = #{groupID,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      cardID = #{cardID,jdbcType=VARCHAR},
+      msgCreateTime = #{msgCreateTime,jdbcType=BIGINT}
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -17,10 +17,13 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
     @Override
     public void test() {
         String url = "https://api.weixin.qq.com/card/paygiftcard/add";
+//        String mpID = "hualala_com";
         String mpID = "tut1Ceu1DX005996";
 //        String cardID = "pXpuzwZdfqUSuLQJrZG_XvDXapPA";
         String cardID = "pXpuzwdJJPIE9peUazT_JntW7spo";
+//        String cardID = "pACwGs3Qk-mhtzuhDnC2mPno2208";
         String mchID = "24251984";
+        String mchID1 = "25192989";
         long begin = System.currentTimeMillis() / 1000;
         long end = begin + 60*60*24;
         String json = "{" +
@@ -28,7 +31,8 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
                 "        \"type\": \"RULE_TYPE_PAY_MEMBER_CARD\"," +
                 "        \"base_info\": {" +
                 "            \"mchid_list\": [                " +
-                "            \""+mchID+"\"" +
+                "            \""+mchID+"\"," +
+                "            \""+mchID1+"\"" +
                 "            ]," +
                 "            \"begin_time\": "+ begin +"," +
                 "            \"end_time\": "+end +
@@ -53,8 +57,9 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
     @Test
     public void test1() {
         String url = "https://api.weixin.qq.com/card/paygiftcard/getbyid";
+//        String mpID = "tut1Ceu1DX005996";
         String mpID = "tut1Ceu1DX005996";
-        String ruleID = "428604180";
+        String ruleID = "428667898";
         String json = "{ \"rule_id\": "+ruleID+"}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
         System.out.println(jsonObject);
@@ -66,7 +71,7 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
     public void test2() {
         String url = "https://api.weixin.qq.com/card/paygiftcard/delete";
         String mpID = "tut1Ceu1DX005996";
-        String ruleID = "428604180";
+        String ruleID = "428667898";
         String json = "{ \"rule_id\": "+ruleID+"}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
         System.out.println(jsonObject);

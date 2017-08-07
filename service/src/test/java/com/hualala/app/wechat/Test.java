@@ -51,4 +51,15 @@ public class Test {
         System.out.println(decimal);
         System.out.println(decimal.longValue());
     }
+    @org.junit.Test
+    public void test3(){
+        String numString="0-1-1-0";
+        String s = numString.replaceAll("-", "");
+        try {
+            Long i = Long.parseLong(s);
+        }catch (Throwable i){
+
+        }
+
+    }
 }

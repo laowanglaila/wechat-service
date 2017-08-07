@@ -222,6 +222,8 @@ public interface CardCodeRpcService {
         private boolean isNotifyCustomField3;
         @Protocol(fieldType = FieldType.STRING, order = 19, description = "集团ID")
         private String groupID;
+        @Protocol(fieldType = FieldType.STRING, order = 20, description = "发生余额、积分变动的时间")
+        private Long msgCreateTime;
     }
 
     @Data
