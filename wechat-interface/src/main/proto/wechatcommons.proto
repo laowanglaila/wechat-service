@@ -2,6 +2,40 @@ syntax = "proto3";
 
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "WechatCommon";
+enum CustomCodeModeEnum {  
+   DEFAULT_CUSTOM_CODE_MODE=0;
+   GET_CUSTOM_CODE_MODE_DEPOSIT=1;
+}
+enum CardStatusEnum {  
+   CARD_STATUS_DEFULT=0;
+   CARD_STATUS_NOT_VERIFY=1;
+   CARD_STATUS_VERIFY_FAIL=2;
+   CARD_STATUS_VERIFY_OK=3;
+   CARD_STATUS_DISPATCH=4;
+   CARD_STATUS_DELETE=5;
+}
+enum DateInfoTypeEnum {  
+   DEFAULT_DATE_TYPE=0;
+   DATE_TYPE_FIX_TIME_RANGE=1;
+   DATE_TYPE_FIX_TERM=2;
+}
+enum MpTypeEnum {  
+   DEFAULT=0;
+   SUBSCRIPTIONS=1;
+   SUBSCRIPTIONS_AUTH=2;
+   SERVICE=3;
+   SERVICE_AUTH=4;
+}
+enum TimelimitTypeEnum {  
+   DEFAULT_TIMELIMIT_TYPE=0;
+   MONDAY=1;
+   TUESDAY=2;
+   WEDNESDAY=3;
+   THURSDAY=4;
+   FRIDAY=5;
+   SATURDAY=6;
+   SUNDAY=7;
+}
 enum ColorEnum {  
    DEFAULT_COLOR=0;
    COLOR_010=1;
@@ -19,44 +53,6 @@ enum ColorEnum {
    COLOR_101=13;
    COLOR_102=14;
 }
-enum CouponTypeEnum {  
-   DEFAULT_COUPON_TYPE=0;
-   GROUPON=1;
-   CASH=2;
-   DISCOUNT=3;
-   GIFT=4;
-   GENERAL_COUPON=5;
-}
-enum TimelimitTypeEnum {  
-   DEFAULT_TIMELIMIT_TYPE=0;
-   MONDAY=1;
-   TUESDAY=2;
-   WEDNESDAY=3;
-   THURSDAY=4;
-   FRIDAY=5;
-   SATURDAY=6;
-   SUNDAY=7;
-}
-enum WechatTemplateTypeEnum {  
-   TEMPLATE_ENUM_DEFAULT=0;
-   TEMPLATE_ENUM_QUEUE=1;
-   TEMPLATE_ENUM_ORDER=2;
-   TEMPLATE_ENUM_ORDER_BOOK=3;
-}
-enum CardStatusEnum {  
-   CARD_STATUS_DEFULT=0;
-   CARD_STATUS_NOT_VERIFY=1;
-   CARD_STATUS_VERIFY_FAIL=2;
-   CARD_STATUS_VERIFY_OK=3;
-   CARD_STATUS_DISPATCH=4;
-   CARD_STATUS_DELETE=5;
-}
-enum WechatQRTypeEnum {  
-   DEFAULT_QR_TYPE=0;
-   LOGIN=1;
-   INVOICE=2;
-   QUEUE=3;
-}
 enum CodeTypeEnum {  
    DEFAULT_CODE_TYPE=0;
    CODE_TYPE_TEXT=1;
@@ -65,19 +61,27 @@ enum CodeTypeEnum {
    CODE_TYPE_ONLY_QRCODE=4;
    CODE_TYPE_ONLY_BARCODE=5;
 }
-enum CustomCodeModeEnum {  
-   DEFAULT_CUSTOM_CODE_MODE=0;
-   GET_CUSTOM_CODE_MODE_DEPOSIT=1;
+enum WechatMessageEnum {  
+   MESSAGE_DEFAULT=0;
+   MESSAGE_TEXT=1;
 }
-enum DateInfoTypeEnum {  
-   DEFAULT_DATE_TYPE=0;
-   DATE_TYPE_FIX_TIME_RANGE=1;
-   DATE_TYPE_FIX_TERM=2;
+enum WechatTemplateTypeEnum {  
+   TEMPLATE_ENUM_DEFAULT=0;
+   TEMPLATE_ENUM_QUEUE=1;
+   TEMPLATE_ENUM_ORDER=2;
+   TEMPLATE_ENUM_ORDER_BOOK=3;
 }
-enum MpTypeEnum {  
-   DEFAULT=0;
-   SUBSCRIPTIONS=1;
-   SUBSCRIPTIONS_AUTH=2;
-   SERVICE=3;
-   SERVICE_AUTH=4;
+enum CouponTypeEnum {  
+   DEFAULT_COUPON_TYPE=0;
+   GROUPON=1;
+   CASH=2;
+   DISCOUNT=3;
+   GIFT=4;
+   GENERAL_COUPON=5;
+}
+enum WechatQRTypeEnum {  
+   DEFAULT_QR_TYPE=0;
+   LOGIN=1;
+   INVOICE=2;
+   QUEUE=3;
 }
