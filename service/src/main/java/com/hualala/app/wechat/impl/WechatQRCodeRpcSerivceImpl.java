@@ -1,12 +1,11 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.config.RabbitQueueProps;
-import com.hualala.app.wechat.mapper.WechatQrcodeMapper;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.model.mq.QrcodeInfoModel;

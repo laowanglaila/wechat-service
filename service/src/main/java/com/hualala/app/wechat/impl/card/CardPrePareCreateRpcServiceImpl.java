@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardPrePareCreateRpcService;
 import com.hualala.app.wechat.CreateCardCouponRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;

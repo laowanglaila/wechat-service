@@ -2,7 +2,7 @@ package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatMessageType;
@@ -40,6 +40,8 @@ public class BaseHttpService {
         //首先判断 null ：200    然后判断创建是否成功
         if (null == responseJson) {
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, "http请求失败！");
+        } else if(responseJson.containsKey(WechatMessageType.IS_SUCCESS) && !responseJson.getBoolean(WechatMessageType.IS_SUCCESS)){
+            return responseJson;
         }
         logger.debug(() -> "微信响应参数 ：" + responseJson.toJSONString());
         String errcode = responseJson.getString(WechatMessageType.WECHAT_ERR_CODE);
@@ -63,6 +65,8 @@ public class BaseHttpService {
         //首先判断 null ：200    然后判断创建是否成功
         if (null == responseJson) {
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, "http请求失败！");
+        } else if(responseJson.containsKey(WechatMessageType.IS_SUCCESS) && !responseJson.getBoolean(WechatMessageType.IS_SUCCESS)){
+            return responseJson;
         }
         logger.debug(() -> "微信响应参数 ：" + responseJson.toJSONString());
         String errcode = responseJson.getString(WechatMessageType.WECHAT_ERR_CODE);
@@ -335,6 +339,8 @@ public class BaseHttpService {
         //首先判断 null ：200    然后判断创建是否成功
         if (null == responseJson) {
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, "http请求失败！");
+        } else if(responseJson.containsKey(WechatMessageType.IS_SUCCESS) && !responseJson.getBoolean(WechatMessageType.IS_SUCCESS)){
+            return responseJson;
         }
         String ticket = responseJson.getString("ticket");
         String expireSeconds = responseJson.getString("expire_seconds");
@@ -369,5 +375,13 @@ public class BaseHttpService {
         return this.commonHttpPost(WechatBaseApi.PAY_GIFT_CARD, json, mpID);
     }
 
-
+    /**
+     * 客服消息接口
+     * @param json
+     * @param mpID
+     * @return
+     */
+    public JSONObject messageCustomSend(String json, String mpID){
+        return this.commonHttpPost(WechatBaseApi.MESSAGE_CUSTOM_SEND, json, mpID);
+    }
 }

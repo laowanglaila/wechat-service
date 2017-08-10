@@ -1,6 +1,6 @@
 package com.hualala.app.wechat.impl;
 
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.WechatTemplateTypeEnum;
 import com.hualala.app.wechat.model.WechatTemplateModel;

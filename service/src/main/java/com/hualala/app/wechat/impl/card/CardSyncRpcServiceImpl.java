@@ -3,7 +3,7 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.CardSyncRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;

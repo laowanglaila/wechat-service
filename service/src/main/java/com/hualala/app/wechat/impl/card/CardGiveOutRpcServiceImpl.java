@@ -2,20 +2,17 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.StringUtil;
 import com.hualala.app.wechat.CardGiveOutRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
-import com.hualala.app.wechat.util.ResultUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.DocFlavor;
 import java.util.List;
 
 /**

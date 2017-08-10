@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
