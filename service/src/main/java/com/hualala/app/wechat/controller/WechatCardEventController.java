@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by renjianfei on 2017/5/22.
@@ -70,12 +71,11 @@ public class WechatCardEventController {
         return jsonObject;
     }
     @RequestMapping("/download")
-    public @ResponseBody List<CardSyncRpcService.CardListResData> bind(@RequestParam String mpID, HttpServletRequest request, HttpServletResponse httpServletResponse) {
-
+    public @ResponseBody List<CardSyncRpcService.CardListResData> downLoad(@RequestParam String mpID, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ExecutionException, InterruptedException {
         int count = 10;
         int offset = 0;
         List<CardSyncRpcService.CardListResData> list = new ArrayList<>();
-        CardSyncRpcService.CardListResData cardList = donwload(mpID, count, offset);
+        CardSyncRpcService.CardListResData cardList = get(mpID, count, offset);
         list.add(cardList);
         int totalNum = cardList.getTotalNum();
         if (totalNum > count){
@@ -83,14 +83,14 @@ public class WechatCardEventController {
             Double times = Math.ceil(multiple);
             for (int t = 1; t < times.intValue();t++ ) {
                 offset = count*t;
-                list.add(donwload(mpID, count, offset));
+                list.add(get(mpID, count, offset));
             }
         }
         return list;
     }
 
     @Async
-    public CardSyncRpcService.CardListResData donwload(String mpID, int count, int offset){
+    public CardSyncRpcService.CardListResData get(String mpID, int count, int offset){
         CardSyncRpcService rpcClient = baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();
         cardListReqData.setCount(count);
@@ -109,7 +109,7 @@ public class WechatCardEventController {
             CardSyncRpcService.CardDownloadReqData cardDownloadReqData = new CardSyncRpcService.CardDownloadReqData();
             cardDownloadReqData.setMpID(mpID);
             StringBuilder builder = new StringBuilder();
-            for (String cardID : cardIdList) {
+                for (String cardID : cardIdList) {
                 cardDownloadReqData.setCardID(cardID);
                 CardSyncRpcService.CardDownloadResData cardDownloadResData = rpcClient.downloadCardInfo(cardDownloadReqData);
                 builder.append( JSONObject.toJSONString(cardDownloadResData) + ",");
@@ -119,6 +119,5 @@ public class WechatCardEventController {
         }
         return cardList;
     }
-        
-    
+
 }
