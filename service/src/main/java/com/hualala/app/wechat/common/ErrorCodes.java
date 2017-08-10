@@ -1,4 +1,4 @@
-package com.hualala.app.wechat.common;
+package com.hualala.app.wechat;
 
 public interface ErrorCodes {
 
@@ -107,4 +107,6 @@ public interface ErrorCodes {
     String WECHAT_MP_NOT_EXIST = "00112157";
     //msgCreateTime不允许为空
     String WECHAT_MP_PERMISSION_DENIED = "00112158";
+    // 客服接口错误
+    String WECHAT_MESSAGE_CUSTOM_SEMD = "00112159";
 }

@@ -73,5 +73,7 @@ public class WechatBaseApi {
     public static final String GET_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
     // 支付即会员、支付赠券
     public static final String PAY_GIFT_CARD = "https://api.weixin.qq.com/card/paygiftcard/add";
+    // 客服消息接口
+    public static final String MESSAGE_CUSTOM_SEND = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
 
 }

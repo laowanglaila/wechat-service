@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
 import com.hualala.app.wechat.common.ErrorCodes;
@@ -290,7 +291,6 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
                 Double ceil = Math.ceil(d);
                 // 发消息缓存二维码
                 cacheQecode(mpID, expireSeconds, qrcodeType,ceil.intValue());
-
                 //数量不够返回提示正在缓存稍后再试
                 return new WechatQRCodeListRes().setResultInfo(ErrorCodes.WECHAT_QRCODE_NOT_ENOUGH,
                         "当前缓存数量不足，请稍后再试！");
