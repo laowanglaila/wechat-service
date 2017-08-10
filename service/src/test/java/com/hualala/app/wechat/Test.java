@@ -1,15 +1,18 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.WechatErrorCode;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 
 /**
  * Created by renjianfei on 2017/7/12.
  */
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class Test {
 
@@ -62,4 +65,24 @@ public class Test {
         }
 
     }
+    @org.junit.Test
+    public void test4(){
+        BigDecimal decimal1 = new BigDecimal(1.0000);
+        BigDecimal decimal2 = new BigDecimal(1.000);
+        int i = decimal1.compareTo(decimal2);
+        System.out.println(i);
+
+    }
+    @org.junit.Test
+    public void test5(){
+
+        Set<String> keySet = WechatErrorCode.wechatError.keySet();
+        int errorcode = 112300;
+        for (String key : keySet){
+            String value = WechatErrorCode.wechatError.get(key);
+            System.out.println("WECHAT_ERROR_"+key+"(\"00"+ errorcode++ +"\",\""+ value +"\","+key+"),\r\n");
+        }
+
+    }
+
 }

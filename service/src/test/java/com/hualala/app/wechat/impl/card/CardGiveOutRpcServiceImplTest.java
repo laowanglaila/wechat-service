@@ -16,7 +16,7 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
 
     @Override
     public void test() {
-        String url = "https://hushangayi.jikabao.com";
+        String url = "https://api.weixin.qq.com/card/paygiftcard/add";
 //        String url = "https://hushangayi.jikabao.com/wechat/get_coupon/5AlV2Y";
 //        String mpID = "hualala_com";
         String mpID = "tut1Ceu1DX005996";
@@ -26,6 +26,8 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
 //        String cardID = "pACwGs3Qk-mhtzuhDnC2mPno2208";
         String mchID = "24251984";
         String mchID1 = "25192989";
+        String mchID2 = "41970458";
+        String mchID3 = "41818180";
         long begin = System.currentTimeMillis() / 1000;
         long end = begin + 60*60;
         String json = "{" +
@@ -34,16 +36,19 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
                 "        \"base_info\": {" +
                 "            \"mchid_list\": [                " +
                 "            \""+mchID+"\"," +
-                "            \""+mchID1+"\"" +
+                "            \""+mchID1+"\"," +
+                "            \""+mchID2+"\"," +
+                "            \""+mchID3+"\"" +
                 "            ]," +
                 "            \"begin_time\": "+ begin +"," +
                 "            \"end_time\": "+end +
                 "        }," +
                 "        \"member_rule\": {" +
                 "            \"card_id\": \""+cardID+"\"," +
-                "            \"least_cost\": 1000," +
-                "            \"max_cost\": 200000," +
-                "            \"jump_url\": \""+url+"\"" +
+                "            \"least_cost\": 1," +
+                "            \"max_cost\": 300" +
+//                "            \"jump_url\": \"https://hushangayi.jikabao.com/users/add_wechat_card\"" +
+//                "            \"jump_url\": \"www.qq.com\"" +
                 "        }    " +
                 "     }" +
                 "  }";
@@ -61,7 +66,20 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
         String url = "https://api.weixin.qq.com/card/paygiftcard/getbyid";
 //        String mpID = "tut1Ceu1DX005996";
         String mpID = "tut1Ceu1DX005996";
-        String ruleID = "428667898";
+        String ruleID = "429014407";
+        String json = "{ \"rule_id\": "+ruleID+"}";
+        JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
+        System.out.println(jsonObject);
+    }
+    /**
+     * 批量查询支付赠卡规则
+     */
+    @Test
+    public void test2() {
+        String url = "https://api.weixin.qq.com/card/paygiftcard/getbyid";
+//        String mpID = "tut1Ceu1DX005996";
+        String mpID = "tut1Ceu1DX005996";
+        String ruleID = "429014407";
         String json = "{ \"rule_id\": "+ruleID+"}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
         System.out.println(jsonObject);
@@ -70,10 +88,10 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
      * 根据ruleID删除支付赠卡规则
      */
     @Test
-    public void test2() {
+    public void test3() {
         String url = "https://api.weixin.qq.com/card/paygiftcard/delete";
         String mpID = "tut1Ceu1DX005996";
-        String ruleID = "428667898";
+        String ruleID = "429014407";
         String json = "{ \"rule_id\": "+ruleID+"}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
         System.out.println(jsonObject);

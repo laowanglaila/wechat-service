@@ -2,7 +2,7 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardSignRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -10,7 +10,6 @@ import com.hualala.app.wechat.mapper.card.BaseInfoModelMapperEXT;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
 import com.hualala.app.wechat.service.ApiTicketService;
-import com.hualala.app.wechat.service.HttpApiService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WxCardSign;
 import org.apache.commons.codec.binary.Base64;

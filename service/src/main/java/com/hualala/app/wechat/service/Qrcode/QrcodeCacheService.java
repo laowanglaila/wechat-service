@@ -2,32 +2,39 @@ package com.hualala.app.wechat.service.Qrcode;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.WechatQRTypeEnum;
+import com.hualala.app.wechat.common.RedisKeys;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
-import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.service.BaseHttpService;
-import javassist.compiler.ast.Expr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by renjianfei on 2017/5/12.
  */
 @Service
-public class QrcodeCacheService {
+public class QrcodeCacheService implements RedisKeys{
     @Autowired
     private QrcodeCreateSceneIDService qrcodeCreateSceneIDService;
     @Autowired
     private BaseHttpService baseHttpService;
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+
 
     private static Logger logger = LoggerFactory.getLogger(QrcodeCacheService.class);
 
@@ -55,7 +62,18 @@ public class QrcodeCacheService {
             String params = "{\"expire_seconds\": " + expireSeconds + "," +
                     " \"action_name\": \"" + qrcodeType.getWechatType() + "\"," +
                     " \"action_info\": {\"scene\": {\"scene_id\": " + tempSenceID + "}}}";
-            JSONObject jsonObject = baseHttpService.createQrCode(params, mpID);
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = baseHttpService.createQrCode(params, mpID);
+            }catch (WechatException e){
+                //接口没有授权的错误放入redis，再次请求时返回错误
+                if (e.getErrorCode().equals("48001")){
+                    BoundValueOperations<String, String> ops
+                            = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
+                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),1, TimeUnit.DAYS);
+                }
+                logger.warn("二维码缓存获取失败：" + jsonObject.toJSONString());
+            }
             if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
 //            //插入数据库
                 WechatQrcodeTempModel qrcodeTempModel = new WechatQrcodeTempModel();
@@ -70,6 +88,7 @@ public class QrcodeCacheService {
                 qrcodeTempMapper.insert(qrcodeTempModel);
             } else {
                 logger.warn("二维码缓存获取失败：" + jsonObject.toJSONString());
+
             }
         }
     }

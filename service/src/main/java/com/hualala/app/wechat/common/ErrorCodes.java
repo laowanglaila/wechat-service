@@ -1,4 +1,4 @@
-package com.hualala.app.wechat;
+package com.hualala.app.wechat.common;
 
 public interface ErrorCodes {
 
@@ -103,4 +103,8 @@ public interface ErrorCodes {
     String WECHAT_CARD_LOCK_ERROR = "00112155";
     //msgCreateTime不允许为空
     String WECHAT_CARD_MSGCREATETIME_EMPTY = "00112156";
+    //msgCreateTime不允许为空
+    String WECHAT_MP_NOT_EXIST = "00112157";
+    //msgCreateTime不允许为空
+    String WECHAT_MP_PERMISSION_DENIED = "00112158";
 }

@@ -2,10 +2,8 @@ package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.ErrorCodes;
-import com.hualala.app.wechat.common.WechatBaseApi;
-import com.hualala.app.wechat.common.WechatErrorCode;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.common.*;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.impl.WechatTemplateRpcServiceImpl;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
@@ -340,6 +338,10 @@ public class BaseHttpService {
         String expireSeconds = responseJson.getString("expire_seconds");
         String qrurl = responseJson.getString("url");
         if (StringUtils.isBlank(ticket) && StringUtils.isBlank(qrurl)) {
+            if (responseJson.containsKey("errcode")
+                    && WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals(responseJson.getString("errcode"))){
+                throw new WechatException(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED);
+            }
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, WechatErrorCode.wechatError.get(responseJson.getString("errcode")));
         }
         return ResultUtil.toResultJson(responseJson, true, ErrorCodes.WECHAT_SUCCESS_CODE, "");

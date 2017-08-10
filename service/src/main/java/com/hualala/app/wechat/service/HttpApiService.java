@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;

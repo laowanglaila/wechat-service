@@ -3,7 +3,7 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardCodeRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -13,13 +13,11 @@ import com.hualala.app.wechat.model.card.MemberMsgModel;
 import com.hualala.app.wechat.model.card.MemberMsgModelQuery;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
-import com.hualala.core.base.ServiceException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,34 +64,6 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeImportResData.class);
     }
 
-//    /**
-//     * 导入优惠券code
-//     * @param cardCodeImportReqData
-//     * @return
-//     */
-//    @Override
-//    public CardCodeImportResData importCouponCode(CardCodeImportReqData cardCodeImportReqData) {
-//        Long cardKey = cardCodeImportReqData.getCardKey();
-//        if (cardKey == null) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
-//        }
-//        BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
-//        if (null == baseInfoModel) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-//        }
-//        String cardID = baseInfoModel.getCardID();
-//        String mpID = baseInfoModel.getMpID();
-//        List<String> code = cardCodeImportReqData.getCode();
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("card_id", cardID);
-//        params.put("code", code);
-//        JSONObject jsonObject = baseHttpService.importCardCode(params, mpID);
-//
-//        return ResultUtil.getResultInfoBean(jsonObject, CardCodeImportResData.class);
-//    }
-
     /**
      * 核销卡券
      * @param cardCodeDestroyReqData
@@ -121,36 +91,6 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
 
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
     }
-
-//    /**
-//     * 核销优惠券
-//     * @param cardCodeDestroyReqData
-//     * @return
-//     */
-//    @Override
-//    public CardCodeDestroyResData destoryCouponCode(CardCodeDestroyReqData cardCodeDestroyReqData) {
-//        Long cardKey = cardCodeDestroyReqData.getCardKey();
-//        if (cardKey == null) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
-//        }
-//        BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
-//        if (null == baseInfoModel) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-//        }
-//        String cardID = baseInfoModel.getCardID();
-//        String mpID = baseInfoModel.getMpID();
-//        String code = cardCodeDestroyReqData.getCode();
-//
-//        String params = "{" +
-//                "  \"code\": \"" + code + "\"," +
-//                "  \"card_id\": \"" + cardID + "\"" +
-//                "}";
-//        JSONObject jsonObject = baseHttpService.destoryCardCode(params, mpID);
-//
-//        return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
-//    }
 
     /**
      * code解码

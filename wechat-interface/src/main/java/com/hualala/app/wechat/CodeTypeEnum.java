@@ -29,4 +29,5 @@ public enum CodeTypeEnum implements ValueEnum {
     public String getName() {
         return codeType;
     }
+
 }
