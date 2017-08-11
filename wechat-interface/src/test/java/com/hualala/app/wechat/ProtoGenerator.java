@@ -11,12 +11,12 @@ public class ProtoGenerator {
     @org.junit.Test
     public void generatorProto() {
         Class[] generatorClass = new Class[]{
-//                CardGiveOutRpcService.class
-//                JsApiSignRpcService.class
-//                CardSignRpcService.class
-//                MsgPublishRpcService.class
-//                CardEventProcessRpcService.class
-                CardCodeRpcService.class,
+//                CardGiveOutRpcService.class,
+//                JsApiSignRpcService.class,
+//                CardSignRpcService.class,
+//                MsgPublishRpcService.class,
+//                CardEventProcessRpcService.class,
+//                CardCodeRpcService.class,
 //                CardUpdateRpcService.class,
 //                CardDeleteRpcService.class,
 //                CardEventRpcService.class,
@@ -24,18 +24,21 @@ public class ProtoGenerator {
 //                CardCodeRpcService.class,
 //                CardPrePareQueryRpcService.class,
 //                CardPrePareCreateRpcService.class,
-////                CreateCardCouponRpcService.class,
+//                CreateCardCouponRpcService.class,
 //                WechatQRCodeRpcSerivce.class,
-//                CardStatusEnum.class,
-//                ColorEnum.class,
-//                CouponTypeEnum.class,
-//                DateInfoTypeEnum.class,
-//                CustomCodeModeEnum.class,
-//                CodeTypeEnum.class,
-//                TimelimitTypeEnum.class,
-//                MpTypeEnum.class,
-//                WechatQRTypeEnum.class,
-//                WechatTemplateTypeEnum.class
+                WechatMessageRpcService.class,
+                CardStatusEnum.class,
+                ColorEnum.class,
+                CouponTypeEnum.class,
+                DateInfoTypeEnum.class,
+                CustomCodeModeEnum.class,
+                CodeTypeEnum.class,
+                TimelimitTypeEnum.class,
+                MpTypeEnum.class,
+                WechatQRTypeEnum.class,
+                WechatTemplateTypeEnum.class,
+                WechatMessageEnum.class,
+
         };
         RpcProtoGenerator.generate(generatorClass);
     }

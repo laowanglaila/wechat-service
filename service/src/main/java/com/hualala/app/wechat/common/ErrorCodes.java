@@ -1,4 +1,4 @@
-package com.hualala.app.wechat;
+package com.hualala.app.wechat.common;
 
 public interface ErrorCodes {
 
