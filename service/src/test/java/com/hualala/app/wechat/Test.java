@@ -2,6 +2,7 @@ package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.WechatErrorCode;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -84,5 +85,8 @@ public class Test {
         }
 
     }
-
+    @org.junit.Test
+    public void test6(){
+        System.out.println(WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS);
+    }
 }

@@ -26,7 +26,8 @@ public class ProtoGenerator {
 //                CardPrePareCreateRpcService.class,
 //                CreateCardCouponRpcService.class,
 //                WechatQRCodeRpcSerivce.class,
-                WechatMessageRpcService.class,
+//                WechatMessageRpcService.class,
+                WebAuthorizationRpcService.class,
                 CardStatusEnum.class,
                 ColorEnum.class,
                 CouponTypeEnum.class,
@@ -38,6 +39,7 @@ public class ProtoGenerator {
                 WechatQRTypeEnum.class,
                 WechatTemplateTypeEnum.class,
                 WechatMessageEnum.class,
+                LangTypeEnum.class
 
         };
         RpcProtoGenerator.generate(generatorClass);

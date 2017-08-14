@@ -62,6 +62,12 @@ enum TimelimitTypeEnum {
    SATURDAY=6;
    SUNDAY=7;
 }
+enum LangTypeEnum {  
+   LANG_DEFAULT=0;
+   zh_CN=1;
+   zh_TW=2;
+   en=3;
+}
 enum WechatMessageEnum {  
    MESSAGE_DEFAULT=0;
    MESSAGE_TEXT=1;
