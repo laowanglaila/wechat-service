@@ -37,7 +37,8 @@
 			<if test="deadTime !=null">#{deadTime},</if>
 			<if test="qrcodeStatus !=null">#{qrcodeStatus},</if>
 			<if test="qrcodeIP !=null">#{qrcodeIP},</if>
-        #{action}, #{createTime}
+		#{action},
+		date_format( now() ,'%Y%m%d%H%i%s')
 		)
 	</insert>
 
@@ -125,7 +126,7 @@
 			<if test="qrcodeStatus != null">
 				qrcodeStatus = #{qrcodeStatus},
 			</if>
-			action = #{action}, actionTime = #{actionTime}
+			action = #{action}, actionTime = date_format( now() ,'%Y%m%d%H%i%s')
 		</set>
 		where itemID = #{itemID}
     </update>

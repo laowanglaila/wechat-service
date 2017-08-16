@@ -80,7 +80,7 @@ public class QrcodeCacheService implements RedisKeys{
                 qrcodeTempModel
                         .setMpID(mpID)
                         .setQrcodeType(qrcodeType.getValue())
-                        .setDeadTime(getCacheDate(expireSeconds))
+                        .setDeadTime(getCacheDate(jsonObject.getInteger("expire_seconds")))
                         .setTicket(jsonObject.getString("ticket"))
                         .setWxUrl(jsonObject.getString("url"))
                         .setSceneID(tempSenceID)

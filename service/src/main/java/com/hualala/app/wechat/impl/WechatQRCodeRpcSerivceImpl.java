@@ -123,7 +123,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
                 wechatQrcodeTempModel = qrcodeModelList.get(0);
                 wechatQrcodeTempModel.setQrcodeStatus(USED_QRCODE_STATUS)
                         .setQrcodeType(qrcodeType.getValue())
-                        .setDeadTime(deadTime)
+//                        .setDeadTime(deadTime)
                         .setDescription(qrCodeReq.getDescription())
                         .setLocationName(qrCodeReq.getLocationName())
                         .setParam1(qrCodeReq.getParam1())
@@ -165,7 +165,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         qrcodeTempModel.setMpID(mpID)
                 //判断类型，根据类型给定默认有效时间
                 .setQrcodeType(qrcodeType.getValue())
-                .setDeadTime(getDate(expireSeconds))
+                .setDeadTime(getDate(jsonObject.getInteger("expire_seconds")))
                 .setDescription(qrCodeReq.getDescription())
                 .setLocationName(qrCodeReq.getLocationName())
                 .setParam1(qrCodeReq.getParam1())
@@ -301,8 +301,8 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
             ArrayList<WechatQRCodeRes> wechatQRCodeList = new ArrayList<>();
             for (int i = 0; i < size ; i++){
                 WechatQrcodeTempModel wechatQrcodeTempModel = qrcodeModelList.get(i);
-                wechatQrcodeTempModel.setQrcodeStatus(USED_QRCODE_STATUS)
-                        .setDeadTime(deadTime);
+                wechatQrcodeTempModel.setQrcodeStatus(USED_QRCODE_STATUS);
+//                        .setDeadTime(deadTime);
                 if (i < wechatQRCodeDataList.size()){
                     WechatQRCodeData wechatQRCodeData = wechatQRCodeDataList.get(i);
                     String description = wechatQRCodeData.getDescription();

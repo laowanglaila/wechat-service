@@ -69,8 +69,10 @@ wechat:
     componentAppSecret: 0c79e1fa963cd80cc0be99b20a18faeb
   mq:
       rabbitmq:
-        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
-        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+#        cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
+#        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+        cacheQrcodeExchange: dohko_hll:service:wechat:exchange:cacheQrcode
+        cacheQrcodeQueue: dohko_hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: mu_hll:service:wechat:card:sku_quantity
 
