@@ -76,5 +76,7 @@ public interface WechatBaseApi {
      String MESSAGE_CUSTOM_SEND = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
     // 网页授权获取用户信息
      String GET_WECHAT_USERINFO = "https://api.weixin.qq.com/sns/userinfo";
+    // 微信api获取用户信息
+     String GET_WECHAT_API_USERINFO = "https://api.weixin.qq.com/cgi-bin/user/info";
 
 }

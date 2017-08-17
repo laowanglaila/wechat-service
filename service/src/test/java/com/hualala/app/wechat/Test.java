@@ -6,6 +6,7 @@ import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -88,5 +89,46 @@ public class Test {
     @org.junit.Test
     public void test6(){
         System.out.println(WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS);
+    }
+    @org.junit.Test
+    public void test7() throws IOException {
+        int lineNumber = 0;
+        File file = null;
+        InputStreamReader read = null;
+        LineNumberReader lineNumberReader = null;
+        String lineTxt = null;
+        String encoding="UTF-8";
+        file = new File("E:\\GitRepository\\wechat-service\\service\\src\\main\\java\\com\\hualala\\app\\wechat\\common\\ErrorCodes.java");
+        read = new InputStreamReader(new FileInputStream(file),encoding);//考虑到编码格式
+        BufferedReader bufferedReader = new BufferedReader(read);
+        String content = "";
+        String message = "";
+        content = bufferedReader.readLine();
+        while(content != null) {
+                if (content.contains("//")) {
+                    message = content.trim();
+//                System.out.println(content);
+                } else if ("".equals(content.trim()) || content.contains(".") || content.contains("}")) {
+                    message = "";
+                } else {
+                    String[] split = content.trim().split(" ");
+                    System.out.println(split[1]+"("+split[3].replace(";","")+",\""+message.replace("//","").trim()+"\"),");
+                    message = "";
+            }
+            content = bufferedReader.readLine();
+        }
+    }
+
+    @org.junit.Test
+    public void test8(){
+        int i = 1;
+        Object i1 = i;
+        System.out.println(i1 instanceof Integer);
+    }
+    @org.junit.Test
+    public void test9(){
+        Object s = "";
+        String s1 = String.valueOf(s);
+        System.out.println(s1);
     }
 }

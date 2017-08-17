@@ -21,6 +21,9 @@ public interface WechatQRCodeRpcSerivce {
     WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq);
     @RpcMethod
     WechatQRCodeListRes createQRCodeList(WechatQRCodeListReq qrCodeReqList);
+    @RpcMethod
+    WechatQRCodeRes createLoginQRCode(WechatQRCodeReq qrCodeReq);
+
 
     @Data
     public class WechatQRCodeListReq extends RequestInfo {

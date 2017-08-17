@@ -405,4 +405,13 @@ public class BaseHttpService implements WechatBaseApi{
         String url = GET_WECHAT_USERINFO + "?" + params;
         return this.commonHttpGet(url, null);
     }
+    /**
+     * 客服消息接口
+     * @param params
+     * @return
+     */
+    public JSONObject getWechatAPIUserInfo(String params,String mpID){
+        String url = GET_WECHAT_API_USERINFO + "?" + params;
+        return this.commonHttpGet(url, mpID);
+    }
 }

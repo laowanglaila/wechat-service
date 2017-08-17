@@ -1,7 +1,6 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
 import com.hualala.app.wechat.common.ErrorCodes;
@@ -20,29 +19,35 @@ import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DataUtils;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by renjianfei on 2017/4/12.
  */
+@Setter
 @Service
+@ConfigurationProperties(prefix = "wechat.mpID")
 class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
 
+    private Logger log = Logger.of(WechatQRCodeRpcSerivceImpl.class);
+    private String qrcodeDefaultMpID;
     private static final String WECHAT_QR_QUERY_CACHE_LOCK = "Wechat_QrCode_QueryLock";
     private static final String COLON = ":";
-    private Logger logger = Logger.of(WechatQRCodeRpcSerivceImpl.class);
     private static final int SIZE = 1;
     private static final int USED_QRCODE_STATUS = 2;
     private static final Long LOCKED_TIME_OUT_SECONDS = 10L;
+
 
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
@@ -262,7 +267,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         // 根据mpID qrcodeType getDeadTime() 查询数据库
         String locdKey = WECHAT_QR_QUERY_CACHE_LOCK + COLON + mpID + COLON + qrcodeType.name();
         boolean isLock = redisLockHandler.tryLock(locdKey, LOCKED_TIME_OUT_SECONDS);
-        logger.debug(() -> "isLock:" + isLock);
+        log.debug(() -> "isLock:" + isLock);
         if (!isLock){
             return new WechatQRCodeRes().setResultInfo(ErrorCodes.WAIT_LOCK_TIMEOUT, "等待同步锁超时，LOCKED_TIME_OUT：" + LOCKED_TIME_OUT_SECONDS + "s");
         }
@@ -333,6 +338,70 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
                 redisLockHandler.realseLock(locdKey);
             }
         }
+    }
+
+    @Override
+    public WechatQRCodeRes createLoginQRCode(WechatQRCodeReq qrCodeReq) {
+
+        //判断mpID,没有则调方法获取
+        String mpID = qrCodeReq.getMpID();
+        if (StringUtils.isBlank(mpID)) {
+            String brandID = qrCodeReq.getBrandID();
+            String groupID = qrCodeReq.getGroupID();
+            String shopID = qrCodeReq.getShopID();
+            if (StringUtils.isNotBlank(shopID) && StringUtils.isNotBlank(brandID) && StringUtils.isNotBlank(groupID)) {
+                //通过上面三个属性获取mpID，调用方法待定；
+                mpID = mpInfoService.queryMpIDAuth(Long.parseLong(groupID), Long.parseLong(brandID), Long.parseLong(shopID));
+            }
+        }
+        if (StringUtils.isBlank(mpID)) {
+            //返回响应对象，设置错误信息和错误码；
+            mpID = qrcodeDefaultMpID;
+        }
+        WechatQRTypeEnum qrcodeType = qrCodeReq.getQrcodeType();
+        if (qrcodeType == null){
+            qrcodeType = WechatQRTypeEnum.LOGIN;
+        }
+        //有效时间
+        int expireSeconds = qrCodeReq.getExpireSeconds();
+        expireSeconds = (expireSeconds == 0 ? 30 : expireSeconds);
+//        expireSeconds = (expireSeconds == 0 ? qrcodeType.getDeadTime() : expireSeconds);
+        //从redis获取场景值
+        int tempSenceID = qrcodeCreateSceneIDService.getTempSenceID(mpID);
+        JSONObject jsonObject = baseHttpService.createQrCode(getModel(expireSeconds, qrcodeType.getWechatType(), tempSenceID), mpID);
+
+        if (!jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
+            return ResultUtil.getResultInfoBean(jsonObject, WechatQRCodeRes.class);
+        }
+        //插入数据库
+        WechatQrcodeTempModel qrcodeTempModel = new WechatQrcodeTempModel();
+        qrcodeTempModel.setMpID(mpID)
+                //判断类型，根据类型给定默认有效时间
+                .setQrcodeType(qrcodeType.getValue())
+                .setDeadTime(getDate(jsonObject.getInteger("expire_seconds")))
+                .setDescription(qrCodeReq.getDescription())
+                .setLocationName(qrCodeReq.getLocationName())
+                .setParam1(qrCodeReq.getParam1())
+                .setParam2(qrCodeReq.getParam2())
+                .setParam3(qrCodeReq.getParam3())
+                .setShopID(qrCodeReq.getShopID())
+                .setTicket(jsonObject.getString("ticket"))
+                .setWxUrl(jsonObject.getString("url"))
+                .setSceneID(tempSenceID)
+                .setQrcodeName(qrCodeReq.getQrcodeName())
+                .setQrcodeStatus(USED_QRCODE_STATUS);
+        qrcodeTempMapper.insert(qrcodeTempModel);
+
+        //返回参数
+        WechatQRCodeRes wechatQRCodeRes = new WechatQRCodeRes();
+        wechatQRCodeRes.setItemID(qrcodeTempModel.getItemID());
+        wechatQRCodeRes.setTicket(qrcodeTempModel.getTicket());
+        wechatQRCodeRes.setWxUrl(qrcodeTempModel.getWxUrl());
+        wechatQRCodeRes.setExpireSeconds(expireSeconds);
+        wechatQRCodeRes.setParam1(qrCodeReq.getParam1());
+        wechatQRCodeRes.setParam2(qrCodeReq.getParam2());
+        wechatQRCodeRes.setParam3(qrCodeReq.getParam3());
+        return wechatQRCodeRes;
     }
 
     private Long getDate(Integer second) {

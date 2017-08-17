@@ -98,6 +98,9 @@ message WechatQRCodeListRes {
 //
 service WechatQRCodeRpcSerivce{
     //
+    rpc createLoginQRCode(WechatQRCodeReq) returns (WechatQRCodeRes) {}
+    //
     rpc createQRCode(WechatQRCodeReq) returns (WechatQRCodeRes) {}
+    //
     rpc createQRCodeList(WechatQRCodeListReq) returns (WechatQRCodeListRes) {}
 }

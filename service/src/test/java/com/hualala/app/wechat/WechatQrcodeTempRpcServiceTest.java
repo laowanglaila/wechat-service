@@ -71,13 +71,13 @@ public class WechatQrcodeTempRpcServiceTest {
     public void  test1(){
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
-//        wechatQRCodeListReq.setMpID("doulaofangceshi");
-        wechatQRCodeListReq.setMpID("5fWNjiboDX32dcec");
+        wechatQRCodeListReq.setMpID("doulaofangceshi");
+//        wechatQRCodeListReq.setMpID("5fWNjiboDX32dcec");
 //        wechatQRCodeListReq.setBrandID("0");
 //        wechatQRCodeListReq.setGroupID("5");
 //        wechatQRCodeListReq.setShopID("0");
-        wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.QUEUE);
-        wechatQRCodeListReq.setExpireSeconds(3600*24);
+        wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.INVOICE);
+//        wechatQRCodeListReq.setExpireSeconds(3600*24);
         wechatQRCodeListReq.setSize(20);
         List<WechatQRCodeRpcSerivce.WechatQRCodeData> list = new ArrayList<>();
         for (int i = 0 ; i < 3; i++) {
@@ -93,11 +93,11 @@ public class WechatQrcodeTempRpcServiceTest {
         System.out.println("--------------"+(end-start)+"ms");
         System.out.println(qrCodeList.getMessage());
         System.out.println(qrCodeList.getWechatQRCodeResList()==null?0:qrCodeList.getWechatQRCodeResList().size());
-//        try {
-//            Thread.sleep(300000L);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(300000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -210,5 +210,28 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
         System.out.println("--------------"+(end-start)+"ms");
 
 
+    }
+
+    /**
+     *
+     * 登录码测试
+     */
+    @Test
+    public void  test6(){
+        WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
+        WechatQRCodeRpcSerivce.WechatQRCodeReq wechatQRCodeReq = new WechatQRCodeRpcSerivce.WechatQRCodeReq();
+        String param1 = "ID" ;
+        wechatQRCodeReq.setParam1(param1);
+//        wechatQRCodeReq.setExpireSeconds(3600);
+        wechatQRCodeReq.setShopID("５");
+        wechatQRCodeReq.setBrandID("5");
+        wechatQRCodeReq.setGroupID("5");
+        wechatQRCodeReq.setShopName("测试二维码:ShopName");
+        wechatQRCodeReq.setDescription("测试二维码:Description");
+        wechatQRCodeReq.setLocationName("测试二维码:LocationName");
+        long start = System.currentTimeMillis();
+        WechatQRCodeRpcSerivce.WechatQRCodeRes qrCode = rpcClient.createLoginQRCode(wechatQRCodeReq);
+        long end = System.currentTimeMillis();
+        System.out.println("-------------" + (end - start) + "ms------------------>" + qrCode.toJson());
     }
 }
