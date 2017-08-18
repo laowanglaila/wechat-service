@@ -80,7 +80,7 @@ public class HttpApiService {
             }else {
                 String accessToken = result.getString("accessToken");
                 StringBuilder suilder = new StringBuilder(url);
-                url = suilder.append("&access_token="+accessToken).toString();
+                url = suilder.append("?access_token="+accessToken).toString();
             }
         }
         return url;
