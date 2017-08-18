@@ -397,7 +397,7 @@ public class BaseHttpService implements WechatBaseApi{
         return this.commonHttpPost(MESSAGE_CUSTOM_SEND, json, mpID);
     }
     /**
-     * 客服消息接口
+     * 获取用户信息
      * @param params
      * @return
      */
@@ -406,11 +406,12 @@ public class BaseHttpService implements WechatBaseApi{
         return this.commonHttpGet(url, null);
     }
     /**
-     * 客服消息接口
+     * 获取用户信息
      * @param params
      * @return
      */
     public JSONObject getWechatAPIUserInfo(String params,String mpID){
+
         String url = GET_WECHAT_API_USERINFO + "?" + params;
         return this.commonHttpGet(url, mpID);
     }

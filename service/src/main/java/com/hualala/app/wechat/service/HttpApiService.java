@@ -70,7 +70,7 @@ public class HttpApiService {
 
     private String checkAccessTocken(String url, String mpID) {
         String[] split = url.trim().split("[?]");
-        if(split.length ==1 || !url.contains("access_token")){
+        if(split.length ==1 && !url.contains("access_token")){
 
             JSONObject result = accessTokenService.getAccessToken(mpID);
             if(!result.getBoolean(WechatMessageType.IS_SUCCESS)){
@@ -81,6 +81,17 @@ public class HttpApiService {
                 String accessToken = result.getString("accessToken");
                 StringBuilder suilder = new StringBuilder(url);
                 url = suilder.append("?access_token="+accessToken).toString();
+            }
+        } else if(split.length > 1 && !url.contains("access_token")){
+            JSONObject result = accessTokenService.getAccessToken(mpID);
+            if(!result.getBoolean(WechatMessageType.IS_SUCCESS)){
+                String code = result.getString(WechatMessageType.CODE);
+                String message = result.getString(WechatMessageType.MESSAGE);
+                throw new WechatException(code,message) ;
+            }else {
+                String accessToken = result.getString("accessToken");
+                StringBuilder suilder = new StringBuilder(url);
+                url = suilder.append("&access_token="+accessToken).toString();
             }
         }
         return url;
