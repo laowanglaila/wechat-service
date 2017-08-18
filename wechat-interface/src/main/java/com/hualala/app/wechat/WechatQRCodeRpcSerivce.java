@@ -124,5 +124,7 @@ public interface WechatQRCodeRpcSerivce {
         private String param3;
         @Protocol(fieldType = FieldType.LONG, order = 8, description = "二维码唯一ID")
         private Long itemID;
+        @Protocol(fieldType = FieldType.STRING, order= 9, description = "公众号mpID")
+        private String mpID;
     }
 }

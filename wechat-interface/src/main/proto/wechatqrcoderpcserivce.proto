@@ -50,6 +50,8 @@ message WechatQRCodeRes {
    string param3=7;
    // 二维码唯一ID
    int64 itemID=8;
+   // 公众号mpID
+   string mpID=9;
    // 响应公共字段
    ResultHeader result=1;
 }

@@ -401,6 +401,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         wechatQRCodeRes.setParam1(qrCodeReq.getParam1());
         wechatQRCodeRes.setParam2(qrCodeReq.getParam2());
         wechatQRCodeRes.setParam3(qrCodeReq.getParam3());
+        wechatQRCodeRes.setMpID(mpID);
         return wechatQRCodeRes;
     }
 
