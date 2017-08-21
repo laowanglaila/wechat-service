@@ -41,9 +41,9 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
         if (log.isInfoEnabled()){
             log.info(jsonObject.toJSONString());
         }
-        String event = jsonObject.getString("event");
+        String event = jsonObject.getString("Event");
         if (log.isInfoEnabled()){
-            log.info("CardEventProcessRpcService.process()\r\n$event:{}\r\n$params:{}",event,jsonObject);
+            log.info("CardEventProcessRpcService.process()\r\nEvent:{}\r\n$params:{}",event,jsonObject);
         }
         EventProcessRes eventProcessRes = new EventProcessRes();
 
