@@ -81,7 +81,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     Long currentDateTimeLong = System.currentTimeMillis();
     Integer startTime =  (int)(currentDateTimeLong/1000L);
     Integer endTime = startTime + 3600 * 24 * 7;
-    baseInfo.setMpID("tut1Ceu1DX005996");
+    baseInfo.setMpID("wangxiangyuanceshi");
     baseInfo.setTitle("小卖部代金券");
     baseInfo.setCardType("CASH");
     baseInfo.setDateInfo("{\"begin_timestamp\" : "+startTime+",\"end_timestamp\" : "+endTime+",\n\"type\" : \"DATE_TYPE_FIX_TIME_RANGE\"}");
@@ -212,7 +212,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
         baseInfo.setTitle("微信会员测试");
-        baseInfo.setMpID("dohko1155");
+        baseInfo.setMpID("wangxiangyuanceshi");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
         baseInfo.setBrandName("微信会员");
@@ -280,7 +280,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6454333499305371779L);
+        cardPrimaryKey.setCardKey(6456559666754233352L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }
