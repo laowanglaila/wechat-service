@@ -154,11 +154,6 @@
             <artifactId>httpmime</artifactId>
             <version>4.5.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-mp</artifactId>
-            <version>2.7.0</version>
-        </dependency>
     </dependencies>
 
 

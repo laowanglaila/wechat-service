@@ -386,6 +386,8 @@ wechat:
         cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: pre_hll:service:wechat:card:sku_quantity
+  mpID:
+      qrcodeDefaultMpID: hualala_dld
 #redisStock:
 #  host: 172.16.0.27
 #  port: 19000
@@ -486,6 +488,8 @@ wechat:
         cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: hll:service:wechat:card:sku_quantity
+  mpID:
+      qrcodeDefaultMpID: hualala_dld
 #redisStock:
 #    host: sjhl.codis.hualala.com
 #    port: 19000
