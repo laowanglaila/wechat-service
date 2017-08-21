@@ -42,6 +42,9 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
             log.info(jsonObject.toJSONString());
         }
         String event = jsonObject.getString("event");
+        if (log.isInfoEnabled()){
+            log.info("CardEventProcessRpcService.process()\r\n$event:{}\r\n$params:{}",event,jsonObject);
+        }
         EventProcessRes eventProcessRes = new EventProcessRes();
 
         if (WechatMessageType.EVENT_CARD_MEMBER_ACTIVE.equals(event)) {
