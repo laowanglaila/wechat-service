@@ -127,6 +127,8 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         req.setTemplateID(wechatTemplateModel.getTemplateID());
         req.setOrderKey(UUID.randomUUID().toString());
         req.setGroupID(reqData.getGroupID());
+        if(StringUtils.isNotEmpty(reqData.getOrderKey()))
+            req.setOrderKey(reqData.getOrderKey());
 
         WechatMsgQueueService wechatMsgQueueService = rpcClient.getRpcClient(WechatMsgQueueService.class);
         WechatMsgQueueService.WechatQueueRes wechatQueueRes = wechatMsgQueueService.wechatCreateMsgQueue(req);
