@@ -21,6 +21,8 @@ message CardUnAvailableReqData {
    string code=3;
    // 失效原因
    string reason=4;
+   // 集团ID
+   string groupID=5;
    // 请求公共字段
    RequestHeader header=1;
 }

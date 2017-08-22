@@ -9,12 +9,16 @@ message CardSignReqData {
    string mpID=2;
    // 集团ID
    int64 groupID=3;
-   // 哗啦啦会员卡ID
+   // 哗啦啦会员卡TypeID
    int64 hualalaCardID=5;
    // 指定的卡券code码，只能被领一次。自定义code模式的卡券必须填写，非自定义code和预存code模式的卡券不必填写
    string code=6;
    // 指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，bind_openid字段为false不必填写
    string openid=7;
+   // 哗啦啦用户的会员卡id
+   string hualalaCardCode=8;
+   // 哗啦啦用户id
+   string customerID=9;
    // 请求公共字段
    RequestHeader header=1;
 }

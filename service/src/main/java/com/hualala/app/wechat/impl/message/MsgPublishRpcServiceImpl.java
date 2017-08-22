@@ -2,9 +2,8 @@ package com.hualala.app.wechat.impl.message;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.MsgPublishRpcService;
-import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.user.UserModelQuery;
 import com.hualala.app.wechat.service.BaseHttpService;

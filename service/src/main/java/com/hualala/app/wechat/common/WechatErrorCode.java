@@ -112,7 +112,7 @@ public class WechatErrorCode {
 		wechatError.put("46003", "不存在的菜单数据");
 		wechatError.put("46004", "不存在的用户");
 		wechatError.put("47001", "解析JSON/XML内容错误");
-		wechatError.put("48001", "api功能未授权");
+		wechatError.put("48001", "接口功能未授权，请确认公众号已获得该权限");
 		wechatError.put("50001", "用户未授权该api");
 		wechatError.put("61007", "当前公众号还未获取正在操作的组件授权");
 		wechatError.put("61451", "参数错误(invalid parameter)");

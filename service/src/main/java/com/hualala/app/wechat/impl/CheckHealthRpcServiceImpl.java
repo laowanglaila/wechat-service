@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.CheckHealthRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import org.springframework.stereotype.Service;
 
 /**

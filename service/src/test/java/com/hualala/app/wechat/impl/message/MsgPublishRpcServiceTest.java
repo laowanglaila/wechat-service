@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by renjianfei on 2017/6/5.
  */
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class MsgPublishRpcServiceTest {
     @Autowired
@@ -52,31 +52,7 @@ public class MsgPublishRpcServiceTest {
         System.out.println(jsonObject);
     }
 
-    /**
-     * 图文消息预览
-     */
-    @Test
-    public void test4(){
-        String text = "群发测试Hellow word!\r\n<a url=\"http://www.hualala.com/\">hualala<a/>";
-//        String mpID = "doulaofangceshi";
-        String mpID = "hualala_com";
 
-        String url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview";
-//        String params = "{ " +
-//                "    \"towxname\":\"renfeifei_1314\"," +
-//                "    \"text\":{\"content\":\""+text+"\"}," +
-//                "    \"msgtype\":\"text\"" +
-//                "}";
-        String params = "{\n" +
-//                        "  \"touser\":\"o7FjEuBvkjdVaJBkrQt8GNqMuSIQ\", \n" +
-                      "    \"towxname\":\"renfeifei_1314\"," +
-//                        "  \"msgtype\":\"mpnews\",\n" +
-                        "  \"wxcard\":{\"card_id\":\"pACwGswc-Pr6d1_nB4WKw4nxW3Po\"},\n" +
-//                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
-                        "}";
-        JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
-        System.out.println(jsonObject);
-    }
 
     @Autowired
     private UserModelMapper userModelMapper;
@@ -123,22 +99,55 @@ public class MsgPublishRpcServiceTest {
         System.out.println(textMsgRes.getMessage());
     }
 
-
+    /**
+     * 图文消息预览
+     */
+    @Test
+    public void test4(){
+        String text = "群发测试Hellow word!\r\n<a url=\"http://www.hualala.com/\">hualala<a/>";
+//        String mpID = "doulaofangceshi";
+//        String mpID = "hualala_com";
+        String mpID = "tut1Ceu1DX005996";
+        String url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview";
+//        String params = "{ " +
+//                "    \"towxname\":\"renfeifei_1314\"," +
+//                "    \"text\":{\"content\":\""+text+"\"}," +
+//                "    \"msgtype\":\"text\"" +
+//                "}";
+        String params = "{\n" +
+//                "  \"touser\":\"oXpuzwXrT6TRDji_GtIK2frw7ZK4\", \n" +
+//                      "    \"towxname\":\"renfeifei_1314\"," +
+                      "    \"towxname\":\"xukai80231314\"," +
+//                        "  \"msgtype\":\"mpnews\",\n" +
+                "  \"wxcard\":{\"card_id\":\"pXpuzwdJJPIE9peUazT_JntW7spo\"},\n" +
+                "        \"msgtype\":\"wxcard\"\n" +
+//                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
+                "}";
+        JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
+        System.out.println(jsonObject);
+    }
     @Test
     public void test5(){
         String text = "<![CDATA[<a href='http://www.hualala.com'>hualala<a/>>]]>";
 //        String mpID = "doulaofangceshi";
-        String mpID = "hualala_com";
-
+//        String mpID = "hualala_com";
+        String mpID = "tut1Ceu1DX005996";
         String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
 
+//        String params = "{" +
+//                "    \"touser\":\"oACwGs4QPjQ_JoAVBOCQgwC12yFk\"," +
+//                "    \"msgtype\":\"text\"," +
+//                "    \"text\":" +
+//                "    {" +
+//                "         \"content\":\""+text+"\"" +
+//                "    }" +
+//                "}";
         String params = "{" +
-                "    \"touser\":\"oACwGs4QPjQ_JoAVBOCQgwC12yFk\"," +
-                "    \"msgtype\":\"text\"," +
-                "    \"text\":" +
-                "    {" +
-                "         \"content\":\""+text+"\"" +
-                "    }" +
+                "   \"touser\":[" +
+                "    \"oXpuzwXrT6TRDji_GtIK2frw7ZK4\"" +
+                "   ]," +
+                "        \"wxcard\": {\"card_id\":\"pXpuzwdJJPIE9peUazT_JntW7spo\"}\n" +
+                "        \"msgtype\":\"wxcard\"\n" +
                 "}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
         System.out.println(jsonObject);

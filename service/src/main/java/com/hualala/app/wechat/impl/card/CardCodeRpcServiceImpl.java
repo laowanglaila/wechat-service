@@ -3,15 +3,21 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardCodeRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
-import com.hualala.app.wechat.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
+import com.hualala.app.wechat.mapper.card.MemberMsgModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
+import com.hualala.app.wechat.model.card.MemberMsgModel;
+import com.hualala.app.wechat.model.card.MemberMsgModelQuery;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +34,8 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     @Autowired
     private BaseInfoModelMapper baseInfoModel;
 
+    @Autowired
+    private MemberMsgModelMapper memberMsgModelMapper;
     /**
      * 导入code
      * @param cardCodeImportReqData
@@ -56,34 +64,6 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeImportResData.class);
     }
 
-//    /**
-//     * 导入优惠券code
-//     * @param cardCodeImportReqData
-//     * @return
-//     */
-//    @Override
-//    public CardCodeImportResData importCouponCode(CardCodeImportReqData cardCodeImportReqData) {
-//        Long cardKey = cardCodeImportReqData.getCardKey();
-//        if (cardKey == null) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
-//        }
-//        BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
-//        if (null == baseInfoModel) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-//        }
-//        String cardID = baseInfoModel.getCardID();
-//        String mpID = baseInfoModel.getMpID();
-//        List<String> code = cardCodeImportReqData.getCode();
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("card_id", cardID);
-//        params.put("code", code);
-//        JSONObject jsonObject = baseHttpService.importCardCode(params, mpID);
-//
-//        return ResultUtil.getResultInfoBean(jsonObject, CardCodeImportResData.class);
-//    }
-
     /**
      * 核销卡券
      * @param cardCodeDestroyReqData
@@ -93,13 +73,11 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     public CardCodeDestroyResData destoryCode(CardCodeDestroyReqData cardCodeDestroyReqData) {
         Long cardKey = cardCodeDestroyReqData.getCardKey();
         if (cardKey == null) {
-            return new CardUpdateRpcService.CardUpdateResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+            return new CardCodeDestroyResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
         BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel) {
-            return new CardUpdateRpcService.CardUpdateResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+            return new CardCodeDestroyResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
         }
         String cardID = baseInfoModel.getCardID();
         String mpID = baseInfoModel.getMpID();
@@ -113,36 +91,6 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
 
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
     }
-
-//    /**
-//     * 核销优惠券
-//     * @param cardCodeDestroyReqData
-//     * @return
-//     */
-//    @Override
-//    public CardCodeDestroyResData destoryCouponCode(CardCodeDestroyReqData cardCodeDestroyReqData) {
-//        Long cardKey = cardCodeDestroyReqData.getCardKey();
-//        if (cardKey == null) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
-//        }
-//        BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
-//        if (null == baseInfoModel) {
-//            return new CardUpdateRpcService.CardUpdateResData()
-//                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-//        }
-//        String cardID = baseInfoModel.getCardID();
-//        String mpID = baseInfoModel.getMpID();
-//        String code = cardCodeDestroyReqData.getCode();
-//
-//        String params = "{" +
-//                "  \"code\": \"" + code + "\"," +
-//                "  \"card_id\": \"" + cardID + "\"" +
-//                "}";
-//        JSONObject jsonObject = baseHttpService.destoryCardCode(params, mpID);
-//
-//        return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
-//    }
 
     /**
      * code解码
@@ -220,6 +168,10 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     public MemberItemUpdateRes updateMemberItem(MemberItemUpdateReq memberItemUpdateReq) {
         String cardCode = memberItemUpdateReq.getCardCode();
         Long cardKey = memberItemUpdateReq.getCardKey();
+        Long msgCreateTime = memberItemUpdateReq.getMsgCreateTime();
+        if (msgCreateTime == null){
+            return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_MSGCREATETIME_EMPTY, "msgCreateTime不允许为空！");
+        }
         if (cardKey == null) {
             return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
@@ -230,6 +182,10 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         if (null == baseInfoModel) {
             return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
         }
+        //校验消息时间，如果消息创建时间小于上一次消息的创建时间，则不执行该条语句。
+        msgLock(cardCode, msgCreateTime, baseInfoModel);
+
+
         String addBonus = memberItemUpdateReq.getAddBonus();
         String bonus = memberItemUpdateReq.getBonus();
         String addBalance = memberItemUpdateReq.getAddBalance();
@@ -255,10 +211,18 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
             sb.append("\"bonus\": "+bonus+",");
         if (StringUtils.isNotBlank(addBonus))
             sb.append("\"add_bonus\": "+addBonus+",");
-        if (StringUtils.isNotBlank(balance))
-            sb.append("\"balance\": "+balance+",");
-        if (StringUtils.isNotBlank(addBalance))
-            sb.append("\"add_balance\": "+addBalance+",");
+        if (StringUtils.isNotBlank(balance)) {
+            BigDecimal bigDecimal = new BigDecimal(balance);
+            BigDecimal bigDecimal1 = new BigDecimal("100");
+            BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
+            sb.append("\"balance\": "+decimal.longValue()+",");
+        }
+        if (StringUtils.isNotBlank(addBalance)) {
+            BigDecimal bigDecimal = new BigDecimal(addBalance);
+            BigDecimal bigDecimal1 = new BigDecimal("100");
+            BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
+            sb.append("\"add_balance\": " + decimal.longValue() + ",");
+        }
         if (StringUtils.isNotBlank(backgroundPicUrl))
             sb.append("\"background_pic_url\": \""+backgroundPicUrl+"\",");
         if (StringUtils.isNotBlank(recordBonus))
@@ -286,5 +250,41 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         sb.replace(sb.length()-1,sb.length(),"    } }");
         JSONObject jsonObject = baseHttpService.updateMemberInfo(sb.toString(), baseInfoModel.getMpID());
         return ResultUtil.getResultInfoBean(jsonObject,MemberItemUpdateRes.class);
+    }
+
+    /**
+     * 校验消息时间，如果消息创建时间小于上一次消息的创建时间，则抛出ServiceException不执行该条语句。
+     * @param cardCode
+     * @param msgCreateTime
+     * @param baseInfoModel
+     */
+    private void msgLock(String cardCode, Long msgCreateTime, BaseInfoModel baseInfoModel) {
+        MemberMsgModelQuery memberMsgModelQuery = new MemberMsgModelQuery();
+        memberMsgModelQuery.createCriteria()
+                .andCardIDEqualTo(baseInfoModel.getCardID())
+                .andCodeEqualTo(cardCode);
+        int count = memberMsgModelMapper.countByExample(memberMsgModelQuery);
+        int rows = 0;
+        if (count == 0){
+            MemberMsgModel memberMsgModel = new MemberMsgModel();
+            memberMsgModel.setCardID(baseInfoModel.getCardID());
+            memberMsgModel.setCode(cardCode);
+            memberMsgModel.setMsgCreateTime(msgCreateTime);
+            rows = memberMsgModelMapper.insertSelective(memberMsgModel);
+        }else {
+            MemberMsgModel memberMsgModel = new MemberMsgModel();
+            memberMsgModel.setCardID(baseInfoModel.getCardID());
+            memberMsgModel.setCode(cardCode);
+            memberMsgModel.setMsgCreateTime(msgCreateTime);
+            MemberMsgModelQuery updateQuery = new MemberMsgModelQuery();
+            memberMsgModelQuery.createCriteria()
+                    .andCardIDEqualTo(baseInfoModel.getCardID())
+                    .andCodeEqualTo(cardCode)
+                    .andMsgCreateTimeLessThan(msgCreateTime);
+            rows = memberMsgModelMapper.updateByCondition(memberMsgModel);
+        }
+        if (rows != 1){
+            throw new WechatException(WechatExceptionTypeEnum.WECHAT_CARD_LOCK_ERROR);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.hualala.app.wechat;
+package com.hualala.app.wechat.common;
 
 public interface ErrorCodes {
 
@@ -93,4 +93,20 @@ public interface ErrorCodes {
     String WAIT_LOCK_TIMEOUT = "00112150";
     //等待同步锁超时
     String WECHAT_APPSECRET_MISSED = "00112151";
+    //时间范围有误
+    String WECHAT_TIME_RANGE_WRONG = "00112152";
+    //金额范围有误
+    String WECHAT_AMOUNT_RANGE_WRONG = "00112153";
+    //没有对应的微信会员卡
+    String WECHAT_CARD_ID_MISSED = "00112154";
+    //会员卡更新消息时间小于上一次更新时间
+    String WECHAT_CARD_LOCK_ERROR = "00112155";
+    //msgCreateTime不允许为空
+    String WECHAT_CARD_MSGCREATETIME_EMPTY = "00112156";
+    //msgCreateTime不允许为空
+    String WECHAT_MP_NOT_EXIST = "00112157";
+    //msgCreateTime不允许为空
+    String WECHAT_MP_PERMISSION_DENIED = "00112158";
+    // 客服接口错误
+    String WECHAT_MESSAGE_CUSTOM_SEMD = "00112159";
 }

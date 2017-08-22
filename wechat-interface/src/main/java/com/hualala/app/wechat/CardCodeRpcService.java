@@ -95,6 +95,8 @@ public interface CardCodeRpcService {
         //    code	是	string(20)	1231231	需核销的Code码。
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "需导入微信卡券后台的自定义code，上限为100个。")
         private String code;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
+        private String groupID;
     }
 
     @Data
@@ -164,6 +166,9 @@ public interface CardCodeRpcService {
 
     }
 
+    /**
+     * 同步会员余额积分
+     */
     @Data
     class MemberItemUpdateReq extends RequestInfo {
         //        code            	        是            	string(20)            	1231123            	                        卡券Code码。
@@ -215,6 +220,10 @@ public interface CardCodeRpcService {
         private boolean isNotifyCustomField2;
         @Protocol(fieldType = FieldType.BOOL, order = 18, description = "自定义custom_field1变动时是否触发系统模板消息，默认为false。（2、3同理）")
         private boolean isNotifyCustomField3;
+        @Protocol(fieldType = FieldType.STRING, order = 19, description = "集团ID")
+        private String groupID;
+        @Protocol(fieldType = FieldType.STRING, order = 20, description = "发生余额、积分变动的时间")
+        private Long msgCreateTime;
     }
 
     @Data

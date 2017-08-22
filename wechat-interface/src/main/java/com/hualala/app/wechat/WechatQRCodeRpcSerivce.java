@@ -21,6 +21,9 @@ public interface WechatQRCodeRpcSerivce {
     WechatQRCodeRes createQRCode(WechatQRCodeReq qrCodeReq);
     @RpcMethod
     WechatQRCodeListRes createQRCodeList(WechatQRCodeListReq qrCodeReqList);
+    @RpcMethod
+    WechatQRCodeRes createLoginQRCode(WechatQRCodeReq qrCodeReq);
+
 
     @Data
     public class WechatQRCodeListReq extends RequestInfo {
@@ -121,5 +124,7 @@ public interface WechatQRCodeRpcSerivce {
         private String param3;
         @Protocol(fieldType = FieldType.LONG, order = 8, description = "二维码唯一ID")
         private Long itemID;
+        @Protocol(fieldType = FieldType.STRING, order= 9, description = "公众号mpID")
+        private String mpID;
     }
 }

@@ -51,6 +51,8 @@ public interface WechatTemplateRpcService {
         private String remark;
         @Protocol(fieldType = FieldType.STRING, order = 17, description = "param1")
         private String param1;
+        @Protocol(fieldType = FieldType.STRING, order = 18, description = "key")
+        private String orderKey;
 
 //        @Protocol(fieldType = FieldType.STRING, order = 5, description = "模板类型")
 //        private String ModelType;

@@ -73,7 +73,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
     CardPrePareCreateRpcService.PreCouponReqData couponData = new CardPrePareCreateRpcService.PreCouponReqData();
     //头信息：商家信息
-
+        couponData.setReduceCost(1);
     //设置baseInfo
     CardPrePareCreateRpcService.PreCardBaseInfoData baseInfo = new CardPrePareCreateRpcService.PreCardBaseInfoData();
     baseInfo.setSku(100);
@@ -81,9 +81,12 @@ public class CardPrePareCreateRpcServiceImplTest {
     Long currentDateTimeLong = System.currentTimeMillis();
     Integer startTime =  (int)(currentDateTimeLong/1000L);
     Integer endTime = startTime + 3600 * 24 * 7;
+    baseInfo.setMpID("tut1Ceu1DX005996");
+    baseInfo.setTitle("小卖部代金券");
+    baseInfo.setCardType("CASH");
     baseInfo.setDateInfo("{\"begin_timestamp\" : "+startTime+",\"end_timestamp\" : "+endTime+",\n\"type\" : \"DATE_TYPE_FIX_TIME_RANGE\"}");
     baseInfo.setBindOpenid(false);
-    baseInfo.setBrandName("微信餐厅，豆捞坊测试");
+    baseInfo.setBrandName("沪上阿姨现煮茶饮测试");
     baseInfo.setCanShare(true);
     baseInfo.setCanGiveFriend(true);
     baseInfo.setCenterSubTitle("按钮下方的wording");
@@ -109,7 +112,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     ArrayList<Integer> locationIdList = new ArrayList<>();
     locationIdList.add(218384742);
     //Json
-    baseInfo.setLocationIdList("123, 12321, 345345");
+    baseInfo.setLocationIdList("[123,12321,345345]");
 
     //高级
     CardPrePareCreateRpcService.PreAdvancedInfoData advancedInfo = new CardPrePareCreateRpcService.PreAdvancedInfoData();
@@ -135,13 +138,13 @@ public class CardPrePareCreateRpcServiceImplTest {
             "   \"reject_category\" : \"阿迪达斯\"" +
             "}");
 
-
-    CardPrePareCreateRpcService.PreCardResData resInfo = prePareCreateCardRpcService.createCoupon(couponData);
-    Long cardKey = resInfo.getCardKey();
-    baseInfo.setCardKey(cardKey);
-    advancedInfo.setCardKey(cardKey);
-    prePareCreateCardRpcService.createBaseInfo(baseInfo);
-    prePareCreateCardRpcService.createAdvancedInfo(advancedInfo);
+        CardPrePareCreateRpcService.PreCardResData baseInfo1 = prePareCreateCardRpcService.createBaseInfo(baseInfo);
+        System.out.println(baseInfo1.getMessage());
+        Long cardKey = baseInfo1.getCardKey();
+        couponData.setCardKey(cardKey);
+        advancedInfo.setCardKey(cardKey);
+        prePareCreateCardRpcService.createCoupon(couponData);
+        prePareCreateCardRpcService.createAdvancedInfo(advancedInfo);
 
 }
 
@@ -184,7 +187,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("桂圆铺会员卡01");
+        memberInfo.setPrerogative("微信会员测试");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -208,11 +211,11 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(1155L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("桂圆铺会员卡01");
+        baseInfo.setTitle("微信会员测试");
         baseInfo.setMpID("dohko1155");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
-        baseInfo.setBrandName("桂源铺");
+        baseInfo.setBrandName("微信会员");
         baseInfo.setCanShare(false);
         baseInfo.setCanGiveFriend(false);
         baseInfo.setCenterTitle("CenterTitle");
@@ -277,7 +280,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6439585775611816067L);
+        cardPrimaryKey.setCardKey(6454333499305371779L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }
