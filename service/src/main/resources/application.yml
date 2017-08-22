@@ -55,9 +55,9 @@ grpc:
   port: 6567
   client:
      hosts:
-        wechat: localhost:6567
+#        wechat: localhost:6567
 #        wechat: dohko.wechat.service.hualala.com:31558
-#        wechat: 192.168.5.204:6567
+        wechat: 172.16.32.45:6567
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272
@@ -386,6 +386,8 @@ wechat:
         cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: pre_hll:service:wechat:card:sku_quantity
+  mpID:
+      qrcodeDefaultMpID: hualala_dld
 #redisStock:
 #  host: 172.16.0.27
 #  port: 19000
@@ -486,6 +488,8 @@ wechat:
         cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
   card:
       skuQuantity: hll:service:wechat:card:sku_quantity
+  mpID:
+      qrcodeDefaultMpID: hualala_dld
 #redisStock:
 #    host: sjhl.codis.hualala.com
 #    port: 19000
