@@ -76,6 +76,11 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_TEMPLATE_ERROR, "未找到对应的模板ID");
         }
         Map<String, Object> map = DataUtils.beanToMap(reqData);
+
+        if(!map.containsKey("remark")){
+            map.put("remark","");
+        }
+
         //  获取模板ID
         WechatTemplateModel wechatTemplateModel = wechatTemplateService.getTemplate(mpID, modelID,reqData.getGroupID(),modelType);
         if (wechatTemplateModel == null) {
@@ -127,6 +132,8 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         req.setTemplateID(wechatTemplateModel.getTemplateID());
         req.setOrderKey(UUID.randomUUID().toString());
         req.setGroupID(reqData.getGroupID());
+        if(StringUtils.isNotEmpty(reqData.getOrderKey()))
+            req.setOrderKey(reqData.getOrderKey());
 
         WechatMsgQueueService wechatMsgQueueService = rpcClient.getRpcClient(WechatMsgQueueService.class);
         WechatMsgQueueService.WechatQueueRes wechatQueueRes = wechatMsgQueueService.wechatCreateMsgQueue(req);
