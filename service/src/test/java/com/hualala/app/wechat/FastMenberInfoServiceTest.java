@@ -42,7 +42,7 @@ public class FastMenberInfoServiceTest {
         memberInfoService.setCacheNo(1000);
         memberInfoService.setThreadNO(50);
 
-        memberInfoService.loadInfo("C:\\Users\\Administrator\\Desktop\\code_pQqgCs4wFvht1uuiJNgSktnB894E.txt");
+        memberInfoService.loadInfo("C:\\Users\\Administrator\\Desktop\\1.csv");
         long endTime = System.currentTimeMillis();    //获取结束时间
         System.out.println("程序运行时间：" + (endTime - startTime)/60*1000 + "s");    //输出程序运行时间
         System.out.println("accessToken : [" + memberInfoService.getAccessToken() + "]");

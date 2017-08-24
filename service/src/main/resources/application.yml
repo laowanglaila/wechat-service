@@ -55,9 +55,9 @@ grpc:
   port: 6567
   client:
      hosts:
-#        wechat: localhost:6567
+        wechat: localhost:6567
 #        wechat: dohko.wechat.service.hualala.com:31558
-        wechat: 172.16.32.45:6567
+#        wechat: 172.16.32.45:6567
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272

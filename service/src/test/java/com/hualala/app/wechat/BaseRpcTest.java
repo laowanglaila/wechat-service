@@ -20,6 +20,6 @@ public abstract class BaseRpcTest {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(BaseRpcTest.class);
     @Test
-    public abstract void test();
+    public abstract void test() throws InterruptedException;
 
 }

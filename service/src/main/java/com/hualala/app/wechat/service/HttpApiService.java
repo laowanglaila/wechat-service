@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
+import com.hualala.app.wechat.util.OkHttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,8 @@ public class HttpApiService {
             return ResultUtil.toResultJson(null,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_URL_NULL,"http请求url不能为空！");
         }
         url = checkAccessTocken(url, mpID);
-        JSONObject jsonObject = HttpApiUtil.httpPost(url, params);
+//        JSONObject jsonObject = HttpApiUtil.httpPost(url, params);
+        JSONObject jsonObject = OkHttpUtil.post(url, params);
         String errCode = jsonObject.getString("errcode");
 
         if("42001".equals(errCode)){
@@ -51,7 +52,8 @@ public class HttpApiService {
             return ResultUtil.toResultJson(null,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_URL_NULL,"http请求url不能为空！");
         }
         url = checkAccessTocken(url, mpID);
-        JSONObject jsonObject = HttpApiUtil.httpGet(url);
+//        JSONObject jsonObject = HttpApiUtil.httpGet(url);
+        JSONObject jsonObject = OkHttpUtil.get(url);
         String errCode = jsonObject.getString("errcode");
 
         if (errCode != null && !errCode.equals("0")){
