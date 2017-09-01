@@ -1,9 +1,12 @@
 spring:
-  profiles.active: local
+  profiles.active: mu
 #  profiles.active: pre
 #  profiles.active: dohko
 ---
 spring:
+#  freemarker:
+#      prefix: /templates/
+#      suffix: .html
   profiles: local
   aop:
     auto: true
@@ -24,6 +27,34 @@ spring:
     test-while-idle: true
     time-between-eviction-runs-millis: 3600000
     min-evictable-idle-time-millis: 1800000
+#     多数据源配置
+#    multipartite:
+#        mu:
+#          url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
+#          username: root
+#          password: hualaladev
+#          driver: com.mysql.jdbc.Driver
+#          initial-size: 3
+#          max-active: 20
+#          min-idle: 1
+#          validation-query: SELECT 1
+#          test-on-borrow: ture
+#          test-while-idle: true
+#          time-between-eviction-runs-millis: 3600000
+#          min-evictable-idle-time-millis: 1800000
+#        dohko:
+#          url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
+#          username: root
+#          password: hualaladev
+#          driver: com.mysql.jdbc.Driver
+#          initial-size: 3
+#          max-active: 20
+#          min-idle: 1
+#          validation-query: SELECT 1
+#          test-on-borrow: ture
+#          test-while-idle: true
+#          time-between-eviction-runs-millis: 3600000
+#          min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -111,7 +142,6 @@ zookeeper:
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
   lockPath: /wechat/card/lock  #分布式锁路径
-
 
 
 ---

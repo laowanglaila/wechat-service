@@ -42,7 +42,6 @@ public class ServiceApplication extends SpringBootServletInitializer implements 
     public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {
         configurableEmbeddedServletContainer.setPort(8881);
     }
-
 //    @Bean
 //    @Primary
 //    RedisTemplate<String, String> redisTemplate(RedisConnectionFactory rcf) {

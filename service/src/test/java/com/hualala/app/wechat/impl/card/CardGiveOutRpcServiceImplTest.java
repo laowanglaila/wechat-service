@@ -66,7 +66,7 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
         String url = "https://api.weixin.qq.com/card/paygiftcard/getbyid";
 //        String mpID = "tut1Ceu1DX005996";
         String mpID = "tut1Ceu1DX005996";
-        String ruleID = "429330936";
+        String ruleID = "429381824";
         String json = "{ \"rule_id\": "+ruleID+"}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
         System.out.println(jsonObject);

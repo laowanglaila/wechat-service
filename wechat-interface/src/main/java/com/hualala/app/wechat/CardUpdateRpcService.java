@@ -39,6 +39,21 @@ public interface CardUpdateRpcService {
     CardUpdateResData updateCouponSku(CardSkuUpdateReqData cardSkuUpdateReqData);
     @RpcMethod
     CardUpdateResData updateMemberSku(CardSkuUpdateReqData cardSkuUpdateReqData);
+
+    BindResData bindCardBaseInfo(BindReqData bindReqData);
+
+    @Data
+    class BindReqData extends RequestInfo{
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
+        private String cardKey;
+        //        increase_stock_value	否	int	1231231	增加多少库存，支持不填或填0。
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "被绑定的会员卡类型ID")
+        private String hualalaCardID;
+    }
+    @Data
+    class BindResData extends ResultInfo{
+
+    }
     /**
      * 更新库存请求参数对象
      */

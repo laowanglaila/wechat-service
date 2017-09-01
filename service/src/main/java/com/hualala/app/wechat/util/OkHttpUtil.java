@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by renjianfei on 2017/8/23.
@@ -84,7 +84,6 @@ public class OkHttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
-
     /**
      * 发送http请求
      * @param request

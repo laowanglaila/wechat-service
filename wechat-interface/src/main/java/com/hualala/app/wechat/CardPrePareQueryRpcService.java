@@ -248,8 +248,8 @@ public interface CardPrePareQueryRpcService {
     @Data
     class CardBaseInfoResData extends ResultInfo {
 
-        @Protocol(fieldType = FieldType.LONG, order = 2, description = "card唯一键")
-        private Long cardKey;
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "card唯一键")
+        private String cardKey;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "公众号编码")
         private String mpID;
         @Protocol(fieldType = FieldType.LONG, order = 4, description = "集团ID")
@@ -358,6 +358,8 @@ public interface CardPrePareQueryRpcService {
         private boolean isSwipeCard;
         @Protocol(fieldType = FieldType.BOOL, order = 39, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
         private boolean isPayAndQrcode;
+        @Protocol(fieldType = FieldType.STRING, order = 40, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
+        private Long hualalaCardID;
 
 
 

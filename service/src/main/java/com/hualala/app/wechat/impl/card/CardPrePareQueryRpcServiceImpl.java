@@ -222,7 +222,9 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
         List<CardBaseInfoResData> list = new ArrayList<>();
         List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample(baseInfoModelQuery);
         for (BaseInfoModel baseInfoModel : baseInfoModels) {
-            list.add(DataUtils.copyProperties(baseInfoModel, CardBaseInfoResData.class));
+            CardBaseInfoResData cardBaseInfoResData = DataUtils.copyProperties(baseInfoModel, CardBaseInfoResData.class);
+            cardBaseInfoResData.setCardKey(baseInfoModel.getCardKey().toString());
+            list.add(cardBaseInfoResData);
         }
         cardBaseInfoResDataList.setBaseInfoList(list);
         return cardBaseInfoResDataList;

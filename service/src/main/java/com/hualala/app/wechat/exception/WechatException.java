@@ -19,5 +19,4 @@ public class WechatException extends ServiceException {
     public WechatException(WechatExceptionTypeEnum typeEnum,String message){
         super(typeEnum.getCode(),typeEnum.getMessage()+":"+message);
     }
-
 }

@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.Set;
 import java.util.UUID;
 
@@ -183,11 +184,12 @@ public class Test {
     public void test10() {
         String s = UUID.randomUUID().toString();
         System.out.println(s);
-        Long uuid = fromStringWhitoutHyphens(s.replace("-", ""));
+        String uuid = fromStringWhitoutHyphens(s.replace("-", ""));
         System.out.println(uuid);
+        System.out.println(Long.parseLong(uuid));
     }
 
-    public static long fromStringWhitoutHyphens(String str) {
+    public static String fromStringWhitoutHyphens(String str) {
         if (str.length() != 32) {
             throw new IllegalArgumentException("Invalid UUID string: " + str);
         }
@@ -202,6 +204,9 @@ public class Test {
         String s5 = str.substring(20, 32);
         long l4 = Long.parseLong(s5, 16);
         System.out.println("---------" + s1 + s2 + s3 + s4 + s5);
+        byte[] bytes = str.getBytes(Charset.forName("ISO-8859-1"));
+        java.lang.String s = new java.lang.String(bytes);
+
         long mostSigBits = Long.decode("0x" + s1).longValue();
         mostSigBits <<= 16;
         mostSigBits |= Long.decode("0x" + s2).longValue();
@@ -212,7 +217,7 @@ public class Test {
         leastSigBits |= Long.decode("0x" + s5).longValue();
         System.out.println("mostSigBits:"+mostSigBits);
         System.out.println("leastSigBits:"+leastSigBits);
-        return l + l1 + l2 + l3 + l4;
+        return ""+l + l1 + l2 + l3 + l4;
 
 
     }
