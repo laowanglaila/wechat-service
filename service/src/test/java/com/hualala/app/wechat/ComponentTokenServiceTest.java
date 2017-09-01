@@ -1,5 +1,6 @@
 package com.hualala.app.wechat;
 
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.service.ComponentTokenService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,7 @@ public class ComponentTokenServiceTest {
     @Autowired
     private ComponentTokenService componentTokenService;
     @Test
-    public void initComponentTokenTest(){
+    public void initComponentTokenTest() throws WechatInnerException {
         System.out.println(componentTokenService.initComponentToken());
     }
 }

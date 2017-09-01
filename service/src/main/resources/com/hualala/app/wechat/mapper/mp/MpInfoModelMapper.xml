@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hualala.app.wechat.mapper.mp.MpInfoModelMapper" >
+  <resultMap id="BaseResultMap" type="com.hualala.app.wechat.model.mp.MpInfoModel" >
+    <id column="itemID" property="itemID" jdbcType="BIGINT" />
+    <result column="mpID" property="mpID" jdbcType="VARCHAR" />
+    <result column="ghID" property="ghID" jdbcType="VARCHAR" />
+    <result column="mpName" property="mpName" jdbcType="VARCHAR" />
+    <result column="mpType" property="mpType" jdbcType="TINYINT" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="appID" property="appID" jdbcType="VARCHAR" />
+    <result column="appSecret" property="appSecret" jdbcType="VARCHAR" />
+    <result column="encodingAESKey" property="encodingAESKey" jdbcType="VARCHAR" />
+    <result column="weixinURL" property="weixinURL" jdbcType="VARCHAR" />
+    <result column="headImg" property="headImg" jdbcType="VARCHAR" />
+    <result column="qrCodeURL" property="qrCodeURL" jdbcType="VARCHAR" />
+    <result column="menuJson" property="menuJson" jdbcType="VARCHAR" />
+    <result column="groupID" property="groupID" jdbcType="INTEGER" />
+    <result column="brandID" property="brandID" jdbcType="BIGINT" />
+    <result column="shopID" property="shopID" jdbcType="BIGINT" />
+    <result column="customerWithoutBindMobile" property="customerWithoutBindMobile" jdbcType="TINYINT" />
+    <result column="subscribeToCcustomer" property="subscribeToCcustomer" jdbcType="TINYINT" />
+    <result column="tableMsgTemplate" property="tableMsgTemplate" jdbcType="VARCHAR" />
+    <result column="funcInfo" property="funcInfo" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="authorize" property="authorize" jdbcType="TINYINT" />
+    <result column="authorizerRefreshToken" property="authorizerRefreshToken" jdbcType="VARCHAR" />
+    <result column="oauth" property="oauth" jdbcType="TINYINT" />
+    <result column="wechatEndDate" property="wechatEndDate" jdbcType="BIGINT" />
+    <result column="isActiveUse" property="isActiveUse" jdbcType="TINYINT" />
+    <result column="action" property="action" jdbcType="TINYINT" />
+    <result column="actionTime" property="actionTime" jdbcType="BIGINT" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      itemID, mpID, ghID, mpName, mpType, token, appID, appSecret, encodingAESKey, weixinURL, 
+      headImg, qrCodeURL, menuJson, groupID, brandID, shopID, customerWithoutBindMobile, 
+      subscribeToCcustomer, tableMsgTemplate, funcInfo, alias, authorize, authorizerRefreshToken, 
+      oauth, wechatEndDate, isActiveUse, action, actionTime, createTime
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hualala.app.wechat.model.mp.MpInfoModelQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_shop_wechat_mp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    itemID,mpID,ghID,mpName,mpType,token,appID,appSecret,encodingAESKey,weixinURL,headImg,qrCodeURL,menuJson,groupID,brandID,shopID,customerWithoutBindMobile,subscribeToCcustomer,tableMsgTemplate,funcInfo,alias,authorize,authorizerRefreshToken,oauth,wechatEndDate,isActiveUse,action,actionTime,createTime
+    from tbl_shop_wechat_mp
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_shop_wechat_mp
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hualala.app.wechat.model.mp.MpInfoModelQuery" >
+    delete from tbl_shop_wechat_mp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hualala.app.wechat.model.mp.MpInfoModel" >
+    insert into tbl_shop_wechat_mp (itemID, mpID, ghID, 
+      mpName, mpType, token, 
+      appID, appSecret, encodingAESKey, 
+      weixinURL, headImg, qrCodeURL, 
+      menuJson, groupID, brandID, 
+      shopID, customerWithoutBindMobile, subscribeToCcustomer, 
+      tableMsgTemplate, funcInfo, alias, 
+      authorize, authorizerRefreshToken, oauth, 
+      wechatEndDate, isActiveUse, action, 
+      actionTime, createTime)
+    values (#{itemID,jdbcType=BIGINT}, #{mpID,jdbcType=VARCHAR}, #{ghID,jdbcType=VARCHAR}, 
+      #{mpName,jdbcType=VARCHAR}, #{mpType,jdbcType=TINYINT}, #{token,jdbcType=VARCHAR}, 
+      #{appID,jdbcType=VARCHAR}, #{appSecret,jdbcType=VARCHAR}, #{encodingAESKey,jdbcType=VARCHAR}, 
+      #{weixinURL,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, #{qrCodeURL,jdbcType=VARCHAR}, 
+      #{menuJson,jdbcType=VARCHAR}, #{groupID,jdbcType=INTEGER}, #{brandID,jdbcType=BIGINT}, 
+      #{shopID,jdbcType=BIGINT}, #{customerWithoutBindMobile,jdbcType=TINYINT}, #{subscribeToCcustomer,jdbcType=TINYINT}, 
+      #{tableMsgTemplate,jdbcType=VARCHAR}, #{funcInfo,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{authorize,jdbcType=TINYINT}, #{authorizerRefreshToken,jdbcType=VARCHAR}, #{oauth,jdbcType=TINYINT}, 
+      #{wechatEndDate,jdbcType=BIGINT}, #{isActiveUse,jdbcType=TINYINT}, #{action,jdbcType=TINYINT}, 
+      #{actionTime,jdbcType=BIGINT},
+      #{createTime,jdbcType=BIGINT})
+/*      date_format( now() ,'%Y%m%d%H%i%s'))*/
+  </insert>
+  <insert id="insertSelective" parameterType="com.hualala.app.wechat.model.mp.MpInfoModel" >
+    insert into tbl_shop_wechat_mp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemID != null" >
+        itemID,
+      </if>
+      <if test="mpID != null" >
+        mpID,
+      </if>
+      <if test="ghID != null" >
+        ghID,
+      </if>
+      <if test="mpName != null" >
+        mpName,
+      </if>
+      <if test="mpType != null" >
+        mpType,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="appID != null" >
+        appID,
+      </if>
+      <if test="appSecret != null" >
+        appSecret,
+      </if>
+      <if test="encodingAESKey != null" >
+        encodingAESKey,
+      </if>
+      <if test="weixinURL != null" >
+        weixinURL,
+      </if>
+      <if test="headImg != null" >
+        headImg,
+      </if>
+      <if test="qrCodeURL != null" >
+        qrCodeURL,
+      </if>
+      <if test="menuJson != null" >
+        menuJson,
+      </if>
+      <if test="groupID != null" >
+        groupID,
+      </if>
+      <if test="brandID != null" >
+        brandID,
+      </if>
+      <if test="shopID != null" >
+        shopID,
+      </if>
+      <if test="customerWithoutBindMobile != null" >
+        customerWithoutBindMobile,
+      </if>
+      <if test="subscribeToCcustomer != null" >
+        subscribeToCcustomer,
+      </if>
+      <if test="tableMsgTemplate != null" >
+        tableMsgTemplate,
+      </if>
+      <if test="funcInfo != null" >
+        funcInfo,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="authorize != null" >
+        authorize,
+      </if>
+      <if test="authorizerRefreshToken != null" >
+        authorizerRefreshToken,
+      </if>
+      <if test="oauth != null" >
+        oauth,
+      </if>
+      <if test="wechatEndDate != null" >
+        wechatEndDate,
+      </if>
+      <if test="isActiveUse != null" >
+        isActiveUse,
+      </if>
+        action,
+        actionTime,
+        createTime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemID != null" >
+        #{itemID,jdbcType=BIGINT},
+      </if>
+      <if test="mpID != null" >
+        #{mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="ghID != null" >
+        #{ghID,jdbcType=VARCHAR},
+      </if>
+      <if test="mpName != null" >
+        #{mpName,jdbcType=VARCHAR},
+      </if>
+      <if test="mpType != null" >
+        #{mpType,jdbcType=TINYINT},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="appID != null" >
+        #{appID,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null" >
+        #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="encodingAESKey != null" >
+        #{encodingAESKey,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinURL != null" >
+        #{weixinURL,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null" >
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCodeURL != null" >
+        #{qrCodeURL,jdbcType=VARCHAR},
+      </if>
+      <if test="menuJson != null" >
+        #{menuJson,jdbcType=VARCHAR},
+      </if>
+      <if test="groupID != null" >
+        #{groupID,jdbcType=INTEGER},
+      </if>
+      <if test="brandID != null" >
+        #{brandID,jdbcType=BIGINT},
+      </if>
+      <if test="shopID != null" >
+        #{shopID,jdbcType=BIGINT},
+      </if>
+      <if test="customerWithoutBindMobile != null" >
+        #{customerWithoutBindMobile,jdbcType=TINYINT},
+      </if>
+      <if test="subscribeToCcustomer != null" >
+        #{subscribeToCcustomer,jdbcType=TINYINT},
+      </if>
+      <if test="tableMsgTemplate != null" >
+        #{tableMsgTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="funcInfo != null" >
+        #{funcInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="authorize != null" >
+        #{authorize,jdbcType=TINYINT},
+      </if>
+      <if test="authorizerRefreshToken != null" >
+        #{authorizerRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="oauth != null" >
+        #{oauth,jdbcType=TINYINT},
+      </if>
+      <if test="wechatEndDate != null" >
+        #{wechatEndDate,jdbcType=BIGINT},
+      </if>
+      <if test="isActiveUse != null" >
+        #{isActiveUse,jdbcType=TINYINT},
+      </if>
+        #{action,jdbcType=TINYINT},
+        #{actionTime,jdbcType=BIGINT},
+      #{createTime,jdbcType=BIGINT}
+      /*      date_format( now() ,'%Y%m%d%H%i%s')*/
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hualala.app.wechat.model.mp.MpInfoModelQuery" resultType="java.lang.Integer" >
+    select count(*) from tbl_shop_wechat_mp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_shop_wechat_mp
+    <set >
+      <if test="record.itemID != null" >
+        itemID = #{record.itemID,jdbcType=BIGINT},
+      </if>
+      <if test="record.mpID != null" >
+        mpID = #{record.mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ghID != null" >
+        ghID = #{record.ghID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mpName != null" >
+        mpName = #{record.mpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mpType != null" >
+        mpType = #{record.mpType,jdbcType=TINYINT},
+      </if>
+      <if test="record.token != null" >
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appID != null" >
+        appID = #{record.appID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appSecret != null" >
+        appSecret = #{record.appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.encodingAESKey != null" >
+        encodingAESKey = #{record.encodingAESKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinURL != null" >
+        weixinURL = #{record.weixinURL,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImg != null" >
+        headImg = #{record.headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrCodeURL != null" >
+        qrCodeURL = #{record.qrCodeURL,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuJson != null" >
+        menuJson = #{record.menuJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupID != null" >
+        groupID = #{record.groupID,jdbcType=INTEGER},
+      </if>
+      <if test="record.brandID != null" >
+        brandID = #{record.brandID,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopID != null" >
+        shopID = #{record.shopID,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerWithoutBindMobile != null" >
+        customerWithoutBindMobile = #{record.customerWithoutBindMobile,jdbcType=TINYINT},
+      </if>
+      <if test="record.subscribeToCcustomer != null" >
+        subscribeToCcustomer = #{record.subscribeToCcustomer,jdbcType=TINYINT},
+      </if>
+      <if test="record.tableMsgTemplate != null" >
+        tableMsgTemplate = #{record.tableMsgTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.funcInfo != null" >
+        funcInfo = #{record.funcInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alias != null" >
+        alias = #{record.alias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorize != null" >
+        authorize = #{record.authorize,jdbcType=TINYINT},
+      </if>
+      <if test="record.authorizerRefreshToken != null" >
+        authorizerRefreshToken = #{record.authorizerRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oauth != null" >
+        oauth = #{record.oauth,jdbcType=TINYINT},
+      </if>
+      <if test="record.wechatEndDate != null" >
+        wechatEndDate = #{record.wechatEndDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.isActiveUse != null" >
+        isActiveUse = #{record.isActiveUse,jdbcType=TINYINT},
+      </if>
+      <if test="record.action != null" >
+        action = #{record.action,jdbcType=TINYINT},
+      </if>
+      <if test="record.actionTime != null" >
+        actionTime = #{record.actionTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_shop_wechat_mp
+    set itemID = #{record.itemID,jdbcType=BIGINT},
+      mpID = #{record.mpID,jdbcType=VARCHAR},
+      ghID = #{record.ghID,jdbcType=VARCHAR},
+      mpName = #{record.mpName,jdbcType=VARCHAR},
+      mpType = #{record.mpType,jdbcType=TINYINT},
+      token = #{record.token,jdbcType=VARCHAR},
+      appID = #{record.appID,jdbcType=VARCHAR},
+      appSecret = #{record.appSecret,jdbcType=VARCHAR},
+      encodingAESKey = #{record.encodingAESKey,jdbcType=VARCHAR},
+      weixinURL = #{record.weixinURL,jdbcType=VARCHAR},
+      headImg = #{record.headImg,jdbcType=VARCHAR},
+      qrCodeURL = #{record.qrCodeURL,jdbcType=VARCHAR},
+      menuJson = #{record.menuJson,jdbcType=VARCHAR},
+      groupID = #{record.groupID,jdbcType=INTEGER},
+      brandID = #{record.brandID,jdbcType=BIGINT},
+      shopID = #{record.shopID,jdbcType=BIGINT},
+      customerWithoutBindMobile = #{record.customerWithoutBindMobile,jdbcType=TINYINT},
+      subscribeToCcustomer = #{record.subscribeToCcustomer,jdbcType=TINYINT},
+      tableMsgTemplate = #{record.tableMsgTemplate,jdbcType=VARCHAR},
+      funcInfo = #{record.funcInfo,jdbcType=VARCHAR},
+      alias = #{record.alias,jdbcType=VARCHAR},
+      authorize = #{record.authorize,jdbcType=TINYINT},
+      authorizerRefreshToken = #{record.authorizerRefreshToken,jdbcType=VARCHAR},
+      oauth = #{record.oauth,jdbcType=TINYINT},
+      wechatEndDate = #{record.wechatEndDate,jdbcType=BIGINT},
+      isActiveUse = #{record.isActiveUse,jdbcType=TINYINT},
+      action = #{record.action,jdbcType=TINYINT},
+      actionTime = #{record.actionTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hualala.app.wechat.model.mp.MpInfoModel" >
+    update tbl_shop_wechat_mp
+    <set >
+      <if test="mpID != null" >
+        mpID = #{mpID,jdbcType=VARCHAR},
+      </if>
+      <if test="ghID != null" >
+        ghID = #{ghID,jdbcType=VARCHAR},
+      </if>
+      <if test="mpName != null" >
+        mpName = #{mpName,jdbcType=VARCHAR},
+      </if>
+      <if test="mpType != null" >
+        mpType = #{mpType,jdbcType=TINYINT},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="appID != null" >
+        appID = #{appID,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null" >
+        appSecret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="encodingAESKey != null" >
+        encodingAESKey = #{encodingAESKey,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinURL != null" >
+        weixinURL = #{weixinURL,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null" >
+        headImg = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCodeURL != null" >
+        qrCodeURL = #{qrCodeURL,jdbcType=VARCHAR},
+      </if>
+      <if test="menuJson != null" >
+        menuJson = #{menuJson,jdbcType=VARCHAR},
+      </if>
+      <if test="groupID != null" >
+        groupID = #{groupID,jdbcType=INTEGER},
+      </if>
+      <if test="brandID != null" >
+        brandID = #{brandID,jdbcType=BIGINT},
+      </if>
+      <if test="shopID != null" >
+        shopID = #{shopID,jdbcType=BIGINT},
+      </if>
+      <if test="customerWithoutBindMobile != null" >
+        customerWithoutBindMobile = #{customerWithoutBindMobile,jdbcType=TINYINT},
+      </if>
+      <if test="subscribeToCcustomer != null" >
+        subscribeToCcustomer = #{subscribeToCcustomer,jdbcType=TINYINT},
+      </if>
+      <if test="tableMsgTemplate != null" >
+        tableMsgTemplate = #{tableMsgTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="funcInfo != null" >
+        funcInfo = #{funcInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="authorize != null" >
+        authorize = #{authorize,jdbcType=TINYINT},
+      </if>
+      <if test="authorizerRefreshToken != null" >
+        authorizerRefreshToken = #{authorizerRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="oauth != null" >
+        oauth = #{oauth,jdbcType=TINYINT},
+      </if>
+      <if test="wechatEndDate != null" >
+        wechatEndDate = #{wechatEndDate,jdbcType=BIGINT},
+      </if>
+      <if test="isActiveUse != null" >
+        isActiveUse = #{isActiveUse,jdbcType=TINYINT},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=TINYINT},
+      </if>
+      <if test="actionTime != null" >
+        actionTime = #{actionTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hualala.app.wechat.model.mp.MpInfoModel" >
+    update tbl_shop_wechat_mp
+    set mpID = #{mpID,jdbcType=VARCHAR},
+      ghID = #{ghID,jdbcType=VARCHAR},
+      mpName = #{mpName,jdbcType=VARCHAR},
+      mpType = #{mpType,jdbcType=TINYINT},
+      token = #{token,jdbcType=VARCHAR},
+      appID = #{appID,jdbcType=VARCHAR},
+      appSecret = #{appSecret,jdbcType=VARCHAR},
+      encodingAESKey = #{encodingAESKey,jdbcType=VARCHAR},
+      weixinURL = #{weixinURL,jdbcType=VARCHAR},
+      headImg = #{headImg,jdbcType=VARCHAR},
+      qrCodeURL = #{qrCodeURL,jdbcType=VARCHAR},
+      menuJson = #{menuJson,jdbcType=VARCHAR},
+      groupID = #{groupID,jdbcType=INTEGER},
+      brandID = #{brandID,jdbcType=BIGINT},
+      shopID = #{shopID,jdbcType=BIGINT},
+      customerWithoutBindMobile = #{customerWithoutBindMobile,jdbcType=TINYINT},
+      subscribeToCcustomer = #{subscribeToCcustomer,jdbcType=TINYINT},
+      tableMsgTemplate = #{tableMsgTemplate,jdbcType=VARCHAR},
+      funcInfo = #{funcInfo,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      authorize = #{authorize,jdbcType=TINYINT},
+      authorizerRefreshToken = #{authorizerRefreshToken,jdbcType=VARCHAR},
+      oauth = #{oauth,jdbcType=TINYINT},
+      wechatEndDate = #{wechatEndDate,jdbcType=BIGINT},
+      isActiveUse = #{isActiveUse,jdbcType=TINYINT},
+      action = #{action,jdbcType=TINYINT},
+      actionTime = #{actionTime,jdbcType=BIGINT}
+    where itemID = #{itemID,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -5,6 +5,7 @@ import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;
@@ -33,7 +34,7 @@ public class AccessTokenService {
      * @param mpID
      * @return
      */
-    public JSONObject getAccessToken(String mpID) {
+    public JSONObject getAccessToken(String mpID) throws WechatInnerException {
 
         if (mpID == null || mpID.trim().isEmpty()) {
             return ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
@@ -81,7 +82,7 @@ public class AccessTokenService {
      * @param param
      * @return
      */
-    private JSONObject initAccessToken(Map<String,Object> param){
+    private JSONObject initAccessToken(Map<String,Object> param) throws WechatInnerException {
         String mpID = param.containsKey("mpID")?String.valueOf(param.get("mpID")):null;
         String appID = param.containsKey("appID")?String.valueOf(param.get("appID")):null;
         JSONObject mpInfoJson = WechatCacheUtil.getMpInfo(mpID, appID);

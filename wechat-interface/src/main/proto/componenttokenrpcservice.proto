@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "ComponentTokenRpcData";
+import "commons.proto";
+
+message QueryAuthReqData {  
+   // 开放平台预授权码
+   string preAuthCode=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryAuthResData {  
+   // 获取开放平台授权accessToken
+   string authorizerAccessToken=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message DefaultRequestInfo {  
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PreAuthCodeResData {  
+   // 开放平台预授权码
+   string preAuthCode=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service ComponentTokenRpcService{
+    //获取开放平台授权authorizerAccessToken ，authorizerRefreshToken，同时缓存到redis
+    rpc queryAuth(QueryAuthReqData) returns (QueryAuthResData) {}
+    //获取预授权码
+    rpc createPreAuthCode(DefaultRequestInfo) returns (PreAuthCodeResData) {}
+}
