@@ -16,6 +16,7 @@ import com.hualala.core.app.Logger;
 import com.hualala.core.client.BaseRpcClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,6 +104,12 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
         JSONObject jsonObj = JSONObject.parseObject(new String(Base64.decodeBase64(outerStr)));
         if (log.isDebugEnabled()){
             log.debug("outStr:" + jsonObj.toJSONString());
+        }
+        if (StringUtils.isBlank( outerStr )){
+            //todo 或者做默认记录处理，如果openid匹配可以则做线下核销，否则记录无效
+            if (log.isInfoEnabled())
+                log.info( "给卡券不是哗啦啦投放渠道领取，不做同步处理：{}",jsonObject );
+            return;
         }
         Long groupID = null;
         if (jsonObj.containsKey("groupID")) {
