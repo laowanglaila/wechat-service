@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.util.OkHttpUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.mockito.cglib.proxy.Enhancer;
 import org.mockito.cglib.proxy.MethodInterceptor;
@@ -237,6 +238,31 @@ public class Test {
                 "\"text\": { \"content\": \"" + content + "\"}" +
                 "}";
         System.out.println(params);
+    }
+
+    @org.junit.Test
+    public void test12(){
+        String url = "http://dohko.api.promotion.service.hualala.com/feature/addCardFeature";
+        String params = "{\n" +
+                        "\"cardID\": 557646,\n" +
+                        "\"eventID\": 6439582021810398339,\n" +
+                        "\"groupID\": 1155\n" +
+                        "}";
+        JSONObject post = OkHttpUtil.post( url, params );
+        System.out.println(post);
+    }
+    @org.junit.Test
+    public void test13(){
+        String url = "http://dohko.api.promotion.service.hualala.com/feature/queryFeature";
+        String params = "{\n" +
+//                        "\"cardID\": 0,\n" +
+                        "\"eventID\": \"\",\n" +
+                        "\"groupID\": 1155,\n" +
+//                        "\"cardTypeID\": 0,\n" +
+                        "\"date\": 0\n" +
+                        "}";
+        JSONObject post = OkHttpUtil.post( url, params );
+        System.out.println(post);
     }
 }
 

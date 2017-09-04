@@ -96,7 +96,7 @@ public class OkHttpUtil {
             response = client.newCall(request).execute();
             if (!response.isSuccessful()) {
                 log.error("http error message:[{}]", response.message());
-                throw new WechatException(WechatExceptionTypeEnum.WECHAT_HTTP_FAILED,response.message());
+                throw new WechatException(WechatExceptionTypeEnum.WECHAT_HTTP_FAILED,response.code()+ " - " +response.message());
             }
             jsonObject = JSONObject.parseObject(response.body().string());
         } catch (IOException e) {
