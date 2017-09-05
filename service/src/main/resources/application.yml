@@ -473,7 +473,8 @@ grpc:
 #        idgen: id.gen.hualala.com:32243
         sem: service.short.message.hualala.com:7081
         wechat: wechat.service.hualala.com:32263
-        shopcrm: shop.crm.service.hualala.com:32244
+#        shopcrm: shop.crm.service.hualala.com:32244
+        shopcrm: shop.crm.service21.hualala.com:32306
 
 wechat:
   data:
