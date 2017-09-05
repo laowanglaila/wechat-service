@@ -60,7 +60,8 @@ grpc:
 #        sem: localhost:6466
         sem: mu.service.short.message.hualala.com:32272
 #        shopcrm: 172.16.32.46:6656
-        shopcrm: dohko.shop.crm.service.hualala.com:31537
+#        shopcrm: dohko.shop.crm.service.hualala.com:31537
+        shopcrm: dohko.shop.crm.service21.hualala.com:32313
 wechat:
   data:
     componentAppID: wx8ed9d715cdd52b1d
