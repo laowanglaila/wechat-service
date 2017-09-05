@@ -148,20 +148,8 @@ public interface CardPrePareCreateRpcService {
      * 卡券基本信息
      */
     @Data
-    class PreCardBaseInfoData extends RequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
-        private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
-        private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
-        private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
-        private Long shopID;
-        @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
-        private String title;
-        //        card_type            	是            	string(24)            	会员卡类型。
-        @Protocol(fieldType = FieldType.STRING, order = 7, description = "优惠券类型")
-        private String cardType;
+    class PreCardBaseInfoData extends WechatRequestInfo {
+
 
         @Protocol(fieldType = FieldType.LONG, order = 2, description = "card唯一键")
         private Long cardKey;
@@ -260,6 +248,20 @@ public interface CardPrePareCreateRpcService {
         private Boolean isSwipeCard;
         @Protocol(fieldType = FieldType.BOOL, order = 33, description = "是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码")
         private Boolean isPayAndQrcode;
+
+        @Protocol(fieldType = FieldType.STRING, order = 34, description = "公众号编码")
+        private String mpID;
+        @Protocol(fieldType = FieldType.LONG, order = 35, description = "集团ID")
+        private Long groupID;
+        @Protocol(fieldType = FieldType.LONG, order = 36, description = "品牌ID")
+        private Long brandID;
+        @Protocol(fieldType = FieldType.LONG, order = 37, description = "店铺ID")
+        private Long shopID;
+        @Protocol(fieldType = FieldType.STRING, order = 38, description = "卡券名称")
+        private String title;
+        //        card_type            	是            	string(24)            	会员卡类型。
+        @Protocol(fieldType = FieldType.STRING, order = 39, description = "优惠券类型")
+        private String cardType;
 
     }
 

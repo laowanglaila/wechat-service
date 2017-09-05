@@ -14,6 +14,12 @@ public interface WechatBaseApi {
 
      String API_AUTHORIZER_TOKEN = ROOT + "/component/api_authorizer_token";
 
+    // 获取凭证接口
+     String API_QUERY_AUTH = ROOT + "/component/api_query_auth";
+
+     String API_CREATE_PREAUTHCODE = ROOT + "/component/api_create_preauthcode";
+
+     String API_GET_AUTHORIZER_INFO = ROOT + "/component/api_get_authorizer_info";
     //微信卡券上传背景图片
      String API_UPLOAD_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/uploadimg";
     //微信上传临时素材

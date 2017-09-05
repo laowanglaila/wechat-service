@@ -1,10 +1,9 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.WechatBaseApi;
-import com.hualala.app.wechat.common.WechatErrorCode;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.common.*;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.impl.WechatTemplateRpcServiceImpl;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatMediaUtil;
@@ -39,7 +38,13 @@ public class BaseMediaService {
      */
     public JSONObject upload(String url, String type, File file, String mpID) {
         String token = null;
-        JSONObject result = accessTokenService.getAccessToken(mpID);
+        JSONObject result = null;
+        try {
+            result = accessTokenService.getAccessToken(mpID);
+        } catch (WechatInnerException e) {
+            logger.error( e.getMessage(), e);
+            throw new WechatException(WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD);
+        }
         if (WechatMessageType.FALSE.equals(result.getBoolean(WechatMessageType.IS_SUCCESS))) {
             return result;
         } else {

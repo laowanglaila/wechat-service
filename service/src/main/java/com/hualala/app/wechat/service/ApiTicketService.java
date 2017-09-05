@@ -1,10 +1,9 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.WechatBaseApi;
-import com.hualala.app.wechat.common.WechatErrorCode;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.common.*;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;
@@ -49,7 +48,13 @@ public class ApiTicketService {
             return ResultUtil.toResultJson(jsonObject,WechatMessageType.TRUE, ErrorCodes.WECHAT_SUCCESS_CODE,"成功获取全局缓存"+type+"_ticket！");
         }
 
-        JSONObject tockenObject = accessTokenService.getAccessToken(mpID);
+        JSONObject tockenObject = null;
+        try {
+            tockenObject = accessTokenService.getAccessToken(mpID);
+        } catch (WechatInnerException e) {
+            logger.error( e.getMessage(), e);
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD);
+        }
         if (!tockenObject.getBoolean(WechatMessageType.IS_SUCCESS)){
             return tockenObject;
         }

@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.config.client;
 
 import com.hualala.app.wechat.grpc.CardPrePareQueryRpcServiceGrpc;
+import com.hualala.app.wechat.grpc.CardUpdateRpcServiceGrpc;
 import com.hualala.core.app.Logger;
 import com.hualala.core.grpc.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,13 @@ public class GrpcClientConfiguration {
         return client;
     }
     @Bean
-    @Autowired
     public CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub getWechatServiceStub(@Qualifier("wechatGrpcClient") GrpcClient wechatGrpcClient) throws Exception {
         return (CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub) wechatGrpcClient.getBlockingStub(CardPrePareQueryRpcServiceGrpc.class);
+    }
+
+    @Bean
+    public CardUpdateRpcServiceGrpc.CardUpdateRpcServiceBlockingStub getWechatUpdateServiceStub(@Qualifier("wechatGrpcClient") GrpcClient wechatGrpcClient) throws Exception {
+        return (CardUpdateRpcServiceGrpc.CardUpdateRpcServiceBlockingStub) wechatGrpcClient.getBlockingStub(CardUpdateRpcServiceGrpc.class);
     }
 
 }

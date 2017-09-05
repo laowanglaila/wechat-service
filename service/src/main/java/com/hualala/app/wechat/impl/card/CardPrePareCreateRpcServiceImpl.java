@@ -6,6 +6,7 @@ import com.hualala.app.wechat.CardPrePareCreateRpcService;
 import com.hualala.app.wechat.CreateCardCouponRpcService;
 import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -18,9 +19,11 @@ import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.card.CreateCardKeyService;
+import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.app.Logger;
+import com.hualala.core.base.ServiceException;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 
 /**
  * Created by renjianfei on 2017/4/25.
@@ -95,24 +99,10 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
 
     @Override
     public PreCardResData createBaseInfo(PreCardBaseInfoData preCardBaseInfoData) {
+        String mpID = RequestUtil.getMpID(preCardBaseInfoData);
 
-        //判断mpID,没有则调方法获取
-        String mpID = preCardBaseInfoData.getMpID();
-        if (StringUtils.isBlank(mpID)) {
-            Long brandID = preCardBaseInfoData.getBrandID();
-            Long groupID = preCardBaseInfoData.getGroupID();
-            Long shopID = preCardBaseInfoData.getShopID();
-            if (null == brandID || null == groupID) {
-                return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
-            }
-            //通过上面三个属性获取mpID，调用方法待定；
-            mpID = mpInfoService.queryMpIDAuth(groupID, brandID, shopID);
-        }
-        if (StringUtils.isBlank(mpID)) {
-            //返回响应对象，设置错误信息和错误码；
-            return new PreCardResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
-        }
         //groupID
+
         Long groupID = null;
         groupID = preCardBaseInfoData.getGroupID();
         if (groupID == null) {

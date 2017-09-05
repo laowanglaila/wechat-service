@@ -12,14 +12,12 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * Created by xiangbin on 2016/10/19.
  */
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableAsync
 @ComponentScan
 public class ServiceApplication extends SpringBootServletInitializer implements CommandLineRunner,EmbeddedServletContainerCustomizer {
 
@@ -44,7 +42,6 @@ public class ServiceApplication extends SpringBootServletInitializer implements 
     public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {
         configurableEmbeddedServletContainer.setPort(8881);
     }
-
 //    @Bean
 //    @Primary
 //    RedisTemplate<String, String> redisTemplate(RedisConnectionFactory rcf) {

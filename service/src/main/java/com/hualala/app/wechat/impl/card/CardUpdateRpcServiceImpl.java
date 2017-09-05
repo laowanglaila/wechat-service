@@ -3,7 +3,9 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardUpdateRpcService;
 import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
@@ -220,6 +222,25 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         }
 
         return ResultUtil.getResultInfoBean(jsonObject, CardUpdateResData.class);
+    }
+
+    @Override
+    public BindResData bindCardBaseInfo(BindReqData bindReqData) {
+        String cardKey = bindReqData.getCardKey();
+        String hualalaCardID = bindReqData.getHualalaCardID();
+        if (StringUtils.isBlank(cardKey) || StringUtils.isBlank(hualalaCardID)){
+            throw new WechatException(WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"cardKey:"+cardKey+",hualalaCardID:"+hualalaCardID);
+        }
+        BaseInfoModel baseInfoModel = new BaseInfoModel();
+        baseInfoModel.setCardKey(Long.parseLong(cardKey));
+        baseInfoModel.setHualalaCardID(Long.parseLong(hualalaCardID));
+        int i = baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
+        if (i != 1){
+            throw new WechatException(WechatExceptionTypeEnum.WECHAT_MP_ERROR,"【绑定卡券】 update status:"+i);
+        }
+
+
+        return new BindResData().setResultInfo("000","卡券绑定成功");
     }
 
     private void prepareBaseInfo(Map<String, Object> baseInfo, CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData) {

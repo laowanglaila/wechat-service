@@ -28,7 +28,7 @@ public class CardEventProcessRpcServiceImplTest extends BaseRpcTest {
         CardChannelService rpcClient = super.baseRpcClient.getRpcClient(CardChannelService.class);
         CardChannelReq cardChannelReq = new CardChannelReq();
         cardChannelReq.setCardID(730353551578210304L);
-        cardChannelReq.setGroupID(1155L);
+        cardChannelReq.setGroupID(8L);
         cardChannelReq.setWechatCardCode("312160172886");
         cardChannelReq.setWechatCardKey(643958577561181608L);
         CardChannelRes cardChannelRes = rpcClient.addCardChannel(cardChannelReq);

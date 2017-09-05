@@ -60,7 +60,12 @@ public enum WechatExceptionTypeEnum {
     WECHAT_CARD_MSGCREATETIME_EMPTY("00112156","msgCreateTime不允许为空"),
     WECHAT_MP_NOT_EXIST("00112157","msgCreateTime不允许为空"),
     WECHAT_MP_PERMISSION_DENIED("00112158","msgCreateTime不允许为空"),
-    WECHAT_MESSAGE_CUSTOM_SEMD("00112159","客服接口错误");
+    WECHAT_MESSAGE_CUSTOM_SEMD("00112159","客服接口错误"),
+    WECHAT_GET_AUTHORIZER_INFO_FIELD("00112160","客服接口错误"),
+    WECHAT_GET_PREAUTHCODE_FIELD("00112161","获取预授权码失败"),
+    WECHAT_QUERY_AUTH_FIELD("00112162","公众号授权失败"),
+    WECHAT_GET_ACCESSTOKEN_FIELD("00112163","获取accessToken失败"),
+    WECHAT_GET_AUTHORIZER_ACCESSTOKEN_FIELD("00112164","获取authorizerAccessToken失败");
 
     private String code;
     private String message;

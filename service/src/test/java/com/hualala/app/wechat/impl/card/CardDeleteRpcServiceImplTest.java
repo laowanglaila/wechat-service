@@ -25,8 +25,8 @@ public class CardDeleteRpcServiceImplTest extends BaseRpcTest {
         long l = System.currentTimeMillis();
         CardDeleteRpcService rpcClient = super.baseRpcClient.getRpcClient(CardDeleteRpcService.class);
         CardDeleteRpcService.CardUnAvailableReqData cardUnAvailableReqData = new CardDeleteRpcService.CardUnAvailableReqData();
-        cardUnAvailableReqData.setCardKey(6435763117279446021L);
-        cardUnAvailableReqData.setCode("563266774873");
+        cardUnAvailableReqData.setCardKey(6461827126315197571L);
+        cardUnAvailableReqData.setCode("859133580109");
         cardUnAvailableReqData.setReason("测试设置失效");
         ResultInfo resultInfo = rpcClient.unAvailableCard(cardUnAvailableReqData);
         long l1 = System.currentTimeMillis();
