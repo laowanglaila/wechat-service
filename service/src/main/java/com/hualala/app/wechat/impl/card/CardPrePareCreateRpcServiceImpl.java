@@ -6,7 +6,6 @@ import com.hualala.app.wechat.CardPrePareCreateRpcService;
 import com.hualala.app.wechat.CreateCardCouponRpcService;
 import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -23,7 +22,6 @@ import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.app.Logger;
-import com.hualala.core.base.ServiceException;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
 
 /**
  * Created by renjianfei on 2017/4/25.

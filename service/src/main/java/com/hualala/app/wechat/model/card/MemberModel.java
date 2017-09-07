@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class MemberModel extends BaseItem implements Serializable {
     /**
-     * 会员端产生的唯一主键
+     * 卡券全局唯一主键
      */
     private Long cardKey;
 
@@ -40,6 +40,16 @@ public class MemberModel extends BaseItem implements Serializable {
      * 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
      */
     private Boolean wxActivate;
+
+    /**
+     * 使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活
+     */
+    private Boolean wxActivateAfterSubmit;
+
+    /**
+     * 使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url
+     */
+    private String wxActivateAfterSubmitUrl;
 
     /**
      * 显示积分，填写true或false，如填写true，积分相关字段均为必填。
