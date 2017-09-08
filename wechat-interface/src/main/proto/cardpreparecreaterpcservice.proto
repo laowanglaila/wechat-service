@@ -4,28 +4,6 @@ option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardPrePareCreateRpcData";
 import "commons.proto";
 
-message PreAdvancedInfoData {  
-   // card唯一键
-   int64 cardKey=2;
-   // 封面摘要结构体名称
-   string abstractInfo=3;
-   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
-   string businessService=4;
-   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
-   string textImage=5;
-   // 使用时段限制，包含以下字段
-   string timeLimit=6;
-   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
-   string useCodition=7;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message PreCardResData {  
-   // 唯一ID
-   int64 cardKey=2;
-   // 响应公共字段
-   ResultHeader result=1;
-}
 message PreCouponReqData {  
    // 唯一ID
    int64 cardKey=8;
@@ -43,6 +21,12 @@ message PreCouponReqData {
    string gift=14;
    // 请求公共字段
    RequestHeader header=1;
+}
+message PreCardResData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 响应公共字段
+   ResultHeader result=1;
 }
 message PreMemberReqData {  
    // 会员端产生的唯一主键ID
@@ -83,6 +67,10 @@ message PreMemberReqData {
    string balanceRules=25;
    // 积分规则
    string bonusRules=26;
+   // 使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活
+   bool wxActivateAfterSubmit=27;
+   // 使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url
+   string wxActivateAfterSubmitUrl=28;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -172,10 +160,24 @@ message CardPrimaryKey {
    // 请求公共字段
    RequestHeader header=1;
 }
+message PreAdvancedInfoData {  
+   // card唯一键
+   int64 cardKey=2;
+   // 封面摘要结构体名称
+   string abstractInfo=3;
+   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
+   string businessService=4;
+   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+   string textImage=5;
+   // 使用时段限制，包含以下字段
+   string timeLimit=6;
+   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+   string useCodition=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
 //预创建卡券接口
 service CardPrePareCreateRpcService{
-    //高级信息
-    rpc createAdvancedInfo(PreAdvancedInfoData) returns (PreCardResData) {}
     //卡券创建必要信息方法
     rpc createCoupon(PreCouponReqData) returns (PreCardResData) {}
     //会员卡创建必要信息方法
@@ -184,4 +186,6 @@ service CardPrePareCreateRpcService{
     rpc createBaseInfo(PreCardBaseInfoData) returns (PreCardResData) {}
     //提交卡券到微信
     rpc submitCardInfo(CardPrimaryKey) returns (PreCardResData) {}
+    //高级信息
+    rpc createAdvancedInfo(PreAdvancedInfoData) returns (PreCardResData) {}
 }

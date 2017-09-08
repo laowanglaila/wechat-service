@@ -14,14 +14,15 @@ public class CardUpdateRpcServiceImplTest extends BaseRpcTest {
     public void test() {
         CardUpdateRpcService rpcClient = super.baseRpcClient.getRpcClient(CardUpdateRpcService.class);
         CardUpdateRpcService.MemberUpdateReqData memberUpdateReqData = new CardUpdateRpcService.MemberUpdateReqData();
-        memberUpdateReqData.setCardKey(6461827126315197571L);
-//        memberUpdateReqData.setTitle("哗啦啦钻石会员");
-//        memberUpdateReqData.setBalanceRules("adsfasdf");
+        memberUpdateReqData.setCardKey(6439570631557130245L);
+        memberUpdateReqData.setWxActivate( true );
+        memberUpdateReqData.setWxActivateAfterSubmit( true );
+        memberUpdateReqData.setWxActivateAfterSubmitUrl( "https://www.hualala.com" );
         CardUpdateRpcService.CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = memberUpdateReqData.buildBaseInfo();
-//        cardBaseInfoUpdateReqData.setTitle("哗啦啦钻石会员");
-//        cardBaseInfoUpdateReqData.setCanGiveFriend(true);
-//        cardBaseInfoUpdateReqData.setDescription("asdfasdf");
-        cardBaseInfoUpdateReqData.setGetLimit( 10 );
+        cardBaseInfoUpdateReqData.setTitle("哗啦啦钻石会员1");
+        cardBaseInfoUpdateReqData.setCanGiveFriend(true);
+        cardBaseInfoUpdateReqData.setDescription("asdfasdf");
+//        cardBaseInfoUpdateReqData.setGetLimit( 10 );
         CardUpdateRpcService.CardUpdateResData cardUpdateResData = rpcClient.updateMemberInfo(memberUpdateReqData);
         System.out.println(cardUpdateResData.isSendCheck());
     }

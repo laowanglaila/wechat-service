@@ -1,5 +1,5 @@
 spring:
-  profiles.active: dohko
+  profiles.active: local
 ---
 spring:
   profiles: local

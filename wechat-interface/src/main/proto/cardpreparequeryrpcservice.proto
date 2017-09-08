@@ -26,6 +26,70 @@ message CardQuery {
    // 请求公共字段
    RequestHeader header=1;
 }
+message MemberResData {  
+   // 会员端产生的唯一主键ID
+   int64 cardKey=2;
+   // 折扣，该会员卡享受的折扣优惠,填10就是九折。
+   int32 discount=3;
+   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
+   string backgroundPicUrl=4;
+   // 会员卡特权说明。
+   string prerogative=5;
+   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
+   bool autoActivate=6;
+   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
+   bool wxActivate=7;
+   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
+   bool supplyBonus=8;
+   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
+   string bonusUrl=9;
+   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
+   bool supplyBalance=10;
+   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
+   string balanceUrl=11;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField1=12;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField2=13;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField3=14;
+   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
+   string customCell1=15;
+   // 积分规则。JSON结构
+   string bonusRule=16;
+   // 激活会员卡的url。
+   string activateUrl=17;
+   // 积分清零规则。
+   string bonusCleared=18;
+   // 储值说明。
+   string balanceRules=19;
+   // 积分规则
+   string bonusRules=20;
+   // 使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活
+   bool wxActivateAfterSubmit=21;
+   // 使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url
+   string wxActivateAfterSubmitUrl=22;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CouponResData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 优惠券专用，填写优惠详情。
+   string defaultDetail=3;
+   // 团购券专用，填写团购详情。
+   string dealDetail=4;
+   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。
+   string leastCost=5;
+   // 代金券专用，表示减免金额。（单位为分）
+   string reduceCost=6;
+   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
+   string discount=7;
+   // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
+   string gift=8;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message CardBaseInfoResData {  
    // card唯一键
    string cardKey=2;
@@ -136,76 +200,16 @@ message CardAdvancedInfoResData {
    // 响应公共字段
    ResultHeader result=1;
 }
-message MemberResData {  
-   // 会员端产生的唯一主键ID
-   int64 cardKey=2;
-   // 折扣，该会员卡享受的折扣优惠,填10就是九折。
-   int32 discount=3;
-   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
-   string backgroundPicUrl=4;
-   // 会员卡特权说明。
-   string prerogative=5;
-   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
-   bool autoActivate=6;
-   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
-   bool wxActivate=7;
-   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
-   bool supplyBonus=8;
-   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
-   string bonusUrl=9;
-   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
-   bool supplyBalance=10;
-   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
-   string balanceUrl=11;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField1=12;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField2=13;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField3=14;
-   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
-   string customCell1=15;
-   // 积分规则。JSON结构
-   string bonusRule=16;
-   // 激活会员卡的url。
-   string activateUrl=17;
-   // 积分清零规则。
-   string bonusCleared=18;
-   // 储值说明。
-   string balanceRules=19;
-   // 积分规则
-   string bonusRules=20;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CouponResData {  
-   // 唯一ID
-   int64 cardKey=2;
-   // 优惠券专用，填写优惠详情。
-   string defaultDetail=3;
-   // 团购券专用，填写团购详情。
-   string dealDetail=4;
-   // 代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。
-   string leastCost=5;
-   // 代金券专用，表示减免金额。（单位为分）
-   string reduceCost=6;
-   // 折扣券专用，表示打折额度（百分比）。填30就是七折。
-   string discount=7;
-   // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
-   string gift=8;
-   // 响应公共字段
-   ResultHeader result=1;
-}
 //查询卡券创建相关数据
 service CardPrePareQueryRpcService{
+    //查询会员卡数据
+    rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
+    //查询优惠券数据
+    rpc queryCouponByCardKey(CardQuery) returns (CouponResData) {}
     //查询基本数据
     rpc queryBaseInfoByCardKey(CardQuery) returns (CardBaseInfoResData) {}
     //查询多个会员卡数据
     rpc queryBaseInfoList(CardQuery) returns (CardBaseInfoResDataList) {}
     //查询优高级数据
     rpc queryAdvancedInfoByCardKey(CardQuery) returns (CardAdvancedInfoResData) {}
-    //查询会员卡数据
-    rpc queryMemberByCardKey(CardQuery) returns (MemberResData) {}
-    //查询优惠券数据
-    rpc queryCouponByCardKey(CardQuery) returns (CouponResData) {}
 }

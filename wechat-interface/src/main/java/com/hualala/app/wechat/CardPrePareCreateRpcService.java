@@ -135,6 +135,10 @@ public interface CardPrePareCreateRpcService {
         //        bonus_rules            	否            	string（512）            	积分规则。
         @Protocol(fieldType = FieldType.STRING, order = 26, description = "积分规则")
         private String bonusRules;
+        @Protocol(fieldType = FieldType.BOOL, order = 27, description = "使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活")
+        private Boolean wxActivateAfterSubmit;
+        @Protocol(fieldType = FieldType.STRING, order = 28, description = "使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url")
+        private String wxActivateAfterSubmitUrl;
 
     }
 
