@@ -234,10 +234,10 @@ public class ComponentTokenService implements WechatBaseApi {
 //                return ResultUtil.toResultJson(resultJson, WechatMessageType.FALSE, errcode, errmsg);
             }
             componentAcToken = resultJson.getString( "component_access_token" );
+            //缓存
+            WechatCacheUtil.setData( componentAppID, "componentAcToken",
+                    componentAcToken, Long.parseLong( resultJson.getString( "expires_in" ) ) );
         }
-        //缓存
-        WechatCacheUtil.setData( componentAppID, "componentAcToken",
-                componentAcToken, Long.parseLong( resultJson.getString( "expires_in" ) ) );
         return componentAcToken;
     }
 
