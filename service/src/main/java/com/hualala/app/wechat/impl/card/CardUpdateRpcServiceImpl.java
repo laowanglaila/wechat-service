@@ -404,7 +404,12 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         card.put("supplyBonus", supplyBonus);
         Boolean wxActivate = memberUpdateReqData.getWxActivate();
         card.put("wxActivate", wxActivate);
-
+        Boolean wxActivateAfterSubmit = memberUpdateReqData.getWxActivateAfterSubmit();
+        card.put( "wxActivateAfterSubmit",wxActivateAfterSubmit );
+        String wxActivateAfterSubmitUrl = memberUpdateReqData.getWxActivateAfterSubmitUrl();
+        if (StringUtils.isNotBlank( wxActivateAfterSubmitUrl )){
+            card.put( "wxActivateAfterSubmitUrl", wxActivateAfterSubmitUrl );
+        }
     }
 
 }
