@@ -38,9 +38,6 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
     public EventProcessRes process(EventProcessReq json) {
         String jsonStr = json.getJson();
         JSONObject jsonObject = JSONObject.parseObject(jsonStr);
-        if (log.isInfoEnabled()){
-            log.info(jsonObject.toJSONString());
-        }
         String event = jsonObject.getString("Event");
         if (log.isInfoEnabled()){
             log.info("CardEventProcessRpcService.process()\r\nEvent:{}\r\n$params:{}",event,jsonObject);
@@ -99,16 +96,16 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
      * @param jsonObject
      */
     private void eventUserGetHandler(JSONObject jsonObject) {
-        String outerStr = jsonObject.getString("OuterStr");
-        JSONObject jsonObj = JSONObject.parseObject(new String(Base64.decodeBase64(outerStr)));
-        if (log.isDebugEnabled()){
-            log.debug("outStr:" + jsonObj.toJSONString());
-        }
-        if (StringUtils.isBlank( outerStr )){
+        if (!jsonObject.containsKey( "OuterStr" )){
             //todo 或者做默认记录处理，如果openid匹配可以则做线下核销，否则记录无效
             if (log.isInfoEnabled())
                 log.info( "给卡券不是哗啦啦投放渠道领取，不做同步处理：{}",jsonObject );
             return;
+        }
+        String outerStr = jsonObject.getString("OuterStr");
+        JSONObject jsonObj = JSONObject.parseObject(new String(Base64.decodeBase64(outerStr)));
+        if (log.isDebugEnabled()){
+            log.debug("outStr:" + jsonObj.toJSONString());
         }
         Long groupID = null;
         if (jsonObj.containsKey("groupID")) {
