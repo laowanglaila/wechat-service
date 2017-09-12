@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.grpc.CardCodeRpcData;
 import com.hualala.app.wechat.util.OkHttpUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.mockito.cglib.proxy.Enhancer;
@@ -263,6 +264,14 @@ public class Test {
                         "}";
         JSONObject post = OkHttpUtil.post( url, params );
         System.out.println(post);
+    }
+    @org.junit.Test
+    public void test14(){
+        Class <?> builderClass = CardCodeRpcData.CardCodeDestroyReqData.Builder.class;
+        Class <?> superclass = builderClass.getSuperclass();
+        String canonicalName = builderClass.getCanonicalName();
+        Class <?> declaringClass = builderClass.getDeclaringClass();
+        System.out.println();
     }
 
 }
