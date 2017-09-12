@@ -283,12 +283,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
 
             if (queryCacheQrcodeCount < size){
                 //查询Redis缓存二维码接口执行状态，如果有错误直接返回
-                BoundValueOperations<String, String> ops
-                        = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
-                String errorCode = ops.get();
-                if (StringUtils.isNotBlank(errorCode)){
-                    throw new WechatException(WechatExceptionTypeEnum.parseEnum(errorCode));
-                }
+                this.checkErrorCode( mpID );
                 //缓存数量少于期望数量的一半，获取期望数量的缓存，
                 //缓存数量多于期望数量的一半，获取期望数量一半的缓存。
                 int i = size - queryCacheQrcodeCount;
@@ -337,6 +332,19 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
             if (redisLockHandler != null) {
                 redisLockHandler.realseLock(locdKey);
             }
+        }
+    }
+
+    /**
+     * 查询Redis缓存二维码接口执行状态，如果有错误直接返回WechatException
+     * @param mpID
+     */
+    private void checkErrorCode(String mpID) {
+        BoundValueOperations<String, String> ops
+                = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
+        String errorCode = ops.get();
+        if (StringUtils.isNotBlank(errorCode)){
+            throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
         }
     }
 
