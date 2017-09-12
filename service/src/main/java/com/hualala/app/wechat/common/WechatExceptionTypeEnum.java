@@ -59,7 +59,7 @@ public enum WechatExceptionTypeEnum {
     WECHAT_CARD_LOCK_ERROR("00112155","会员卡更新消息时间小于上一次更新时间"),
     WECHAT_CARD_MSGCREATETIME_EMPTY("00112156","msgCreateTime不允许为空"),
     WECHAT_MP_NOT_EXIST("00112157","msgCreateTime不允许为空"),
-    WECHAT_MP_PERMISSION_DENIED("00112158","msgCreateTime不允许为空"),
+    WECHAT_MP_PERMISSION_DENIED("00112158","接口功能未授权，请确认公众号已获得该权限"),
     WECHAT_MESSAGE_CUSTOM_SEMD("00112159","客服接口错误"),
     WECHAT_GET_AUTHORIZER_INFO_FIELD("00112160","客服接口错误"),
     WECHAT_GET_PREAUTHCODE_FIELD("00112161","获取预授权码失败"),

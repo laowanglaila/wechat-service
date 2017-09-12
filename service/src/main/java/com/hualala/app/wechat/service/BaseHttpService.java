@@ -354,8 +354,8 @@ public class BaseHttpService implements WechatBaseApi{
         String expireSeconds = responseJson.getString("expire_seconds");
         String qrurl = responseJson.getString("url");
         if (StringUtils.isBlank(ticket) && StringUtils.isBlank(qrurl)) {
-            if (responseJson.containsKey("errcode")
-                    && WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals(responseJson.getString("errcode"))){
+            if (responseJson.containsKey(WechatMessageType.WECHAT_ERR_CODE)
+                    && "48001".equals(responseJson.getString(WechatMessageType.WECHAT_ERR_CODE))){
                 throw new WechatException(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED);
             }
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, WechatErrorCode.wechatError.get(responseJson.getString("errcode")));
