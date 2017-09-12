@@ -74,6 +74,7 @@ public class QrcodeCacheService implements RedisKeys{
                     ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),1, TimeUnit.DAYS);
                     return;
                 }
+                continue;
             }
             if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
 //            //插入数据库
