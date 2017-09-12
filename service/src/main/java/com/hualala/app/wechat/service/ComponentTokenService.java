@@ -58,8 +58,8 @@ public class ComponentTokenService implements WechatBaseApi {
     public String createPreAuthCode() throws WechatInnerException {
         String componentAccessToken = initComponentToken();
         String param = "{\n" +
-                        "\"component_appid\":\"" + componentAppID + "\" \n" +
-                        "}";
+                "\"component_appid\":\"" + componentAppID + "\" \n" +
+                "}";
         JSONObject jsonObject = this.componentPost( API_CREATE_PREAUTHCODE, componentAccessToken, param, componentAppID );
         if (!jsonObject.getBoolean( WechatMessageType.IS_SUCCESS )) {
             throw WechatInnerException.of(  "获取预授权码失败", jsonObject);
@@ -77,9 +77,9 @@ public class ComponentTokenService implements WechatBaseApi {
     public String queryAuth(String authorizationCode) throws WechatInnerException {
         String componentAccessToken = this.initComponentToken();
         String params = "{\n" +
-                            "\"component_appid\":\"" + componentAppID + "\" ,\n" +
-                            "\"authorization_code\": \"" + authorizationCode + "\"\n" +
-                        "}";
+                "\"component_appid\":\"" + componentAppID + "\" ,\n" +
+                "\"authorization_code\": \"" + authorizationCode + "\"\n" +
+                "}";
         JSONObject result = this.componentPost( API_QUERY_AUTH, componentAccessToken, params, componentAppID );
         if (!result.getBoolean( WechatMessageType.IS_SUCCESS )) {
             throw  WechatInnerException.of( result );
@@ -90,8 +90,8 @@ public class ComponentTokenService implements WechatBaseApi {
         Long expiresIn = authorizationInfo.getLong( "expires_in" );
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
-                //使用runnable接口作为构造参数
-                //真正的任务在这里执行
+            //使用runnable接口作为构造参数
+            //真正的任务在这里执行
             try {
                 this.getAuthorizerInfo( authorizerAppID, authorizerAccessToken );
             } catch (WechatInnerException e) {
@@ -234,10 +234,10 @@ public class ComponentTokenService implements WechatBaseApi {
 //                return ResultUtil.toResultJson(resultJson, WechatMessageType.FALSE, errcode, errmsg);
             }
             componentAcToken = resultJson.getString( "component_access_token" );
+            //缓存
+            WechatCacheUtil.setData( componentAppID, "componentAcToken",
+                    componentAcToken, Long.parseLong( resultJson.getString( "expires_in" ) ) );
         }
-        //缓存
-        WechatCacheUtil.setData( componentAppID, "componentAcToken",
-                componentAcToken, Long.parseLong( resultJson.getString( "expires_in" ) ) );
         return componentAcToken;
     }
 
