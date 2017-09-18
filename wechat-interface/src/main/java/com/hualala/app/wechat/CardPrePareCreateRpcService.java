@@ -8,6 +8,8 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by renjianfei on 2017/4/25.
  */
@@ -77,6 +79,7 @@ public interface CardPrePareCreateRpcService {
      */
     @Data
     class PreMemberReqData extends RequestInfo {
+        @NotNull
         @Protocol(fieldType = FieldType.LONG, order = 8, description = "会员端产生的唯一主键ID")
         private Long cardKey;
         //        discount            	否            	int            	折扣，该会员卡享受的折扣优惠,填10就是九折。

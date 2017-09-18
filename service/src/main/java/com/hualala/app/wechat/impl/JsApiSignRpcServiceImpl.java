@@ -29,8 +29,8 @@ public class JsApiSignRpcServiceImpl implements JsApiSignRpcService {
     private static final String HUALALA_COM = "hualala_com";
     @Override
     public JsApiSignResData getSign(JsApiSignReqData jsApiSignReqData) {
-        String mpID = jsApiSignReqData.getMpID().trim();
-        String url = jsApiSignReqData.getUrl().trim();
+        String mpID = jsApiSignReqData.getMpID();
+        String url = jsApiSignReqData.getUrl();
         if (StringUtils.isBlank(mpID)){
             mpID = HUALALA_COM;
         }
