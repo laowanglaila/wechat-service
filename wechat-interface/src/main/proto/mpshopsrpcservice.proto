@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "MpShopsRpcData";
+import "commons.proto";
+
+message BindShopsReqData {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 店铺ID列表
+   repeated int64 shopIDs=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message BindShopsResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service MpShopsRpcService{
+    //
+    rpc bindShops(BindShopsReqData) returns (BindShopsResData) {}
+}

@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.hualala.app.wechat.mapper.WechatMpMapper;
+import com.hualala.app.wechat.mapper.mp.MpShopsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -17,6 +18,8 @@ public class MpInfoService {
     @Autowired
     private WechatMpMapper wechatMpMapper;
 
+    @Autowired
+    private MpShopsMapper mpShopsMapper;
     /**
      * query mpInfo by mpID or appID
      *
@@ -41,6 +44,10 @@ public class MpInfoService {
      * @return
      */
     public String queryMpIDAuth(long groupID, long brandID, long shopID) {
+        List <String> mpIDs = mpShopsMapper.select( groupID, shopID );
+        if (mpIDs != null && !mpIDs.isEmpty()){
+            return mpIDs.get( 0 );
+        }
         String mpID = wechatMpMapper.queryMpIDAuth(groupID, brandID, shopID);
 
         if (StringUtils.isEmpty(mpID)) {

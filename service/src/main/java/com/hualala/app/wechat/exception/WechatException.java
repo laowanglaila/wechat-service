@@ -9,7 +9,9 @@ import lombok.Data;
  */
 @Data
 public class WechatException extends ServiceException {
-
+    public WechatException(){
+        super(WechatExceptionTypeEnum.WECHAT_COMMON_ERROR.getCode(),WechatExceptionTypeEnum.WECHAT_COMMON_ERROR.getMessage());
+    }
     public WechatException(String code,String message){
         super(code,message);
     }

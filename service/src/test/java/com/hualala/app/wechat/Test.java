@@ -273,6 +273,12 @@ public class Test {
         Class <?> declaringClass = builderClass.getDeclaringClass();
         System.out.println();
     }
+    @org.junit.Test
+    public void test15(){
+        ThreadLocal <String> stringThreadLocal = new ThreadLocal <>();
+        stringThreadLocal.set( "123" );
+        String s = stringThreadLocal.get();
+    }
 
 }
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hualala.app.wechat.mapper.mp.MpShopsMapper" >
+    <select id="select" resultType="string" >
+        select
+        mpID
+        from tbl_shop_wechat_shops
+        where groupID = #{groupID} and shopID = #{shopID} order by createStamp;
+    </select>
+    <delete id="delete" parameterType="java.lang.Long" >
+        delete from tbl_shop_wechat_shops
+        WHERE
+        groupID = #{groupID} and mpID = #{mpID}
+    </delete>
+    <insert id="insert" parameterType="com.hualala.app.wechat.model.mp.MpShopsModel" >
+        insert into tbl_shop_wechat_shops (
+        mpID,groupID,shopID,createStamp
+        )
+        values (
+        #{mpID}, #{groupID}, #{shopID},#{createStamp}
+        )
+    </insert>
+
+    <select id="count" parameterType="com.hualala.app.wechat.model.mp.MpShopsModel" resultType="java.lang.Integer" >
+        select count(*) from tbl_shop_wechat_shops
+        WHERE
+        groupID = #{groupID} and mpID = #{mpID}
+
+    </select>
+
+
+</mapper>
