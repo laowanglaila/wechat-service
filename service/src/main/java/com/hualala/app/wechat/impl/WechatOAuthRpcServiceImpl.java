@@ -2,7 +2,7 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatOAuthRpcService;
 import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.service.WechatUserOAuthService;
+import com.hualala.app.wechat.service.user.WechatUserOAuthService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
