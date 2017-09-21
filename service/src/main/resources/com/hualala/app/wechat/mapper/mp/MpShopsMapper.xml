@@ -7,7 +7,7 @@
         from tbl_shop_wechat_shops
         where groupID = #{groupID} and shopID = #{shopID} order by createStamp;
     </select>
-    <delete id="delete" parameterType="java.lang.Long" >
+    <delete id="delete" parameterType="com.hualala.app.wechat.model.mp.MpShopsModel" >
         delete from tbl_shop_wechat_shops
         WHERE
         groupID = #{groupID} and mpID = #{mpID}
