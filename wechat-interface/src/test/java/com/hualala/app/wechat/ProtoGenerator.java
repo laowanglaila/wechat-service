@@ -17,13 +17,13 @@ public class ProtoGenerator {
 //                MsgPublishRpcService.class,
 //                CardEventProcessRpcService.class,
 //                CardCodeRpcService.class,
-                CardUpdateRpcService.class,
+//                CardUpdateRpcService.class,
 //                CardDeleteRpcService.class,
 //                CardEventRpcService.class,
 //                CardSyncRpcService.class,
 //                CardCodeRpcService.class,
-                CardPrePareQueryRpcService.class,
-                CardPrePareCreateRpcService.class,
+//                CardPrePareQueryRpcService.class,
+//                CardPrePareCreateRpcService.class,
 //                CreateCardCouponRpcService.class,
 //                WechatQRCodeRpcSerivce.class,
 //                WechatMessageRpcService.class,
@@ -42,6 +42,7 @@ public class ProtoGenerator {
 //                WechatTemplateTypeEnum.class,
 //                WechatMessageEnum.class,
 //                LangTypeEnum.class
+                WechatOAuthRpcService.class
 
         };
         RpcProtoGenerator.generate(generatorClass);

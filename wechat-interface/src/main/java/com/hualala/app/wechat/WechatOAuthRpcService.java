@@ -11,7 +11,7 @@ import lombok.Data;
 public interface WechatOAuthRpcService {
 
     @RpcMethod(description = "获取oauth授权地址")
-    WechatOAuthResData WechatOAuthUrl(WechatOAuthReqData reqData);
+    WechatOAuthResData wechatOAuthUrl(WechatOAuthReqData reqData);
 
     @Data
     class WechatOAuthReqData extends RequestInfo{

@@ -83,4 +83,13 @@ public class WechatMessageType {
 	//会员卡激活事件推送
 	public static final String EVENT_CARD_MEMBER_ACTIVE = "submit_membercard_user_info";
 
+
+	public static final String OAUTH_BASE = "snsapi_base";
+	public static final String OAUTH_USERINFO = "snsapi_userinfo";
+	public static final int COMPONENT_OAUTH_USERINFO_TYPE = 3;
+	public static final int OAUTH_BASE_TYPE = 2;
+	public static final int OAUTH_USERINFO_TYPE = 1;
+	public static final String STATE_HLL_OAUTH = "hll"; // 使用hualala_com的base认证
+	public static final String STATE_SHOP_OAUTH = "hlS"; //商户认证
+
 }

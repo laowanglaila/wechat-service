@@ -23,5 +23,5 @@ message WechatOAuthResData {
 //微信公众号用户oauth授权
 service WechatOAuthRpcService{
     //获取oauth授权地址
-    rpc WechatOAuthUrl(WechatOAuthReqData) returns (WechatOAuthResData) {}
+    rpc wechatOAuthUrl(WechatOAuthReqData) returns (WechatOAuthResData) {}
 }
