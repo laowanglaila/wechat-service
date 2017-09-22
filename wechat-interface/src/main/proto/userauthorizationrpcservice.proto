@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "UserAuthorizationRpcData";
+import "commons.proto";
+
+message UserAuthorizationReq {  
+   // 公众号ID
+   string mpID=2;
+   // 网页授权获取的code
+   string code=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UserAuthorizationRes {  
+   // 网页授权tocken
+   string accessToken=2;
+   // 有效时间
+   int32 expiresIn=3;
+   // 授权范围
+   string scope=4;
+   // 刷新tocken
+   string refreshToken=5;
+   // 用户openID
+   string openID=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service UserAuthorizationRpcService{
+    //获取用户网页授权，获取openID
+    rpc userAuthorization(UserAuthorizationReq) returns (UserAuthorizationRes) {}
+}

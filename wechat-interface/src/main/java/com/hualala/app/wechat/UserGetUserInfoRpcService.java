@@ -15,6 +15,8 @@ public interface UserGetUserInfoRpcService {
 
     @RpcMethod
     UserInfoResData getUserInfoByOpenID(UserInfoReqData userInfoReqData);
+    @RpcMethod
+    UserInfoResData findUserInfo(UserInfoReqData userInfoReqData);
 
     @Data
     class UserInfoReqData extends WechatRequestInfo {

@@ -415,4 +415,5 @@ public class BaseHttpService implements WechatBaseApi{
         String url = GET_WECHAT_API_USERINFO + "?" + params;
         return this.commonHttpGet(url, mpID);
     }
+
 }
