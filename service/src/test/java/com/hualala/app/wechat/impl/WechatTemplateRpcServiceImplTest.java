@@ -31,8 +31,9 @@ public class WechatTemplateRpcServiceImplTest {
         reqData.setKeynote4("关键字4");
         reqData.setKeynote5("关键字5");
         reqData.setKeynote6("关键字6");
-        reqData.setRemark("备注说明");
+        reqData.setRemark("");
         reqData.setMpID("doulaofangceshi");
+        reqData.setOrderKey("00000000000000000000000000000000");
 
 //        reqData.setModelType("queue");
 //        reqData.setModelSubType("alarm");

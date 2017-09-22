@@ -6,7 +6,7 @@ import com.hualala.app.wechat.WechatTemplateTypeEnum;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
-import com.hualala.app.wechat.service.WechatUserService;
+import com.hualala.app.wechat.service.user.WechatUserService;
 import com.hualala.app.wechat.util.template.WechatTemplate;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;
 import com.hualala.app.wechat.util.template.WechatTemplateFatory;
