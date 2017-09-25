@@ -2,6 +2,7 @@ package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.common.*;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.common.ErrorCodes;
@@ -398,21 +399,22 @@ public class BaseHttpService implements WechatBaseApi{
     }
     /**
      * 获取用户信息
-     * @param params
+     * @param
      * @return
      */
-    public JSONObject getWechatUserInfo(String params){
+    public JSONObject getWechatUserInfo(String accessToken, String openid, LangTypeEnum langTypeEnum){
+        String params = "access_token=" + accessToken + "&openid=" + openid + "&lang=" + langTypeEnum.name();
         String url = GET_WECHAT_USERINFO + "?" + params;
         return this.commonHttpGet(url, null);
     }
     /**
      * 获取用户信息
-     * @param params
+     * @param
      * @return
      */
-    public JSONObject getWechatAPIUserInfo(String params,String mpID){
-
-        String url = GET_WECHAT_API_USERINFO + "?" + params;
+    public JSONObject getWechatAPIUserInfo(String openID, LangTypeEnum langType, String mpID){
+        String param = "openid=" + openID + "&lang=" + langType.name();
+        String url = GET_WECHAT_API_USERINFO + "?" + param;
         return this.commonHttpGet(url, mpID);
     }
 

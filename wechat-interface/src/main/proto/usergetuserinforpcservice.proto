@@ -3,6 +3,7 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "UserGetUserInfoRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message UserInfoReqData {  
    // 公众号编码
@@ -19,12 +20,6 @@ message UserInfoReqData {
    LangTypeEnum langType=7;
    // 请求公共字段
    RequestHeader header=1;
-}
-enum LangTypeEnum {  
-   LANG_DEFAULT=0;
-   zh_CN=1;
-   zh_TW=2;
-   en=3;
 }
 message UserInfoResData {  
    // 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
@@ -61,7 +56,7 @@ message UserInfoResData {
 //
 service UserGetUserInfoRpcService{
     //
-    rpc getUserInfoByOpenID(UserInfoReqData) returns (UserInfoResData) {}
-    //
     rpc findUserInfo(UserInfoReqData) returns (UserInfoResData) {}
+    //
+    rpc getUserInfoByOpenID(UserInfoReqData) returns (UserInfoResData) {}
 }
