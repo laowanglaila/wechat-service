@@ -15,6 +15,7 @@ import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.utils.DataUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,7 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         if (langType == null) {
             langType = LangTypeEnum.zh_CN;
         }
-        String param = "openid=" + openID + "&lang=" + langType.name();
-        JSONObject wechatAPIUserInfo = baseHttpService.getWechatAPIUserInfo( param, mpID );
+        JSONObject wechatAPIUserInfo = baseHttpService.getWechatAPIUserInfo( openID,langType, mpID );
         UserInfoResData resultInfoBean = ResultUtil.getResultInfoBean( wechatAPIUserInfo, UserInfoResData.class );
         resultInfoBean.setWechatGroupID( wechatAPIUserInfo.getString( "groupid" ) );
         return resultInfoBean;
@@ -63,23 +63,22 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         if (StringUtils.isBlank( openID )) {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS, "openID不能为空" );
         }
-        if (langType == null) {
-            langType = LangTypeEnum.zh_CN;
-        }
         UserModelQuery userModelQuery = new UserModelQuery();
         userModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openID );
         List <UserModel> userModels = userModelMapper.selectByExample( userModelQuery );
         UserModel userModel = null;
         if (userModels == null || userModels.isEmpty()) {
-            //加Redis锁，插入操作
             userModel = this.insertDefaultUser( mpID, openID );
         } else {
             userModel = userModels.get( 0 );
         }
         this.updateUser( userInfoReqData, mpID, openID );
         UserInfoResData userInfoResData = new UserInfoResData();
-        //TODO 检查字段
+        Integer isSubscribe = userModel.getIsSubscribe();
+        String userNickName = userModel.getUserNickName();
         BeanUtils.copyProperties( userModel,userInfoResData );
+        userInfoResData.setSubscribe( isSubscribe );
+        userInfoResData.setNickname( userNickName );
         return userInfoResData;
     }
 
@@ -89,12 +88,15 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
             executor.submit(() -> {
                 //使用runnable接口作为构造参数
                 UserInfoResData userInfoResData = this.getUserInfoByOpenID( userInfoReqData );
-                UserModel userModel2 = new UserModel();
-                //TODO 检查字段
-                BeanUtils.copyProperties( userInfoResData ,userModel2);
+                UserModel userModel = new UserModel();
+                BeanUtils.copyProperties( userInfoResData ,userModel);
+                Integer isSubscribe = userInfoResData.getSubscribe();
+                String userNickName = userInfoResData.getNickname();
+                userModel.setIsSubscribe( isSubscribe );
+                userModel.setUserNickName( userNickName );
                 UserModelQuery userModelQuery1 = new UserModelQuery();
                 userModelQuery1.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openID );
-                userModelMapper.updateByExampleSelective( userModel2 ,userModelQuery1);
+                userModelMapper.updateByExampleSelective( userModel ,userModelQuery1);
             } );
         }
     }
@@ -121,7 +123,6 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         }finally {
             redisLockHandler.realseLock( mpID + openID );
         }
-
         return userModel;
     }
 
