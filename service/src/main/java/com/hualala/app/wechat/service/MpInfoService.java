@@ -35,7 +35,7 @@ public class MpInfoService {
         return getMpInfoByMpID( mpID ,true);
     }
 
-    private MpInfoCache getMpInfoByMpID(String mpID,Boolean isUseCache) throws WechatInnerException {
+    public MpInfoCache getMpInfoByMpID(String mpID,Boolean isUseCache) throws WechatInnerException {
         MpInfoCache mpInfoCache = null;
         BoundValueOperations<String, String> valueOps = skuRedisTemplate.boundValueOps( RedisKeys.WEHCHAT_MPINFO_KEY + mpID );
         if (isUseCache){

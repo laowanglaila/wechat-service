@@ -43,7 +43,7 @@ public class ProtoGenerator {
 //                WechatTemplateTypeEnum.class,
 //                WechatMessageEnum.class,
 //                LangTypeEnum.class
-                WechatOAuthRpcService.class
+//                WechatOAuthRpcService.class
 
         };
         RpcProtoGenerator.generate(generatorClass);

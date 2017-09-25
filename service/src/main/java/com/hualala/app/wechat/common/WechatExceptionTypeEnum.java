@@ -10,6 +10,7 @@ public enum WechatExceptionTypeEnum {
     WECHAT_SUCCESS_CODE("000","请求成功"),
     WECHAT_PARPAS_EMPTY("00112101","参数错误"),
     WECHAT_MPID_EMPTY("00112102","公众号mpID不允许为空"),
+    WECHAT_MPINFO_INCOMPLETE("00112103","公众号信息不完整"),
     WECHAT_MP_ERROR("00112110","微信公众号公共错误"),
     WECHAT_MP_NULL("00112111","未找到对应的公众号"),
     WECHAT_MP_ACCESSTOKEN_ERROR("00112112","公众号收授权令牌错误"),

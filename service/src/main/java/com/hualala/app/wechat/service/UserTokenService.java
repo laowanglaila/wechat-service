@@ -46,13 +46,16 @@ public class UserTokenService {
         } else if ("2".equals(authorize)) {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR ,"该公众号已经取消第三方平台授权");
         }
+        if (StringUtils.isBlank( appSecret )){
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_MPINFO_INCOMPLETE , "缺少AppSecret");
+        }
         return this.userAuthorization( appID,appSecret,code );
     }
 
 
 
     /**
-     * 公众号未授权，通过appID和APPSecret获取
+     * 公众号未授权，通过appID和APPSecret获取用户授权
      */
     private UserAuthVO userAuthorization(String appID,String secret,String code) throws WechatInnerException {
         String params = "appid="+appID+
@@ -66,7 +69,7 @@ public class UserTokenService {
 
 
     /**
-     * 公众号已授权
+     * 公众号已授权采用公众号授权码获取用户授权
      */
     private UserAuthVO componentUserAuthorization(String appID,String code) throws WechatInnerException {
 
