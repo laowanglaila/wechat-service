@@ -19,7 +19,7 @@ public class UserAuthorizationRpcServiceImpl implements UserAuthorizationRpcServ
     @Autowired
     private UserTokenService userTokenService;
     @Autowired
-    private UserGetUserInfoRpcService userGetUserInfoRpcService;
+    private UserGetUserInfoRpcService getUserInfoService;
     @Override
     public UserAuthorizationRes userAuthorization(UserAuthorizationReq userAuthorizationReq) {
         String mpID = userAuthorizationReq.getMpID();
@@ -37,7 +37,7 @@ public class UserAuthorizationRpcServiceImpl implements UserAuthorizationRpcServ
             userInfoReqData.setOpenID( userAuth.getOpenID() );
             userInfoReqData.setMpID( mpID );
             userInfoReqData.setUserID( userAuthorizationReq.getUserID() );
-            UserGetUserInfoRpcService.UserInfoResData userInfo1 = userGetUserInfoRpcService.findUserInfo( userInfoReqData );
+            UserGetUserInfoRpcService.UserInfoResData userInfo1 = getUserInfoService.findUserInfo( userInfoReqData );
             BeanUtils.copyProperties( userInfo1, userInfo );
         }else {
             userInfo.setMpID( mpID );

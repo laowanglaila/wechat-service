@@ -32,7 +32,7 @@ import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
  * Created by renjianfei on 2017/8/17.
  */
 @Slf4j
-@Service
+@Service("getUserInfoService")
 public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService {
     @Autowired
     private BaseHttpService baseHttpService;
