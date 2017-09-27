@@ -6,6 +6,9 @@ import com.hualala.core.rpc.Protocol;
 import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by renjianfei on 2017/8/17.
@@ -28,10 +31,14 @@ public interface UserGetUserInfoRpcService {
         private Long brandID;
         @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
         private Long shopID;
+        @NotBlank(message = "openID不能为空")
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "微信用户openid")
         private String openID;
         @Protocol(fieldType = FieldType.ENUM, order = 7, description = "语言选择，默认中文，选填")
         private LangTypeEnum langType;
+        @NotNull(message = "userID不能为空")
+        @Protocol(fieldType = FieldType.LONG, order = 8, description = "用户ID")
+        private Long userID;
     }
 
     @Data
@@ -64,5 +71,9 @@ public interface UserGetUserInfoRpcService {
         private String tagidList;
         @Protocol(fieldType = FieldType.STRING, order = 15, description = "用户所在省份")
         private String province;
+        @Protocol(fieldType = FieldType.LONG, order = 16, description = "用户ID")
+        private Long userID;
+        @Protocol(fieldType = FieldType.STRING, order = 17, description = "公众号ID")
+        private String mpID;
     }
 }
