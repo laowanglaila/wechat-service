@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public interface UserAuthorizationRpcService {
 
 
-    @RpcMethod(description = "获取用户网页授权，获取openID")
+    @RpcMethod(description = "获取用户网页授权，获取用户基本信息")
     UserAuthorizationRes userAuthorization(UserAuthorizationReq userAuthorizationReq);
 
     @Data
@@ -29,7 +29,7 @@ public interface UserAuthorizationRpcService {
         @NotBlank(message = "code不能为空")
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "网页授权获取的code")
         private String code;
-        @NotNull(message = "code不能为空")
+        @NotNull(message = "userID不能为空")
         @Protocol(fieldType = FieldType.LONG, order = 4, description = "用户ID")
         private long userID;
     }
