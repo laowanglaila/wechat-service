@@ -3,6 +3,7 @@ package com.hualala.app.wechat.impl.user;
 import com.hualala.app.wechat.UserAuthorizationRpcService;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.service.UserTokenService;
@@ -32,7 +33,7 @@ public class UserAuthorizationRpcServiceImpl implements UserAuthorizationRpcServ
         UserInfo userInfo = new UserInfo();
         UserAuthorizationRes userAuthorizationRes = new UserAuthorizationRes();
         BeanUtils.copyProperties( userAuth,userAuthorizationRes );
-        if (!"hualala_com".equals( mpID )) {
+        if (!WechatMessageType.HUALALA_COM.equals( mpID )) {
             UserGetUserInfoRpcService.UserInfoReqData userInfoReqData = new UserGetUserInfoRpcService.UserInfoReqData();
             userInfoReqData.setOpenID( userAuth.getOpenID() );
             userInfoReqData.setMpID( mpID );

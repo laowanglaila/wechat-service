@@ -37,7 +37,7 @@ public class WechatUserOAuthService {
         param.put("mpID",mpID);
         Map<String, Object> mpInfo = mpInfoService.queryMpInfo(param);
         if(mpInfo == null) {
-            throw new WechatException(WechatExceptionTypeEnum.WECHAT_OAUTH_ERROR);
+            throw new WechatException(WechatExceptionTypeEnum.WECHAT_OAUTH_ERROR,"mpInfo不存在");
         }
 
         String appID = (String) mpInfo.get("appID");

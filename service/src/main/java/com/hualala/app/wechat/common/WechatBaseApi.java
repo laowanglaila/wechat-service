@@ -87,6 +87,6 @@ public interface WechatBaseApi {
      // 微信开放平台用户授权
      String OPEN_USER_AUTHORIZATION = "https://api.weixin.qq.com/sns/oauth2/component/access_token";
      // 微信公众平台用户授权
-     String MP_USER_AUTHORIZATION = "https://api.weixin.qq.com/sns/oauth2/component/access_token";
+     String MP_USER_AUTHORIZATION = "https://api.weixin.qq.com/sns/oauth2/access_token";
 
 }

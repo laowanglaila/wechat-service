@@ -42,10 +42,12 @@ public class UserTokenService {
         String appSecret = mpInfoByMpID.getAppSecret();
         String authorize = mpInfoByMpID.getAuthorize();
         if ("1".equals(authorize)) {
+            log.info( "获取用户授权，执行公众平台用户授权！" );
             return this.componentUserAuthorization(appID,code);
         } else if ("2".equals(authorize)) {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR ,"该公众号已经取消第三方平台授权");
         }
+        log.info( "获取用户授权，执行公众号用户授权！" );
         if (StringUtils.isBlank( appSecret )){
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_MPINFO_INCOMPLETE , "缺少AppSecret");
         }

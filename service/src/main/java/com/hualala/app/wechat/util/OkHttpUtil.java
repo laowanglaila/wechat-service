@@ -18,11 +18,13 @@ public class OkHttpUtil {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final Integer MAXIDLE_CONNECTION = 20;
     public static final Long KEEP_ALIVE_DURATION = 10L;
+    public static final Long RESPONSE_TIMOUT = 5L;
 
     static {
         ConnectionPool connectionPool = new ConnectionPool(MAXIDLE_CONNECTION, KEEP_ALIVE_DURATION, TimeUnit.MINUTES);
         client = new OkHttpClient.Builder()
                 .connectionPool(connectionPool)
+                .connectTimeout( RESPONSE_TIMOUT,TimeUnit.SECONDS )
                 .build();
     }
 

@@ -5,34 +5,6 @@ option java_outer_classname = "WebAuthorizationRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
-message AuthorizationReq {  
-   // 公众号编码
-   string mpID=2;
-   // 集团ID
-   int64 groupID=3;
-   // 品牌ID
-   int64 brandID=4;
-   // 店铺ID
-   int64 shopID=5;
-   // 填写网页授权获取的code参数
-   string code=6;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message AuthorizationRes {  
-   // 接口调用凭证
-   string access_token=2;
-   // access_token接口调用凭证超时时间，单位（秒）
-   string expires_in=3;
-   // 用户刷新access_token
-   string refresh_token=4;
-   // 授权用户唯一标识
-   string openid=5;
-   // 用户授权的作用域，使用逗号（,）分隔
-   string scope=6;
-   // 响应公共字段
-   ResultHeader result=1;
-}
 message WechatUserInfoReq {  
    // 集团ID
    int64 groupID=2;
@@ -67,10 +39,38 @@ message WechatUserInfoRes {
    // 响应公共字段
    ResultHeader result=1;
 }
+message AuthorizationReq {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
+   // 填写网页授权获取的code参数
+   string code=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AuthorizationRes {  
+   // 接口调用凭证
+   string access_token=2;
+   // access_token接口调用凭证超时时间，单位（秒）
+   string expires_in=3;
+   // 用户刷新access_token
+   string refresh_token=4;
+   // 授权用户唯一标识
+   string openid=5;
+   // 用户授权的作用域，使用逗号（,）分隔
+   string scope=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 //
 service WebAuthorizationRpcService{
-    //高级授权，需要用户点击确定同意授权，可以获取accessTocken和openID
-    rpc snsAuthorization(AuthorizationReq) returns (AuthorizationRes) {}
     //需要高级授权的accessTocken和openID来获取用户信息
     rpc getWechatUserInfo(WechatUserInfoReq) returns (WechatUserInfoRes) {}
+    //高级授权，需要用户点击确定同意授权，可以获取accessTocken和openID
+    rpc snsAuthorization(AuthorizationReq) returns (AuthorizationRes) {}
 }

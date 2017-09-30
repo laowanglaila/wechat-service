@@ -3,11 +3,9 @@ package com.hualala.app.wechat.impl.user;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
-import com.hualala.app.wechat.common.RedisKeys;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.mapper.user.UserRelationModelMapper;
 import com.hualala.app.wechat.model.user.UserModel;
@@ -25,9 +23,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.*;
+
 import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
+import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_INFO_LOCK;
+
 /**
  * Created by renjianfei on 2017/8/17.
  */
@@ -57,7 +57,7 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         if (langType == null) {
             langType = LangTypeEnum.zh_CN;
         }
-        JSONObject wechatAPIUserInfo = baseHttpService.getWechatAPIUserInfo( openID,langType, mpID );
+        JSONObject wechatAPIUserInfo = baseHttpService.getWechatAPIUserInfo( openID, langType, mpID );
         UserInfoResData resultInfoBean = ResultUtil.getResultInfoBean( wechatAPIUserInfo, UserInfoResData.class );
         resultInfoBean.setWechatGroupID( wechatAPIUserInfo.getString( "groupid" ) );
         return resultInfoBean;
@@ -72,9 +72,6 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         if (StringUtils.isBlank( openID )) {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS, "openID不能为空" );
         }
-//        UserModelQuery userModelQuery = new UserModelQuery();
-//        userModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openID );
-//        List <UserModel> userModels = userModelMapper.selectByExample( userModelQuery );
         UserRelationModelQuery userRelationModelQuery = new UserRelationModelQuery();
         userRelationModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openID );
         int i = userRelationModelMapper.countByExample( userRelationModelQuery );
@@ -83,15 +80,16 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         userModel.setMpID( mpID );
         userModel.setIsSubscribe( 0 );
         userModel.setUserID( userID );
-        if (i < 1 && !WechatMessageType.HUALALA_COM.equals( mpID )) {
-            this.insertDefaultUserWithLock( mpID, openID ,userID);
-        }
         if (!WechatMessageType.HUALALA_COM.equals( mpID )) {
-            Future <UserModel> future = this.updateUser( userInfoReqData, userModel );
+            if (i < 1) {
+                this.insertUserRelationWithLock( mpID, openID, userID );
+            }
+
+            Future <UserModel> future = this.insertOrUpdateUser( userInfoReqData, userModel );
             try {
-               userModel = future.get( 2L, TimeUnit.SECONDS );
+                userModel = future.get( 2L, TimeUnit.SECONDS );
             } catch (InterruptedException | ExecutionException e) {
-                log.error( "获取用户数据失败",e );
+                log.error( "获取用户数据失败", e );
             } catch (TimeoutException e) {
                 log.warn( "获取用户数据超时,主线程取消等待,子线程将完成更新" );
             }
@@ -99,47 +97,89 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         UserInfoResData userInfoResData = new UserInfoResData();
         Integer isSubscribe = userModel.getIsSubscribe();
         String userNickName = userModel.getUserNickName();
-        BeanUtils.copyProperties( userModel,userInfoResData );
+        BeanUtils.copyProperties( userModel, userInfoResData );
         userInfoResData.setSubscribe( isSubscribe );
         userInfoResData.setNickname( userNickName );
         return userInfoResData;
     }
 
-    private Future<UserModel> updateUser(UserInfoReqData userInfoReqData, UserModel userModel ) {
+    private Future <UserModel> insertOrUpdateUser(UserInfoReqData userInfoReqData, UserModel userModel) {
         return executor.submit( () -> {
-            UserInfoResData userInfoResData = this.getUserInfoByOpenID( userInfoReqData );
-            Integer subscribe = userInfoResData.getSubscribe();
-            if (subscribe == 1){
-                BeanUtils.copyProperties( userInfoResData, userModel );
-                Integer isSubscribe = userInfoResData.getSubscribe();
-                String userNickName = userInfoResData.getNickname();
-                userModel.setUserNickName( userNickName );
-                UserModelQuery userModelQuery1 = new UserModelQuery();
-                userModelQuery1.createCriteria().andMpIDEqualTo( userModel.getMpID() ).andOpenidEqualTo( userModel.getOpenid() );
-                userModelMapper.updateByExampleSelective( userModel, userModelQuery1 );
-
+            try {
+                String mpID = userModel.getMpID();
+                Long userID = userModel.getUserID();
+                String openid = userModel.getOpenid();
+                UserInfoResData userInfoResData = this.getUserInfoByOpenID( userInfoReqData );
                 UserRelationModel userRelationModel = new UserRelationModel();
                 userRelationModel.setSubscribe( userInfoResData.getSubscribe() );
+                userRelationModel.setUserID( userID );
                 UserRelationModelQuery userRelationModelQuery = new UserRelationModelQuery();
-                userRelationModelQuery.createCriteria().andMpIDEqualTo( userModel.getMpID() ).andOpenidEqualTo( userModel.getOpenid() );
-                userRelationModelMapper.updateByExample( userRelationModel,userRelationModelQuery );
+                userRelationModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openid );
+                userRelationModelMapper.updateByExampleSelective( userRelationModel, userRelationModelQuery );
+                //TODO 发送用户信息消息到user-service
+                Integer subscribe = userInfoResData.getSubscribe();
+                if (subscribe == 1 && userID != 0) {
+                    UserModelQuery userModelQuery1 = new UserModelQuery();
+                    userModelQuery1.createCriteria().andUserIDEqualTo( userID );
+                    UserModel userModel1 = DataUtils.copyProperties( userInfoResData, UserModel.class );
+                    String userNickName = userInfoResData.getNickname();
+                    userModel1.setUserNickName( userNickName );
+                    userModel1.setUserID( userID );
+                    userModel1.setOpenid( openid );
+                    userModel1.setMpID( mpID );
+                    int i = userModelMapper.countByExample( userModelQuery1 );
+                    boolean ifEnableInsert = i == 0;
+                    if (ifEnableInsert) {
+                        ifEnableInsert = this.insertUserInfoWithLock( userModel1 );
+                    }
+                    if (!ifEnableInsert) {
+                        userModelMapper.updateByExampleSelective( userModel1, userModelQuery1 );
+                    }
+                    return userModel1;
+                }
+            } catch (Throwable e) {
+                log.debug( "更新用户异常", e );
+                throw e;
             }
             return userModel;
-
         } );
 
     }
 
-    private void insertDefaultUserWithLock(String mpID, String openID,Long userID) {
+    private boolean insertUserInfoWithLock(UserModel userModel1) {
+        Long userID = userModel1.getUserID();
+        String openid = userModel1.getOpenid();
+        String mpID = userModel1.getMpID();
+        UserModelQuery userModelQuery1 = new UserModelQuery();
+        userModelQuery1.createCriteria().andUserIDEqualTo( userID );
+        int i;
+        boolean tryLock = redisLockHandler.tryLock( WECHAT_USER_INFO_LOCK + mpID + openid, LOCKED_TIME_OUT_SECONDS );
+        if (!tryLock) {
+            throw new WechatException( WechatExceptionTypeEnum.WAIT_LOCK_TIMEOUT, "插入用户基本信息表失败" );
+        }
+        boolean ifEnableInsert;
+        try {
+            i = userModelMapper.countByExample( userModelQuery1 );
+            ifEnableInsert = i == 0;
+            if (ifEnableInsert) {
+                userModelMapper.insertSelective( userModel1 );
+            }
+        } finally {
+            redisLockHandler.realseLock( WECHAT_USER_INFO_LOCK + mpID + openid );
+        }
+        return ifEnableInsert;
+    }
+
+    private void insertUserRelationWithLock(String mpID, String openID, Long userID) {
         UserRelationModelQuery userRelationModelQuery = new UserRelationModelQuery();
         userRelationModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openID );
         UserModelQuery userModelQuery = new UserModelQuery();
-        userModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openID );
+        userModelQuery.createCriteria().andUserIDEqualTo( userID );
         boolean tryLock = redisLockHandler.tryLock( WECHAT_USER_RELATION_LOCK + mpID + openID, LOCKED_TIME_OUT_SECONDS );
         if (!tryLock) {
-            throw new WechatException( WechatExceptionTypeEnum.WAIT_LOCK_TIMEOUT ,"插入用户关系表失败");
+            throw new WechatException( WechatExceptionTypeEnum.WAIT_LOCK_TIMEOUT, "插入用户关系表失败" );
         }
-        if (userID == null){
+        if (userID == null) {
             userID = 0L;
         }
         try {
@@ -149,18 +189,13 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
                 userRelationModel.setMpID( mpID );
                 userRelationModel.setOpenid( openID );
                 userRelationModel.setUserID( userID );
-                userRelationModelMapper.insert( userRelationModel );
+                userRelationModelMapper.insertSelective( userRelationModel );
             }
-            int i1 = userModelMapper.countByExample( userModelQuery );
-            if (i1 == 0){
-                UserModel userModel = new UserModel();
-                userModel.setMpID( mpID );
-                userModel.setOpenid( openID );
-                userModelMapper.insertSelective( userModel );
-            }
-        } catch (Exception e){
+
+        } catch (Exception e) {
+            log.error( WechatExceptionTypeEnum.WECHAT_USER_SERVICE_ERROR.getMessage(), e );
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_USER_SERVICE_ERROR );
-        }finally {
+        } finally {
             redisLockHandler.realseLock( WECHAT_USER_RELATION_LOCK + mpID + openID );
         }
     }
