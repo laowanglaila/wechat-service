@@ -68,9 +68,13 @@ public class RedisLockHandler {
                     }
                 }
             }
+            if (!result){
+                jedis.close();
+            }
             return result;
         }catch (Exception e){
             logger.error("Failed to run RedisLockHandler.tryLock method.", e);
+            jedis.close();
             return false;
         }
     }
