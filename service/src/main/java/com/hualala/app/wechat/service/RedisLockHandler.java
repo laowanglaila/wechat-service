@@ -68,13 +68,15 @@ public class RedisLockHandler {
                     }
                 }
             }
-            if (!result){
+            if (!result && jedis != null && jedis.isConnected()){
                 jedis.close();
             }
             return result;
         }catch (Exception e){
             logger.error("Failed to run RedisLockHandler.tryLock method.", e);
-            jedis.close();
+            if (jedis != null && jedis.isConnected()){
+                jedis.close();
+            }
             return false;
         }
     }
@@ -82,10 +84,12 @@ public class RedisLockHandler {
 
     public void realseLock(String lockKey) {
         Jedis jedis = jedisThreadLocal.get();
-        try {
-            jedis.del(lockKey);
-        }finally {
-            jedis.close();
+        if (jedis != null && jedis.isConnected()){
+            try {
+                jedis.del(lockKey);
+            }finally {
+                jedis.close();
+            }
         }
     }
 
