@@ -343,6 +343,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
                 = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
         String errorCode = ops.get();
         if (StringUtils.isNotBlank(errorCode)){
+            //TODO 判断错误是否解决，如果已解决删除错误标记
             throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
         }
     }
