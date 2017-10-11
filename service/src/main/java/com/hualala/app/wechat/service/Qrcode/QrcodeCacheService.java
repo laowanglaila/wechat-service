@@ -71,7 +71,7 @@ public class QrcodeCacheService implements RedisKeys{
                 if (WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals( e.getErrorCode() )){
                     BoundValueOperations<String, String> ops
                             = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
-                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),1, TimeUnit.DAYS);
+                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),10, TimeUnit.MINUTES);
                     return;
                 }
                 continue;
