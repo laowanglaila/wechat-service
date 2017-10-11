@@ -50,7 +50,7 @@ public class WechatQrcodeTempRpcServiceTest {
             wechatQRCodeReq.setBrandID("5");
             wechatQRCodeReq.setGroupID("5");
             wechatQRCodeReq.setShopName("测试二维码:ShopName");
-//        wechatQRCodeReq.setMpID("doulaofang");
+        wechatQRCodeReq.setMpID("AfTiEFjiRU0897bd");
             wechatQRCodeReq.setDescription("测试二维码:Description");
             wechatQRCodeReq.setLocationName("测试二维码:LocationName");
 
@@ -71,7 +71,7 @@ public class WechatQrcodeTempRpcServiceTest {
     public void  test1(){
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
-        wechatQRCodeListReq.setMpID("doulaofangceshi");
+        wechatQRCodeListReq.setMpID("AfTiEFjiRU0897bd");
 //        wechatQRCodeListReq.setMpID("5fWNjiboDX32dcec");
 //        wechatQRCodeListReq.setBrandID("0");
 //        wechatQRCodeListReq.setGroupID("5");
