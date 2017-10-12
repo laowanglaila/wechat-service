@@ -2,14 +2,13 @@ package com.hualala.app.wechat.impl.EventHandler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.crm.bean.cardChannel.CardChannelReq;
-import com.hualala.app.crm.bean.cardChannel.CardChannelRes;
 import com.hualala.app.crm.bean.giftDetailChannel.GiftDetailChannelReq;
-import com.hualala.app.crm.bean.giftDetailChannel.GiftDetailChannelRes;
 import com.hualala.app.crm.service.CardChannelService;
 import com.hualala.app.crm.service.GiftDetailChannelService;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
+import com.hualala.core.base.ResultInfo;
 import com.hualala.core.client.BaseRpcClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -35,12 +34,12 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
      * @param jsonObject
      */
     @Override
-    public void handler(JSONObject jsonObject) {
+    public Object handler(JSONObject jsonObject) {
         if (!jsonObject.containsKey( "OuterStr" )) {
             //todo 或者做默认记录处理，如果openid匹配可以则做线下核销，否则记录无效
             if (log.isInfoEnabled())
                 log.info( "给卡券不是哗啦啦投放渠道领取，不做同步处理：{}", jsonObject );
-            return;
+            return null;
         }
         String outerStr = jsonObject.getString( "OuterStr" );
         JSONObject jsonObj = JSONObject.parseObject( new String( Base64.decodeBase64( outerStr ) ) );
@@ -94,8 +93,9 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
                         "customerID:[" + customerID + "]\n" +
                         "cardType:[" + cardType + "]" );
             }
-            return;
+            return null;
         }
+        ResultInfo resultInfo;
         if ("MEMBER_CARD".equals( cardType )) {
             CardChannelService rpcClient = baseRpcClient.getRpcClient( CardChannelService.class );
             CardChannelReq cardChannelReq = new CardChannelReq();
@@ -103,13 +103,7 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
             cardChannelReq.setWechatCardCode( userCardCode );
             cardChannelReq.setGroupID( groupID );
             cardChannelReq.setCardID( hualalaCardCode );
-            CardChannelRes cardChannelRes = null;
-            try {
-                cardChannelRes = rpcClient.addCardChannel( cardChannelReq );
-            } catch (Throwable e) {
-                super.logError( e, cardChannelReq );
-            }
-            super.logResult( cardChannelRes, cardChannelReq );
+            resultInfo = rpcClient.addCardChannel( cardChannelReq );
         } else {
             GiftDetailChannelService rpcClient = baseRpcClient.getRpcClient( GiftDetailChannelService.class );
             GiftDetailChannelReq giftDetailChannelReq = new GiftDetailChannelReq();
@@ -118,14 +112,9 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
             giftDetailChannelReq.setCustomerID( customerID );
             giftDetailChannelReq.setWechatCardCode( userCardCode );
             giftDetailChannelReq.setWechatCardKey( cardKey );
-            GiftDetailChannelRes giftDetailChannelRes = null;
-            try {
-                giftDetailChannelRes = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
-            } catch (Throwable e) {
-                super.logError( e, giftDetailChannelReq );
-            }
-            super.logResult( giftDetailChannelRes, giftDetailChannelReq );
+            resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
         }
+        return resultInfo;
     }
 
 

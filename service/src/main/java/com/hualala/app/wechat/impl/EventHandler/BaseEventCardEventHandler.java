@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.common.WechatBeanFactory;
 import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.core.base.RequestInfo;
 import com.hualala.core.base.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +17,36 @@ public abstract class BaseEventCardEventHandler  {
 @Autowired
 private WechatBeanFactory wechatBeanFactory;
 
-    public abstract void handler(JSONObject jsonObject);
-
-    void logResult(ResultInfo resultInfo, RequestInfo requestInfo) {
-        if (log.isDebugEnabled()) {
-            log.debug( JSONObject.toJSONString( resultInfo.getMessageParams() ) );
+    public abstract Object handler(JSONObject jsonObject);
+    public void handler(JSONObject object,String event){
+        try {
+            Object resultInfo = this.handler( object );
+            this.onComplete( resultInfo,object,event );
+        }catch (Throwable throwable){
+            this.onError( throwable,object );
         }
-        if (!"000".equals( resultInfo.getCode() )) {
-            Object[] messageParams = resultInfo.getMessageParams();
-            String s = JSONObject.toJSONString( messageParams );
-            if (log.isErrorEnabled()) {
-                log.error( "卡券绑定-服务端执行失败:" + JSON.toJSONString( resultInfo ) + ";\n" + JSON.toJSONString( requestInfo ) );
+
+    }
+
+    void onComplete(Object resultInfo, Object requestInfo,String event) {
+        if (requestInfo != null && resultInfo instanceof ResultInfo) {
+            ResultInfo result = (ResultInfo) resultInfo;
+            if (log.isDebugEnabled()) {
+                log.debug( JSONObject.toJSONString( result.getMessageParams() ) );
             }
+            if (!"000".equals( result.getCode() )) {
+                Object[] messageParams = result.getMessageParams();
+                String s = JSONObject.toJSONString( messageParams );
+                if (log.isErrorEnabled()) {
+                    log.error( "卡券事件处理器:"+event+"-服务端执行失败:" + JSON.toJSONString( resultInfo ) + ";\n" + JSON.toJSONString( requestInfo ) );
+                }
+            }
+        }else {
+            log.info( "卡券事件处理器:"+event+"-事件:" + JSON.toJSONString( resultInfo ) + ";\n" + JSON.toJSONString( requestInfo )  );
         }
     }
 
-     void logError(Throwable e, RequestInfo requestInfo) {
+     void onError(Throwable e, Object requestInfo) {
         if (log.isErrorEnabled()) {
             log.error( "卡券绑定-GRPC通信异常:" + JSON.toJSONString( requestInfo ), e );
         }
@@ -80,8 +93,7 @@ private WechatBeanFactory wechatBeanFactory;
             //用户进入会员卡事件（暂不接受压力大）
 
         }
-
-         return null;
+        return null;
     }
 
 

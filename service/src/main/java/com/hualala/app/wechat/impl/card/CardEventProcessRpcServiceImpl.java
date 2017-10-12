@@ -23,11 +23,10 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
             log.info( "CardEventProcessRpcService.process()\r\nEvent:{}\r\n$params:{}", event, jsonObject );
         }
         EventProcessRes eventProcessRes = new EventProcessRes();
-
         BaseEventCardEventHandler baseEventCardEventHandler = BaseEventCardEventHandler
                 .create( event );
         if (baseEventCardEventHandler != null){
-            baseEventCardEventHandler.handler( jsonObject );
+            baseEventCardEventHandler.handler( jsonObject,event );
         }
         eventProcessRes.setJson( jsonStr );
         return eventProcessRes;
