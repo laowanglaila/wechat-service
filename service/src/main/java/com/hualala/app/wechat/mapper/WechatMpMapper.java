@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.mapper;
 
 import com.hualala.app.wechat.model.WechatMpModel;
+import com.hualala.app.wechat.model.mp.MpInfoCache;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +15,7 @@ public interface WechatMpMapper {
 	List<WechatMpModel> queryList(Map<String, Object> params);
 
 	List<Map<String,Object >> queryByParams(Map<String,Object> params);
+	MpInfoCache queryByMpID(@Param( "mpID" )String mpID);
 
 	int queryCount(Map<String, Object> params);
 

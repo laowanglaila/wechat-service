@@ -73,7 +73,7 @@ public class AccessTokenService {
         }
         result.put(WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE);
         result.put("accessToken", accessToken);
-        return ResultUtil.toResultJson(result,WechatMessageType.TRUE,ErrorCodes.WECHAT_MP_ACCESSTOKEN_AUTH_STATUS_ERROR,"");
+        return ResultUtil.toResultJson(result,WechatMessageType.TRUE,ErrorCodes.WECHAT_SUCCESS_CODE,"执行成功");
     }
 
     /**
@@ -117,7 +117,7 @@ public class AccessTokenService {
             WechatCacheUtil.setCacheAccessToken(mpID, value, Long.parseLong(resultJson.getString("expires_in")));
 
             resultJson.put("accessToken",value);
-            return ResultUtil.toResultJson(resultJson,WechatMessageType.TRUE, ErrorCodes.WECHAT_SUCCESS_CODE,"");
+            return ResultUtil.toResultJson(resultJson,WechatMessageType.TRUE, ErrorCodes.WECHAT_SUCCESS_CODE,"执行成功");
         }
     }
 }

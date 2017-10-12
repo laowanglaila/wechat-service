@@ -2,15 +2,19 @@ package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.WechatBeanFactory;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.grpc.CardCodeRpcData;
+import com.hualala.app.wechat.impl.EventHandler.CardUserGetHandler;
 import com.hualala.app.wechat.util.OkHttpUtil;
 import org.apache.commons.codec.binary.Base64;
+import org.junit.runner.RunWith;
 import org.mockito.cglib.proxy.Enhancer;
 import org.mockito.cglib.proxy.MethodInterceptor;
 import org.mockito.cglib.proxy.MethodProxy;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import sun.misc.ProxyGenerator;
 
 import java.io.*;
@@ -26,7 +30,7 @@ import java.util.UUID;
 /**
  * Created by renjianfei on 2017/7/12.
  */
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class Test {
     /**
@@ -278,6 +282,12 @@ public class Test {
         ThreadLocal <String> stringThreadLocal = new ThreadLocal <>();
         stringThreadLocal.set( "123" );
         String s = stringThreadLocal.get();
+    }
+    @org.junit.Test
+    public void test16(){
+        CardUserGetHandler bean = WechatBeanFactory.getBean( CardUserGetHandler.class );
+        System.out.println(bean);
+        bean.handler( new JSONObject( ) );
     }
 
 }

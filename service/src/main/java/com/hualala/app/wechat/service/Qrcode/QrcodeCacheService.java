@@ -66,12 +66,12 @@ public class QrcodeCacheService implements RedisKeys{
             try {
                 jsonObject = baseHttpService.createQrCode(params, mpID);
             }catch (WechatException e){
-                logger.warn("二维码缓存获取失败：" + jsonObject.toJSONString(),e);
+                logger.warn("二维码缓存获取失败：",e);
                 //接口没有授权的错误放入redis，再次请求时返回错误
                 if (WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals( e.getErrorCode() )){
                     BoundValueOperations<String, String> ops
-                            = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
-                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),1, TimeUnit.DAYS);
+                            = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
+                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),10, TimeUnit.MINUTES);
                     return;
                 }
                 continue;

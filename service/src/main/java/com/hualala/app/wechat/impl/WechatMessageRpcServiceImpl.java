@@ -5,7 +5,7 @@ import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatCustomService;
-import com.hualala.app.wechat.service.WechatUserService;
+import com.hualala.app.wechat.service.user.WechatUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

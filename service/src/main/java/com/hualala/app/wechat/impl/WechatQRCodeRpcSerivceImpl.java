@@ -20,7 +20,6 @@ import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DataUtils;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -341,9 +340,10 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
      */
     private void checkErrorCode(String mpID) {
         BoundValueOperations<String, String> ops
-                = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
+                = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
         String errorCode = ops.get();
         if (StringUtils.isNotBlank(errorCode)){
+            //TODO 判断错误是否解决，如果已解决删除错误标记
             throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
         }
     }

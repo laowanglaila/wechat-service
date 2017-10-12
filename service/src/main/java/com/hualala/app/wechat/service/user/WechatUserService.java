@@ -1,4 +1,4 @@
-package com.hualala.app.wechat.service;
+package com.hualala.app.wechat.service.user;
 
 import com.hualala.app.wechat.mapper.WechatUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

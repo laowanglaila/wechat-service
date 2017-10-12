@@ -34,8 +34,7 @@ public class WebAuthorizationRpcServiceImpl implements WebAuthorizationRpcServic
         if (StringUtils.isBlank(accessToken) || StringUtils.isBlank(openid) || lang == null ){
             throw new WechatException(WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"openID:["+openid+"],lang:["+lang+"],accessTocken:["+accessToken+"]");
         }
-        String params = "access_token=" + accessToken + "&openid=" + openid + "&lang=" + lang.name();
-        JSONObject wechatUserInfo = baseHttpService.getWechatUserInfo(params);
+        JSONObject wechatUserInfo = baseHttpService.getWechatUserInfo(accessToken,openid,lang);
         //TODO 存入数据库 或者 返回结果
         WechatUserInfoRes resultInfoBean = ResultUtil.getResultInfoBean(wechatUserInfo, WechatUserInfoRes.class);
         if ("000".equals(resultInfoBean.getCode())) {

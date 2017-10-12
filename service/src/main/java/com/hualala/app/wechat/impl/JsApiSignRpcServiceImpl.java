@@ -26,7 +26,7 @@ public class JsApiSignRpcServiceImpl implements JsApiSignRpcService {
     @Autowired
     private MpInfoService mpInfoService;
 
-    private static final String HUALALA_COM = "hualala_com";
+    private static final String HUALALA_COM = WechatMessageType.HUALALA_COM;
     @Override
     public JsApiSignResData getSign(JsApiSignReqData jsApiSignReqData) {
         String mpID = jsApiSignReqData.getMpID();

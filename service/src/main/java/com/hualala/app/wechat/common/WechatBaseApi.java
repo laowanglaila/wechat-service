@@ -84,5 +84,9 @@ public interface WechatBaseApi {
      String GET_WECHAT_USERINFO = "https://api.weixin.qq.com/sns/userinfo";
     // 微信api获取用户信息
      String GET_WECHAT_API_USERINFO = "https://api.weixin.qq.com/cgi-bin/user/info";
+     // 微信开放平台用户授权
+     String OPEN_USER_AUTHORIZATION = "https://api.weixin.qq.com/sns/oauth2/component/access_token";
+     // 微信公众平台用户授权
+     String MP_USER_AUTHORIZATION = "https://api.weixin.qq.com/sns/oauth2/access_token";
 
 }

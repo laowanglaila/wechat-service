@@ -1,5 +1,6 @@
 package com.hualala.app.wechat;
 
+import com.hualala.core.base.RequestInfo;
 import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
 import com.hualala.core.rpc.Protocol;
@@ -11,38 +12,43 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by renjianfei on 2017/8/17.
+ * Created by renjianfei on 2017/9/22.
  */
 @RpcService
-public interface UserGetUserInfoRpcService {
+public interface UserAuthorizationRpcService {
 
-    @RpcMethod
-    UserInfoResData getUserInfoByOpenID(UserInfoReqData userInfoReqData);
-    @RpcMethod
-    UserInfoResData findUserInfo(UserInfoReqData userInfoReqData);
+
+    @RpcMethod(description = "获取用户网页授权，获取用户基本信息")
+    UserAuthorizationRes userAuthorization(UserAuthorizationReq userAuthorizationReq);
 
     @Data
-    class UserInfoReqData extends WechatRequestInfo {
-        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
+    class UserAuthorizationReq extends RequestInfo{
+        @NotBlank(message = "mpID不能为空")
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号ID")
         private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
-        private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
-        private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
-        private Long shopID;
-        @NotBlank(message = "openID不能为空")
-        @Protocol(fieldType = FieldType.STRING, order = 6, description = "微信用户openid")
-        private String openID;
-        @Protocol(fieldType = FieldType.ENUM, order = 7, description = "语言选择，默认中文，选填")
-        private LangTypeEnum langType;
+        @NotBlank(message = "code不能为空")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "网页授权获取的code")
+        private String code;
         @NotNull(message = "userID不能为空")
-        @Protocol(fieldType = FieldType.LONG, order = 8, description = "用户ID")
-        private Long userID;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "用户ID")
+        private long userID;
+    }
+    @Data
+    class UserAuthorizationRes extends ResultInfo{
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "网页授权tocken")
+        private String accessToken;
+        @Protocol(fieldType = FieldType.INT, order = 3, description = "有效时间")
+        private Integer expiresIn;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "授权范围")
+        private String scope;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "刷新tocken")
+        private String refreshToken;
+        @Protocol(fieldType = FieldType.OBJECT, order = 6, description = "用户openID")
+        private UserInfo userInfo;
     }
 
     @Data
-    class UserInfoResData extends ResultInfo {
+    class UserInfo{
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。")
         private Integer subscribe;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "用户的标识，对当前公众号唯一")
@@ -75,5 +81,7 @@ public interface UserGetUserInfoRpcService {
         private Long userID;
         @Protocol(fieldType = FieldType.STRING, order = 17, description = "公众号ID")
         private String mpID;
+
     }
+
 }
