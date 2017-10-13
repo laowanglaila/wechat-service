@@ -1,6 +1,9 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.AuthorizationCheckRpcService;
+import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
+import com.hualala.app.wechat.WechatFuctionEnum;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
 import com.hualala.app.wechat.common.ErrorCodes;
@@ -73,6 +76,9 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
     private RedisLockHandler redisLockHandler;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private AuthorizationCheckRpcService getAuthorizationCheckRpcService;
     /**
      * 获取一个临时二维码，优先获取缓存
      * @param qrCodeReq
@@ -343,8 +349,16 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
                 = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
         String errorCode = ops.get();
         if (StringUtils.isNotBlank(errorCode)){
-            //TODO 判断错误是否解决，如果已解决删除错误标记
-            throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
+            // 判断错误是否解决，如果已解决删除错误标记
+            AuthorizationCheckRpcService.AuthorizationCheckReq authorizationCheckReq = new AuthorizationCheckRpcService.AuthorizationCheckReq();
+            authorizationCheckReq.setMpID( mpID );
+            authorizationCheckReq.setInterfaceType( WechatFuctionEnum.TEMPORARY_QR_CODE );
+            DefaultResultInfo check = getAuthorizationCheckRpcService.check( authorizationCheckReq );
+            if (check.success()){
+                stringRedisTemplate.delete( WECHAT_QRCODE_ERRO_CODE + mpID );
+            }else {
+                throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
+            }
         }
     }
 

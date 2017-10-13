@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * Created by renjianfei on 2017/10/13.
  */
 @Slf4j
-@Service
+@Service("getAuthorizationCheckRpcService")
 public class AuthorizationCheckRpcServiceImpl implements AuthorizationCheckRpcService {
     @Autowired
     private MpInfoService mpInfoService;
