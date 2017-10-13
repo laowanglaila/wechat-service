@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "AuthorizationCheckRpcData";
+import "commons.proto";
+import "wechatcommons.proto";
+
+message AuthorizationCheckReq {  
+   // 需要校验公众号mpID
+   string mpID=2;
+   // 需要校验的接口枚举
+   WechatFuctionEnum interfaceType=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message DefaultResultInfo {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//权限检查接口
+service AuthorizationCheckRpcService{
+    //
+    rpc check(AuthorizationCheckReq) returns (DefaultResultInfo) {}
+}

@@ -30,22 +30,24 @@ public class ProtoGenerator {
 //                WebAuthorizationRpcService.class,
 //                UserGetUserInfoRpcService.class,
 //                ComponentTokenRpcService.class,
-                MpShopsRpcService.class,
+//                MpShopsRpcService.class,
 //                UserAuthorizationRpcService.class,
-                WechatAccessTokenRpcService.class
-//                CardStatusEnum.class,
-//                ColorEnum.class,
-//                CouponTypeEnum.class,
-//                DateInfoTypeEnum.class,
-//                CustomCodeModeEnum.class,
-//                CodeTypeEnum.class,
-//                TimelimitTypeEnum.class,
-//                MpTypeEnum.class,
-//                WechatQRTypeEnum.class,
-//                WechatTemplateTypeEnum.class,
-//                WechatMessageEnum.class,
-//                LangTypeEnum.class,
+//                WechatAccessTokenRpcService.class
 //                WechatOAuthRpcService.class
+                AuthorizationCheckRpcService.class,
+                CardStatusEnum.class,
+                ColorEnum.class,
+                CouponTypeEnum.class,
+                DateInfoTypeEnum.class,
+                CustomCodeModeEnum.class,
+                CodeTypeEnum.class,
+                TimelimitTypeEnum.class,
+                MpTypeEnum.class,
+                WechatQRTypeEnum.class,
+                WechatTemplateTypeEnum.class,
+                WechatMessageEnum.class,
+                LangTypeEnum.class,
+                WechatFuctionEnum.class
 
         };
         RpcProtoGenerator.generate(generatorClass);

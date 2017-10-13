@@ -187,10 +187,10 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("微信会员测试111");
+        memberInfo.setPrerogative("小卖部会员");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
-        memberInfo.setSupplyBalance(true);
+        memberInfo.setSupplyBalance(false);
         memberInfo.setCustomCell1("{\n" +
                 "   \"name\" : \"点击有惊喜！\",\n" +
                 "   \"tips\" : \"豪礼等着你！\",\n" +
@@ -208,11 +208,11 @@ public class CardPrePareCreateRpcServiceImplTest {
         Integer startTime =  (int)(currentDateTimeLong/1000L);
         Integer endTime = startTime + 3600 * 24 * 365;
         baseInfo.setBrandID(5L);
-        baseInfo.setGroupID(1155L);
+        baseInfo.setGroupID(8L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("微信会员测试111");
-        baseInfo.setMpID("wangxiangyuanceshi");
+        baseInfo.setTitle("小卖部会员");
+        baseInfo.setMpID("hualala_com");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
         baseInfo.setBrandName("微信会员");
@@ -280,7 +280,7 @@ public class CardPrePareCreateRpcServiceImplTest {
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6461827126315197571L);
+        cardPrimaryKey.setCardKey(6476284123672487944L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }

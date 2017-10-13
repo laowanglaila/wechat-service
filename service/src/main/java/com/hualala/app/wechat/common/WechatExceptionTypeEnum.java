@@ -70,7 +70,8 @@ public enum WechatExceptionTypeEnum {
     WECHAT_GET_AUTHORIZER_ACCESSTOKEN_FIELD("00112164","获取authorizerAccessToken失败"),
     WECHAT_OAUTH_ERROR("00112165","公众号OAUTH不具备授权权限"),
     WECHAT_USER_SERVICE_ERROR("00112166","获取用户服务错误"),
-    WECHAT_USER_AUTHORIZATION_FIELD("00112167","获取用户授权失败");
+    WECHAT_USER_AUTHORIZATION_FIELD("00112167","获取用户授权失败"),
+    WECHAT_AUTHORIZATION_MISS("00112168","接口校验失败");
 
     private String code;
     private String message;
