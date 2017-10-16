@@ -1,6 +1,5 @@
 package com.hualala.app.wechat;
 
-import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
@@ -19,7 +18,7 @@ public class AuthorizationCheckRpcServiceImplTest extends BaseRpcTest {
         AuthorizationCheckRpcService.AuthorizationCheckReq authorizationCheckReq = new AuthorizationCheckRpcService.AuthorizationCheckReq();
         authorizationCheckReq.setMpID( mpID );
         authorizationCheckReq.setInterfaceType( WechatFuctionEnum.TEMPORARY_QR_CODE );
-        DefaultResultInfo check = rpcClient.check( authorizationCheckReq );
+        AuthorizationCheckRpcService.AuthorizationCheckRes check = rpcClient.check( authorizationCheckReq );
         System.out.println(check);
     }
 }
