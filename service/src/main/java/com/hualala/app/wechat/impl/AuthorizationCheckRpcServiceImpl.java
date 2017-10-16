@@ -23,7 +23,7 @@ public class AuthorizationCheckRpcServiceImpl implements AuthorizationCheckRpcSe
     @Autowired
     private MpInfoService mpInfoService;
     @Override
-    public DefaultResultInfo check(AuthorizationCheckReq authorizationCheckReq) {
+    public AuthorizationCheckRes check(AuthorizationCheckReq authorizationCheckReq) {
         String mpID = authorizationCheckReq.getMpID();
         WechatFuctionEnum interfaceType = authorizationCheckReq.getInterfaceType();
         MpInfoCache mpInfo;
@@ -46,6 +46,6 @@ public class AuthorizationCheckRpcServiceImpl implements AuthorizationCheckRpcSe
         if (!success){
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_AUTHORIZATION_MISS,"未获取权限:"+interfaceType);
         }
-        return ResultUtil.success( DefaultResultInfo.class );
+        return ResultUtil.success( AuthorizationCheckRes.class );
     }
 }

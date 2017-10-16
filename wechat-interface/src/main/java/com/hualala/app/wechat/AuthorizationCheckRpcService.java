@@ -1,7 +1,7 @@
 package com.hualala.app.wechat;
 
-import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
 import com.hualala.core.base.RequestInfo;
+import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
 import com.hualala.core.rpc.Protocol;
 import com.hualala.core.rpc.RpcMethod;
@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
  */
 @RpcService(description = "权限检查接口")
 public interface AuthorizationCheckRpcService {
-    @RpcMethod
-    DefaultResultInfo check(AuthorizationCheckReq authorizationCheckReq);
+    @RpcMethod(description = "检查微信接口权限")
+    AuthorizationCheckRes check(AuthorizationCheckReq authorizationCheckReq);
 
     @Data
     class AuthorizationCheckReq extends RequestInfo{
@@ -28,8 +28,6 @@ public interface AuthorizationCheckRpcService {
         @Protocol(fieldType = FieldType.ENUM, order = 3, description = "需要校验的接口枚举")
         private WechatFuctionEnum interfaceType;
     }
-//    @Data
-//    class AuthorizationCheckRes extends ResultInfo{
-//
-//    }
+    @Data
+    class AuthorizationCheckRes extends ResultInfo {}
 }

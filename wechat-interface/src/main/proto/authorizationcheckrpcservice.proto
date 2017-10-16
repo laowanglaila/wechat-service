@@ -13,12 +13,12 @@ message AuthorizationCheckReq {
    // 请求公共字段
    RequestHeader header=1;
 }
-message DefaultResultInfo {  
+message AuthorizationCheckRes {  
    // 响应公共字段
    ResultHeader result=1;
 }
 //权限检查接口
 service AuthorizationCheckRpcService{
-    //
-    rpc check(AuthorizationCheckReq) returns (DefaultResultInfo) {}
+    //检查微信接口权限
+    rpc check(AuthorizationCheckReq) returns (AuthorizationCheckRes) {}
 }

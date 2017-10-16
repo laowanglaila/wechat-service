@@ -14,5 +14,6 @@ public class MpInfoRpcServiceImplTest extends BaseRpcTest {
         mpInfoSelectReqData.setMpID( "" );
         MpInfoRpcService.MpInfoQueryResData mpInfoQueryResData = rpcClient.selectMp( mpInfoSelectReqData );
         System.out.println(mpInfoQueryResData.getMpInfoResDataList());
+
     }
 }

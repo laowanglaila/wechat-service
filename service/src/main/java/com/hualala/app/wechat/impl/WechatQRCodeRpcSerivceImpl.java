@@ -353,7 +353,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
             AuthorizationCheckRpcService.AuthorizationCheckReq authorizationCheckReq = new AuthorizationCheckRpcService.AuthorizationCheckReq();
             authorizationCheckReq.setMpID( mpID );
             authorizationCheckReq.setInterfaceType( WechatFuctionEnum.TEMPORARY_QR_CODE );
-            DefaultResultInfo check = getAuthorizationCheckRpcService.check( authorizationCheckReq );
+            AuthorizationCheckRpcService.AuthorizationCheckRes check = getAuthorizationCheckRpcService.check( authorizationCheckReq );
             if (check.success()){
                 stringRedisTemplate.delete( WECHAT_QRCODE_ERRO_CODE + mpID );
             }else {
