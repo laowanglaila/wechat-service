@@ -34,7 +34,9 @@ public class ProtoGenerator {
 //                UserAuthorizationRpcService.class,
 //                WechatAccessTokenRpcService.class
 //                WechatOAuthRpcService.class
-                AuthorizationCheckRpcService.class,
+//                AuthorizationCheckRpcService.class,
+//                WechatPermanentQrCodeRpcService.class,
+                MpInfoRpcService.class,
                 CardStatusEnum.class,
                 ColorEnum.class,
                 CouponTypeEnum.class,

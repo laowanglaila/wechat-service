@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by renjianfei on 2017/9/20.
  */
+
 public class MpShopsRpcServiceImplTest extends BaseRpcTest {
     @Override
     public void test() throws InterruptedException {

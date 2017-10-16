@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
 import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
@@ -78,6 +79,12 @@ public class ResultUtil {
             t.setCode( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getCode() );
             t.setMessage( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getMessage() );
         }
+        return t;
+    }
+    public static DefaultResultInfo success() {
+        DefaultResultInfo t = new DefaultResultInfo();
+            t.setCode( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getCode() );
+            t.setMessage( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getMessage() );
         return t;
     }
 }

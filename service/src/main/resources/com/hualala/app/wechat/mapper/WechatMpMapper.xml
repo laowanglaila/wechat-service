@@ -102,7 +102,24 @@
         AND authorize in (0,1)
         Order by brandID desc limit 1
     </select>
-
+    <select id="select" parameterType="hashmap" resultType="com.hualala.app.wechat.model.WechatMpModel">
+        SELECT
+        *
+        FROM
+        tbl_shop_wechat_mp
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            action in (0, 1)
+            <if test="mpID != null ">
+                AND	mpID = #{mpID}
+            </if>
+            <if test="appID != null">
+                AND appID = #{appID}
+            </if>
+        </trim>
+        ORDER BY
+        actionTime DESC
+        limit 10
+    </select>
 
     <sql id="whereSql">
         action in (0,1)

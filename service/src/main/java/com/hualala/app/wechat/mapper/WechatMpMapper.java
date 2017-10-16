@@ -27,4 +27,6 @@ public interface WechatMpMapper {
 	 * @return
 	 */
 	String queryMpIDAuth(@Param("groupID") long groupID, @Param("brandID") long brandID, @Param("shopID") long shopID);
+
+	List<WechatMpModel> select(Map<String, Object> params);
 }

@@ -50,7 +50,7 @@ public class WechatQrcodeTempRpcServiceTest {
             wechatQRCodeReq.setBrandID("5");
             wechatQRCodeReq.setGroupID("5");
             wechatQRCodeReq.setShopName("测试二维码:ShopName");
-        wechatQRCodeReq.setMpID("AfTiEFjiRU0897bd");
+        wechatQRCodeReq.setMpID("doulaofangceshi");
             wechatQRCodeReq.setDescription("测试二维码:Description");
             wechatQRCodeReq.setLocationName("测试二维码:LocationName");
 

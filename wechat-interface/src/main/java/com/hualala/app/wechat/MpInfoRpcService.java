@@ -7,6 +7,7 @@ import com.hualala.core.rpc.Protocol;
 import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
 
@@ -19,7 +20,15 @@ public interface MpInfoRpcService {
 
     @RpcMethod(description = "获取公众信息")
     MpInfoQueryResData queryMpInfo(MpInfoQueryReqData reqData);
+    @RpcMethod(description = "根据mpID获取公众信息")
+    MpInfoQueryResData selectMp(MpInfoSelectReqData reqData);
 
+    @Data
+    class MpInfoSelectReqData extends RequestInfo {
+        @NotBlank(message = "mpID不能为空")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description="公众号编码")
+        private String mpID;
+    }
     @Data
     class MpInfoQueryReqData extends RequestInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description="itemID")
