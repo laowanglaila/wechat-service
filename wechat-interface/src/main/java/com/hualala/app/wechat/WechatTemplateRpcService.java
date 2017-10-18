@@ -27,7 +27,8 @@ public interface WechatTemplateRpcService {
         @Protocol(fieldType = FieldType.LONG, order = 4, description = "店铺ID")
         private long shopID;
         @Protocol(fieldType = FieldType.ENUM, order = 5, description = "模板消息类型枚举")
-        private WechatTemplateTypeEnum templateType = WechatTemplateTypeEnum.TEMPLATE_ENUM_DEFAULT;       @Protocol(fieldType = FieldType.STRING, order = 6, description = "mpID")
+        private WechatTemplateTypeEnum templateType = WechatTemplateTypeEnum.TEMPLATE_ENUM_DEFAULT;
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "mpID")
         private String mpID;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "openID")
         private String openID;

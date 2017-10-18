@@ -98,6 +98,8 @@ public class WechatTemplateConstants {
 		MODELID_TITLE_MAP.put("OPENTM201565167","会员注册成功通知");
 		MODELID_TITLE_MAP.put("OPENTM207508788","会员权益变动提醒");
 
+		MODELID_TITLE_MAP.put("OPENTM408389786","开票结果通知");
+
 		MODEL_TYPE_MODELID_MAP.put("queue_alarm",QUEUE_ALARM_MODELID);
 		MODEL_TYPE_MODELID_MAP.put("order_default",ORDER_MODELID);
 		MODEL_TYPE_MODELID_MAP.put("order_book",ORDER_BOOK_MODELID);
@@ -106,6 +108,8 @@ public class WechatTemplateConstants {
 		MODEL_TYPE_MODELID_MAP.put("crm_reg",CRM_REG_MODELID);
 		MODEL_TYPE_MODELID_MAP.put("crm_gift",GIFT_ALARM_GIFT_MODELID);
 		MODEL_TYPE_MODELID_MAP.put("crm_customer",GIFT_ALARM_CRMCUSTOMER_MODELID);
+
+		MODEL_TYPE_MODELID_MAP.put("invoice_alarm",INVOICE_ALARM_MODELID);
 
 	}
 }
