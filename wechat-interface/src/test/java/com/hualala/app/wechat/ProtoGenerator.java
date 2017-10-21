@@ -34,9 +34,10 @@ public class ProtoGenerator {
 //                UserAuthorizationRpcService.class,
 //                WechatAccessTokenRpcService.class
 //                WechatOAuthRpcService.class
-                AuthorizationCheckRpcService.class,
+//                AuthorizationCheckRpcService.class,
 //                WechatPermanentQrCodeRpcService.class,
 //                MpInfoRpcService.class,
+                WechatTemplateRpcService.class,
                 CardStatusEnum.class,
                 ColorEnum.class,
                 CouponTypeEnum.class,
@@ -49,7 +50,8 @@ public class ProtoGenerator {
                 WechatTemplateTypeEnum.class,
                 WechatMessageEnum.class,
                 LangTypeEnum.class,
-                WechatFuctionEnum.class
+                WechatFuctionEnum.class,
+                TemplateItemTypeEnum.class
 
         };
         RpcProtoGenerator.generate(generatorClass);

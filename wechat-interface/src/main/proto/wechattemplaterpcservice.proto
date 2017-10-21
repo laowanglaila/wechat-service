@@ -5,6 +5,42 @@ option java_outer_classname = "WechatTemplateRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
+message WechatSendTemplateReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 品牌ID
+   int64 brandID=3;
+   // 店铺ID
+   int64 shopID=4;
+   // 模板消息类型枚举
+   WechatTemplateTypeEnum templateType=5;
+   // mpID
+   string mpID=6;
+   // openID
+   string openID=7;
+   // 用户ID
+   int64 userID=8;
+   // 模板消息item
+   repeated WechatTemplateItem templateItem=9;
+   // param1
+   string url=10;
+   // param1
+   string param1=11;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WechatTemplateItem {  
+   // 模板name
+   TemplateItemTypeEnum type=1;
+   // 模板value
+   string value=2;
+   // 字体颜色，默认黑色
+   string color=3;
+}
+message WechatSendTemplateRes {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message WechatTemplateRpcReqData {  
    // 集团ID
    int64 groupID=2;
@@ -39,7 +75,7 @@ message WechatTemplateRpcReqData {
    // param1
    string param1=17;
    // key
-   string orderKey = 18;
+   string orderKey=18;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -52,6 +88,8 @@ message WechatTemplateRpcResData {
 }
 //
 service WechatTemplateRpcService{
+    //
+    rpc sentWechatTemplateByMQ(WechatSendTemplateReq) returns (WechatSendTemplateRes) {}
     //
     rpc sentWechatTemplate(WechatTemplateRpcReqData) returns (WechatTemplateRpcResData) {}
 }

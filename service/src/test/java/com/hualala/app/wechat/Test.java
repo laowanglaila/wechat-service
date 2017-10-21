@@ -9,12 +9,10 @@ import com.hualala.app.wechat.grpc.CardCodeRpcData;
 import com.hualala.app.wechat.impl.EventHandler.CardUserGetHandler;
 import com.hualala.app.wechat.util.OkHttpUtil;
 import org.apache.commons.codec.binary.Base64;
-import org.junit.runner.RunWith;
 import org.mockito.cglib.proxy.Enhancer;
 import org.mockito.cglib.proxy.MethodInterceptor;
 import org.mockito.cglib.proxy.MethodProxy;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import sun.misc.ProxyGenerator;
 
 import java.io.*;
@@ -23,6 +21,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ import java.util.UUID;
 /**
  * Created by renjianfei on 2017/7/12.
  */
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class Test {
     /**
@@ -288,6 +288,12 @@ public class Test {
         CardUserGetHandler bean = WechatBeanFactory.getBean( CardUserGetHandler.class );
         System.out.println(bean);
         bean.handler( new JSONObject( ) );
+    }
+    @org.junit.Test
+    public void test17(){
+        Map<String, Object> map = new HashMap <>();
+        String shopID = map.get( "shopID" )==null?"":(String) map.get( "shopID" );
+        System.out.println("123"+shopID + "123");
     }
 
 }

@@ -72,6 +72,8 @@ wechat:
 #        cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
         cacheQrcodeExchange: dohko_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: dohko_hll:service:wechat:queue:cacheQrcode
+        templateMessageExchange: mu_hll:service:wechat:exchange:templateMessage
+        templateMessageQueue: mu_hll:service:wechat:queue:templateMessage
   card:
       skuQuantity: mu_hll:service:wechat:card:sku_quantity
   mpID:
@@ -170,7 +172,7 @@ grpc:
 #        wechat: 192.168.5.204:6567
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
-        sem: mu.service.short.message.hualala.com:32272
+        sem: dohko.service.short.message.hualala.com:31524
         shopcrm: 172.16.32.46:6656
 #        shopcrm: dohko.shop.crm.service.hualala.com:31537
 wechat:
@@ -181,6 +183,8 @@ wechat:
       rabbitmq:
         cacheQrcodeExchange: mu_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: mu_hll:service:wechat:queue:cacheQrcode
+        templateMessageExchange: mu_hll:service:wechat:exchange:templateMessage
+        templateMessageQueue: mu_hll:service:wechat:queue:templateMessage
   card:
       skuQuantity: mu_hll:service:wechat:card:sku_quantity
   mpID:

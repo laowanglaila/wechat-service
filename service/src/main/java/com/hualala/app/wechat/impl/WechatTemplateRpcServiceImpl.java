@@ -1,12 +1,16 @@
 package com.hualala.app.wechat.impl;
 
-import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.WechatTemplateTypeEnum;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.config.RabbitQueueProps;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
 import com.hualala.app.wechat.service.user.WechatUserService;
+import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.template.WechatTemplate;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;
 import com.hualala.app.wechat.util.template.WechatTemplateFatory;
@@ -15,15 +19,17 @@ import com.hualala.core.client.BaseRpcClient;
 import com.hualala.core.utils.DataUtils;
 import com.hualala.message.SemSMSQueueService;
 import com.hualala.message.WechatMsgQueueService;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.PropertyPlaceholderHelper;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 微信模板消息实现类
@@ -32,7 +38,7 @@ import java.util.UUID;
 @Service
 public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
 
-    private Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
+    protected Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
 
 
     @Autowired
@@ -49,7 +55,10 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
 
     @Autowired
     private BaseRpcClient rpcClient;
-
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RabbitQueueProps rabbitQueueProps;
     @Override
     public WechatTemplateRpcResData sentWechatTemplate(WechatTemplateRpcReqData reqData) {
 
@@ -145,7 +154,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         return wechatTemplateRpcResData;
     }
 
-    private String gerModelID(String modelType, String modelSubType) {
+    protected String gerModelID(String modelType, String modelSubType) {
 
         if (WechatTemplateConstants.MODEL_TYPE_MODELID_MAP.containsKey(modelType + "_" + modelSubType)) {
             return WechatTemplateConstants.MODEL_TYPE_MODELID_MAP.get(modelType + "_" + modelSubType);
@@ -181,4 +190,75 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         wechatTemplateRpcResData.setMsgType("SMS");
         return wechatTemplateRpcResData;
     }
+
+
+
+    @Override
+    public WechatSendTemplateRes sentWechatTemplateByMQ(WechatSendTemplateReq reqData) {
+        String mpID = reqData.getMpID();
+
+        if(StringUtils.isEmpty(mpID)){
+            mpID = mpInfoService.queryMpIDAuth(reqData.getGroupID(),reqData.getBrandID(),reqData.getShopID());
+        }
+        if(StringUtils.isEmpty(mpID)) {
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_MPID_EMPTY ,"未找到对应公众号");
+        }
+
+        WechatTemplateTypeEnum templateTypeEnum = reqData.getTemplateType();
+        if(templateTypeEnum.getValue() == 0){
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"未指定模板消息类型");
+        }
+        String modelType =templateTypeEnum.getModelType();
+        String modelSubType = templateTypeEnum.getModelSubType();
+
+        long userID = reqData.getUserID();
+
+        String modelID = gerModelID(modelType, modelSubType);
+        if (modelID == null) {
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"未找到对应的模板ID");
+        }
+        Map<String, Object> map = DataUtils.beanToMap(reqData);
+
+        if(!map.containsKey("remark")){
+            map.put("remark","");
+        }
+
+        //  获取模板ID
+        WechatTemplateModel wechatTemplateModel = wechatTemplateService.getTemplate(mpID, modelID,reqData.getGroupID(),modelType);
+        if (wechatTemplateModel == null) {
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"初始化微信模板消息异常");
+        }
+        logger.debug(() -> "templateID : [ " + wechatTemplateModel.getTemplateID() + " ]");
+        map.put("templateID", wechatTemplateModel.getTemplateID());
+        //  获取用户openID
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("userID", userID);
+        param.put("mpID", mpID);
+        param.put("isSubscribe", 1);
+        param.put("openID", reqData.getOpenID());
+        String userOpenID = wechatUserService.queryOpenID(param);
+        List <WechatTemplateItem> templateItems = reqData.getTemplateItem();
+        List <WxMpTemplateData> collect = templateItems.stream()
+                                                       .map( req -> new WxMpTemplateData( req.getType().getName(), req.getValue(), req.getColor() ) )
+                                                       .collect( Collectors.toList() );
+        WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
+                                                                     .templateId( wechatTemplateModel.getTemplateID() )
+                                                                     .toUser( userOpenID )
+                                                                     .url( reqData.getUrl() )
+                                                                     .data( collect )
+                                                                     .build();
+        String json = wxMpTemplateMessage.toJson();
+        String mqMsg = "{" +
+                "\"mpID\":\"" + mpID + "\","+
+                "\"param\":" + json +""+
+                "}";
+        try {
+            rabbitTemplate.convertAndSend( rabbitQueueProps.getTemplateMessageExchange(),null ,mqMsg );
+        }catch (AmqpException e){
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"RabbitMQ发送消息失败");
+        }
+        return ResultUtil.success(WechatSendTemplateRes.class);
+    }
+
 }

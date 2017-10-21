@@ -15,4 +15,7 @@ public class RabbitQueueProps {
     private String cacheQrcodeExchange;
     private String cacheQrcodeQueue;
 
+    private String templateMessageExchange;
+    private String templateMessageQueue;
+
 }
