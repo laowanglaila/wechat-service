@@ -240,7 +240,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         String userOpenID = wechatUserService.queryOpenID(param);
         List <WechatTemplateItem> templateItems = reqData.getTemplateItem();
         List <WxMpTemplateData> collect = templateItems.stream()
-                                                       .map( req -> new WxMpTemplateData( req.getType().getName(), req.getValue(), req.getColor() ) )
+                                                       .map( item -> new WxMpTemplateData( item.getType().getName(), item.getValue(), item.getColor() ) )
                                                        .collect( Collectors.toList() );
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
                                                                      .templateId( wechatTemplateModel.getTemplateID() )
