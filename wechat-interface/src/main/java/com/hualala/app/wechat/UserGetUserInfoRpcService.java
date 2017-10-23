@@ -36,7 +36,6 @@ public interface UserGetUserInfoRpcService {
         private String openID;
         @Protocol(fieldType = FieldType.ENUM, order = 7, description = "语言选择，默认中文，选填")
         private LangTypeEnum langType;
-        @NotNull(message = "userID不能为空")
         @Protocol(fieldType = FieldType.LONG, order = 8, description = "用户ID")
         private Long userID;
     }
