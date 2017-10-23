@@ -75,5 +75,7 @@ public interface UserGetUserInfoRpcService {
         private Long userID;
         @Protocol(fieldType = FieldType.STRING, order = 17, description = "公众号ID")
         private String mpID;
+        @Protocol(fieldType = FieldType.STRING, order = 18, description = "集团ID")
+        private Long groupID;
     }
 }

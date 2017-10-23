@@ -7,6 +7,7 @@ import com.hualala.app.wechat.UserGetUserInfoRpcService;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.mapper.user.UserRelationModelMapper;
 import com.hualala.app.wechat.model.user.UserModel;
@@ -25,11 +26,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 
-import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
 import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_INFO_LOCK;
+import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
 
 /**
  * Created by renjianfei on 2017/8/17.
@@ -45,6 +48,8 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
     private UserModelMapper userModelMapper;
     @Autowired
     private UserRelationModelMapper userRelationModelMapper;
+    @Autowired
+    private WechatMpMapper wechatMpMapper;
     @Autowired
     private RedisLockHandler redisLockHandler;
     ExecutorService executor = Executors.newCachedThreadPool();
@@ -105,6 +110,9 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         BeanUtils.copyProperties( userModel, userInfoResData );
         userInfoResData.setSubscribe( isSubscribe );
         userInfoResData.setNickname( userNickName );
+        //根据mpID获取groupID
+        Long groupID = findGroupID( mpID );
+        userInfoResData.setGroupID( groupID );
         return userInfoResData;
     }
 
@@ -217,5 +225,17 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
         }
     }
 
+    private Long findGroupID(String mpID){
+        Map<String, Object> params = new HashMap<>();
+        params.put("mpID", mpID);
+        List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
+        if (maps.size() > 0) {
+            Integer groupID1 = (Integer) maps.get(0).get("groupID");
+            return  groupID1.longValue();
+        } else {
+            log.error( "获取用用户信息:groupID获取失败-mpID="+mpID );
+            return null;
+        }
+    }
 
 }

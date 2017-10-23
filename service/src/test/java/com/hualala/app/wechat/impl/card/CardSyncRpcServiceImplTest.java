@@ -66,8 +66,8 @@ private CreateCardKeyService createCardKeyService;
     @Test
     public void testDonwloadCardList() throws ExecutionException {
 //        String mpID = "dohko1155";
-//        String mpID = "hualala_com";
-        String mpID = "tut1Ceu1DX005996";
+        String mpID = "hualala_com";
+//        String mpID = "tut1Ceu1DX005996";
 //        String mpID = "doulaofangceshi";
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();
