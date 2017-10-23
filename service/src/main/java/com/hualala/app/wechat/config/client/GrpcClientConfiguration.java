@@ -54,6 +54,12 @@ public class GrpcClientConfiguration {
         GrpcClient client = new GrpcClient(grpcClientProperties.getWechat());
         return client;
     }
+    @Bean(name = "com.hualala.app.user",destroyMethod = "clean")
+    public UserClient userGrpcClient() {
+        logger.info(() -> "Initializing com.hualala.app.user gRpc client... [" + grpcClientProperties.getWechat() + "]");
+        UserClient client = new UserClient(grpcClientProperties.getWechat());
+        return client;
+    }
     @Bean
     public CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub getWechatServiceStub(@Qualifier("wechatGrpcClient") GrpcClient wechatGrpcClient) throws Exception {
         return (CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub) wechatGrpcClient.getBlockingStub(CardPrePareQueryRpcServiceGrpc.class);

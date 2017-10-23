@@ -16,4 +16,5 @@ public class GrpcClientProperties {
 //    private String idgen;
     private String sem;
     private String shopcrm;
+    private String user;
 }

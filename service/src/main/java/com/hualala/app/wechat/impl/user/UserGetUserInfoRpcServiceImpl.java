@@ -1,6 +1,7 @@
 package com.hualala.app.wechat.impl.user;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.user.UserInfoWechatRpcService;
 import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
@@ -16,6 +17,7 @@ import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
+import com.hualala.core.client.BaseRpcClient;
 import com.hualala.core.utils.DataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.*;
 
 import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
@@ -36,6 +39,8 @@ import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_INFO_LOCK;
 public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService {
     @Autowired
     private BaseHttpService baseHttpService;
+    @Autowired
+    private BaseRpcClient baseRpcClient;
     @Autowired
     private UserModelMapper userModelMapper;
     @Autowired
@@ -116,7 +121,9 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
                 UserRelationModelQuery userRelationModelQuery = new UserRelationModelQuery();
                 userRelationModelQuery.createCriteria().andMpIDEqualTo( mpID ).andOpenidEqualTo( openid );
                 userRelationModelMapper.updateByExampleSelective( userRelationModel, userRelationModelQuery );
-                //TODO 发送用户信息消息到user-service
+
+
+
                 Integer subscribe = userInfoResData.getSubscribe();
                 if (subscribe == 1 && userID != 0) {
                     UserModelQuery userModelQuery1 = new UserModelQuery();
@@ -127,13 +134,23 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
                     userModel1.setUserID( userID );
                     userModel1.setOpenid( openid );
                     userModel1.setMpID( mpID );
-                    int i = userModelMapper.countByExample( userModelQuery1 );
-                    boolean ifEnableInsert = i == 0;
-                    if (ifEnableInsert) {
-                        ifEnableInsert = this.insertUserInfoWithLock( userModel1 );
-                    }
-                    if (!ifEnableInsert) {
-                        userModelMapper.updateByExampleSelective( userModel1, userModelQuery1 );
+                    // 发送用户信息消息到user-service
+                    UserInfoWechatRpcService rpcClient = baseRpcClient.getRpcClient( UserInfoWechatRpcService.class );
+                    UserInfoWechatRpcService.UserInfoWechatAddReqData userInfoWechatAddReqData = new UserInfoWechatRpcService.UserInfoWechatAddReqData();
+                    UserInfoWechatRpcService.UserInfoWechat userInfoWechat1 = new UserInfoWechatRpcService.UserInfoWechat();
+                    userInfoWechat1.setCity( userModel1.getCity() );
+                    userInfoWechat1.setCountry( userModel1.getCountry() );
+                    userInfoWechat1.setHeadImgUrl( userModel1.getHeadimgurl() );
+                    userInfoWechat1.setNickName( userModel1.getNickname() );
+                    userInfoWechat1.setProvince( userModel1.getProvince() );
+                    userInfoWechat1.setSex( userModel1.getSex().toString() );
+                    userInfoWechat1.setUnionID( userInfoResData.getUnionid() );
+                    userInfoWechat1.setUserID( userModel1.getUserID() );
+
+                    userInfoWechatAddReqData.setUserInfoWechat( userInfoWechat1 );
+                    UserInfoWechatRpcService.UserInfoWechatResData userInfoWechatResData = rpcClient.userInfoWechatAdd( userInfoWechatAddReqData );
+                    if (!userInfoWechatResData.success()){
+                        log.error( "更新用户异常" ,JSONObject.toJSONString( userModel1 ));
                     }
                     return userModel1;
                 }
