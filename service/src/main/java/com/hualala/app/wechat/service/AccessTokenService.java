@@ -6,6 +6,7 @@ import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.common.WechatErrorCode;
 import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.model.mp.MpInfoCache;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;
@@ -29,6 +30,7 @@ public class AccessTokenService {
     @Autowired
     private ComponentTokenService componentTokenService;
 
+    @Autowired private MpInfoService mpInfoService;
     /**
      * 获取公众号accessToken
      * @param mpID
@@ -44,15 +46,9 @@ public class AccessTokenService {
         String authorize = null;
         Map<String,Object> param = new HashMap<>();
         param.put("mpID",mpID);
-        // TODO 待优化
-        JSONObject mpInfoJson = WechatCacheUtil.getMpInfo(mpID, null);
-
-        if (mpInfoJson == null) {
-            return ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
-        }
-
-        appID = mpInfoJson.getString("appID");
-        authorize = mpInfoJson.getString("authorize");
+        MpInfoCache mpInfoByMpID = mpInfoService.getMpInfoByMpID( mpID );
+        appID = mpInfoByMpID.getAppID();
+        authorize = mpInfoByMpID.getAuthorize();
         if ("1".equals(authorize)) {
             return componentTokenService.getAuthorizerAcToken(appID);
         } else if ("2".equals(authorize)) {
