@@ -172,6 +172,11 @@
             <groupId>com.hualala.app.user</groupId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>0.2.19</version>
+        </dependency>
     </dependencies>
 
 
