@@ -10,7 +10,6 @@ import com.hualala.app.wechat.bean.result.WxMpCurrentAutoReplyInfo;
 import com.hualala.app.wechat.bean.result.WxMpOAuth2AccessToken;
 import com.hualala.app.wechat.bean.result.WxMpSemanticQueryResult;
 import com.hualala.app.wechat.bean.result.WxMpUser;
-import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -52,24 +51,12 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
 
-  private String mpID;
-
-  protected WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub accessTokenStub;
-
-  @Override
-  public void setMpID(String mpID){
-    this.mpID = mpID;
-  }
-  @Override
-  public String getMpID(){
-    return this.mpID ;
-  }
 
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
     try {
       return SHA1.gen(this.getWxMpConfigStorage().getToken(), timestamp, nonce)
-        .equals(signature);
+                 .equals(signature);
     } catch (Exception e) {
       this.log.error("Checking signature failed, and the reason is :" + e.getMessage());
       return false;
@@ -225,7 +212,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
 
   @Override
   public String get(String url, String queryParam) throws WxErrorException {
-    return execute(SimpleGetRequestExecutor.create(this), url, queryParam);
+    return execute( SimpleGetRequestExecutor.create(this), url, queryParam);
   }
 
   @Override
@@ -329,86 +316,72 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   }
 
   @Override
-  public WxMpKefuService getKefuService(String mpID) {
-    this.mpID = mpID;
+  public WxMpKefuService getKefuService() {
     return this.kefuService;
   }
 
   @Override
-  public WxMpMaterialService getMaterialService(String mpID) {
-    this.mpID = mpID;
+  public WxMpMaterialService getMaterialService() {
     return this.materialService;
   }
 
   @Override
-  public WxMpMenuService getMenuService(String mpID) {
-    this.mpID = mpID;
+  public WxMpMenuService getMenuService() {
     return this.menuService;
   }
 
   @Override
-  public WxMpUserService getUserService(String mpID) {
-    this.mpID = mpID;
+  public WxMpUserService getUserService() {
     return this.userService;
   }
 
   @Override
-  public WxMpUserTagService getUserTagService(String mpID) {
-    this.mpID = mpID;
+  public WxMpUserTagService getUserTagService() {
     return this.tagService;
   }
 
   @Override
-  public WxMpQrcodeService getQrcodeService(String mpID) {
-    this.mpID = mpID;
+  public WxMpQrcodeService getQrcodeService() {
     return this.qrCodeService;
   }
 
   @Override
-  public WxMpCardService getCardService(String mpID) {
-    this.mpID = mpID;
+  public WxMpCardService getCardService() {
     return this.cardService;
   }
 
   @Override
-  public WxMpDataCubeService getDataCubeService(String mpID) {
-    this.mpID = mpID;
+  public WxMpDataCubeService getDataCubeService() {
     return this.dataCubeService;
   }
 
   @Override
-  public WxMpUserBlacklistService getBlackListService(String mpID) {
-    this.mpID = mpID;
+  public WxMpUserBlacklistService getBlackListService() {
     return this.blackListService;
   }
 
   @Override
-  public WxMpStoreService getStoreService(String mpID) {
-    this.mpID = mpID;
+  public WxMpStoreService getStoreService() {
     return this.storeService;
   }
 
   @Override
-  public WxMpTemplateMsgService getTemplateMsgService(String mpID) {
-    this.mpID = mpID;
+  public WxMpTemplateMsgService getTemplateMsgService() {
     return this.templateMsgService;
   }
 
   @Override
-  public WxMpDeviceService getDeviceService(String mpID) {
-    this.mpID = mpID;
+  public WxMpDeviceService getDeviceService() {
     return this.deviceService;
   }
 
   @Override
-  public WxMpShakeService getShakeService(String mpID) {
-    this.mpID = mpID;
+  public WxMpShakeService getShakeService() {
     return this.shakeService;
   }
 
   @Override
-  public WxMpMemberCardService getMemberCardService(String mpID) {
-    this.mpID = mpID;
+  public WxMpMemberCardService getMemberCardService() {
     return this.memberCardService;
   }
 
@@ -418,8 +391,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   }
 
   @Override
-  public WxMpMassMessageService getMassMessageService(String mpID) {
-    this.mpID = mpID;
+  public WxMpMassMessageService getMassMessageService() {
     return this.massMessageService;
   }
 

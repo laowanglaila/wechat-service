@@ -274,104 +274,98 @@ public interface WxMpService {
    *
    * @return WxMpKefuService
    */
-  WxMpKefuService getKefuService(String mpID);
+  WxMpKefuService getKefuService();
 
   /**
    * 返回素材相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpMaterialService
    */
-  WxMpMaterialService getMaterialService(String mpID);
+  WxMpMaterialService getMaterialService();
 
   /**
    * 返回菜单相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpMenuService
    */
-  WxMpMenuService getMenuService(String mpID);
+  WxMpMenuService getMenuService();
 
   /**
    * 返回用户相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpUserService
    */
-  WxMpUserService getUserService(String mpID);
+  WxMpUserService getUserService();
 
   /**
    * 返回用户标签相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpUserTagService
    */
-  WxMpUserTagService getUserTagService(String mpID);
+  WxMpUserTagService getUserTagService();
 
   /**
    * 返回二维码相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpQrcodeService
    */
-  WxMpQrcodeService getQrcodeService(String mpID);
+  WxMpQrcodeService getQrcodeService();
 
   /**
    * 返回卡券相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpCardService
    */
-  WxMpCardService getCardService(String mpID);
+  WxMpCardService getCardService();
 
   /**
    * 返回数据分析统计相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpDataCubeService
    */
-  WxMpDataCubeService getDataCubeService(String mpID);
+  WxMpDataCubeService getDataCubeService();
 
   /**
    * 返回用户黑名单管理相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpUserBlacklistService
    */
-  WxMpUserBlacklistService getBlackListService(String mpID);
+  WxMpUserBlacklistService getBlackListService();
 
   /**
    * 返回门店管理相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpStoreService
    */
-  WxMpStoreService getStoreService(String mpID);
+  WxMpStoreService getStoreService();
 
   /**
    * 返回模板消息相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpTemplateMsgService
    */
-  WxMpTemplateMsgService getTemplateMsgService(String mpID);
+  WxMpTemplateMsgService getTemplateMsgService();
 
   /**
    * 返回硬件平台相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpDeviceService
    */
-  WxMpDeviceService getDeviceService(String mpID);
+  WxMpDeviceService getDeviceService();
 
   /**
    * 返回摇一摇周边相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpShakeService
    */
-  WxMpShakeService getShakeService(String mpID);
+  WxMpShakeService getShakeService();
 
   /**
    * 返回会员卡相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpMemberCardService
    */
-  WxMpMemberCardService getMemberCardService(String mpID);
-
-  /**
-   * 返回群发消息相关接口方法的实现类对象，以方便调用其各个接口
-   * @return WxMpMassMessageService
-   */
-  WxMpMassMessageService getMassMessageService(String mpID);
+  WxMpMemberCardService getMemberCardService();
 
   /**
    * 初始化http请求对象
@@ -383,8 +377,11 @@ public interface WxMpService {
    */
   RequestHttp getRequestHttp();
 
-  void setMpID(String mpID);
-  String getMpID();
+  /**
+   * 返回群发消息相关接口方法的实现类对象，以方便调用其各个接口
+   * @return WxMpMassMessageService
+   */
+  WxMpMassMessageService getMassMessageService();
 
   void setKefuService(WxMpKefuService kefuService);
 

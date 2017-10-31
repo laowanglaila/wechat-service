@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.config;
 
-import com.hualala.app.wechat.api.WxMpService;
-import com.hualala.app.wechat.api.impl.WxMpServiceOkHttpImpl;
+import com.hualala.app.wechat.api.WxGroupMpService;
+import com.hualala.app.wechat.api.impl.WxGroupMpServiceOkHttpImpl;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
 import com.hualala.core.grpc.GrpcClient;
 import io.grpc.Channel;
@@ -43,8 +43,8 @@ public class AccessTokenServiceConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public WxMpService wxMpService(@Qualifier("wechatSDKAccessTokenRpcServiceFutureStub")  WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub stub) {
-        WxMpService wxMpService = new WxMpServiceOkHttpImpl(stub);
+    public WxGroupMpService wxMpService(@Qualifier("wechatSDKAccessTokenRpcServiceFutureStub")  WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub stub) {
+        WxGroupMpService wxMpService = new WxGroupMpServiceOkHttpImpl(stub);
         return wxMpService;
     }
 }

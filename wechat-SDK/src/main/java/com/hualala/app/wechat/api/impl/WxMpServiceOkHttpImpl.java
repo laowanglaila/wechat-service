@@ -1,10 +1,9 @@
 package com.hualala.app.wechat.api.impl;
 
 import com.hualala.app.wechat.api.WxMpConfigStorage;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.grpc.WechatAccessTokenRpcData;
-import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
+import com.hualala.app.wechat.api.WxMpService;
+import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
@@ -13,8 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient, OkHttpProxyInfo> {
 
@@ -22,15 +20,6 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
 
   private OkHttpClient httpClient;
   private OkHttpProxyInfo httpProxy;
-  public WxMpServiceOkHttpImpl(WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub accessTokenStub){
-    super();
-    this.accessTokenStub = accessTokenStub;
-    this.initHttp();
-  }
-  public static final Integer MAXIDLE_CONNECTION = 20;
-  public static final Long KEEP_ALIVE_DURATION = 10L;
-  public static final Long RESPONSE_TIMOUT = 5L;
-
 
   @Override
   public OkHttpClient getRequestHttpClient() {
@@ -50,32 +39,31 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
     logger.debug("WxMpServiceOkHttpImpl is running");
-    WechatAccessTokenRpcData.AccessTokenReq accessTokenReq = WechatAccessTokenRpcData
-            .AccessTokenReq
-            .newBuilder()
-            .setMpID( super.getMpID() )
-            .build();
-    WechatAccessTokenRpcData.AccessTokenRes accessTokenRes = null;
+    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
     try {
-      accessTokenRes = super.accessTokenStub
-              .withDeadlineAfter( 10L, TimeUnit.SECONDS )
-              .getAccessToken( accessTokenReq )
-              .get();
-      String code = accessTokenRes.getResult().getCode();
-      String message = accessTokenRes.getResult().getMessage();
-      if (!"000".equals( code )){
-        log.error( "获取accessToken失败：[" + code +"]:"+ message );
-        throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,message );
-      }
+      lock.lock();
 
-    } catch (InterruptedException e) {
-      log.error( "获取accessToken接口调用失败：" + e.getMessage() );
-      throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,"获取accessToken接口调用失败：" + e.getMessage() );
-    } catch (ExecutionException e) {
-      log.error("获取accessToken接口调用失败：" + e.getMessage() );
-      throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,"获取accessToken接口调用失败：" + e.getMessage() );
+      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
+        String url = String.format( WxMpService.GET_ACCESS_TOKEN_URL,
+          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
+
+        Request request = new Request.Builder().url(url).get().build();
+        Response response = getRequestHttpClient().newCall(request).execute();
+        String resultContent = response.body().string();
+        WxError error = WxError.fromJson(resultContent);
+        if (error.getErrorCode() != 0) {
+          throw new WxErrorException(error);
+        }
+        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+        this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
+          accessToken.getExpiresIn());
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
     }
-    return accessTokenRes.getAccessToken();
+    return this.getWxMpConfigStorage().getAccessToken();
   }
 
   @Override
@@ -83,14 +71,11 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
     logger.debug("WxMpServiceOkHttpImpl initHttp");
     WxMpConfigStorage configStorage = this.getWxMpConfigStorage();
 
-    if (configStorage != null && configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
+    if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
       httpProxy = OkHttpProxyInfo.socks5Proxy(configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
     }
-    ConnectionPool connectionPool = new ConnectionPool(MAXIDLE_CONNECTION, KEEP_ALIVE_DURATION, TimeUnit.MINUTES);
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-            .connectionPool(connectionPool)
-            .connectTimeout( RESPONSE_TIMOUT,TimeUnit.SECONDS );
-                //设置代理
+    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+    //设置代理
     if (httpProxy != null) {
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 
