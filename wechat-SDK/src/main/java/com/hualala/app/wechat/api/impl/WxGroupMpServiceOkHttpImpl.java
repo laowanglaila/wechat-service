@@ -5,8 +5,10 @@ import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcData;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
+import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.*;
 import org.slf4j.Logger;
@@ -44,6 +46,7 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
             .AccessTokenReq
             .newBuilder()
             .setMpID( this.mpID )
+            .setIsForceRefresh( forceRefresh )
             .build();
     WechatAccessTokenRpcData.AccessTokenRes accessTokenRes = null;
     try {
@@ -204,6 +207,45 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
     public WxMpMassMessageService getMassMessageService(String mpID) {
         this.mpID = mpID;
         return this.getMassMessageService();
+    }
+
+
+    @Override
+    public <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+        if (uri.contains("access_token=")) {
+            throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
+        }
+        String accessToken = getAccessToken(false);
+
+        String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
+
+        try {
+            T result = executor.execute(uriWithAccessToken, data);
+            this.log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, data, result);
+            return result;
+        } catch (WxErrorException e) {
+            WxError error = e.getError();
+      /*
+       * 发生以下情况时尝试刷新access_token
+       * 40001 获取access_token时AppSecret错误，或者access_token无效
+       * 42001 access_token超时
+       * 40014 不合法的access_token，请开发者认真比对access_token的有效性（如是否过期），或查看是否正在为恰当的公众号调用接口
+       */
+            if (error.getErrorCode() == 42001) {
+                // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
+                getAccessToken(true);
+                return this.execute(executor, uri, data);
+            }
+
+            if (error.getErrorCode() != 0) {
+                this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, data, error);
+                throw new WxErrorException(error, e);
+            }
+            return null;
+        } catch (IOException e) {
+            this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, data, e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
 }
