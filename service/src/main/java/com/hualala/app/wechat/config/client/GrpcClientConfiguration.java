@@ -27,12 +27,10 @@ public class GrpcClientConfiguration {
         GrpcClient client = new GrpcClient(grpcClientProperties.getWechat());
         return client;
     }
-
-//    @Bean
-//    public GrpcIdgenClient idgenClient(Brave brave) {
-//        logger.info(() -> "initializing idgen client ... [" + grpcClientProperties.getIdgen() + "]");
-//        GrpcIdgenClient client = new GrpcIdgenClient(grpcClientProperties.getIdgen(), brave);
-//        return client;
+//grpc stream test
+//    @Bean(name = "channel",destroyMethod = "shutdown")
+//    public Channel channel() {
+//        return ManagedChannelBuilder.forTarget(grpcClientProperties.getWechat()).usePlaintext(true).build();
 //    }
 
     @Bean (name = "com.hualala.message", destroyMethod="clean")
@@ -68,6 +66,17 @@ public class GrpcClientConfiguration {
     @Bean
     public CardUpdateRpcServiceGrpc.CardUpdateRpcServiceBlockingStub getWechatUpdateServiceStub(@Qualifier("wechatGrpcClient") GrpcClient wechatGrpcClient) throws Exception {
         return (CardUpdateRpcServiceGrpc.CardUpdateRpcServiceBlockingStub) wechatGrpcClient.getBlockingStub(CardUpdateRpcServiceGrpc.class);
+    }
+//grpc stream test
+//    @Bean
+//    public TestRpcServiceGrpc.TestRpcServiceBlockingStub testRpcServiceFutureStub(@Qualifier("channel") Channel channel) throws Exception {
+//        return TestRpcServiceGrpc.newBlockingStub( channel );
+//    }
+
+
+    @Bean
+    public CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceFutureStub cardPrePareQueryRpcServiceFutureStub(@Qualifier("wechatGrpcClient") GrpcClient wechatGrpcClient) throws Exception {
+        return (CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceFutureStub) wechatGrpcClient.getFutureStub(CardPrePareQueryRpcServiceGrpc.class);
     }
 
 }

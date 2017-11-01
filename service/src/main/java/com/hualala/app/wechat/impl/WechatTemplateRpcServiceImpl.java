@@ -2,14 +2,22 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.WechatTemplateTypeEnum;
+import com.hualala.app.wechat.api.WxGroupMpService;
+import com.hualala.app.wechat.api.WxMpService;
 import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.RedisKeys;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.config.RabbitQueueProps;
 import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.mapper.sem.TemplateMessageModelMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
+import com.hualala.app.wechat.model.mp.MpInfoCache;
+import com.hualala.app.wechat.model.sem.TemplateMessageModel;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
 import com.hualala.app.wechat.service.user.WechatUserService;
+import com.hualala.app.wechat.util.MD5Util;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.template.WechatTemplate;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;
@@ -19,12 +27,16 @@ import com.hualala.core.client.BaseRpcClient;
 import com.hualala.core.utils.DataUtils;
 import com.hualala.message.SemSMSQueueService;
 import com.hualala.message.WechatMsgQueueService;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import com.hualala.app.wechat.bean.template.WxMpTemplateData;
+import com.hualala.app.wechat.bean.template.WxMpTemplateMessage;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.PropertyPlaceholderHelper;
 
@@ -38,7 +50,75 @@ import java.util.stream.Collectors;
 @Service
 public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
 
+    @Autowired
+    private WxGroupMpService wxMpService;
+
     protected Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
+
+    @Value( "${env.m.domain}" )
+    private static String domain;
+
+    private static final String ORDER_URL = domain+"/order/detail.htm";
+    private static final String CRM_URL = domain +"/crm/vip_details.htm";
+    private static final String GIFT_URL = domain +"/user/event.htm";
+    private static final String QUEUE_URL = domain +"/user/queueno.htm";
+    private static final String CRM_TRANS_URL = domain +"/crm/vip_trans.htm";
+    private static final String ASSESSMENT_REPLY = domain + "/user/remarks.htm";
+    // 商城的订单详情
+    private static final String STORE_ORDER_URL = domain+"/mall/order-detail.htm";
+
+    private static final String INVOICE_URL = domain+"/receipt/detail.htm";
+    private static final String INVOICE_LST_URL = domain+"/receipt/my-receipt.htm";
+    private static final String BOOK_ORDER_URIL = domain+"/corder/detail.htm";
+
+
+
+    public static final String ORDER_TYPE = "order";
+
+    public static final String CRM_TYPE = "crm";
+
+    public static final String GIFT_TYPE = "gift";
+
+    public static final String QUEUE_TYPE = "queue";
+    // 顾客评价回复
+    public static final String ASSESSMENT_TYPE = "assessment";
+
+    public static final String INVOICE_TYPE = "invoice";
+
+    public static final String SUBMIT_SUBTYPE = "submit";
+
+    public static final String CHECK_SUBTYPE = "check";
+
+    public static final String RETURN_SUBTYPE = "return";
+
+    public static final String REFUND_SUBTYPE = "refund";
+
+    public static final String ALARM_SUBTYPE = "alarm";
+
+    public static final String PAID_ALARM = "paidAlarm";
+
+    public static final String ORDER_BOOK = "book";
+
+    public static final String TRANS_SUBTYPE = "trans";
+
+    // 积分领取通知
+    public static final String GIFT_ALARM_CRMPOINT = "crmPoint";
+    // 会员储值领取通知
+    public static final String GIFT_ALARM_CRMMONEY = "crmMoney";
+    // 代金券领取通知
+    public static final String GIFT_ALARM_GIFT = "giftAlarm";
+    // 会员权益包领取通知
+    public static final String GIFT_ALARM_CRMCUSTOMER = "crmCustomer";
+    // 会员推荐奖励提醒
+    public static final String GIFT_ALARM_CRMBRANCH = "crmBranch";
+    // 会员权益包变动提醒
+    public static final String GIFT_CRMCUSTOMER_CHANGE = "crmCustomerChange";
+    // 会员积分清零
+    public static final String GIFT_POINT_INIT = "crmPointInit";
+    // 顾客评价回复
+    public static final String ASSESSMENT_ALARM_REPLY = "asReply";
+
+
 
 
     @Autowired
@@ -59,6 +139,12 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
     private RabbitTemplate rabbitTemplate;
     @Autowired
     private RabbitQueueProps rabbitQueueProps;
+    @Autowired
+    private StringRedisTemplate skuRedisTemplate;
+
+    @Autowired
+    private TemplateMessageModelMapper templateMessageModelMapper;
+
     @Override
     public WechatTemplateRpcResData sentWechatTemplate(WechatTemplateRpcReqData reqData) {
 
@@ -71,12 +157,12 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "未找到对应公众号");
         }
 
-        WechatTemplateTypeEnum templateTypeEnum = reqData.getTemplateType();
-        if(templateTypeEnum.getValue() == 0){
+        WechatTemplateTypeEnum modelTypeEnum = reqData.getTemplateType();
+        if(modelTypeEnum.getValue() == 0){
             return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_TEMPLATE_ERROR, "未指定模板消息类型");
         }
-        String modelType =templateTypeEnum.getModelType();
-        String modelSubType = templateTypeEnum.getModelSubType();
+        String modelType =modelTypeEnum.getModelType();
+        String modelSubType = modelTypeEnum.getModelSubType();
 
         long userID = reqData.getUserID();
 
@@ -126,6 +212,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         logger.debug(() -> "MapPlaceholderResolver : [" + templateStr + " ]");
 
 
+
         // 调用服务插入模板队列
         WechatMsgQueueService.WechatQueueReq req = new WechatMsgQueueService.WechatQueueReq();
         //WechatQueueReq = DataUtils.mapToBean(map, WechatQueueReq.getClass());
@@ -136,8 +223,8 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         req.setMpID(mpID);
         req.setParam1(reqData.getParam1());
         req.setTemplateContent(templateStr);
-        req.setTemplateType(templateTypeEnum.getModelType());
-        req.setTemplateSubType(templateTypeEnum.getModelSubType());
+        req.setTemplateType(modelTypeEnum.getModelType());
+        req.setTemplateSubType(modelTypeEnum.getModelSubType());
         req.setTemplateID(wechatTemplateModel.getTemplateID());
         req.setOrderKey(UUID.randomUUID().toString());
         req.setGroupID(reqData.getGroupID());
@@ -204,12 +291,20 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_MPID_EMPTY ,"未找到对应公众号");
         }
 
-        WechatTemplateTypeEnum templateTypeEnum = reqData.getTemplateType();
-        if(templateTypeEnum.getValue() == 0){
+        MpInfoCache mpInfo = null;
+        try {
+            mpInfo = mpInfoService.getMpInfoByMpID( mpID );
+        } catch (WechatInnerException e) {
+            logger.error( "获取groupID失败",e );
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_COMMON_ERROR,e.getMessage() );
+        }
+        Integer groupID = mpInfo.getGroupID();
+        WechatTemplateTypeEnum modelTypeEnum = reqData.getTemplateType();
+        if(modelTypeEnum.getValue() == 0){
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"未指定模板消息类型");
         }
-        String modelType =templateTypeEnum.getModelType();
-        String modelSubType = templateTypeEnum.getModelSubType();
+        String modelType =modelTypeEnum.getModelType();
+        String modelSubType = modelTypeEnum.getModelSubType();
 
         long userID = reqData.getUserID();
 
@@ -217,21 +312,15 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         if (modelID == null) {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"未找到对应的模板ID");
         }
-        Map<String, Object> map = DataUtils.beanToMap(reqData);
 
-        if(!map.containsKey("remark")){
-            map.put("remark","");
-        }
 
         //  获取模板ID
-        WechatTemplateModel wechatTemplateModel = wechatTemplateService.getTemplate(mpID, modelID,reqData.getGroupID(),modelType);
+        WechatTemplateModel wechatTemplateModel = wechatTemplateService.getTemplate(mpID, modelID,groupID,modelType);
         if (wechatTemplateModel == null) {
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"初始化微信模板消息异常");
         }
         logger.debug(() -> "templateID : [ " + wechatTemplateModel.getTemplateID() + " ]");
-        map.put("templateID", wechatTemplateModel.getTemplateID());
         //  获取用户openID
-
         Map<String, Object> param = new HashMap<>();
         param.put("userID", userID);
         param.put("mpID", mpID);
@@ -240,25 +329,150 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         String userOpenID = wechatUserService.queryOpenID(param);
         List <WechatTemplateItem> templateItems = reqData.getTemplateItem();
         List <WxMpTemplateData> collect = templateItems.stream()
-                                                       .map( item -> new WxMpTemplateData( item.getType().getName(), item.getValue(), item.getColor() ) )
-                                                       .collect( Collectors.toList() );
+               .map( item -> new WxMpTemplateData( item.getType().getName(), item.getValue(), item.getColor() ) )
+               .collect( Collectors.toList() );
+        String param1 = reqData.getParam1();
+        String orderKey = reqData.getOrderKey();
+
+        String url = this.generateUrl( mpID, groupID, modelType, modelSubType, param1, orderKey );
+
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
-                                                                     .templateId( wechatTemplateModel.getTemplateID() )
-                                                                     .toUser( userOpenID )
-                                                                     .url( reqData.getUrl() )
-                                                                     .data( collect )
-                                                                     .build();
+             .templateId( wechatTemplateModel.getTemplateID() )
+             .toUser( userOpenID )
+             .url( url )
+             .data( collect )
+             .build();
+        String sendTemplateMsg = null;
+        System.out.println("结果：" + sendTemplateMsg);
+        this.sendMessageToMq( mpID,userOpenID, wxMpTemplateMessage );
+        return ResultUtil.success(WechatSendTemplateRes.class);
+    }
+    private String generateUrl(String mpID,
+                               Integer groupID,
+                               WechatTemplateTypeEnum templateTypeEnum,
+                               String param1,
+                               String orderKey) {
+        String url = null;
+        switch (templateTypeEnum){
+            case TEMPLATE_ENUM_ORDER:
+                url =  ORDER_URL+"?mpid="+mpID+"&g="+groupID +"&i="+orderKey;
+                break;
+            case TEMPLATE_ENUM_ORDER_BOOK:
+                url =  BOOK_ORDER_URIL+"?mpid="+mpID+"&g="+groupID +"&key="+orderKey;
+                break;
+            case TEMPLATE_ENUM_QUEUE:
+                url = null;
+                break;
+            case TEMPLATE_ENUM_INVOICE:
+                if("-1".equals(param1)) {
+                    url =  INVOICE_LST_URL + "?mpid=" + mpID + "&g=" + groupID;
+                } else {
+                    // 电子发票
+                    url =  INVOICE_URL + "?i=" + param1 + "&mpid=" + mpID + "&g=" + groupID;
+                }
+                break;
+            case TEMPLATE_ENUM_CRM_REG:
+                //TODO
+                break;
+            case TEMPLATE_ENUM_CRM_GIFT:
+                break;
+            case TEMPLATE_ENUM_CRM_TRANS:
+                break;
+            case TEMPLATE_ENUM_CRM_CUSTOMER:
+                //新版会员权益
+//                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
+                break;
+            default:
+                url = null;
+        }
+
+        return url;
+    }
+    private String generateUrl(String mpID,
+                             Integer groupID,
+                             String modelType,
+                             String modelSubType,
+                             String param1,
+                             String orderKey) {
+        String url = null;
+        if(ORDER_TYPE.equals(modelType)){
+            // 订单状态
+            url =  ORDER_URL+"?mpid="+mpID+"&g="+groupID +"&i="+orderKey;
+
+            if(ORDER_BOOK.equals(modelSubType)){
+                url =  BOOK_ORDER_URIL+"?mpid="+mpID+"&g="+groupID +"&key="+orderKey;
+            } else if("50".equals(param1) || "51".equals(param1)) {
+                url =  STORE_ORDER_URL+"?mpid="+mpID+ "&g="+groupID+"&k="+orderKey;
+            } else if(PAID_ALARM.equals(modelSubType)){
+                url = null;
+            }
+
+        }else if(CRM_TYPE.equals(modelType)){
+            //会员
+            url =  CRM_URL+"?mpid="+mpID+"&g="+groupID;
+        }else if(GIFT_TYPE.equals(modelType)){
+            // 会员充值/会员积分
+            if (GIFT_ALARM_CRMMONEY.equals(modelSubType)
+                    || GIFT_ALARM_CRMPOINT.equals(modelSubType)
+                    ) {
+                url =  CRM_URL+"?mpid="+mpID+"&g="+groupID;
+            } else if (GIFT_ALARM_CRMBRANCH.equals(modelSubType)) {
+
+            } else if (GIFT_ALARM_GIFT.equals(modelSubType)) {
+                // 我的代金券
+                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
+            } else if (GIFT_CRMCUSTOMER_CHANGE.equals(modelSubType)) {
+                // 会员权益变动
+            } else {
+                // 我的代金券
+                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
+            }
+        }else if(QUEUE_TYPE.equals(modelType)){
+            // 排号详情页面
+            //url =  QUEUE_URL+"?sc=wechat&mpid="+mpID+"&g="+groupID;
+            //http://local.m.hualala.com/table/num.htm?s=77875&g=5
+        } else if (ASSESSMENT_TYPE.equals(modelType)) {
+            url =  ASSESSMENT_REPLY+"?i="+param1+"&mpid="+mpID+"&g="+groupID;
+
+        } else if (INVOICE_TYPE.equals(modelType)) {
+            if("-1".equals(param1)) {
+                url =  INVOICE_LST_URL + "?mpid=" + mpID + "&g=" + groupID;
+            } else {
+                // 电子发票
+                url =  INVOICE_URL + "?i=" + param1 + "&mpid=" + mpID + "&g=" + groupID;
+            }
+        }
+        return url;
+    }
+
+    private void sendMessageToMq(String mpID,String openID, WxMpTemplateMessage wxMpTemplateMessage) {
         String json = wxMpTemplateMessage.toJson();
         String mqMsg = "{" +
                 "\"mpID\":\"" + mpID + "\","+
                 "\"param\":" + json +""+
                 "}";
+        Integer status = 0;
         try {
             rabbitTemplate.convertAndSend( rabbitQueueProps.getTemplateMessageExchange(),null ,mqMsg );
+            status = 1;
         }catch (AmqpException e){
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"RabbitMQ发送消息失败");
+        }finally {
+            this.insertDBAndRedis( mpID, openID, mqMsg ,status);
         }
-        return ResultUtil.success(WechatSendTemplateRes.class);
+    }
+
+    private void insertDBAndRedis(String mpID, String openID, String mqMsg,Integer status) {
+        TemplateMessageModel templateMessageModel = new TemplateMessageModel();
+        templateMessageModel.setMpID( mpID );
+        templateMessageModel.setOpenID( openID );
+        templateMessageModel.setMessage( mqMsg );
+        templateMessageModel.setStatus( status );
+        templateMessageModelMapper.insertSelective( templateMessageModel );
+        Long itemID = templateMessageModel.getItemID();
+        String sequence = MD5Util.MD5Encode( mqMsg );
+        BoundValueOperations<String, String> ops = skuRedisTemplate.boundValueOps( RedisKeys.WEHCHAT_MQ_MESSAGE_KEY + sequence );
+        ops.set( ""+itemID );
     }
 
 }

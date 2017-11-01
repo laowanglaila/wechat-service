@@ -10,4 +10,5 @@ public interface RedisKeys {
     String WECHAT_USER_RELATION_LOCK = PREFIX+ COLON  +  "tbl_shop_wechat_user_relation" + COLON ;
     String WECHAT_USER_INFO_LOCK = PREFIX+ COLON  +  "tbl_shop_wechat_user" + COLON ;
     String WEHCHAT_MPINFO_KEY = PREFIX + COLON + "mpInfo" + COLON;
+    String WEHCHAT_MQ_MESSAGE_KEY = PREFIX + COLON + "mq_message" + COLON;
 }

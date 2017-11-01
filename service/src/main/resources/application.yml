@@ -132,7 +132,8 @@ zookeeper:
 env:
   m:
     domain: https://dohko.m.hualala.com
-
+wechatsdk:
+    host: localhost:6567
 ---
 spring:
   profiles: mu

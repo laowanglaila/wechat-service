@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.service.checkpermission;
 
 import com.hualala.app.wechat.WechatFuctionEnum;
-import com.hualala.app.wechat.common.WechatBeanFactory;
+import com.hualala.app.wechat.util.WechatBeanFactory;
 
 /**
  * Created by renjianfei on 2017/10/13.

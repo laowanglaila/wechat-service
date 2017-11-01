@@ -25,6 +25,9 @@ public interface WechatAccessTokenRpcService {
         private Long brandID;
         @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
         private Long shopID;
+        @Protocol(fieldType = FieldType.BOOL, order = 6, description = "是否强制刷新")
+        private boolean isForceRefresh;
+
     }
 
     @Data

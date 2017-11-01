@@ -109,7 +109,8 @@ public interface WechatTemplateRpcService {
         private String url;
         @Protocol(fieldType = FieldType.STRING, order = 11, description = "param1")
         private String param1;
-
+        @Protocol(fieldType = FieldType.STRING, order = 18, description = "key")
+        private String orderKey;
     }
 
 }

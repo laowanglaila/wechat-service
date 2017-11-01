@@ -27,7 +27,4 @@ nbdist/
 ## grpc auto generate
 wechat-interface/src/main/java/com/hualala/app/wechat/grpc
 /service/src/test/java/com/hualala/app/wechat/hash/
-/service/src/main/java/com/hualala/app/wechat/config/datasource/
-/wechat-interface/src/main/proto/atest.proto
-/service/src/main/java/com/hualala/app/wechat/impl/TestGrpcImpl.java
-!/service/src/main/java/com/hualala/app/wechat/config/datasource/
+

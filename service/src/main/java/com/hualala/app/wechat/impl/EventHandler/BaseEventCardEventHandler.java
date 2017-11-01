@@ -2,11 +2,10 @@ package com.hualala.app.wechat.impl.EventHandler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.WechatBeanFactory;
 import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.util.WechatBeanFactory;
 import com.hualala.core.base.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by renjianfei on 2017/9/8.
@@ -14,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public abstract class BaseEventCardEventHandler  {
 
-@Autowired
-private WechatBeanFactory wechatBeanFactory;
+
 
     public abstract Object handler(JSONObject jsonObject);
     public void handler(JSONObject object,String event){
