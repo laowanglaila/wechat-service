@@ -23,9 +23,10 @@ public class WechatAccessTokenRpcServiceImpl implements WechatAccessTokenRpcServ
     @Override
     public AccessTokenRes getAccessToken(AccessTokenReq accessTokenReq) {
         String mpID = RequestUtil.getMpID( accessTokenReq );
+        boolean forceRefresh = accessTokenReq.isForceRefresh();
         AccessTokenRes resultInfoBean;
         try {
-            JSONObject accessToken = accessTokenService.getAccessToken( mpID );
+            JSONObject accessToken = accessTokenService.getAccessToken( mpID ,forceRefresh);
             resultInfoBean = ResultUtil.getResultInfoBean( accessToken, AccessTokenRes.class );
         } catch (WechatInnerException e) {
             log.error( e.getMessage(),e );

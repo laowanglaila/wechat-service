@@ -351,10 +351,12 @@ public class ComponentTokenService implements WechatBaseApi {
      * @param appID
      * @return
      */
-    public JSONObject getAuthorizerAcToken(String appID) throws WechatInnerException {
+    public JSONObject getAuthorizerAcToken(String appID,boolean isForceRefresh) throws WechatInnerException {
         JSONObject result = new JSONObject();
-        String authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
-
+        String authorizerAcToken = null;
+        if (isForceRefresh){
+            authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
+        }
         if (authorizerAcToken == null) {
             this.apiAuthorizerToken( appID );
             authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
