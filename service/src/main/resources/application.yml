@@ -12,7 +12,7 @@ spring:
   datasource:
     multipartite:
                 sem:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
                     username: root
                     password: hualaladev
                     driver-class-name: com.mysql.jdbc.Driver
@@ -25,7 +25,7 @@ spring:
                     time-between-eviction-runs-millis: 3600000
                     min-evictable-idle-time-millis: 1800000
                 shop:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
                     username: root
                     password: hualaladev
                     driver-class-name: com.mysql.jdbc.Driver
@@ -134,6 +134,14 @@ env:
     domain: https://dohko.m.hualala.com
 wechatsdk:
     host: localhost:6567
+
+core:
+  zipkin:
+    url: http://dohko.zipkin.hualala.com/api/v2/spans   #zipkin server地址，采集到的数据发送至此。线上地址用哪个，上线前咨询运维同学（叶志勤）
+    serviceName: wechat-service                      #当前服务名称
+    traceSampler: 1.0                                  #采样比率，1.0表示百分百，刚上线使用建议1.0，后续系统性能稳定建议 0.1。
+    enable: true                                        #开关：是否使用zipkin，如果不设置（或者false），zipkin不能使用
+
 ---
 spring:
   profiles: mu
@@ -144,32 +152,33 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: hualaladev
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 3
-    max-active: 20
-    min-idle: 1
-    validation-query: SELECT 1
-    test-on-borrow: ture
-    test-while-idle: true
-    time-between-eviction-runs-millis: 3600000
-    min-evictable-idle-time-millis: 1800000
     multipartite:
-          sem:
-              url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8
-              username: root
-              password: hualaladev
-              driver-class-name: com.mysql.jdbc.Driver
-              initial-size: 3
-              max-active: 20
-              min-idle: 1
-              validation-query: SELECT 1
-              test-on-borrow: ture
-              test-while-idle: true
-              time-between-eviction-runs-millis: 3600000
-              min-evictable-idle-time-millis: 1800000
+                sem:
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
+                shop:
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -263,6 +272,15 @@ env:
   m:
     domain: https://dohko.m.hualala.com
 
+core:
+  zipkin:
+    url: http://dohko.zipkin.hualala.com/api/v2/spans   #zipkin server地址，采集到的数据发送至此。线上地址用哪个，上线前咨询运维同学（叶志勤）
+    serviceName: wechat-service                      #当前服务名称
+    traceSampler: 1.0                                  #采样比率，1.0表示百分百，刚上线使用建议1.0，后续系统性能稳定建议 0.1。
+    enable: true                                        #开关：是否使用zipkin，如果不设置（或者false），zipkin不能使用
+wechatsdk:
+    host: dohko.wechat.service.hualala.com:31558
+
 ---
 spring:
   profiles: dohko
@@ -273,32 +291,33 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: hualaladev
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 3
-    max-active: 20
-    min-idle: 1
-    validation-query: SELECT 1
-    test-on-borrow: ture
-    test-while-idle: true
-    time-between-eviction-runs-millis: 3600000
-    min-evictable-idle-time-millis: 1800000
     multipartite:
-          sem:
-              url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8
-              username: root
-              password: hualaladev
-              driver-class-name: com.mysql.jdbc.Driver
-              initial-size: 3
-              max-active: 20
-              min-idle: 1
-              validation-query: SELECT 1
-              test-on-borrow: ture
-              test-while-idle: true
-              time-between-eviction-runs-millis: 3600000
-              min-evictable-idle-time-millis: 1800000
+                sem:
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
+                shop:
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -383,6 +402,15 @@ zookeeper:
 env:
   m:
     domain: https://dohko.m.hualala.com
+
+core:
+  zipkin:
+    url: http://dohko.zipkin.hualala.com/api/v2/spans   #zipkin server地址，采集到的数据发送至此。线上地址用哪个，上线前咨询运维同学（叶志勤）
+    serviceName: wechat-service                      #当前服务名称
+    traceSampler: 1.0                                  #采样比率，1.0表示百分百，刚上线使用建议1.0，后续系统性能稳定建议 0.1。
+    enable: true                                        #开关：是否使用zipkin，如果不设置（或者false），zipkin不能使用
+wechatsdk:
+    host: dohko.wechat.service.hualala.com:31558
 ---
 spring:
   profiles: pre
@@ -393,31 +421,33 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: hualaladev
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 3
-    max-active: 20
-    min-idle: 1
-    validation-query: SELECT 1
-    test-on-borrow: ture
-    test-while-idle: true
-    time-between-eviction-runs-millis: 3600000
-    min-evictable-idle-time-millis: 1800000
     multipartite:
-          url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8
-          username: root
-          password: hualaladev
-          driver-class-name: com.mysql.jdbc.Driver
-          initial-size: 3
-          max-active: 20
-          min-idle: 1
-          validation-query: SELECT 1
-          test-on-borrow: ture
-          test-while-idle: true
-          time-between-eviction-runs-millis: 3600000
-          min-evictable-idle-time-millis: 1800000
+                sem:
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
+                shop:
+                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -498,6 +528,16 @@ zookeeper:
 env:
   m:
     domain: https://dohko.m.hualala.com
+
+core:
+  zipkin:
+    url: http://dohko.zipkin.hualala.com/api/v2/spans   #zipkin server地址，采集到的数据发送至此。线上地址用哪个，上线前咨询运维同学（叶志勤）
+    serviceName: wechat-service                      #当前服务名称
+    traceSampler: 1.0                                  #采样比率，1.0表示百分百，刚上线使用建议1.0，后续系统性能稳定建议 0.1。
+    enable: true                                        #开关：是否使用zipkin，如果不设置（或者false），zipkin不能使用
+wechatsdk:
+    host: dohko.wechat.service.hualala.com:31558
+
 ---
 spring:
   profiles: production
@@ -508,26 +548,38 @@ spring:
   resources:
     add-mappings: false
   datasource:
-#    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&allowMultiQueries=true
-    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8
-    username: myhualashopol
-    password: gppwd@dldshopol
-    driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 10
-    max-active: 100
-    min-idle: 2
-    validation-query: SELECT 1
-    test-on-borrow: ture
-    test-while-idle: true
-    time-between-eviction-runs-millis: 3600000
-    min-evictable-idle-time-millis: 1800000
-
+    multipartite:
+                sem:
+                    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
+                shop:
+                    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+                    username: root
+                    password: hualaladev
+                    driver-class-name: com.mysql.jdbc.Driver
+                    initial-size: 3
+                    max-active: 20
+                    min-idle: 1
+                    validation-query: SELECT 1
+                    test-on-borrow: ture
+                    test-while-idle: true
+                    time-between-eviction-runs-millis: 3600000
+                    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     username: admin
     password: hualalaadmin
     host: inner.rabbitmq.hualala.com
     port: 5672
-
   # REDIS (RedisProperties)
   redis:
     database: 0
@@ -538,10 +590,8 @@ spring:
       min-idle: 30
       max-active: 200
       max-wait: 10000
-
 mybatis:
    config-location: classpath:mybatis-config.xml
-
 grpc:
   port: 6567
   client:
@@ -551,7 +601,6 @@ grpc:
         wechat: wechat.service.hualala.com:32263
 #        shopcrm: shop.crm.service.hualala.com:32244
         shopcrm: shop.crm.service21.hualala.com:32306
-
 wechat:
   data:
       componentAppID: wx01482fd383628bee
@@ -582,7 +631,6 @@ redisSku:
     maxWait: 10000
     maxIdle: 20
     minIdle: 10
-
 redisLocker:
   host: sjhl.codis.hualala.com
   port: 19000
@@ -592,14 +640,20 @@ redisLocker:
     maxWait: 10000
     maxIdle: 20
     minIdle: 10
-
 zookeeper:
   zookeeperAddress: 192.168.2.64:2181,192.168.2.65:2181,192.168.2.69:2181,192.168.2.67:2181,192.168.2.68:2181  #zookeeper uri
   serviceName: wechat-card  #服务名称
   basePath: /wechat-service   #服务根路径
   servicePath: /wechat-services  #服务注册路径
   lockPath: /wechat/card/lock  #分布式锁路径
-
 env:
   m:
     domain: https://m.hualala.com
+core:
+  zipkin:
+    url: http://zipkin.sm.hualala.com/api/v2/spans   #zipkin server首鸣机房地址，采集到的数据发送至此。
+    serviceName: store-api-portal                      #当前服务名称
+    traceSampler: 1.0                                  #采样比率，1.0表示百分百，刚上线使用建议1.0，后续系统性能稳定建议 0.1。
+    enable: true                                        #开关：是否使用zipkin，如果不设置（或者false），zipkin不能使用
+wechatsdk:
+    host: wechat.service.hualala.com:32263
