@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.util;
 
 import com.hualala.app.wechat.WechatRequestInfo;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.service.MpInfoService;
 import lombok.extern.slf4j.Slf4j;

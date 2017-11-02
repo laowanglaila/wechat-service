@@ -1,7 +1,7 @@
 //package com.hualala.app.wechat.config;
 //
-//import com.hualala.app.wechat.api.WxMpService;
-//import com.hualala.app.wechat.api.impl.WxMpServiceOkHttpImpl;
+//import WxMpService;
+//import WxMpServiceOkHttpImpl;
 //import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
 //import com.hualala.core.grpc.GrpcClient;
 //import io.grpc.Channel;

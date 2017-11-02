@@ -2,9 +2,9 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.ComponentTokenRpcService;
 import com.hualala.app.wechat.DefaultClass.DefaultRequestInfo;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.ComponentTokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

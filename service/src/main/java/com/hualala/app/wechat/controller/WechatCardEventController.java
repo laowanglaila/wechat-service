@@ -5,7 +5,7 @@ import com.hualala.app.wechat.CardEventProcessRpcService;
 import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.CardSyncRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
-import com.hualala.app.wechat.common.TimeConstants;
+import com.hualala.app.wechat.sdk.mp.common.TimeConstants;
 import com.hualala.app.wechat.grpc.CardPrePareQueryRpcData;
 import com.hualala.app.wechat.grpc.CardPrePareQueryRpcServiceGrpc;
 import com.hualala.app.wechat.grpc.CardUpdateRpcData;

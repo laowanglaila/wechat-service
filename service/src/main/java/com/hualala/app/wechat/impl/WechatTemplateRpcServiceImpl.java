@@ -2,14 +2,13 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.WechatTemplateTypeEnum;
-import com.hualala.app.wechat.api.WxGroupMpService;
-import com.hualala.app.wechat.api.WxMpService;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.RedisKeys;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.config.RabbitQueueProps;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.mapper.sem.TemplateMessageModelMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
@@ -27,8 +26,8 @@ import com.hualala.core.client.BaseRpcClient;
 import com.hualala.core.utils.DataUtils;
 import com.hualala.message.SemSMSQueueService;
 import com.hualala.message.WechatMsgQueueService;
-import com.hualala.app.wechat.bean.template.WxMpTemplateData;
-import com.hualala.app.wechat.bean.template.WxMpTemplateMessage;
+import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateData;
+import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateMessage;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
@@ -333,7 +332,6 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
                .collect( Collectors.toList() );
         String param1 = reqData.getParam1();
         String orderKey = reqData.getOrderKey();
-
         String url = this.generateUrl( mpID, groupID, modelType, modelSubType, param1, orderKey );
 
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
@@ -342,6 +340,11 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
              .url( url )
              .data( collect )
              .build();
+//        try {
+//            wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
+//        } catch (WxErrorException e) {
+//            e.printStackTrace();
+//        }
         String sendTemplateMsg = null;
         System.out.println("结果：" + sendTemplateMsg);
         this.sendMessageToMq( mpID,userOpenID, wxMpTemplateMessage );

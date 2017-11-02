@@ -2,10 +2,10 @@ package com.hualala.app.wechat.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.core.base.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

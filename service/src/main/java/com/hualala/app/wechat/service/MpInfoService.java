@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.RedisKeys;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.mp.MpShopsMapper;
 import com.hualala.app.wechat.model.mp.MpInfoCache;

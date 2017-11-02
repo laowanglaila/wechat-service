@@ -2,8 +2,8 @@ package com.hualala.app.wechat.impl.EventHandler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.util.WechatBeanFactory;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
 import com.hualala.core.base.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
 

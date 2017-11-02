@@ -1,11 +1,10 @@
 package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.AuthorizationCheckRpcService;
-import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
 import com.hualala.app.wechat.WechatFuctionEnum;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.checkpermission.AuthorizationCheck;

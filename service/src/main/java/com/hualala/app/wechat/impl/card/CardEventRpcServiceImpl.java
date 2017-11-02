@@ -2,7 +2,7 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardEventRpcService;
-import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;

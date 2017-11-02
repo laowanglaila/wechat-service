@@ -1,8 +1,8 @@
 //package com.hualala.app.wechat.util;
 //
 //import com.alibaba.fastjson.JSONObject;
-//import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-//import com.hualala.app.wechat.exception.WechatException;
+//import WechatExceptionTypeEnum;
+//import WechatException;
 //import lombok.extern.slf4j.Slf4j;
 //import okhttp3.*;
 //import org.apache.commons.lang3.StringUtils;
