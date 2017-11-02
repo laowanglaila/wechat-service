@@ -54,8 +54,8 @@ public class GrpcClientConfiguration {
     }
     @Bean(name = "com.hualala.app.user",destroyMethod = "clean")
     public UserClient userGrpcClient() {
-        logger.info(() -> "Initializing com.hualala.app.user gRpc client... [" + grpcClientProperties.getWechat() + "]");
-        UserClient client = new UserClient(grpcClientProperties.getWechat());
+        logger.info(() -> "Initializing com.hualala.app.user gRpc client... [" + grpcClientProperties.getUser() + "]");
+        UserClient client = new UserClient(grpcClientProperties.getUser());
         return client;
     }
     @Bean
