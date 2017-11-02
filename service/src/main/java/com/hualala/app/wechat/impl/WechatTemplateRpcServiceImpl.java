@@ -332,19 +332,23 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
                .collect( Collectors.toList() );
         String param1 = reqData.getParam1();
         String orderKey = reqData.getOrderKey();
-        String url = this.generateUrl( mpID, groupID, modelType, modelSubType, param1, orderKey );
-
+        String url = reqData.getUrl();
+        if (StringUtils.isBlank( url )) {
+            url = this.generateUrl( mpID, groupID, modelTypeEnum, param1, orderKey );
+        } else if (url != null && !url.contains( "http" )){
+            url = domain + url;
+        }
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
              .templateId( wechatTemplateModel.getTemplateID() )
              .toUser( userOpenID )
              .url( url )
              .data( collect )
              .build();
-//        try {
-//            wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
-//        } catch (WxErrorException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
         String sendTemplateMsg = null;
         System.out.println("结果：" + sendTemplateMsg);
         this.sendMessageToMq( mpID,userOpenID, wxMpTemplateMessage );
