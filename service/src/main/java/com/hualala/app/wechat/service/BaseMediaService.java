@@ -1,10 +1,10 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.*;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.impl.WechatTemplateRpcServiceImpl;
+import com.hualala.app.wechat.sdk.mp.common.*;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatMediaUtil;
 import com.hualala.core.app.Logger;
@@ -43,9 +43,9 @@ public class BaseMediaService {
             result = accessTokenService.getAccessToken(mpID);
         } catch (WechatInnerException e) {
             logger.error( e.getMessage(), e);
-            throw new WechatException(WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD);
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD);
         }
-        if (WechatMessageType.FALSE.equals(result.getBoolean(WechatMessageType.IS_SUCCESS))) {
+        if (WechatMessageType.FALSE.equals(result.getBoolean( WechatMessageType.IS_SUCCESS))) {
             return result;
         } else {
             token = result.getString("accessToken");
@@ -57,12 +57,12 @@ public class BaseMediaService {
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, "http请求失败！");
         }
         logger.debug(() -> "微信响应参数 ：" + responseJson.toJSONString());
-        String errcode = responseJson.getString(WechatMessageType.WECHAT_ERR_CODE);
+        String errcode = responseJson.getString( WechatMessageType.WECHAT_ERR_CODE);
         if (StringUtils.isNotBlank(errcode) && !"0".equals(errcode)){
             String errmassage = WechatErrorCode.wechatError.get(errcode);
             String errorcode = errmassage == null ? "[ errcode:" + errcode + " ]" : errmassage;
-            logger.error(errorcode + ":[ " + responseJson.getString(WechatMessageType.WECHAT_ERR_MESSAGE) + " ]");
-            return ResultUtil.toResultJson(responseJson, false, null, errorcode + ":[ " + responseJson.getString(WechatMessageType.WECHAT_ERR_MESSAGE) + " ]");
+            logger.error(errorcode + ":[ " + responseJson.getString( WechatMessageType.WECHAT_ERR_MESSAGE) + " ]");
+            return ResultUtil.toResultJson(responseJson, false, null, errorcode + ":[ " + responseJson.getString( WechatMessageType.WECHAT_ERR_MESSAGE) + " ]");
         }
         return ResultUtil.toResultJson(responseJson, true, ErrorCodes.WECHAT_SUCCESS_CODE, "执行成功！");
     }

@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatMessageRpcService;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatCustomService;
 import com.hualala.app.wechat.service.user.WechatUserService;

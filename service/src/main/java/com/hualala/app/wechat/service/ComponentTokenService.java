@@ -1,10 +1,11 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Function;
-import com.hualala.app.wechat.common.*;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.WechatBaseApi;
+import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.mapper.mp.MpInfoModelMapper;
 import com.hualala.app.wechat.model.mp.MpInfoModel;
 import com.hualala.app.wechat.model.mp.MpInfoModelQuery;
@@ -12,8 +13,6 @@ import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.MpIDProducer;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;
-import com.hualala.core.base.ServiceException;
-import jdk.nashorn.internal.ir.ReturnNode;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
-import java.util.function.Supplier;
 
 /**
  * 开放平台相关服务类
@@ -351,10 +349,12 @@ public class ComponentTokenService implements WechatBaseApi {
      * @param appID
      * @return
      */
-    public JSONObject getAuthorizerAcToken(String appID) throws WechatInnerException {
+    public JSONObject getAuthorizerAcToken(String appID,boolean isForceRefresh) throws WechatInnerException {
         JSONObject result = new JSONObject();
-        String authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
-
+        String authorizerAcToken = null;
+        if (isForceRefresh){
+            authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
+        }
         if (authorizerAcToken == null) {
             this.apiAuthorizerToken( appID );
             authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );

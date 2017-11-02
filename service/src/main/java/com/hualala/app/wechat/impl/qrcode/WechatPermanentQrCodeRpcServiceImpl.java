@@ -1,13 +1,11 @@
 package com.hualala.app.wechat.impl.qrcode;
 
-import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
 import com.hualala.app.wechat.WechatPermanentQrCodeRpcService;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatQrcodeMapper;
 import com.hualala.app.wechat.model.WechatQrcodeModel;
 import com.hualala.app.wechat.util.ResultUtil;
-import com.hualala.core.base.ResultInfo;
 import com.hualala.core.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

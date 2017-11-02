@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatTemplateMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;
@@ -10,8 +10,6 @@ import com.hualala.core.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 微信模板

@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.service.checkpermission.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.checkpermission.AuthorizationCheck;
 import org.springframework.beans.factory.annotation.Autowired;

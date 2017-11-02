@@ -1,6 +1,6 @@
 package com.hualala.app.wechat;
 
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.ComponentTokenService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

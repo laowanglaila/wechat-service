@@ -1,9 +1,9 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.*;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.*;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;
@@ -37,7 +37,7 @@ public class ApiTicketService {
 
 
         if (mpID == null || mpID.trim().isEmpty()) {
-            return ResultUtil.toResultJson(null,WechatMessageType.FALSE, ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
+            return ResultUtil.toResultJson(null, WechatMessageType.FALSE, ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
         }
 
         String cacheApiTicket = WechatCacheUtil.getCacheApiTicket(mpID,type);
@@ -45,7 +45,7 @@ public class ApiTicketService {
         if (StringUtils.isNotBlank(cacheApiTicket)){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(API_TICKET,cacheApiTicket);
-            return ResultUtil.toResultJson(jsonObject,WechatMessageType.TRUE, ErrorCodes.WECHAT_SUCCESS_CODE,"成功获取全局缓存"+type+"_ticket！");
+            return ResultUtil.toResultJson(jsonObject, WechatMessageType.TRUE, ErrorCodes.WECHAT_SUCCESS_CODE,"成功获取全局缓存"+type+"_ticket！");
         }
 
         JSONObject tockenObject = null;
@@ -55,11 +55,11 @@ public class ApiTicketService {
             logger.error( e.getMessage(), e);
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD);
         }
-        if (!tockenObject.getBoolean(WechatMessageType.IS_SUCCESS)){
+        if (!tockenObject.getBoolean( WechatMessageType.IS_SUCCESS)){
             return tockenObject;
         }
         String accessTocken = tockenObject.getString("accessToken");
-        JSONObject jsonObject = HttpApiUtil.httpGet(WechatBaseApi.GET_API_TICKET+"?access_token="+accessTocken+"&type="+type);
+        JSONObject jsonObject = HttpApiUtil.httpGet( WechatBaseApi.GET_API_TICKET+"?access_token="+accessTocken+"&type="+type);
         if (null == jsonObject){
             return ResultUtil.toResultJson(null,false,"获取ticket失败");
         }
@@ -81,11 +81,11 @@ public class ApiTicketService {
             String errmassage = WechatErrorCode.wechatError.get(errCode);
             String errorcode = errmassage == null ? "[ errcode:"+errCode+" ]" : errmassage;
             if (logger.isErrorEnabled())
-                logger.error(errorcode+":[ "+jsonObject.getString(WechatMessageType.WECHAT_ERR_MESSAGE)+" ]");
-            return ResultUtil.toResultJson(jsonObject, false, null, errorcode+":[ "+jsonObject.getString(WechatMessageType.WECHAT_ERR_MESSAGE)+" ]");
+                logger.error(errorcode+":[ "+jsonObject.getString( WechatMessageType.WECHAT_ERR_MESSAGE)+" ]");
+            return ResultUtil.toResultJson(jsonObject, false, null, errorcode+":[ "+jsonObject.getString( WechatMessageType.WECHAT_ERR_MESSAGE)+" ]");
 
         }
-        return ResultUtil.toResultJson(jsonObject, true,ErrorCodes.WECHAT_SUCCESS_CODE);
+        return ResultUtil.toResultJson(jsonObject, true, ErrorCodes.WECHAT_SUCCESS_CODE);
     }
 
 }

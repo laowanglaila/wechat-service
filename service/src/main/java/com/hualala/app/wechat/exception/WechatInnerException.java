@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.exception;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.WechatErrorCode;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 
@@ -16,10 +16,10 @@ public class WechatInnerException extends Exception {
         super(message);
     }
 
-    public static WechatInnerException of( JSONObject jsonObject){
+    public static com.hualala.app.wechat.sdk.mp.exception.WechatInnerException of(JSONObject jsonObject){
         return of( "",jsonObject );
     }
-    public static WechatInnerException of( String message, JSONObject jsonObject){
+    public static com.hualala.app.wechat.sdk.mp.exception.WechatInnerException of(String message, JSONObject jsonObject){
         if (StringUtils.isNotBlank( message )){
             message = "->"+message;
         }
@@ -30,6 +30,6 @@ public class WechatInnerException extends Exception {
         if (StringUtils.isNotBlank( errmsgCH )){
             errmsgCH = "_" + errmsgCH;
         }
-        return new WechatInnerException( objMessage + message + ":" + errcode + "("+errmsg + errmsgCH +")" );
+        return new com.hualala.app.wechat.sdk.mp.exception.WechatInnerException( objMessage + message + ":" + errcode + "("+errmsg + errmsgCH +")" );
     }
 }

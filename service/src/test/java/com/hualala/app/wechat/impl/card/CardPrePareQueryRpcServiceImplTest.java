@@ -1,5 +1,9 @@
 package com.hualala.app.wechat.impl.card;
 
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.googlecode.protobuf.format.JsonFormat;
 import com.hualala.app.wechat.BaseRpcTest;
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
 import com.hualala.app.wechat.grpc.CardPrePareQueryRpcData;
@@ -10,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 
 /**
  * Created by renjianfei on 2017/4/26.
@@ -48,7 +55,41 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
 
 
     }
+    //grpc 异步写法
+    @Autowired
+    private CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceFutureStub cardPrePareQueryRpcServiceFutureStub;
+    @Test
+    public void test7() {
+        CardPrePareQueryRpcData.CardQuery.Builder builder = CardPrePareQueryRpcData.CardQuery.newBuilder();
+        builder.setCardKey(6426933076835705861L);
+        CardPrePareQueryRpcData.CardQuery build = builder.build();
+        ListenableFuture <CardPrePareQueryRpcData.CardBaseInfoResData> cardBaseInfoResDataListenableFuture = cardPrePareQueryRpcServiceFutureStub.queryBaseInfoByCardKey( build );
+        cardBaseInfoResDataListenableFuture.addListener( () -> {
+            CardPrePareQueryRpcData.CardBaseInfoResData cardBaseInfoResData = null;
+            try {
+                cardBaseInfoResData = cardBaseInfoResDataListenableFuture.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            System.out.println(new JsonFormat().printToString( cardBaseInfoResData ));
+        } , Executors.newSingleThreadExecutor());
+        System.out.println("end");
 
+        Futures.addCallback( cardBaseInfoResDataListenableFuture, new FutureCallback <CardPrePareQueryRpcData.CardBaseInfoResData>() {
+            @Override
+            public void onSuccess(@Nullable CardPrePareQueryRpcData.CardBaseInfoResData cardBaseInfoResData) {
+                System.out.println(new JsonFormat().printToString( cardBaseInfoResData ));
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+
+            }
+        } );
+        System.out.println("end1");
+    }
 
     @Override
     public void test() {
@@ -58,6 +99,7 @@ public class CardPrePareQueryRpcServiceImplTest extends BaseRpcTest {
         CardPrePareQueryRpcService.MemberResData memberResData = rpcClient.queryMemberByCardKey(cardQuery);
         System.out.println(memberResData.getMessage());
     }
+
 //    @Test
 //    public void testQueryByWhere(){
 //        CardPrePareQueryRpcService rpcClient = super.baseRpcClient.getRpcClient(CardPrePareQueryRpcService.class);

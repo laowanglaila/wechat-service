@@ -13,6 +13,8 @@ message AccessTokenReq {
    int64 brandID=4;
    // 店铺ID
    int64 shopID=5;
+   // 是否强制刷新
+   bool isForceRefresh=6;
    // 请求公共字段
    RequestHeader header=1;
 }

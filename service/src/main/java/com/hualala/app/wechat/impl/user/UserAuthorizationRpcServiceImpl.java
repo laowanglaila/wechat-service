@@ -2,10 +2,10 @@ package com.hualala.app.wechat.impl.user;
 
 import com.hualala.app.wechat.UserAuthorizationRpcService;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.UserTokenService;
 import com.hualala.app.wechat.vo.UserAuthVO;
 import org.springframework.beans.BeanUtils;

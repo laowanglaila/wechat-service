@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class Test2 {
+//    @Autowired
+//    private TestRpcServiceGrpc.TestRpcServiceBlockingStub testRpcServiceBlockingStub;
+
     @Autowired
     private BaseHttpService baseHttpService;
     @org.junit.Test
@@ -38,5 +41,13 @@ public class Test2 {
         JSONObject jsonObject = baseHttpService.commonHttpPost( url, params, mpID );
         System.out.println(jsonObject);
     }
+//   grpc stream test
+//    @org.junit.Test
+//    public void test2(){
+//        TestRpcData.TestReqData build = TestRpcData.TestReqData.newBuilder().setRequesq( "777" ).build();
+//        Iterator<TestRpcData.TestResData> preAuthCode = testRpcServiceBlockingStub.createPreAuthCode( build );
+//        preAuthCode.forEachRemaining( res -> System.out.println(res.getResponse()) );
+//
+//    }
 
 }

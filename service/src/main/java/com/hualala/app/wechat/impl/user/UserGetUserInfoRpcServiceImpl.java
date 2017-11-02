@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.user.UserInfoWechatRpcService;
 import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.mapper.user.UserRelationModelMapper;
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_INFO_LOCK;
-import static com.hualala.app.wechat.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
+import static com.hualala.app.wechat.sdk.mp.common.RedisKeys.WECHAT_USER_INFO_LOCK;
+import static com.hualala.app.wechat.sdk.mp.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
 
 /**
  * Created by renjianfei on 2017/8/17.

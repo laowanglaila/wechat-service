@@ -2,9 +2,9 @@ package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.WechatAccessTokenRpcService;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -23,9 +23,10 @@ public class WechatAccessTokenRpcServiceImpl implements WechatAccessTokenRpcServ
     @Override
     public AccessTokenRes getAccessToken(AccessTokenReq accessTokenReq) {
         String mpID = RequestUtil.getMpID( accessTokenReq );
+        boolean forceRefresh = accessTokenReq.isForceRefresh();
         AccessTokenRes resultInfoBean;
         try {
-            JSONObject accessToken = accessTokenService.getAccessToken( mpID );
+            JSONObject accessToken = accessTokenService.getAccessToken( mpID ,forceRefresh);
             resultInfoBean = ResultUtil.getResultInfoBean( accessToken, AccessTokenRes.class );
         } catch (WechatInnerException e) {
             log.error( e.getMessage(),e );

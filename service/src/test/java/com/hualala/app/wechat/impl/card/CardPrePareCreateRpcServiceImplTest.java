@@ -53,6 +53,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         preCardBaseInfoData.setColor("Color10");
         preCardBaseInfoData.setSku(100);
         preCardBaseInfoData.setNotice("Notice");
+
         CardPrePareCreateRpcService.PreCardResData baseInfo = prePareCreateCardRpcService.createBaseInfo(preCardBaseInfoData);
         System.out.println("-------------------------------"+baseInfo.getMessage());
     }
@@ -190,7 +191,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         memberInfo.setPrerogative("小卖部会员");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
-        memberInfo.setSupplyBalance(false);
+        memberInfo.setSupplyBalance(true);
         memberInfo.setCustomCell1("{\n" +
                 "   \"name\" : \"点击有惊喜！\",\n" +
                 "   \"tips\" : \"豪礼等着你！\",\n" +
@@ -212,7 +213,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
         baseInfo.setTitle("小卖部会员");
-        baseInfo.setMpID("hualala_com");
+        baseInfo.setMpID("wangxiangyuanceshi");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
         baseInfo.setBrandName("微信会员");
@@ -233,7 +234,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setPromotionUrlName("年中大促");
         baseInfo.setServicePhone("17614430096");
         baseInfo.setSource("lingqudaokabao");
-        baseInfo.setUseCustomCode(false);
+        baseInfo.setUseCustomCode(true);
 //        baseInfo.setCustomCodeMode("GET_CUSTOM_CODE_MODE_DEPOSIT");
         baseInfo.setUseLimit(0);
         baseInfo.setUseAllLocations(false);
@@ -275,12 +276,16 @@ public class CardPrePareCreateRpcServiceImplTest {
         advancedInfo.setCardKey(cardKey);
         prePareCreateCardRpcService.createAdvancedInfo(advancedInfo);
         System.out.println("---------------------------------------------------"+cardKey);
+        CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
+        cardPrimaryKey.setCardKey(cardKey);
+        CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
+        System.out.println(preCardResData.getMessage());
     }
 
     @Test
     public void testSubmitMember(){
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-        cardPrimaryKey.setCardKey(6476284123672487944L);
+        cardPrimaryKey.setCardKey(6482999210550503432L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
         System.out.println(preCardResData.getMessage());
     }
