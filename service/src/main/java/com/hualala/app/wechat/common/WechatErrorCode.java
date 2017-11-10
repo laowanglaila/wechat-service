@@ -58,6 +58,7 @@ public class WechatErrorCode {
 		wechatError.put("40052", "JSON格式错误");
 		wechatError.put("40056", "不合法的Code码");
 		wechatError.put("40079", "有效期错误");
+		wechatError.put("40102", "id验证失败");
 		wechatError.put("40109", "code数量超过100个");
 		wechatError.put("40116", "不合法的Code码");
 		wechatError.put("40122", "不合法的库存数量");

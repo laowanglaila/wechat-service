@@ -345,7 +345,8 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
              .data( collect )
              .build();
         try {
-            wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
+            String s = wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
+            System.out.println(s);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
