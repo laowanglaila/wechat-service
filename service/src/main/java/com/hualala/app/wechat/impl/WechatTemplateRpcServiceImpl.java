@@ -55,20 +55,20 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
     protected Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
 
     @Value( "${env.m.domain}" )
-    private static String domain;
+    private String domain;
 
-    private static final String ORDER_URL = domain+"/order/detail.htm";
-    private static final String CRM_URL = domain +"/crm/vip_details.htm";
-    private static final String GIFT_URL = domain +"/user/event.htm";
-    private static final String QUEUE_URL = domain +"/user/queueno.htm";
-    private static final String CRM_TRANS_URL = domain +"/crm/vip_trans.htm";
-    private static final String ASSESSMENT_REPLY = domain + "/user/remarks.htm";
+    private final String ORDER_URL = domain+"/order/detail.htm";
+    private final String CRM_URL = domain +"/crm/vip_details.htm";
+    private final String GIFT_URL = domain +"/user/event.htm";
+    private final String QUEUE_URL = domain +"/user/queueno.htm";
+    private final String CRM_TRANS_URL = domain +"/crm/vip_trans.htm";
+    private final String ASSESSMENT_REPLY = domain + "/user/remarks.htm";
     // 商城的订单详情
-    private static final String STORE_ORDER_URL = domain+"/mall/order-detail.htm";
+    private final String STORE_ORDER_URL = domain+"/mall/order-detail.htm";
 
-    private static final String INVOICE_URL = domain+"/receipt/detail.htm";
-    private static final String INVOICE_LST_URL = domain+"/receipt/my-receipt.htm";
-    private static final String BOOK_ORDER_URIL = domain+"/corder/detail.htm";
+    private final String INVOICE_URL = domain+"/receipt/detail.htm";
+    private final String INVOICE_LST_URL = domain+"/receipt/my-receipt.htm";
+    private final String BOOK_ORDER_URIL = domain+"/corder/detail.htm";
 
 
 
@@ -338,6 +338,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         } else if (url != null && !url.contains( "http" )){
             url = domain + url;
         }
+        //todo mpID
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
              .templateId( wechatTemplateModel.getTemplateID() )
              .toUser( userOpenID )

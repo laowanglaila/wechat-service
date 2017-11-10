@@ -93,8 +93,10 @@ public class WechatTemplateRpcServiceImplTest {
         reqData.setMpID( mpID );
         reqData.setTemplateItem( items );
         WechatTemplateRpcService wechatService = rpcClient.getRpcClient( WechatTemplateRpcService.class );
-        WechatTemplateRpcService.WechatSendTemplateRes wechatSendTemplateRes = wechatService.sentWechatTemplateByMQ( reqData );
-        System.out.println(wechatSendTemplateRes.getMessageParams());
+        for (int i = 0; i < 10; i++) {
+            WechatTemplateRpcService.WechatSendTemplateRes wechatSendTemplateRes = wechatService.sentWechatTemplateByMQ( reqData );
+            System.out.println( wechatSendTemplateRes.getMessageParams() );
+        }
     }
 
 }
