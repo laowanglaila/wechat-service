@@ -345,14 +345,12 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
              .url( url )
              .data( collect )
              .build();
-        try {
-            String s = wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
-            System.out.println(s);
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-        }
-        String sendTemplateMsg = null;
-        System.out.println("结果：" + sendTemplateMsg);
+//        try {
+//            String s = wxMpService.getTemplateMsgService( mpID ).sendTemplateMsg( wxMpTemplateMessage );
+//            System.out.println(s);
+//        } catch (WxErrorException e) {
+//            e.printStackTrace();
+//        }
         this.sendMessageToMq( mpID,userOpenID, wxMpTemplateMessage );
         return ResultUtil.success(WechatSendTemplateRes.class);
     }
@@ -467,7 +465,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         }catch (AmqpException e){
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_TEMPLATE_ERROR ,"RabbitMQ发送消息失败");
         }finally {
-            this.insertDBAndRedis( mpID, openID, mqMsg ,status);
+//            this.insertDBAndRedis( mpID, openID, mqMsg ,status);
         }
     }
 
