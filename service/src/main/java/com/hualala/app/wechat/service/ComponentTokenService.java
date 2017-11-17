@@ -352,7 +352,7 @@ public class ComponentTokenService implements WechatBaseApi {
     public JSONObject getAuthorizerAcToken(String appID,boolean isForceRefresh) throws WechatInnerException {
         JSONObject result = new JSONObject();
         String authorizerAcToken = null;
-        if (isForceRefresh){
+        if (!isForceRefresh){
             authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
         }
         if (authorizerAcToken == null) {

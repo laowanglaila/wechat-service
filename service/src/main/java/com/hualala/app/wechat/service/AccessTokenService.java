@@ -65,7 +65,7 @@ public class AccessTokenService {
     private JSONObject findAccessToken( Map <String, Object> param,boolean isForceRefresh) throws WechatInnerException {
         String mpID = (String)param.get( "mpID" );
         String accessToken = null;
-        if (isForceRefresh){
+        if (!isForceRefresh){
             accessToken = WechatCacheUtil.getCacheAccessToken(mpID);
         }
         JSONObject result = new JSONObject();
