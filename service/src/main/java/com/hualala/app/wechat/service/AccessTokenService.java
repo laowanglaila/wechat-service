@@ -72,7 +72,7 @@ public class AccessTokenService {
         if (accessToken == null) {
             result = initAccessToken(param);
             if(!result.getBoolean( WechatMessageType.IS_SUCCESS)){
-               throw new WechatInnerException("缓存中获取accessToken is null") ;
+               throw new WechatInnerException("缓存中获取accessToken is null" + result.getString( WechatMessageType.MESSAGE )) ;
             }
             accessToken = result.getString("accessToken");
         }

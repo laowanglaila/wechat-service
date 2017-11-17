@@ -52,9 +52,10 @@ public class WechatTemplateRpcServiceImplTest {
 
     @Test
     public void sentMQWechatTemplate() throws Exception {
-        String openID = "oAkHb1IuY78GZyAo9uxzna7MPvV8";
+//        String openID = "oAkHb1IuY78GZyAo9uxzna7MPvV8";
         String userID = "3574377";
-        String mpID = "doulaofang1ceshi";
+//        String mpID = "doulaofang1ceshi";
+        String mpID = "dohko1155";
         List <WechatTemplateRpcService.WechatTemplateItem> items = new ArrayList <>();
         WechatTemplateRpcService.WechatTemplateItem first = new WechatTemplateRpcService.WechatTemplateItem();
         first.setType( TemplateItemTypeEnum.TEMPLATE_ITEM_TYPE_FIRST );
@@ -88,15 +89,16 @@ public class WechatTemplateRpcServiceImplTest {
         items.add( keynote5 );
 
         WechatTemplateRpcService.WechatSendTemplateReq reqData = new WechatTemplateRpcService.WechatSendTemplateReq();
-        reqData.setTemplateType( WechatTemplateTypeEnum.TEMPLATE_ENUM_ORDER );
-        reqData.setOpenID( openID );
+        reqData.setTemplateType( WechatTemplateTypeEnum.TEMPLATE_ENUM_CRM_GIFT );
+//        reqData.setOpenID( openID );
+        reqData.setUserID( Long.parseLong( userID ));
         reqData.setMpID( mpID );
         reqData.setTemplateItem( items );
         WechatTemplateRpcService wechatService = rpcClient.getRpcClient( WechatTemplateRpcService.class );
-        for (int i = 0; i < 10; i++) {
+//        for (int i = 0; i < 10; i++) {
             WechatTemplateRpcService.WechatSendTemplateRes wechatSendTemplateRes = wechatService.sentWechatTemplateByMQ( reqData );
             System.out.println( wechatSendTemplateRes.getMessageParams() );
-        }
+//        }
     }
 
 }
