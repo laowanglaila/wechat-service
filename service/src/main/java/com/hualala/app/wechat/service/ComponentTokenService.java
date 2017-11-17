@@ -356,11 +356,12 @@ public class ComponentTokenService implements WechatBaseApi {
             authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
         }
         if (authorizerAcToken == null) {
-            this.apiAuthorizerToken( appID );
-            authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
-            if (authorizerAcToken == null) {
-                return ResultUtil.toResultJson( result, WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR, "缓存中获取preAuthCode is null" );
+            JSONObject jsonObject = this.apiAuthorizerToken( appID );
+//            authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
+            if (!jsonObject.getBoolean( WechatMessageType.IS_SUCCESS )) {
+                return ResultUtil.toResultJson( result, WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR, "获取authorizerAcToken失败：" + result.getString( WechatMessageType.MESSAGE ));
             }
+            authorizerAcToken = jsonObject.getString( "accessToken" );
         }
         result.put( WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE );
         result.put( "authorizerAcToken", authorizerAcToken );
