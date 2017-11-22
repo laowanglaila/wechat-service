@@ -10,33 +10,18 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    multipartite:
-                sem:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
-                shop:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -68,8 +53,8 @@ grpc:
   port: 6567
   client:
      hosts:
-#        wechat: localhost:6567
-        wechat: dohko.wechat.service.hualala.com:31558
+        wechat: localhost:6567
+#        wechat: dohko.wechat.service.hualala.com:31558
 #        wechat: 172.16.32.45:6567
         idgen: dohko.id.gen.hualala.com:31249
 #        sem: localhost:6466
@@ -152,33 +137,19 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    multipartite:
-                sem:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
-                shop:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
+
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -291,33 +262,18 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    multipartite:
-                sem:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
-                shop:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
+      url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+      username: root
+      password: hualaladev
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 3
+      max-active: 20
+      min-idle: 1
+      validation-query: SELECT 1
+      test-on-borrow: ture
+      test-while-idle: true
+      time-between-eviction-runs-millis: 3600000
+      min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -421,33 +377,18 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    multipartite:
-                sem:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
-                shop:
-                    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     host: 172.16.0.29
     port: 5672
@@ -548,33 +489,18 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    multipartite:
-                sem:
-                    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_sem?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
-                shop:
-                    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-                    username: root
-                    password: hualaladev
-                    driver-class-name: com.mysql.jdbc.Driver
-                    initial-size: 3
-                    max-active: 20
-                    min-idle: 1
-                    validation-query: SELECT 1
-                    test-on-borrow: ture
-                    test-while-idle: true
-                    time-between-eviction-runs-millis: 3600000
-                    min-evictable-idle-time-millis: 1800000
+    url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: ture
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
+    min-evictable-idle-time-millis: 1800000
   rabbitmq:
     username: admin
     password: hualalaadmin
