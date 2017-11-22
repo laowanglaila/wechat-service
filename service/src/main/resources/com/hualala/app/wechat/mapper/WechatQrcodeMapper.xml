@@ -52,6 +52,57 @@
     limit #{offset}, #{pageSize}
     </select>
 
+	<select id="queryQrcode" resultType="com.hualala.app.wechat.model.WechatQrcodeModel" parameterType="java.util.Map">
+		SELECT * FROM tbl_shop_wechat_qrcode
+		WHERE ACTION IN (0,1)
+		AND mpID = #{mpID}
+		AND qrcodeType = 1
+		AND shopID = #{shopID}
+		AND param3 = #{param3}
+		ORDER BY itemID DESC
+		LIMIT 1;
+	</select>
+
+	<update id="delTableQrcoed" parameterType="java.util.Map" flushCache="true">
+		update tbl_shop_wechat_qrcode set
+		action=2,
+		actionTime=date_format(now(),'%Y%m%d%H%i%s')
+		where
+		qrcodeType = #{qrcodeType}
+		<if test="param3 != null">
+			and param3 = #{param3}
+		</if>
+		<if test="mpID != null">
+			and mpID = #{mpID}
+		</if>
+		and shopID = #{shopID}
+	</update>
+
+	<update id="updateDelQrCode" >
+		UPDATE tbl_shop_wechat_qrcode set
+		action = 2,
+		actionTime=date_format(now(),'%Y%m%d%H%i%s')
+		WHERE
+		itemID = #{itemID}
+	</update>
+
+
+	<update id="updateQrCode" parameterType="com.hualala.app.wechat.model.WechatQrcodeModel">
+		UPDATE tbl_shop_wechat_qrcode set
+		<if test="qrcodeName != null">
+			qrcodeName = #{qrcodeName},
+		</if>
+		<if test="param1 != null">
+			param1 = #{param1},
+		</if>
+		<if test="isActive != null">
+			isActive = #{isActive},
+		</if>
+		actionTime=date_format(now(),'%Y%m%d%H%i%s')
+		WHERE
+		itemID = #{itemID}
+	</update>
+
     <sql id="queryField">
         itemID,        mpID,        qrcodeType,        sceneID,        qrcodeName,        description,        param1,        param2,        param3,        locationName,        shopID,        ticket,        wxUrl,        qrcodeIP,        isLog,        isActive
     </sql>

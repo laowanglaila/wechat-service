@@ -1,14 +1,16 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.AuthorizationCheckRpcService;
+import com.hualala.app.wechat.WechatFuctionEnum;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.RedisKeys;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.config.RabbitQueueProps;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.model.mq.QrcodeInfoModel;
@@ -20,7 +22,6 @@ import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DataUtils;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,9 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
     private RedisLockHandler redisLockHandler;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private AuthorizationCheckRpcService getAuthorizationCheckRpcService;
     /**
      * 获取一个临时二维码，优先获取缓存
      * @param qrCodeReq
@@ -283,12 +287,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
 
             if (queryCacheQrcodeCount < size){
                 //查询Redis缓存二维码接口执行状态，如果有错误直接返回
-                BoundValueOperations<String, String> ops
-                        = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
-                String errorCode = ops.get();
-                if (StringUtils.isNotBlank(errorCode)){
-                    throw new WechatException(WechatExceptionTypeEnum.parseEnum(errorCode));
-                }
+                this.checkErrorCode( mpID );
                 //缓存数量少于期望数量的一半，获取期望数量的缓存，
                 //缓存数量多于期望数量的一半，获取期望数量一半的缓存。
                 int i = size - queryCacheQrcodeCount;
@@ -336,6 +335,28 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         } finally {
             if (redisLockHandler != null) {
                 redisLockHandler.realseLock(locdKey);
+            }
+        }
+    }
+
+    /**
+     * 查询Redis缓存二维码接口执行状态，如果有错误直接返回WechatException
+     * @param mpID
+     */
+    private void checkErrorCode(String mpID) {
+        BoundValueOperations<String, String> ops
+                = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
+        String errorCode = ops.get();
+        if (StringUtils.isNotBlank(errorCode)){
+            // 判断错误是否解决，如果已解决删除错误标记
+            AuthorizationCheckRpcService.AuthorizationCheckReq authorizationCheckReq = new AuthorizationCheckRpcService.AuthorizationCheckReq();
+            authorizationCheckReq.setMpID( mpID );
+            authorizationCheckReq.setInterfaceType( WechatFuctionEnum.TEMPORARY_QR_CODE );
+            AuthorizationCheckRpcService.AuthorizationCheckRes check = getAuthorizationCheckRpcService.check( authorizationCheckReq );
+            if (check.success()){
+                stringRedisTemplate.delete( WECHAT_QRCODE_ERRO_CODE + mpID );
+            }else {
+                throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
             }
         }
     }

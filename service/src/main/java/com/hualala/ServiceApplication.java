@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableAutoConfiguration
+//@ComponentScan("com.hualala.**")
 @ComponentScan
 public class ServiceApplication extends SpringBootServletInitializer implements CommandLineRunner,EmbeddedServletContainerCustomizer {
 

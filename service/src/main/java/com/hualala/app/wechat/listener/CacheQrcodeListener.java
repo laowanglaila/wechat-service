@@ -2,14 +2,11 @@ package com.hualala.app.wechat.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.WechatQRTypeEnum;
-import com.hualala.app.wechat.config.RabbitQueueProps;
 import com.hualala.app.wechat.service.Qrcode.QrcodeCacheService;
 import com.hualala.core.app.Logger;
-import com.hualala.core.client.BaseRpcClient;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +20,7 @@ public class CacheQrcodeListener {
     @Autowired
     private QrcodeCacheService qrcodeCacheService;
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-    @Autowired
-    private RabbitQueueProps rabbitQueueProps;
-    @Autowired
-    private BaseRpcClient baseRpcClient;
+
     /**
      * consumer
      * @param message

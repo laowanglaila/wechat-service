@@ -1,9 +1,13 @@
 package com.hualala.app.wechat.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.DefaultClass.DefaultResultInfo;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.core.base.ResultInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,6 +18,7 @@ import java.util.Map;
  *
  * Created by xkia on 2017/3/22.
  */
+@Slf4j
 public class ResultUtil {
 
     public static JSONObject toResultJson(JSONObject resultJson, boolean isSuccess, String code, String message){
@@ -60,5 +65,26 @@ public class ResultUtil {
 
     public static JSONObject toResultJson(JSONObject resultJson, Boolean isSuccess, String code) {
         return toResultJson(resultJson,isSuccess,code,"");
+    }
+
+    public static <T extends ResultInfo> T success( Class<T> clazz) {
+        T t = null;
+        try {
+            t = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            log.error( "类型转换错误",e );
+            throw new WechatException();
+        }
+        if (t != null){
+            t.setCode( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getCode() );
+            t.setMessage( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getMessage() );
+        }
+        return t;
+    }
+    public static DefaultResultInfo success() {
+        DefaultResultInfo t = new DefaultResultInfo();
+            t.setCode( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getCode() );
+            t.setMessage( WechatExceptionTypeEnum.WECHAT_SUCCESS_CODE.getMessage() );
+        return t;
     }
 }

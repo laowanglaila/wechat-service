@@ -2,10 +2,10 @@ package com.hualala.app.wechat.service.Qrcode;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.WechatQRTypeEnum;
-import com.hualala.app.wechat.common.RedisKeys;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.common.WechatMessageType;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.service.BaseHttpService;
@@ -66,13 +66,15 @@ public class QrcodeCacheService implements RedisKeys{
             try {
                 jsonObject = baseHttpService.createQrCode(params, mpID);
             }catch (WechatException e){
+                logger.warn("二维码缓存获取失败：",e);
                 //接口没有授权的错误放入redis，再次请求时返回错误
-                if (e.getErrorCode().equals("48001")){
+                if (WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals( e.getErrorCode() )){
                     BoundValueOperations<String, String> ops
-                            = stringRedisTemplate.boundValueOps(WECHAT_ERRO_CODE + COLON + QRCODE_CACHE_SERVICE + COLON + mpID);
-                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),1, TimeUnit.DAYS);
+                            = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
+                    ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),10, TimeUnit.MINUTES);
+                    return;
                 }
-                logger.warn("二维码缓存获取失败：" + jsonObject.toJSONString());
+                continue;
             }
             if (jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
 //            //插入数据库

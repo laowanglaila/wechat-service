@@ -58,12 +58,14 @@ public class WechatErrorCode {
 		wechatError.put("40052", "JSON格式错误");
 		wechatError.put("40056", "不合法的Code码");
 		wechatError.put("40079", "有效期错误");
+		wechatError.put("40102", "id验证失败");
 		wechatError.put("40109", "code数量超过100个");
 		wechatError.put("40116", "不合法的Code码");
 		wechatError.put("40122", "不合法的库存数量");
 		wechatError.put("40124", "会员卡设置查过限制的 custom_field字段");
 		wechatError.put("40127", "卡券被用户删除或转赠中");
 		wechatError.put("40136", "请确定code数量大于卡券库存");
+		wechatError.put("40163", "code已经使用过哟");
 		wechatError.put("41001", "缺少access_token参数");
 		wechatError.put("41002", "缺少appid参数");
 		wechatError.put("41003", "缺少refresh_token参数");

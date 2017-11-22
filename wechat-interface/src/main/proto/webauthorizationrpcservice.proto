@@ -5,6 +5,40 @@ option java_outer_classname = "WebAuthorizationRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
+message WechatUserInfoReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+   string accessToken=3;
+   // 用户的唯一标识
+   string openid=4;
+   // 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+   LangTypeEnum lang=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WechatUserInfoRes {  
+   // 用户的唯一标识
+   string openID=2;
+   // 用户昵称
+   string nickName=3;
+   // 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+   string sex=4;
+   // 用户个人资料填写的省份
+   string province=5;
+   // 普通用户个人资料填写的城市
+   string city=6;
+   // 国家，如中国为CN
+   string country=7;
+   // 用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+   string headImgUrl=8;
+   // 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
+   string privilege=9;
+   // 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。详见：获取用户个人信息（UnionID机制）
+   string unionID=10;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message AuthorizationReq {  
    // 公众号编码
    string mpID=2;
@@ -33,26 +67,10 @@ message AuthorizationRes {
    // 响应公共字段
    ResultHeader result=1;
 }
-message WechatUserInfoReq {  
-   // 集团ID
-   int64 groupID=2;
-   // 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
-   string accessToken=3;
-   // 用户的唯一标识
-   string openid=4;
-   // 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
-   LangTypeEnum lang=5;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message WechatUserInfoRes {  
-   // 响应公共字段
-   ResultHeader result=1;
-}
 //
 service WebAuthorizationRpcService{
-    //高级授权，需要用户点击确定同意授权，可以获取accessTocken和openID
-    rpc snsAuthorization(AuthorizationReq) returns (AuthorizationRes) {}
     //需要高级授权的accessTocken和openID来获取用户信息
     rpc getWechatUserInfo(WechatUserInfoReq) returns (WechatUserInfoRes) {}
+    //高级授权，需要用户点击确定同意授权，可以获取accessTocken和openID
+    rpc snsAuthorization(AuthorizationReq) returns (AuthorizationRes) {}
 }

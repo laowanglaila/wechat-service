@@ -597,6 +597,136 @@ public class MemberModelQuery {
             return (Criteria) this;
         }
 
+        public Criteria andWxActivateAfterSubmitIsNull() {
+            addCriterion("wxActivateAfterSubmit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitIsNotNull() {
+            addCriterion("wxActivateAfterSubmit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitEqualTo(Boolean value) {
+            addCriterion("wxActivateAfterSubmit =", value, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitNotEqualTo(Boolean value) {
+            addCriterion("wxActivateAfterSubmit <>", value, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitGreaterThan(Boolean value) {
+            addCriterion("wxActivateAfterSubmit >", value, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("wxActivateAfterSubmit >=", value, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitLessThan(Boolean value) {
+            addCriterion("wxActivateAfterSubmit <", value, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitLessThanOrEqualTo(Boolean value) {
+            addCriterion("wxActivateAfterSubmit <=", value, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitIn(List<Boolean> values) {
+            addCriterion("wxActivateAfterSubmit in", values, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitNotIn(List<Boolean> values) {
+            addCriterion("wxActivateAfterSubmit not in", values, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitBetween(Boolean value1, Boolean value2) {
+            addCriterion("wxActivateAfterSubmit between", value1, value2, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("wxActivateAfterSubmit not between", value1, value2, "wxActivateAfterSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlIsNull() {
+            addCriterion("wxActivateAfterSubmitUrl is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlIsNotNull() {
+            addCriterion("wxActivateAfterSubmitUrl is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlEqualTo(String value) {
+            addCriterion("wxActivateAfterSubmitUrl =", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlNotEqualTo(String value) {
+            addCriterion("wxActivateAfterSubmitUrl <>", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlGreaterThan(String value) {
+            addCriterion("wxActivateAfterSubmitUrl >", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("wxActivateAfterSubmitUrl >=", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlLessThan(String value) {
+            addCriterion("wxActivateAfterSubmitUrl <", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlLessThanOrEqualTo(String value) {
+            addCriterion("wxActivateAfterSubmitUrl <=", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlLike(String value) {
+            addCriterion("wxActivateAfterSubmitUrl like", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlNotLike(String value) {
+            addCriterion("wxActivateAfterSubmitUrl not like", value, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlIn(List<String> values) {
+            addCriterion("wxActivateAfterSubmitUrl in", values, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlNotIn(List<String> values) {
+            addCriterion("wxActivateAfterSubmitUrl not in", values, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlBetween(String value1, String value2) {
+            addCriterion("wxActivateAfterSubmitUrl between", value1, value2, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxActivateAfterSubmitUrlNotBetween(String value1, String value2) {
+            addCriterion("wxActivateAfterSubmitUrl not between", value1, value2, "wxActivateAfterSubmitUrl");
+            return (Criteria) this;
+        }
+
         public Criteria andSupplyBonusIsNull() {
             addCriterion("supplyBonus is null");
             return (Criteria) this;

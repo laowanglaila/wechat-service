@@ -10,6 +10,8 @@ public enum WechatExceptionTypeEnum {
     WECHAT_SUCCESS_CODE("000","请求成功"),
     WECHAT_PARPAS_EMPTY("00112101","参数错误"),
     WECHAT_MPID_EMPTY("00112102","公众号mpID不允许为空"),
+    WECHAT_COMMON_ERROR("00112103","微信服务内部错误"),
+    WECHAT_MPINFO_INCOMPLETE("00112104","公众号信息不完整"),
     WECHAT_MP_ERROR("00112110","微信公众号公共错误"),
     WECHAT_MP_NULL("00112111","未找到对应的公众号"),
     WECHAT_MP_ACCESSTOKEN_ERROR("00112112","公众号收授权令牌错误"),
@@ -59,13 +61,17 @@ public enum WechatExceptionTypeEnum {
     WECHAT_CARD_LOCK_ERROR("00112155","会员卡更新消息时间小于上一次更新时间"),
     WECHAT_CARD_MSGCREATETIME_EMPTY("00112156","msgCreateTime不允许为空"),
     WECHAT_MP_NOT_EXIST("00112157","msgCreateTime不允许为空"),
-    WECHAT_MP_PERMISSION_DENIED("00112158","msgCreateTime不允许为空"),
+    WECHAT_MP_PERMISSION_DENIED("00112158","接口功能未授权，请确认公众号已获得该权限"),
     WECHAT_MESSAGE_CUSTOM_SEMD("00112159","客服接口错误"),
     WECHAT_GET_AUTHORIZER_INFO_FIELD("00112160","客服接口错误"),
     WECHAT_GET_PREAUTHCODE_FIELD("00112161","获取预授权码失败"),
     WECHAT_QUERY_AUTH_FIELD("00112162","公众号授权失败"),
     WECHAT_GET_ACCESSTOKEN_FIELD("00112163","获取accessToken失败"),
-    WECHAT_GET_AUTHORIZER_ACCESSTOKEN_FIELD("00112164","获取authorizerAccessToken失败");
+    WECHAT_GET_AUTHORIZER_ACCESSTOKEN_FIELD("00112164","获取authorizerAccessToken失败"),
+    WECHAT_OAUTH_ERROR("00112165","公众号OAUTH不具备授权权限"),
+    WECHAT_USER_SERVICE_ERROR("00112166","获取用户服务错误"),
+    WECHAT_USER_AUTHORIZATION_FIELD("00112167","获取用户授权失败"),
+    WECHAT_AUTHORIZATION_MISS("00112168","接口校验失败");
 
     private String code;
     private String message;
@@ -74,8 +80,8 @@ public enum WechatExceptionTypeEnum {
         this.message = message;
     }
 
-    public static WechatExceptionTypeEnum parseEnum(String code) {
-        for (WechatExceptionTypeEnum each : WechatExceptionTypeEnum.class.getEnumConstants()){
+    public static com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum parseEnum(String code) {
+        for (com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum each : com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum.class.getEnumConstants()){
             if (code.equals(each.getCode())){
                 return each;
             }

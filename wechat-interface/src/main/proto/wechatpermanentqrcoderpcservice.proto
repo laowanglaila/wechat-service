@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "WechatPermanentQrCodeRpcData";
+import "commons.proto";
+
+message DelQrCodeReq {  
+   // 公众号mpID
+   string mpID=2;
+   // 店铺ID不能为空
+   string shopID=3;
+   // 二维码类型
+   string qrcodeType=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message DelQrCodeRes {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message UpdateQrCodeReq {  
+   // 公众号mpID
+   string mpID=2;
+   // 店铺ID不能为空
+   string shopID=3;
+   // QRCodeID
+   string param3=4;
+   // tableName
+   string tableName=5;
+   // actionType
+   string actionType=6;
+   // isActive
+   string isActive=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UpdateQrCodeRes {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//永久二维码相关操作
+service WechatPermanentQrCodeRpcService{
+    //桌台二维码删除(标记删除)
+    rpc delWechatQrcodeByParams(DelQrCodeReq) returns (DelQrCodeRes) {}
+    //桌台更新相应二维码更新
+    rpc updateQrcode(UpdateQrCodeReq) returns (UpdateQrCodeRes) {}
+}

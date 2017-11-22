@@ -3,8 +3,23 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardUpdateRpcData";
 import "commons.proto";
-import "wechatcommons.proto";
 
+message CardSkuUpdateReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 增加多少库存，支持不填或填0。
+   int32 increaseStockValue=3;
+   // 减少多少库存，可以不填或填0。
+   int32 reduceStockValue=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardUpdateResData {  
+   // 是否需要提审
+   bool sendCheck=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message CouponInfoUpdateReqData {  
    // 唯一ID
    int64 cardKey=2;
@@ -63,21 +78,17 @@ message CardBaseInfoUpdateReqData {
    // 卡券名称
    string title=25;
 }
-message CardUpdateResData {  
-   // 是否需要提审
-   bool sendCheck=2;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CardSkuUpdateReqData {  
+message BindReqData {  
    // 唯一ID
-   int64 cardKey=2;
-   // 增加多少库存，支持不填或填0。
-   int32 increaseStockValue=3;
-   // 减少多少库存，可以不填或填0。
-   int32 reduceStockValue=4;
+   string cardKey=2;
+   // 被绑定的会员卡类型ID
+   string hualalaCardID=3;
    // 请求公共字段
    RequestHeader header=1;
+}
+message BindResData {  
+   // 响应公共字段
+   ResultHeader result=1;
 }
 message MemberUpdateReqData {  
    // 唯一ID
@@ -118,32 +129,24 @@ message MemberUpdateReqData {
    string bonusRule=19;
    // 积分规则
    string bonusRules=20;
+   // 使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活
+   bool wxActivateAfterSubmit=21;
+   // 使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url
+   string wxActivateAfterSubmitUrl=22;
    // 卡券基本信息
-   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=22;
+   CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData=23;
    // 请求公共字段
    RequestHeader header=1;
-}
-message BindReqData {  
-   // 唯一ID
-   string cardKey=2;
-   // 被绑定的会员卡类型ID
-   string hualalaCardID=3;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message BindResData {  
-   // 响应公共字段
-   ResultHeader result=1;
 }
 //
 service CardUpdateRpcService{
     //
-    rpc updateCouponInfo(CouponInfoUpdateReqData) returns (CardUpdateResData) {}
-    //
     rpc updateCouponSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
     //
-    rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
+    rpc updateCouponInfo(CouponInfoUpdateReqData) returns (CardUpdateResData) {}
     //
     rpc updateMemberSku(CardSkuUpdateReqData) returns (CardUpdateResData) {}
     rpc bindCardBaseInfo(BindReqData) returns (BindResData) {}
+    //
+    rpc updateMemberInfo(MemberUpdateReqData) returns (CardUpdateResData) {}
 }

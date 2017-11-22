@@ -2,9 +2,12 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.BaseRpcTest;
+import com.hualala.app.wechat.CardGiveOutRpcService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
 
 /**
  * Created by renjianfei on 2017/7/21.
@@ -95,6 +98,26 @@ public class CardGiveOutRpcServiceImplTest extends BaseRpcTest {
         String json = "{ \"rule_id\": "+ruleID+"}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, json, mpID);
         System.out.println(jsonObject);
+    }
+    /**
+     * 根据ruleID删除支付赠卡规则
+     */
+    @Test
+    public void test4() {
+        CardGiveOutRpcService rpcClient = super.baseRpcClient.getRpcClient( CardGiveOutRpcService.class );
+        CardGiveOutRpcService.CouponInfo couponInfo = new CardGiveOutRpcService.CouponInfo();
+        couponInfo.setCardKey( 1L );
+        couponInfo.setAmount( "1" );
+        ArrayList <CardGiveOutRpcService.CouponInfo> objects = new ArrayList <>();
+        objects.add( couponInfo );
+        CardGiveOutRpcService.PayToGiveCouponsReq payToGiveCouponsReq = new CardGiveOutRpcService.PayToGiveCouponsReq();
+        payToGiveCouponsReq.setBeginTime( "1" );
+        payToGiveCouponsReq.setEndTime( "2" );
+        payToGiveCouponsReq.setTitle( "123" );
+        payToGiveCouponsReq.setCouponInfoList( objects );
+        CardGiveOutRpcService.PayToGiveCouponsRes payToGiveCouponsRes = rpcClient.payToGiveCoupon( payToGiveCouponsReq );
+        System.out.println(payToGiveCouponsRes.getMessageParams());
+
     }
 
 }

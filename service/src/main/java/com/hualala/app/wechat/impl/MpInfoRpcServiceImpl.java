@@ -54,4 +54,17 @@ public class MpInfoRpcServiceImpl implements MpInfoRpcService {
         mpInfoQueryResData.setMpInfoResDataList(mpInfoLst);
         return mpInfoQueryResData;
     }
+
+    @Override
+    public MpInfoQueryResData selectMp(MpInfoSelectReqData reqData) {
+        Map<String, Object> param = new HashMap<>();
+        if(StringUtils.isNotEmpty(reqData.getMpID())){
+            param.put("mpID",reqData.getMpID());
+        }
+        List<WechatMpModel> list = wechatMpMapper.select(param);
+        List<MpInfoResData> mpInfoLst = DataUtils.copyList(list, MpInfoResData.class);
+        MpInfoQueryResData mpInfoQueryResData = new MpInfoQueryResData();
+        mpInfoQueryResData.setMpInfoResDataList(mpInfoLst);
+        return mpInfoQueryResData;
+    }
 }

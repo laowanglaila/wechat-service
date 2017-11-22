@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -66,8 +67,8 @@ private CreateCardKeyService createCardKeyService;
     @Test
     public void testDonwloadCardList() throws ExecutionException {
 //        String mpID = "dohko1155";
-//        String mpID = "hualala_com";
-        String mpID = "tut1Ceu1DX005996";
+        String mpID = "hualala_com";
+//        String mpID = "tut1Ceu1DX005996";
 //        String mpID = "doulaofangceshi";
         CardSyncRpcService rpcClient = super.baseRpcClient.getRpcClient(CardSyncRpcService.class);
         CardSyncRpcService.CardListReqData cardListReqData = new CardSyncRpcService.CardListReqData();
@@ -83,6 +84,8 @@ private CreateCardKeyService createCardKeyService;
         cardListReqData.setStatusList(cardStatusEnums);
         CardSyncRpcService.CardListResData cardList = rpcClient.getCardList(cardListReqData);
         List<String> cardIdList = cardList.getCardIdList();
+        Map <String, Object> map = cardList.toMap();
+        System.out.println(map);
         CardSyncRpcService.CardDownloadReqData cardDownloadReqData = new CardSyncRpcService.CardDownloadReqData();
         cardDownloadReqData.setMpID(mpID);
         for (String cardID : cardIdList) {

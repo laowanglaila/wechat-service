@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "WechatAccessTokenRpcData";
+import "commons.proto";
+
+message AccessTokenReq {  
+   // 公众号编码
+   string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
+   // 是否强制刷新
+   bool isForceRefresh=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccessTokenRes {  
+   // 微信接口调用凭证
+   string accessToken=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service WechatAccessTokenRpcService{
+    //
+    rpc getAccessToken(AccessTokenReq) returns (AccessTokenRes) {}
+}

@@ -5,25 +5,9 @@ option java_outer_classname = "MpInfoRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
-message MpInfoQueryReqData {  
-   // itemID
-   string itemID=2;
+message MpInfoSelectReqData {  
    // 公众号编码
    string mpID=3;
-   // 公众号名称
-   string mpName=4;
-   // 公众号类型
-   MpTypeEnum mpType=5;
-   // 集团ID
-   int64 groupID=6;
-   // 品牌ID
-   int64 brandID=7;
-   // 店铺ID
-   int64 shopID=8;
-   // appID
-   string appID=9;
-   int32 pageNo=10;
-   int32 pageSize=11;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -87,8 +71,32 @@ message MpInfoResData {
    // 响应公共字段
    ResultHeader result=1;
 }
+message MpInfoQueryReqData {  
+   // itemID
+   string itemID=2;
+   // 公众号编码
+   string mpID=3;
+   // 公众号名称
+   string mpName=4;
+   // 公众号类型
+   MpTypeEnum mpType=5;
+   // 集团ID
+   int64 groupID=6;
+   // 品牌ID
+   int64 brandID=7;
+   // 店铺ID
+   int64 shopID=8;
+   // appID
+   string appID=9;
+   int32 pageNo=10;
+   int32 pageSize=11;
+   // 请求公共字段
+   RequestHeader header=1;
+}
 //
 service MpInfoRpcService{
+    //根据mpID获取公众信息
+    rpc selectMp(MpInfoSelectReqData) returns (MpInfoQueryResData) {}
     //获取公众信息
     rpc queryMpInfo(MpInfoQueryReqData) returns (MpInfoQueryResData) {}
 }

@@ -8,6 +8,8 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by renjianfei on 2017/4/25.
  */
@@ -77,6 +79,7 @@ public interface CardPrePareCreateRpcService {
      */
     @Data
     class PreMemberReqData extends RequestInfo {
+        @NotNull
         @Protocol(fieldType = FieldType.LONG, order = 8, description = "会员端产生的唯一主键ID")
         private Long cardKey;
         //        discount            	否            	int            	折扣，该会员卡享受的折扣优惠,填10就是九折。
@@ -135,6 +138,10 @@ public interface CardPrePareCreateRpcService {
         //        bonus_rules            	否            	string（512）            	积分规则。
         @Protocol(fieldType = FieldType.STRING, order = 26, description = "积分规则")
         private String bonusRules;
+        @Protocol(fieldType = FieldType.BOOL, order = 27, description = "使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活")
+        private Boolean wxActivateAfterSubmit;
+        @Protocol(fieldType = FieldType.STRING, order = 28, description = "使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url")
+        private String wxActivateAfterSubmitUrl;
 
     }
 

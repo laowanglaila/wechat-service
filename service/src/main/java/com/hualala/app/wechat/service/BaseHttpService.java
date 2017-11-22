@@ -2,13 +2,10 @@ package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.*;
-import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.common.ErrorCodes;
-import com.hualala.app.wechat.common.WechatBaseApi;
-import com.hualala.app.wechat.common.WechatErrorCode;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.impl.WechatTemplateRpcServiceImpl;
+import com.hualala.app.wechat.sdk.mp.common.*;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import org.apache.commons.lang.StringUtils;
@@ -22,7 +19,7 @@ import java.util.Map;
  * 微信卡券通用接口
  */
 @Service
-public class BaseHttpService implements WechatBaseApi{
+public class BaseHttpService implements WechatBaseApi {
 
 
     private Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
@@ -50,7 +47,7 @@ public class BaseHttpService implements WechatBaseApi{
         //首先判断 null ：200    然后判断创建是否成功
         if (null == responseJson) {
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, "http请求失败！");
-        } else if(responseJson.containsKey(WechatMessageType.IS_SUCCESS) && !responseJson.getBoolean(WechatMessageType.IS_SUCCESS)){
+        } else if(responseJson.containsKey( WechatMessageType.IS_SUCCESS) && !responseJson.getBoolean(WechatMessageType.IS_SUCCESS)){
             return responseJson;
         }
         logger.debug(() -> "微信响应参数 ：" + responseJson.toJSONString());
@@ -354,9 +351,9 @@ public class BaseHttpService implements WechatBaseApi{
         String expireSeconds = responseJson.getString("expire_seconds");
         String qrurl = responseJson.getString("url");
         if (StringUtils.isBlank(ticket) && StringUtils.isBlank(qrurl)) {
-            if (responseJson.containsKey("errcode")
-                    && WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals(responseJson.getString("errcode"))){
-                throw new WechatException(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED);
+            if (responseJson.containsKey(WechatMessageType.WECHAT_ERR_CODE)
+                    && "48001".equals(responseJson.getString(WechatMessageType.WECHAT_ERR_CODE))){
+                throw new WechatException( WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED);
             }
             return ResultUtil.toResultJson(responseJson, false, ErrorCodes.WECHAT_HTTP_FAILED, WechatErrorCode.wechatError.get(responseJson.getString("errcode")));
         }
@@ -398,21 +395,23 @@ public class BaseHttpService implements WechatBaseApi{
     }
     /**
      * 获取用户信息
-     * @param params
+     * @param
      * @return
      */
-    public JSONObject getWechatUserInfo(String params){
+    public JSONObject getWechatUserInfo(String accessToken, String openid, LangTypeEnum langTypeEnum){
+        String params = "access_token=" + accessToken + "&openid=" + openid + "&lang=" + langTypeEnum.name();
         String url = GET_WECHAT_USERINFO + "?" + params;
         return this.commonHttpGet(url, null);
     }
     /**
      * 获取用户信息
-     * @param params
+     * @param
      * @return
      */
-    public JSONObject getWechatAPIUserInfo(String params,String mpID){
-
-        String url = GET_WECHAT_API_USERINFO + "?" + params;
+    public JSONObject getWechatAPIUserInfo(String openID, LangTypeEnum langType, String mpID){
+        String param = "openid=" + openID + "&lang=" + langType.name();
+        String url = GET_WECHAT_API_USERINFO + "?" + param;
         return this.commonHttpGet(url, mpID);
     }
+
 }

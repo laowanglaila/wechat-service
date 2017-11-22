@@ -18,6 +18,8 @@ message UserInfoReqData {
    string openID=6;
    // 语言选择，默认中文，选填
    LangTypeEnum langType=7;
+   // 用户ID
+   int64 userID=8;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -50,11 +52,19 @@ message UserInfoResData {
    string tagidList=14;
    // 用户所在省份
    string province=15;
+   // 用户ID
+   int64 userID=16;
+   // 公众号ID
+   string mpID=17;
+   // 集团ID
+   string groupID=18;
    // 响应公共字段
    ResultHeader result=1;
 }
 //
 service UserGetUserInfoRpcService{
+    //
+    rpc findUserInfo(UserInfoReqData) returns (UserInfoResData) {}
     //
     rpc getUserInfoByOpenID(UserInfoReqData) returns (UserInfoResData) {}
 }

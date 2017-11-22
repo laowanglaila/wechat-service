@@ -2,9 +2,12 @@ package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.WechatErrorCode;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.util.OkHttpUtil;
+import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.grpc.CardCodeRpcData;
+import com.hualala.app.wechat.impl.EventHandler.CardUserGetHandler;
+import com.hualala.app.wechat.sdk.mp.util.OkHttpUtil;
+import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
 import org.apache.commons.codec.binary.Base64;
 import org.mockito.cglib.proxy.Enhancer;
 import org.mockito.cglib.proxy.MethodInterceptor;
@@ -18,6 +21,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -264,6 +269,33 @@ public class Test {
         JSONObject post = OkHttpUtil.post( url, params );
         System.out.println(post);
     }
+    @org.junit.Test
+    public void test14(){
+        Class <?> builderClass = CardCodeRpcData.CardCodeDestroyReqData.Builder.class;
+        Class <?> superclass = builderClass.getSuperclass();
+        String canonicalName = builderClass.getCanonicalName();
+        Class <?> declaringClass = builderClass.getDeclaringClass();
+        System.out.println();
+    }
+    @org.junit.Test
+    public void test15(){
+        ThreadLocal <String> stringThreadLocal = new ThreadLocal <>();
+        stringThreadLocal.set( "123" );
+        String s = stringThreadLocal.get();
+    }
+    @org.junit.Test
+    public void test16(){
+        CardUserGetHandler bean = WechatBeanFactory.getBean( CardUserGetHandler.class );
+        System.out.println(bean);
+        bean.handler( new JSONObject( ) );
+    }
+    @org.junit.Test
+    public void test17(){
+        Map<String, Object> map = new HashMap <>();
+        String shopID = map.get( "shopID" )==null?"":(String) map.get( "shopID" );
+        System.out.println("123"+shopID + "123");
+    }
+
 }
 
 /**

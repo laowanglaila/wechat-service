@@ -1,9 +1,9 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.JsApiSignRpcService;
-import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.service.ApiTicketService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.JsApiSignUtil;
@@ -26,11 +26,11 @@ public class JsApiSignRpcServiceImpl implements JsApiSignRpcService {
     @Autowired
     private MpInfoService mpInfoService;
 
-    private static final String HUALALA_COM = "hualala_com";
+    private static final String HUALALA_COM = WechatMessageType.HUALALA_COM;
     @Override
     public JsApiSignResData getSign(JsApiSignReqData jsApiSignReqData) {
-        String mpID = jsApiSignReqData.getMpID().trim();
-        String url = jsApiSignReqData.getUrl().trim();
+        String mpID = jsApiSignReqData.getMpID();
+        String url = jsApiSignReqData.getUrl();
         if (StringUtils.isBlank(mpID)){
             mpID = HUALALA_COM;
         }

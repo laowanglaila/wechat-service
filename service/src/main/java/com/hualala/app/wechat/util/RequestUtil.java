@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.util;
 
 import com.hualala.app.wechat.WechatRequestInfo;
-import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.service.MpInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,22 +46,4 @@ public class RequestUtil {
         }
         return mpID;
     }
-//    public static Long getGroupID(WechatRequestInfo requestInfo,String mpID){
-//
-//        Long groupID = null;
-//        groupID = requestInfo.getGroupID();
-//        if (groupID == null) {
-//            Map<String, Object> params = new HashMap<>();
-//            params.put("mpID", mpID);
-//            List<Map<String, Object>> maps = wechatMpMapper.queryByParams(params);
-//            if (maps.size() > 0) {
-//                Integer groupID1 = (Integer) maps.get(0).get("groupID");
-//                groupID = groupID1.longValue();
-//            } else {
-//                throw new WechatException(WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"mpID为空并且没有提供brandID、groupID、shopID！");
-//                return new PreCardResData().setResultInfo( ErrorCodes.WECHAT_GROUP_ID_NULL, "获取GroupID失败！");
-//            }
-//        }
-//        return groupID;
-//    }
 }

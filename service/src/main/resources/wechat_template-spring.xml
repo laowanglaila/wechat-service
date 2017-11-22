@@ -49,6 +49,47 @@
 								"keyword5": "[keynote5]",
 								"remark": "[remark]"
 							}
+						},
+						"crm":{
+							"trans":{
+								"modelID": "[modelID]",
+								"templateID": "[templateID]",
+								"first": "[first]",
+								"keyword1": "[keynote1]",
+								"keyword2": "[keynote2]",
+								"keyword3": "[keynote3]",
+								"keyword4": "[keynote4]",
+								"keyword5": "[keynote5]",
+								"remark": "[remark]"
+							},
+							"reg":{
+								"modelID": "[modelID]",
+								"templateID": "[templateID]",
+								"first": "[first]",
+								"keyword1": "[keynote1]",
+								"keyword2": "[keynote2]",
+								"keyword3": "[keynote3]",
+								"keyword4": "[keynote4]",
+								"remark": "[remark]"
+							},
+							"gift":{
+								"modelID": "[modelID]",
+								"templateID": "[templateID]",
+								"first": "[first]",
+								"keyword1": "[keynote1]",
+								"keyword2": "[keynote2]",
+								"keyword3": "[keynote3]",
+								"remark": "[remark]"
+							},
+							"customer":{
+								"modelID": "[modelID]",
+								"templateID": "[templateID]",
+								"first": "[first]",
+								"keyword1": "[keynote1]",
+								"keyword2": "[keynote2]",
+								"keyword3": "[keynote3]",
+								"remark": "[remark]"
+							}
 						}
 					}
 				]]>

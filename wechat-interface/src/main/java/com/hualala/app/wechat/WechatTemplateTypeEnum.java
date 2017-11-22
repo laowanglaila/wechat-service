@@ -10,7 +10,12 @@ public enum WechatTemplateTypeEnum implements ValueEnum {
     TEMPLATE_ENUM_DEFAULT(0,"","",""),
     TEMPLATE_ENUM_QUEUE(1, "queue", "alarm", ""),
     TEMPLATE_ENUM_ORDER(2, "order", "default", ""),
-    TEMPLATE_ENUM_ORDER_BOOK(3, "order", "book", "");
+    TEMPLATE_ENUM_ORDER_BOOK(3, "order", "book", ""),
+    TEMPLATE_ENUM_CRM_TRANS(4, "crm", "trans", ""),
+    TEMPLATE_ENUM_CRM_REG(5, "crm", "reg", ""),
+    TEMPLATE_ENUM_CRM_GIFT(6, "crm", "gift", ""),
+    TEMPLATE_ENUM_CRM_CUSTOMER(7, "crm", "customer", ""),
+    TEMPLATE_ENUM_INVOICE(8, "invoice", "alarm", "");
 
     private int value;
     private String modelType;

@@ -1,7 +1,7 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import org.junit.Test;
@@ -24,7 +24,8 @@ public class AccessTokenServiceTest {
 //    private StringRedisTemplate commonRedisTemplate;
     @Test
     public void getAccessTokenTest() throws WechatInnerException {
-        String mpID = "tut1Ceu1DX005996";
+//        String mpID = "tut1Ceu1DX005996";
+        String mpID = "dohko1155";
 
         System.out.println(accessTokenService.getAccessToken(mpID).getString("accessToken"));
     }

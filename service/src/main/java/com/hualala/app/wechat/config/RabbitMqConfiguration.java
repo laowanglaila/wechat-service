@@ -24,7 +24,7 @@ public class RabbitMqConfiguration {
     public static final String QRCODE_CACHE_ROUTE_KEY = "qrcode_cache_route_key";
 
     /**
-     * 创建查单消息队形
+     * 创建缓存二维码消息队形
      * @return
      */
     @Bean
@@ -41,7 +41,7 @@ public class RabbitMqConfiguration {
     }
 
     /**
-     * 创建查询exchange
+     * 创建缓存二维码exchange
      * @return
      */
     @Bean
@@ -55,13 +55,49 @@ public class RabbitMqConfiguration {
     }
 
     /**
-     * 绑定查单队列
+     * 绑定缓存二维码队列
      * @param amqpAdmin
      * @return
      */
     @Bean
     public Binding cacheQrcodeConsumerBinding(AmqpAdmin amqpAdmin) {
         return BindingBuilder.bind(cacheQrcodeConsumerQueue(amqpAdmin)).to(cacheQrcodeConsumerExchange(amqpAdmin));
+    }
+
+    /**
+     * 创建缓存二维码消息队形
+     * @return
+     */
+    @Bean
+    public Queue templateMessageQueue(AmqpAdmin amqpAdmin) {
+        String queueName = queueProps.getTemplateMessageQueue();
+        logger.info(() -> "init templateMessage consumer queue [" + queueName + "]");
+        Queue queue = new Queue(queueName);
+        return queue;
+    }
+
+    /**
+     * 创建缓存二维码exchange
+     * @return
+     */
+    @Bean
+    public FanoutExchange templateMessageExchange(AmqpAdmin amqpAdmin) {
+        String exchangeName = queueProps.getTemplateMessageExchange();
+        logger.info(() -> "init templateMessage consumer exchange [" + exchangeName + "]");
+        FanoutExchange exchange = new FanoutExchange(exchangeName);
+        exchange.setDelayed(true);
+        amqpAdmin.declareExchange(exchange);
+        return exchange;
+    }
+
+    /**
+     * 绑定缓存二维码队列
+     * @param amqpAdmin
+     * @return
+     */
+    @Bean
+    public Binding templateMessageConsumerBinding(AmqpAdmin amqpAdmin) {
+        return BindingBuilder.bind(templateMessageQueue(amqpAdmin)).to(templateMessageExchange(amqpAdmin));
     }
 
 }
