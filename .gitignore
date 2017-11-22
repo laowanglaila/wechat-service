@@ -28,3 +28,4 @@ nbdist/
 wechat-interface/src/main/java/com/hualala/app/wechat/grpc
 /service/src/test/java/com/hualala/app/wechat/hash/
 
+/unnamed.patch

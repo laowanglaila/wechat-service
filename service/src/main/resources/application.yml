@@ -426,6 +426,8 @@ wechat:
       rabbitmq:
         cacheQrcodeExchange: pre_hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: pre_hll:service:wechat:queue:cacheQrcode
+        templateMessageExchange: pre_hll:service:wechat:exchange:templateMessage
+        templateMessageQueue: pre_hll:service:wechat:queue:templateMessage
   card:
       skuQuantity: pre_hll:service:wechat:card:sku_quantity
   mpID:
@@ -535,6 +537,8 @@ wechat:
       rabbitmq:
         cacheQrcodeExchange: hll:service:wechat:exchange:cacheQrcode
         cacheQrcodeQueue: hll:service:wechat:queue:cacheQrcode
+        templateMessageExchange: hll:service:wechat:exchange:templateMessage
+        templateMessageQueue: hll:service:wechat:queue:templateMessage
   card:
       skuQuantity: hll:service:wechat:card:sku_quantity
   mpID:
