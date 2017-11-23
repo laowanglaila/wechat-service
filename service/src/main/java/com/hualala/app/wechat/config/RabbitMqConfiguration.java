@@ -72,7 +72,8 @@ public class RabbitMqConfiguration {
     public Queue templateMessageQueue(AmqpAdmin amqpAdmin) {
         String queueName = queueProps.getTemplateMessageQueue();
         logger.info(() -> "init templateMessage consumer queue [" + queueName + "]");
-        Queue queue = new Queue(queueName);
+//        Queue queue = new Queue(queueName);
+        Queue queue = new Queue(queueName, true, false, true);
         return queue;
     }
 
