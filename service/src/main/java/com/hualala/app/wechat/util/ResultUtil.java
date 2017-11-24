@@ -50,7 +50,6 @@ public class ResultUtil {
             Class<ResultInfo> resultInfoClass = ResultInfo.class;
             Method setCode = resultInfoClass.getDeclaredMethod("setCode", String.class);
             Method setMessage = resultInfoClass.getDeclaredMethod("setMessage", String.class);
-
             setCode.invoke(object,jsonObject.getString(WechatMessageType.CODE));
             setMessage.invoke(object,jsonObject.getString(WechatMessageType.MESSAGE));
         }catch (NoSuchMethodException e){
