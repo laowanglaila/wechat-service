@@ -1,5 +1,5 @@
 spring:
-  profiles.active: local
+  profiles.active: pre
 ---
 spring:
   profiles: local
@@ -413,7 +413,7 @@ grpc:
   port: 6567
   client:
      hosts:
-        wechat: dohko.wechat.service.hualala.com:31558
+        wechat: pre.wechat.service.hualala.com:31558
 #        idgen: dohko.id.gen.hualala.com:31249
         sem: pre.service.short.message.hualala.com:31524
         shopcrm: pre.shop.crm.service.hualala.com:31537
@@ -479,7 +479,7 @@ core:
     traceSampler: 1.0                                  #采样比率，1.0表示百分百，刚上线使用建议1.0，后续系统性能稳定建议 0.1。
     enable: true                                        #开关：是否使用zipkin，如果不设置（或者false），zipkin不能使用
 wechatsdk:
-    host: dohko.wechat.service.hualala.com:31558
+    host: pre.wechat.service.hualala.com:31558
 
 ---
 spring:
