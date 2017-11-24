@@ -1,5 +1,5 @@
 spring:
-  profiles.active: pre
+  profiles.active: local
 ---
 spring:
   profiles: local
