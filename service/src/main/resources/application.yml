@@ -492,12 +492,12 @@ spring:
     add-mappings: false
   datasource:
     url: jdbc:mysql://mysql.shop.001.master.hualala.com:6350/db_shop?useUnicode=true&characterEncoding=utf8&statementInterceptors=brave.mysql.TracingStatementInterceptor
-    username: root
-    password: hualaladev
+    username: myhualashopol
+    password: gppwd@dldshopol
     driver-class-name: com.mysql.jdbc.Driver
-    initial-size: 3
-    max-active: 20
-    min-idle: 1
+    initial-size: 10
+    max-active: 100
+    min-idle: 2
     validation-query: SELECT 1
     test-on-borrow: ture
     test-while-idle: true
