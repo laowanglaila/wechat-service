@@ -74,7 +74,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
     @Autowired
     private RedisLockHandler redisLockHandler;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private StringRedisTemplate stringRedisTemplate2;
 
     @Autowired
     private AuthorizationCheckRpcService getAuthorizationCheckRpcService;
@@ -345,7 +345,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
      */
     private void checkErrorCode(String mpID) {
         BoundValueOperations<String, String> ops
-                = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
+                = stringRedisTemplate2.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
         String errorCode = ops.get();
         if (StringUtils.isNotBlank(errorCode)){
             // 判断错误是否解决，如果已解决删除错误标记
@@ -354,7 +354,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
             authorizationCheckReq.setInterfaceType( WechatFuctionEnum.TEMPORARY_QR_CODE );
             AuthorizationCheckRpcService.AuthorizationCheckRes check = getAuthorizationCheckRpcService.check( authorizationCheckReq );
             if (check.success()){
-                stringRedisTemplate.delete( WECHAT_QRCODE_ERRO_CODE + mpID );
+                stringRedisTemplate2.delete( WECHAT_QRCODE_ERRO_CODE + mpID );
             }else {
                 throw new WechatException( WechatExceptionTypeEnum.parseEnum(errorCode));
             }

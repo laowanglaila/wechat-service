@@ -32,7 +32,7 @@ public class QrcodeCacheService implements RedisKeys{
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private StringRedisTemplate stringRedisTemplate2;
 
 
 
@@ -70,7 +70,7 @@ public class QrcodeCacheService implements RedisKeys{
                 //接口没有授权的错误放入redis，再次请求时返回错误
                 if (WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode().equals( e.getErrorCode() )){
                     BoundValueOperations<String, String> ops
-                            = stringRedisTemplate.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
+                            = stringRedisTemplate2.boundValueOps( WECHAT_QRCODE_ERRO_CODE + mpID);
                     ops.set(WechatExceptionTypeEnum.WECHAT_MP_PERMISSION_DENIED.getCode(),10, TimeUnit.MINUTES);
                     return;
                 }

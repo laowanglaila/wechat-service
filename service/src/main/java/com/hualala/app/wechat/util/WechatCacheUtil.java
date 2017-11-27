@@ -28,10 +28,13 @@ public class WechatCacheUtil {
     @Autowired
     @Qualifier("stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate2;
     private RedisTemplate<String, String> redisTemplate;
 
 
     private static StringRedisTemplate redisTemplateStatic;
+    private static StringRedisTemplate redisTemplateStatic2;
 
     {
         WE_CACHE.put("ticket", "component_ticket_");
@@ -47,6 +50,7 @@ public class WechatCacheUtil {
     @PostConstruct
     private void init() {
         redisTemplateStatic  = this.stringRedisTemplate;
+        redisTemplateStatic2  = this.stringRedisTemplate2;
     }
 
 
@@ -158,6 +162,7 @@ public class WechatCacheUtil {
      */
     public static void setData(String keyName, String type, String value) {
         redisTemplateStatic.opsForValue().set(WE_CACHE.get(type) + keyName, value);
+        redisTemplateStatic2.opsForValue().set(WE_CACHE.get(type) + keyName, value);
     }
 
     public static void setData(String keyName, String type, String value, Long timeout) {
@@ -176,6 +181,7 @@ public class WechatCacheUtil {
 
     public static void setData(String keyName, String value, Long timeout) {
         redisTemplateStatic.opsForValue().set(keyName,value,timeout, TimeUnit.SECONDS);
+        redisTemplateStatic2.opsForValue().set(keyName,value,timeout, TimeUnit.SECONDS);
     }
 
     public static JSONObject getMpInfo(String mpID,String appID) {
