@@ -5,6 +5,7 @@ import com.hualala.app.wechat.AuthorizationCheckRpcService;
 import com.hualala.app.wechat.WechatFuctionEnum;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
+import com.hualala.app.wechat.lock.RedisLock;
 import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
@@ -17,7 +18,6 @@ import com.hualala.app.wechat.model.mq.QrcodeInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.Qrcode.QrcodeCreateSceneIDService;
-import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.app.Logger;
 import com.hualala.core.utils.DataUtils;
@@ -72,7 +72,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
     private RabbitQueueProps rabbitQueueProps;
 
     @Autowired
-    private RedisLockHandler redisLockHandler;
+    private RedisLock redisLockHandler;
     @Autowired
     private StringRedisTemplate stringRedisTemplate2;
 
