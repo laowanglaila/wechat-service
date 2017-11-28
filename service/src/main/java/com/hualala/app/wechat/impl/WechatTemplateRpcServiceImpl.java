@@ -389,6 +389,10 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
                 //新版会员权益
 //                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
                 break;
+            case TEMPLATE_ENUM_ASSESSMENT:
+                //用餐评价提醒
+                url = ASSESSMENT_REPLY + "i="+param1+"&mpid="+mpID+"&g="+groupID;
+                break;
             default:
                 url = null;
         }
