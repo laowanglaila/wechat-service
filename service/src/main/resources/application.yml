@@ -1,5 +1,5 @@
 spring:
-  profiles.active: dohko
+  profiles.active: local
 ---
 spring:
   profiles: local
@@ -48,7 +48,7 @@ spring:
   redis2:
     database: 0
     host: 172.16.0.27
-    port: 20000
+    port: 19000
     pool:
       max-idle: 1
       min-idle: 1
@@ -184,7 +184,7 @@ spring:
   redis2:
     database: 0
     host: 172.16.0.27
-    port: 20000
+    port: 19000
     pool:
       max-idle: 1
       min-idle: 1
@@ -309,7 +309,7 @@ spring:
   redis2:
     database: 0
     host: 172.16.0.27
-    port: 20000
+    port: 19000
     pool:
       max-idle: 1
       min-idle: 1
@@ -433,7 +433,7 @@ spring:
   redis2:
     database: 0
     host: 172.16.0.27
-    port: 20000
+    port: 19000
     pool:
       max-idle: 1
       min-idle: 1

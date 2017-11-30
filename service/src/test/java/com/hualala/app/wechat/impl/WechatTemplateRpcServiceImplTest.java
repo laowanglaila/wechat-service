@@ -92,6 +92,7 @@ public class WechatTemplateRpcServiceImplTest {
         reqData.setTemplateType( WechatTemplateTypeEnum.TEMPLATE_ENUM_ASSESSMENT);
 //        reqData.setOpenID( openID );
         reqData.setUserID( Long.parseLong( userID ));
+        reqData.setParam1( "1126" );
         reqData.setMpID( mpID );
         reqData.setTemplateItem( items );
         WechatTemplateRpcService wechatService = rpcClient.getRpcClient( WechatTemplateRpcService.class );
