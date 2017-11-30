@@ -83,6 +83,8 @@ wechat:
         cacheQrcodeQueue: dohko_hll:service:wechat:queue:cacheQrcode
         templateMessageExchange: mu_hll:service:wechat:exchange:templateMessage
         templateMessageQueue: mu_hll:service:wechat:queue:templateMessage
+#        templateMessageExchange: dohko_hll:service:wechat:exchange:templateMessage
+#        templateMessageQueue: dohko_hll:service:wechat:queue:templateMessage
   card:
       skuQuantity: mu_hll:service:wechat:card:sku_quantity
   mpID:
