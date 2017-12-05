@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.user.UserInfoWechatRpcService;
 import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
+import com.hualala.app.wechat.lock.RedisLock;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
@@ -15,7 +16,6 @@ import com.hualala.app.wechat.model.user.UserModelQuery;
 import com.hualala.app.wechat.model.user.UserRelationModel;
 import com.hualala.app.wechat.model.user.UserRelationModelQuery;
 import com.hualala.app.wechat.service.BaseHttpService;
-import com.hualala.app.wechat.service.RedisLockHandler;
 import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.core.client.BaseRpcClient;
@@ -51,7 +51,7 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
     @Autowired
     private WechatMpMapper wechatMpMapper;
     @Autowired
-    private RedisLockHandler redisLockHandler;
+    private RedisLock redisLockHandler;
     ExecutorService executor = Executors.newCachedThreadPool();
 
     private static final Long LOCKED_TIME_OUT_SECONDS = 10L;

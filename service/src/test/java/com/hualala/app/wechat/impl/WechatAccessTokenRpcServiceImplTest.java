@@ -23,7 +23,7 @@ public class WechatAccessTokenRpcServiceImplTest extends BaseRpcTest {
     public void test() throws InterruptedException {
         WechatAccessTokenRpcService rpcClient = super.baseRpcClient.getRpcClient( WechatAccessTokenRpcService.class );
         WechatAccessTokenRpcService.AccessTokenReq accessTokenReq = new WechatAccessTokenRpcService.AccessTokenReq();
-        accessTokenReq.setMpID( "doulaofangceshi" );
+        accessTokenReq.setMpID( "hualala_com" );
         WechatAccessTokenRpcService.AccessTokenRes accessToken = rpcClient.getAccessToken( accessTokenReq );
         Assert.assertEquals( "000", accessToken.getCode());
     }

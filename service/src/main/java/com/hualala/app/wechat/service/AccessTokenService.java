@@ -91,17 +91,21 @@ public class AccessTokenService {
         String mpID = param.containsKey("mpID")?String.valueOf(param.get("mpID")):null;
         String appID = param.containsKey("appID")?String.valueOf(param.get("appID")):null;
         JSONObject mpInfoJson = WechatCacheUtil.getMpInfo(mpID, appID);
-
-        //Map<String,Object> mpInfoLst = mpInfoService.queryMpInfo(param);
+        String appSecret = null;
         if(mpInfoJson == null){
-            ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_NULL,"未找到对应的公众号");
+            Map<String,Object> mpInfoLst = mpInfoService.queryMpInfo(param);
+            if (mpInfoLst == null) {
+                ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MP_NULL,"未找到对应的公众号");
+            }
+            appSecret = (String) mpInfoLst.get( "appSecret" );
+            appID = (String) mpInfoLst.get( "appID" );
+            mpID = (String) mpInfoLst.get( "mpID" );
+        }else {
+            appSecret = mpInfoJson.getString("appSecret");
+            appID = mpInfoJson.getString("appID");
+            mpID = mpInfoJson.getString("mpID");
         }
-        appID = mpInfoJson.getString("appID");
-        mpID = mpInfoJson.getString("mpID");
-        String appSecret = mpInfoJson.getString("appSecret");
-        String authorize = mpInfoJson.getString("authorize");
-        String url = null;
-        url = WechatBaseApi.GET_ACCESS_TOKEN + "&appid=" + appID + "&secret=" + appSecret;
+        String url = WechatBaseApi.GET_ACCESS_TOKEN + "&appid=" + appID + "&secret=" + appSecret;
         JSONObject resultJson = HttpApiUtil.httpGet(url);
         if(resultJson == null){
             return ResultUtil.toResultJson(resultJson,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR,"http请求出错了");

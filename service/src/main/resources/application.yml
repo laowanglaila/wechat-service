@@ -1,5 +1,5 @@
 spring:
-  profiles.active: pre
+  profiles.active: local
 ---
 spring:
   profiles: local
@@ -45,7 +45,15 @@ spring:
       min-idle: 1
       max-active: 1
       max-wait: 10000
-
+  redis2:
+    database: 0
+    host: 172.16.0.27
+    port: 19000
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
 mybatis:
    config-location: classpath:mybatis-config.xml
 
@@ -75,6 +83,8 @@ wechat:
         cacheQrcodeQueue: dohko_hll:service:wechat:queue:cacheQrcode
         templateMessageExchange: mu_hll:service:wechat:exchange:templateMessage
         templateMessageQueue: mu_hll:service:wechat:queue:templateMessage
+#        templateMessageExchange: dohko_hll:service:wechat:exchange:templateMessage
+#        templateMessageQueue: dohko_hll:service:wechat:queue:templateMessage
   card:
       skuQuantity: mu_hll:service:wechat:card:sku_quantity
   mpID:
@@ -173,7 +183,15 @@ spring:
       min-idle: 1
       max-active: 1
       max-wait: 10000
-
+  redis2:
+    database: 0
+    host: 172.16.0.27
+    port: 19000
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
 mybatis:
    config-location: classpath:mybatis-config.xml
 
@@ -290,7 +308,15 @@ spring:
       min-idle: 1
       max-active: 1
       max-wait: 10000
-
+  redis2:
+    database: 0
+    host: 172.16.0.27
+    port: 19000
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
 mybatis:
    config-location: classpath:mybatis-config.xml
 
@@ -405,6 +431,16 @@ spring:
       min-idle: 1
       max-active: 1
       max-wait: 10000
+  # REDIS (RedisProperties)
+  redis2:
+    database: 0
+    host: 172.16.0.27
+    port: 19000
+    pool:
+      max-idle: 1
+      min-idle: 1
+      max-active: 1
+      max-wait: 10000
 
 mybatis:
    config-location: classpath:mybatis-config.xml
@@ -513,6 +549,16 @@ spring:
     database: 0
     host: redis1.api.hualala.com
     port: 21379
+    pool:
+      max-idle: 50
+      min-idle: 30
+      max-active: 200
+      max-wait: 10000
+        # REDIS (RedisProperties)
+  redis2:
+    database: 0
+    host: sjhl.codis.hualala.com
+    port: 20000
     pool:
       max-idle: 50
       min-idle: 30

@@ -3,6 +3,7 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardPrePareCreateRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message PreCouponReqData {  
    // 唯一ID

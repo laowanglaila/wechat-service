@@ -2,6 +2,7 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONArray;
 import com.hualala.app.wechat.CardPrePareCreateRpcService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         couponReqData.setLeastCost(100);
         couponReqData.setReduceCost(10);
         CardPrePareCreateRpcService.PreCardResData coupon = prePareCreateCardRpcService.createCoupon(couponReqData);
-
-        System.out.println("--------------------------------"+coupon.toString());
+        Assert.assertEquals( "000",coupon.getCode()  );
     }
     @Test
     public void testBaseInfo(){
@@ -55,7 +55,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         preCardBaseInfoData.setNotice("Notice");
 
         CardPrePareCreateRpcService.PreCardResData baseInfo = prePareCreateCardRpcService.createBaseInfo(preCardBaseInfoData);
-        System.out.println("-------------------------------"+baseInfo.getMessage());
+        Assert.assertEquals( "000",baseInfo.getCode()  );
     }
     @Test
     public void testAdvancedInfo(){
@@ -63,7 +63,8 @@ public class CardPrePareCreateRpcServiceImplTest {
         CardPrePareCreateRpcService.PreAdvancedInfoData preAdvancedInfoData = new CardPrePareCreateRpcService.PreAdvancedInfoData();
         preAdvancedInfoData.setAbstractInfo("Json");
         CardPrePareCreateRpcService.PreCardResData advancedInfo = prePareCreateCardRpcService.createAdvancedInfo(preAdvancedInfoData);
-        System.out.println("-------------------------------"+advancedInfo);
+        Assert.assertEquals( "000",advancedInfo.getCode()  );
+
     }
 
     /**
@@ -146,16 +147,8 @@ public class CardPrePareCreateRpcServiceImplTest {
         advancedInfo.setCardKey(cardKey);
         prePareCreateCardRpcService.createCoupon(couponData);
         prePareCreateCardRpcService.createAdvancedInfo(advancedInfo);
-
 }
 
-//    @Test
-//    public void testSubmitCoupon(){
-//        CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
-//        cardPrimaryKey.setCardKey(2342343242L);
-//        CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCouponInfo(cardPrimaryKey);
-//        System.out.println(preCardResData.getMessage());
-//    }
 
     @Test
     public void testMemberInfo(){
@@ -177,7 +170,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         preMemberReqData.setDiscount(10);
         CardPrePareCreateRpcService.PreCardResData coupon = prePareCreateCardRpcService.createMemberCard(preMemberReqData);
 
-        System.out.println("--------------------------------"+coupon.toString());
+        Assert.assertEquals( "000",coupon.getCode()  );
     }
 
     /**
@@ -188,7 +181,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("小卖部会员");
+        memberInfo.setPrerogative("倩倩会员卡");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -212,7 +205,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(8L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("小卖部会员");
+        baseInfo.setTitle("倩倩会员卡");
         baseInfo.setMpID("wangxiangyuanceshi");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
@@ -279,7 +272,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
         cardPrimaryKey.setCardKey(cardKey);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
-        System.out.println(preCardResData.getMessage());
+        Assert.assertEquals( "000",preCardResData.getCode()  );
     }
 
     @Test
@@ -287,7 +280,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         CardPrePareCreateRpcService.CardPrimaryKey cardPrimaryKey = new CardPrePareCreateRpcService.CardPrimaryKey();
         cardPrimaryKey.setCardKey(6482999210550503432L);
         CardPrePareCreateRpcService.PreCardResData preCardResData = prePareCreateCardRpcService.submitCardInfo(cardPrimaryKey);
-        System.out.println(preCardResData.getMessage());
+        Assert.assertEquals( "000",preCardResData.getCode()  );
     }
 
 }

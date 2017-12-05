@@ -1,6 +1,6 @@
 package com.hualala.app.wechat.util;
 
-import com.hualala.app.wechat.service.RedisLockHandler;
+import com.hualala.app.wechat.lock.RedisLock;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ public class RedisLockTest {
     private Logger logger = Logger.getLogger(this.getClass());
 
     @Autowired
-    private RedisLockHandler redisLockHandler;
+    private RedisLock redisLockHandler;
     private String key = "test_redis_key";
 //    @Autowired
 //    private RedissonClient redissonClient;

@@ -357,16 +357,14 @@ public class ComponentTokenService implements WechatBaseApi {
         }
         if (authorizerAcToken == null) {
             JSONObject jsonObject = this.apiAuthorizerToken( appID );
-//            authorizerAcToken = WechatCacheUtil.getData( appID, "authorizerAcToken" );
             if (!jsonObject.getBoolean( WechatMessageType.IS_SUCCESS )) {
                 return ResultUtil.toResultJson( result, WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_ERROR, "获取authorizerAcToken失败：" + result.getString( WechatMessageType.MESSAGE ));
             }
             authorizerAcToken = jsonObject.getString( "accessToken" );
         }
-        result.put( WechatMessageType.IS_SUCCESS, WechatMessageType.TRUE );
         result.put( "authorizerAcToken", authorizerAcToken );
         result.put( "accessToken", authorizerAcToken );
-        return result;
+        return ResultUtil.toResultJson(result,WechatMessageType.TRUE,ErrorCodes.WECHAT_SUCCESS_CODE,"执行成功");
     }
 
     /**

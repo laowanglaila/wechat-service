@@ -13,8 +13,8 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "Spring.redis")
-public class DefaultRedisTemplateConfig {
+@ConfigurationProperties(prefix = "Spring.redis2")
+public class DefaultRedisTemplateConfig2 {
     public static final String COLON = ":";
     private String host;
 
@@ -33,7 +33,7 @@ public class DefaultRedisTemplateConfig {
         private Integer minIdle;
     }
 
-    @Bean(name = "stringRedisTemplate")
+    @Bean(name = "stringRedisTemplate2")
     public StringRedisTemplate getStringRedisTemplate() {
         //实例化链接工厂
         JedisConnectionFactory connectionFactory = new JedisConnectionFactory();

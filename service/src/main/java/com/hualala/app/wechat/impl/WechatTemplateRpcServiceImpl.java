@@ -2,17 +2,19 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.WechatTemplateTypeEnum;
-import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.config.RabbitQueueProps;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.mapper.sem.TemplateMessageModelMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
 import com.hualala.app.wechat.model.sem.TemplateMessageModel;
+import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateData;
+import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateMessage;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
 import com.hualala.app.wechat.service.user.WechatUserService;
@@ -26,9 +28,6 @@ import com.hualala.core.client.BaseRpcClient;
 import com.hualala.core.utils.DataUtils;
 import com.hualala.message.SemSMSQueueService;
 import com.hualala.message.WechatMsgQueueService;
-import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateData;
-import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateMessage;
-import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -55,20 +54,20 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
     protected Logger logger = Logger.of(WechatTemplateRpcServiceImpl.class);
 
     @Value( "${env.m.domain}" )
-    private String domain;
+    private String domain ;
 
-    private final String ORDER_URL = domain+"/order/detail.htm";
-    private final String CRM_URL = domain +"/crm/vip_details.htm";
-    private final String GIFT_URL = domain +"/user/event.htm";
-    private final String QUEUE_URL = domain +"/user/queueno.htm";
-    private final String CRM_TRANS_URL = domain +"/crm/vip_trans.htm";
-    private final String ASSESSMENT_REPLY = domain + "/user/remarks.htm";
+    private final String ORDER_URL = "/order/detail.htm";
+    private final String CRM_URL = "/crm/vip_details.htm";
+    private final String GIFT_URL = "/user/event.htm";
+    private final String QUEUE_URL = "/user/queueno.htm";
+    private final String CRM_TRANS_URL = "/crm/vip_trans.htm";
+    private final String ASSESSMENT_REPLY =  "/user/remarks.htm";
     // 商城的订单详情
-    private final String STORE_ORDER_URL = domain+"/mall/order-detail.htm";
+    private final String STORE_ORDER_URL = "/mall/order-detail.htm";
 
-    private final String INVOICE_URL = domain+"/receipt/detail.htm";
-    private final String INVOICE_LST_URL = domain+"/receipt/my-receipt.htm";
-    private final String BOOK_ORDER_URIL = domain+"/corder/detail.htm";
+    private final String INVOICE_URL = "/receipt/detail.htm";
+    private final String INVOICE_LST_URL = "/receipt/my-receipt.htm";
+    private final String BOOK_ORDER_URIL = "/corder/detail.htm";
 
 
 
@@ -362,20 +361,20 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         String url = null;
         switch (templateTypeEnum){
             case TEMPLATE_ENUM_ORDER:
-                url =  ORDER_URL+"?mpid="+mpID+"&g="+groupID +"&i="+orderKey;
+                url =  domain + ORDER_URL+"?mpid="+mpID+"&g="+groupID +"&i="+orderKey;
                 break;
             case TEMPLATE_ENUM_ORDER_BOOK:
-                url =  BOOK_ORDER_URIL+"?mpid="+mpID+"&g="+groupID +"&key="+orderKey;
+                url = domain +  BOOK_ORDER_URIL+"?mpid="+mpID+"&g="+groupID +"&key="+orderKey;
                 break;
             case TEMPLATE_ENUM_QUEUE:
                 url = null;
                 break;
             case TEMPLATE_ENUM_INVOICE:
                 if("-1".equals(param1)) {
-                    url =  INVOICE_LST_URL + "?mpid=" + mpID + "&g=" + groupID;
+                    url = domain +  INVOICE_LST_URL + "?mpid=" + mpID + "&g=" + groupID;
                 } else {
                     // 电子发票
-                    url =  INVOICE_URL + "?i=" + param1 + "&mpid=" + mpID + "&g=" + groupID;
+                    url = domain +  INVOICE_URL + "?i=" + param1 + "&mpid=" + mpID + "&g=" + groupID;
                 }
                 break;
             case TEMPLATE_ENUM_CRM_REG:
@@ -388,6 +387,10 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             case TEMPLATE_ENUM_CRM_CUSTOMER:
                 //新版会员权益
 //                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
+                break;
+            case TEMPLATE_ENUM_ASSESSMENT:
+                //用餐评价提醒
+                url = domain + ASSESSMENT_REPLY + "i="+param1+"&mpid="+mpID+"&g="+groupID;
                 break;
             default:
                 url = null;
@@ -404,49 +407,49 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
         String url = null;
         if(ORDER_TYPE.equals(modelType)){
             // 订单状态
-            url =  ORDER_URL+"?mpid="+mpID+"&g="+groupID +"&i="+orderKey;
+            url =  domain + ORDER_URL+"?mpid="+mpID+"&g="+groupID +"&i="+orderKey;
 
             if(ORDER_BOOK.equals(modelSubType)){
-                url =  BOOK_ORDER_URIL+"?mpid="+mpID+"&g="+groupID +"&key="+orderKey;
+                url =  domain + BOOK_ORDER_URIL+"?mpid="+mpID+"&g="+groupID +"&key="+orderKey;
             } else if("50".equals(param1) || "51".equals(param1)) {
-                url =  STORE_ORDER_URL+"?mpid="+mpID+ "&g="+groupID+"&k="+orderKey;
+                url =  domain + STORE_ORDER_URL+"?mpid="+mpID+ "&g="+groupID+"&k="+orderKey;
             } else if(PAID_ALARM.equals(modelSubType)){
                 url = null;
             }
 
         }else if(CRM_TYPE.equals(modelType)){
             //会员
-            url =  CRM_URL+"?mpid="+mpID+"&g="+groupID;
+            url =  domain + CRM_URL+"?mpid="+mpID+"&g="+groupID;
         }else if(GIFT_TYPE.equals(modelType)){
             // 会员充值/会员积分
             if (GIFT_ALARM_CRMMONEY.equals(modelSubType)
                     || GIFT_ALARM_CRMPOINT.equals(modelSubType)
                     ) {
-                url =  CRM_URL+"?mpid="+mpID+"&g="+groupID;
+                url =  domain + CRM_URL+"?mpid="+mpID+"&g="+groupID;
             } else if (GIFT_ALARM_CRMBRANCH.equals(modelSubType)) {
 
             } else if (GIFT_ALARM_GIFT.equals(modelSubType)) {
                 // 我的代金券
-                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
+                url =  domain + GIFT_URL+"?mpid="+mpID+"&g="+groupID;
             } else if (GIFT_CRMCUSTOMER_CHANGE.equals(modelSubType)) {
                 // 会员权益变动
             } else {
                 // 我的代金券
-                url =  GIFT_URL+"?mpid="+mpID+"&g="+groupID;
+                url =  domain + GIFT_URL+"?mpid="+mpID+"&g="+groupID;
             }
         }else if(QUEUE_TYPE.equals(modelType)){
             // 排号详情页面
             //url =  QUEUE_URL+"?sc=wechat&mpid="+mpID+"&g="+groupID;
             //http://local.m.hualala.com/table/num.htm?s=77875&g=5
         } else if (ASSESSMENT_TYPE.equals(modelType)) {
-            url =  ASSESSMENT_REPLY+"?i="+param1+"&mpid="+mpID+"&g="+groupID;
+            url =  domain + ASSESSMENT_REPLY+"?i="+param1+"&mpid="+mpID+"&g="+groupID;
 
         } else if (INVOICE_TYPE.equals(modelType)) {
             if("-1".equals(param1)) {
-                url =  INVOICE_LST_URL + "?mpid=" + mpID + "&g=" + groupID;
+                url =  domain + INVOICE_LST_URL + "?mpid=" + mpID + "&g=" + groupID;
             } else {
                 // 电子发票
-                url =  INVOICE_URL + "?i=" + param1 + "&mpid=" + mpID + "&g=" + groupID;
+                url =  domain + INVOICE_URL + "?i=" + param1 + "&mpid=" + mpID + "&g=" + groupID;
             }
         }
         return url;

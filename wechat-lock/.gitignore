@@ -22,13 +22,3 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-
-
-## grpc auto generate
-wechat-interface/src/main/java/com/hualala/app/wechat/grpc
-/service/src/test/java/com/hualala/app/wechat/hash/
-
-/unnamed.patch
-/wechat-lock/mvnw
-/wechat-lock/mvnw.cmd
-/wechat-lock/.mvn/wrapper/
