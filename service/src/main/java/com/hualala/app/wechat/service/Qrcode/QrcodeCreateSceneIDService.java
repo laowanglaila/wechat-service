@@ -16,10 +16,10 @@ public class QrcodeCreateSceneIDService {
     public static final String WECHAT_SENCEID_TEMP = "Wechat_SenceID_Temp";
     public static final String COLON = ":";
 
-//    @Autowired
-//    private StringRedisTemplate stringRedisTemplate;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate2;
+    private StringRedisTemplate stringRedisTemplate;
+//    @Autowired
+//    private StringRedisTemplate stringRedisTemplate2;
 
     @Autowired
     private WechatQrcodeTempMapper qrcodeTempMapper;
@@ -27,7 +27,7 @@ public class QrcodeCreateSceneIDService {
 
     public int getTempSenceID(String mpID) {
 //        临时Wechat_SenceID_Temp
-        BoundValueOperations<String, String> ops2 = stringRedisTemplate2.boundValueOps(WECHAT_SENCEID_TEMP + COLON + mpID);
+        BoundValueOperations<String, String> ops2 = stringRedisTemplate.boundValueOps(WECHAT_SENCEID_TEMP + COLON + mpID);
         //获取去之前先判断redis是否存在key值==0
         if (StringUtils.isBlank(ops2.get())) {
             //获取SenceID最大值存入redis
