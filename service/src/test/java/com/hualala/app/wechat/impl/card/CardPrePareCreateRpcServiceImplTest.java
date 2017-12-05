@@ -181,7 +181,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("小卖部会员");
+        memberInfo.setPrerogative("倩倩会员卡");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -205,7 +205,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(8L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("小卖部会员");
+        baseInfo.setTitle("倩倩会员卡");
         baseInfo.setMpID("wangxiangyuanceshi");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
