@@ -1,9 +1,11 @@
 package com.hualala.app.wechat.service.user;
 
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatUserMapper;
+import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -31,6 +33,9 @@ public class WechatUserService {
             }
         }
         openID = wechatUserMapper.queryOpenID(mpID,userID,isSubscribe);
+        if (StringUtils.isBlank( openID )){
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"用户唯一标识为空，请指定正确的userID或者openID！");
+        }
         return openID;
     }
 }
