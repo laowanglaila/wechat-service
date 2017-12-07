@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN" "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+
+<urlrewrite use-query-string="true">
+		
+	<!-- 服务器处理 -->
+	<rule>
+		<from>^/access/([a-zA-Z0-9_-]+)?.*</from>
+		<to>/access?mpid=$1</to>
+	</rule>
+	
+	<rule>
+		<from>^/event/([a-zA-Z0-9_-]+)?.*</from>
+		<to>/event?appID=$1</to>
+	</rule>
+	
+	<rule>
+		<from>^/msg</from>
+		<to>/msg</to>
+	</rule>
+</urlrewrite>	
