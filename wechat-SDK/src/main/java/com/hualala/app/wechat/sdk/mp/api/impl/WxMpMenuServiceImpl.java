@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by Binary Wang on 2016/7/21.
+ * Created by renjianfei on 2016/7/21.
  */
 public class WxMpMenuServiceImpl implements WxMpMenuService {
   private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/menu";

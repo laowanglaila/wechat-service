@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 用户管理相关操作接口
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 public interface WxMpUserService {
 

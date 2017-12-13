@@ -9,10 +9,10 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 /**
  * <pre>
  * 群发消息服务类
- * Created by Binary Wang on 2017-8-16.
+ * Created by renjianfei on 2017-8-16.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
+ * @author <a href="">renjianfei</a>
  */
 public interface WxMpMassMessageService {
   /**

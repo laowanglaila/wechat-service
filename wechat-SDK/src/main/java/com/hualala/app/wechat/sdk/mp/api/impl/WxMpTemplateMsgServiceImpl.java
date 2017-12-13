@@ -14,8 +14,8 @@ import java.util.List;
 
 /**
  * <pre>
- * Created by Binary Wang on 2016-10-14.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * Created by renjianfei on 2016-10-14.
+ * @author <a href="">renjianfei(renjianfei)</a>
  * </pre>
  */
 public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {

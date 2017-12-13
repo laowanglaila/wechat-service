@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.Date;
 
 /**
- * @author Binary Wang
+ * @author renjianfei
  */
 public class WxMpKefuServiceImpl implements WxMpKefuService {
   protected final Logger log = LoggerFactory.getLogger(this.getClass());

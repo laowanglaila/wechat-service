@@ -12,10 +12,10 @@ import java.util.List;
 /**
  * <pre>
  * 模板列表信息
- * Created by Binary Wang on 2016-10-17.
+ * Created by renjianfei on 2016-10-17.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="">renjianfei(renjianfei)</a>
  */
 public class WxMpTemplate implements Serializable {
   private static final JsonParser JSON_PARSER = new JsonParser();

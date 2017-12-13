@@ -11,10 +11,10 @@ import java.util.List;
 /**
  * <pre>
  *  用户标签对象
- *  Created by Binary Wang on 2016/9/2.
+ *  Created by renjianfei on 2016/9/2.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="">renjianfei(renjianfei)</a>
  */
 public class WxUserTag implements Serializable {
   private static final long serialVersionUID = -7722428695667031252L;

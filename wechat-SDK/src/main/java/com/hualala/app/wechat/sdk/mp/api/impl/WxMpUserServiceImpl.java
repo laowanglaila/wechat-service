@@ -11,7 +11,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import java.util.List;
 
 /**
- * Created by Binary Wang on 2016/7/21.
+ * Created by renjianfei on 2016/7/21.
  */
 public class WxMpUserServiceImpl implements WxMpUserService {
   private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/user";

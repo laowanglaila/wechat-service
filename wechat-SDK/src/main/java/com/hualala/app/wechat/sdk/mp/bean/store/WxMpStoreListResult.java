@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * <pre>
  * 门店列表结果类
- * Created by Binary Wang on 2016-09-27.
+ * Created by renjianfei on 2016-09-27.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="">renjianfei(renjianfei)</a>
  */
 public class WxMpStoreListResult implements Serializable {
   private static final long serialVersionUID = 5388907559949538663L;

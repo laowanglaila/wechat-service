@@ -14,7 +14,7 @@ import java.util.List;
  *  Created by BinaryWang on 2017/5/4.
  * </pre>
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 @XStreamAlias("SendPicsInfo")
 public class SendPicsInfo implements Serializable {

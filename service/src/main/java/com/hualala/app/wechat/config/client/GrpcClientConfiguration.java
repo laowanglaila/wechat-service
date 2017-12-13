@@ -27,11 +27,6 @@ public class GrpcClientConfiguration {
         GrpcClient client = new GrpcClient(grpcClientProperties.getWechat());
         return client;
     }
-//grpc stream test
-//    @Bean(name = "channel",destroyMethod = "shutdown")
-//    public Channel channel() {
-//        return ManagedChannelBuilder.forTarget(grpcClientProperties.getWechat()).usePlaintext(true).build();
-//    }
 
     @Bean (name = "com.hualala.message", destroyMethod="clean")
     public SemServiceClient semServiceClient() {
@@ -58,6 +53,7 @@ public class GrpcClientConfiguration {
         UserClient client = new UserClient(grpcClientProperties.getUser());
         return client;
     }
+
     @Bean
     public CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub getWechatServiceStub(@Qualifier("wechatGrpcClient") GrpcClient wechatGrpcClient) throws Exception {
         return (CardPrePareQueryRpcServiceGrpc.CardPrePareQueryRpcServiceBlockingStub) wechatGrpcClient.getBlockingStub(CardPrePareQueryRpcServiceGrpc.class);

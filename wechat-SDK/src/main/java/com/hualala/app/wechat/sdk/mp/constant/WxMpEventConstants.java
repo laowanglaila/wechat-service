@@ -3,8 +3,8 @@ package com.hualala.app.wechat.sdk.mp.constant;
 /**
  * <pre>
  * 微信公众号事件的相关常量
- * Created by Binary Wang on 2017-5-10.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * Created by renjianfei on 2017-5-10.
+ * @author <a href="">renjianfei(renjianfei)</a>
  * </pre>
  */
 public class WxMpEventConstants {

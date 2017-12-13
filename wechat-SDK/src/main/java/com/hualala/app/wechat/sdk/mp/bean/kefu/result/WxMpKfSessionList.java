@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Binary Wang
+ * @author renjianfei
  */
 public class WxMpKfSessionList implements Serializable {
   private static final long serialVersionUID = -7680371346226640206L;

@@ -16,9 +16,9 @@ import me.chanjar.weixin.common.util.BeanUtils;
 import java.util.List;
 
 /**
- * Created by Binary Wang on 2016/9/26.
+ * Created by renjianfei on 2016/9/26.
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author renjianfei ()
  */
 public class WxMpStoreServiceImpl implements WxMpStoreService {
   private static final String API_BASE_URL = "http://api.weixin.qq.com/cgi-bin/poi";

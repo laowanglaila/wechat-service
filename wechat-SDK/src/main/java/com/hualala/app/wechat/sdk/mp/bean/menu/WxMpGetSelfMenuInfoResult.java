@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * Created by Binary Wang on 2016-11-25.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * Created by renjianfei on 2016-11-25.
+ * @author <a href="">renjianfei(renjianfei)</a>
  * </pre>
  */
 public class WxMpGetSelfMenuInfoResult implements Serializable {

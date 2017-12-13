@@ -6,7 +6,7 @@ import me.chanjar.weixin.common.util.ToStringUtils;
 import java.io.Serializable;
 
 /**
- * @author Binary Wang
+ * @author renjianfei
  */
 public class WxMpKfSession implements Serializable {
   private static final long serialVersionUID = 7804332813164994062L;

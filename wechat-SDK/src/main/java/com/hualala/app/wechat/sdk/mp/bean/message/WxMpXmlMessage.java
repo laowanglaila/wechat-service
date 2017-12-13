@@ -26,7 +26,7 @@ import java.io.Serializable;
 @XStreamAlias("xml")
 public class WxMpXmlMessage implements Serializable {
   private static final long serialVersionUID = -3586245291677274914L;
-
+private String mpID;
   ///////////////////////
   // 以下都是微信推送过来的消息的xml的element所对应的属性
   ///////////////////////
@@ -1057,9 +1057,17 @@ public class WxMpXmlMessage implements Serializable {
     this.remarkAmount = remarkAmount;
   }
 
+  public String getMpID() {
+    return mpID;
+  }
+
+  public void setMpID(String mpID) {
+    this.mpID = mpID;
+  }
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
   }
+
 
 }

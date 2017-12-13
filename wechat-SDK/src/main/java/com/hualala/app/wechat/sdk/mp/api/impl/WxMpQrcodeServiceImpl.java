@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by Binary Wang on 2016/7/21.
+ * Created by renjianfei on 2016/7/21.
  */
 public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/qrcode";

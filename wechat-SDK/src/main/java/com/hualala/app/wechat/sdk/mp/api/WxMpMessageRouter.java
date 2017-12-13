@@ -36,7 +36,7 @@ import java.util.concurrent.Future;
  * router
  *   .rule()
  *       .msgType("MSG_TYPE").event("EVENT").eventKey("EVENT_KEY").content("CONTENT")
- *       .interceptor(interceptor, ...).handler(handler, ...)
+ *       .eventInterceptor(eventInterceptor, ...).handler(handler, ...)
  *   .end()
  *   .rule()
  *       // 另外一个匹配规则

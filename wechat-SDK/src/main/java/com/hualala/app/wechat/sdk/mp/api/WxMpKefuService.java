@@ -14,7 +14,7 @@ import java.util.Date;
  * 注意：命名采用kefu拼音的原因是：其英文CustomerService如果再加上Service后缀显得有点啰嗦，如果不加又显得表意不完整。
  * </pre>
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 public interface WxMpKefuService {
   String MESSAGE_CUSTOM_SEND = "https://api.weixin.qq.com/cgi-bin/message/custom/send";

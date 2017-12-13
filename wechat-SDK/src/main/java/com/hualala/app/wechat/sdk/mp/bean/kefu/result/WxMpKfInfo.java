@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 客服基本信息以及客服在线状态信息
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 public class WxMpKfInfo implements Serializable {
   private static final long serialVersionUID = -5877300750666022290L;

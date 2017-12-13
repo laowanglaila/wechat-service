@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 消息分析数据接口返回结果对象
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/8/29.
+ * @author <a href="">renjianfei(renjianfei)</a>
+ *         Created by renjianfei on 2016/8/29.
  */
 public class WxDataCubeMsgResult extends WxDataCubeBaseResult {
   private static final long serialVersionUID = 6932121822150573659L;

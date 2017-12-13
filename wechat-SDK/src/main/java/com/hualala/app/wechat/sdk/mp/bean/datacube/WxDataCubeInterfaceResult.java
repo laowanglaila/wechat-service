@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 接口分析数据接口返回结果对象
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/8/30.
+ * @author <a href="">renjianfei(renjianfei)</a>
+ *         Created by renjianfei on 2016/8/30.
  */
 public class WxDataCubeInterfaceResult extends WxDataCubeBaseResult {
   private static final long serialVersionUID = 597734329161281398L;

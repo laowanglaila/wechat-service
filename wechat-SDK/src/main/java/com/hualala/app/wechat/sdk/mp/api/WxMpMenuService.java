@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 /**
  * 菜单相关操作接口
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 public interface WxMpMenuService {
 

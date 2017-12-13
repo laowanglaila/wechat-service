@@ -12,7 +12,7 @@ import java.io.Serializable;
  *  Created by BinaryWang on 2017/5/4.
  * </pre>
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 @XStreamAlias("SendLocationInfo")
 public class SendLocationInfo implements Serializable {

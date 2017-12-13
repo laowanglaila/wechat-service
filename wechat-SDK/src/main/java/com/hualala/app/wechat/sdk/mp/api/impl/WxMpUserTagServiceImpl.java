@@ -16,8 +16,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 /**
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/9/2.
+ * @author <a href="">renjianfei(renjianfei)</a>
+ *         Created by renjianfei on 2016/9/2.
  */
 public class WxMpUserTagServiceImpl implements WxMpUserTagService {
   private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/tags";

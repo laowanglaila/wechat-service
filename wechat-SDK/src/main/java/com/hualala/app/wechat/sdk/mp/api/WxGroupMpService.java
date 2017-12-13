@@ -6,6 +6,13 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
  * 微信API的Service,多公众号
  */
 public interface WxGroupMpService  {
+  /**
+   * <pre>
+   * 验证消息的确来自微信服务器
+   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319&token=&lang=zh_CN
+   * </pre>
+   */
+  boolean checkSignature(String timestamp, String nonce, String signature);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口

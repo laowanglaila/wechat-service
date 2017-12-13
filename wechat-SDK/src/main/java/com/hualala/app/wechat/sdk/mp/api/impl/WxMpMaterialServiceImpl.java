@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by Binary Wang on 2016/7/21.
+ * Created by renjianfei on 2016/7/21.
  */
 public class WxMpMaterialServiceImpl implements WxMpMaterialService {
 

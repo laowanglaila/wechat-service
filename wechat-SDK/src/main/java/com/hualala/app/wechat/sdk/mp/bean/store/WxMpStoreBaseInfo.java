@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * <pre>
  *  门店基础信息
- *  Created by Binary Wang on 2016-09-23.
+ *  Created by renjianfei on 2016-09-23.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="">renjianfei(renjianfei)</a>
  */
 public class WxMpStoreBaseInfo implements Serializable {
   private static final long serialVersionUID = 829577606838118218L;

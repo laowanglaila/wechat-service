@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Binary Wang on 2016/7/15.
+ * Created by renjianfei on 2016/7/15.
  */
 public class WxMpKfMsgList implements Serializable {
   private static final long serialVersionUID = 4524296707435188202L;

@@ -1,13 +1,19 @@
 package com.hualala.app.wechat.impl.EventHandler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.crm.bean.card.VoucherCardReq;
+import com.hualala.app.crm.bean.card.VoucherCardRes;
 import com.hualala.app.crm.bean.cardChannel.CardChannelReq;
 import com.hualala.app.crm.bean.giftDetailChannel.GiftDetailChannelReq;
 import com.hualala.app.crm.service.CardChannelService;
+import com.hualala.app.crm.service.CardInfoService;
 import com.hualala.app.crm.service.GiftDetailChannelService;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
+import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
+import com.hualala.app.wechat.model.user.UserModel;
+import com.hualala.app.wechat.model.user.UserModelQuery;
 import com.hualala.core.base.ResultInfo;
 import com.hualala.core.client.BaseRpcClient;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +32,8 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
     @Autowired
     private BaseInfoModelMapper baseInfoModelMapper;
     @Autowired
+    private UserModelMapper userModelMapper;
+    @Autowired
     private BaseRpcClient baseRpcClient;
 
     /**
@@ -36,9 +44,9 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
     @Override
     public Object handler(JSONObject jsonObject) {
         if (!jsonObject.containsKey( "OuterStr" )) {
-            //todo 或者做默认记录处理，如果openid匹配可以则做线下核销，否则记录无效
             if (log.isInfoEnabled())
-                log.info( "给卡券不是哗啦啦投放渠道领取，不做同步处理：{}", jsonObject );
+                log.info( "微信渠道投放卡券：{}", jsonObject );
+            this.processCardNotBeenExist(jsonObject);
             return null;
         }
         String outerStr = jsonObject.getString( "OuterStr" );
@@ -69,16 +77,14 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
         Long cardKey = null;
         String cardId = null;
         String cardType = null;
+        BaseInfoModel baseInfoModel = null;
         if (jsonObject.containsKey( "CardId" )) {
             cardId = jsonObject.getString( "CardId" );
-            BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
-            baseInfoModelQuery.createCriteria().andCardIDEqualTo( cardId );
-            List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample( baseInfoModelQuery );
-            if (baseInfoModels != null && baseInfoModels.size() == 1) {
-                BaseInfoModel baseInfoModel1 = baseInfoModels.get( 0 );
-                cardKey = baseInfoModel1.getCardKey();
-                cardType = baseInfoModel1.getCardType();
-            }
+            baseInfoModel = getBaseInfoModel( cardId );
+        }
+        if (baseInfoModel != null) {
+            cardKey = baseInfoModel.getCardKey();
+            cardType = baseInfoModel.getCardType();
         }
         if (cardKey == null || userCardCode == null || hualalaCardID == null || groupID == null
                 || hualalaCardCode == null || cardType == null) {
@@ -115,6 +121,63 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
             resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
         }
         return resultInfo;
+    }
+
+    private BaseInfoModel getBaseInfoModel(String cardId) {
+        BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
+        baseInfoModelQuery.createCriteria().andCardIDEqualTo( cardId );
+        List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample( baseInfoModelQuery );
+        BaseInfoModel baseInfoModel = null;
+        if (baseInfoModels != null && baseInfoModels.size() == 1) {
+            baseInfoModel = baseInfoModels.get( 0 );
+        }
+        return baseInfoModel;
+    }
+
+    private VoucherCardRes processCardNotBeenExist(JSONObject jsonObject) {
+        String userCardCode = jsonObject.getString( "UserCardCode" );
+        String fromUserName = jsonObject.getString( "FromUserName" );
+        String cardId = null;
+        BaseInfoModel baseInfoModel = null;
+        if (jsonObject.containsKey( "CardId" )) {
+            cardId = jsonObject.getString( "CardId" );
+            baseInfoModel = getBaseInfoModel( cardId );
+        }
+        if (baseInfoModel != null) {
+            log.info( "未找到卡券关系，不处理" );
+            return null;
+        }
+        CardInfoService rpcClient = baseRpcClient.getRpcClient( CardInfoService.class );
+        VoucherCardReq voucherCardReq = new VoucherCardReq();
+        voucherCardReq.setMpID( baseInfoModel.getMpID() );
+        voucherCardReq.setGroupID( baseInfoModel.getGroupID() );
+        voucherCardReq.setWechatCardKey( baseInfoModel.getCardKey() );
+        voucherCardReq.setCardTypeID( baseInfoModel.getHualalaCardID() );
+        voucherCardReq.setWechatCardCode( userCardCode );
+        voucherCardReq.setActiveStatus( 1 );
+        voucherCardReq.setSourceWay( true );
+        voucherCardReq.setSourceType( 30 );
+        voucherCardReq.setShopWeixinID( fromUserName );
+        UserModelQuery userModelQuery = new UserModelQuery();
+        userModelQuery.createCriteria().andOpenidEqualTo( fromUserName );
+        List <UserModel> userModels = userModelMapper.selectByExample( userModelQuery );
+        if (userModels != null && userModels.size() > 0) {
+            UserModel userModel = userModels.get( 0 );
+            Long userID = userModel.getUserID();
+            if(userID != null && -1 != userID){
+                UserModelQuery userModelQuery1 = new UserModelQuery();
+                userModelQuery1.createCriteria().andUserIDEqualTo( userID ).andMpIDEqualTo( "hualala_com" );
+                List <UserModel> userModels1 = userModelMapper.selectByExample( userModelQuery1 );
+                if (userModels1 != null && userModels1.size() > 0) {
+                    UserModel userModel1 = userModels1.get( 0 );
+                    String openid = userModel1.getOpenid();
+                    voucherCardReq.setWeixinID( openid );
+                }
+            }
+        }
+        return rpcClient.reverseVoucherCardAssociation( voucherCardReq );
+
+
     }
 
 

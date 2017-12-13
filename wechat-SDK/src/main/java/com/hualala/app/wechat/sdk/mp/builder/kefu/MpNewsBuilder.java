@@ -10,7 +10,7 @@ import me.chanjar.weixin.common.api.WxConsts;
  * WxMpKefuMessage m = WxMpKefuMessage.NEWS().mediaId("xxxxx").toUser(...).build();
  * </pre>
  *
- * @author Binary Wang
+ * @author renjianfei
  */
 public final class MpNewsBuilder extends BaseBuilder<MpNewsBuilder> {
   private String mediaId;

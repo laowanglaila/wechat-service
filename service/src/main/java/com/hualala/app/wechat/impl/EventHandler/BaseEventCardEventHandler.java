@@ -2,10 +2,13 @@ package com.hualala.app.wechat.impl.EventHandler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
 import com.hualala.core.base.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by renjianfei on 2017/9/8.
@@ -21,7 +24,7 @@ public abstract class BaseEventCardEventHandler  {
             Object resultInfo = this.handler( object );
             this.onComplete( resultInfo,object,event );
         }catch (Throwable throwable){
-            this.onError( throwable,object );
+            this.onError( throwable,object,event );
         }
 
     }
@@ -44,9 +47,19 @@ public abstract class BaseEventCardEventHandler  {
         }
     }
 
-     void onError(Throwable e, Object requestInfo) {
-        if (log.isErrorEnabled()) {
-            log.error( "卡券绑定-GRPC通信异常:" + JSON.toJSONString( requestInfo ), e );
+     void onError(Throwable e, Object requestInfo,String event) {
+        if (e instanceof ExecutionException || e instanceof InterruptedException) {
+            if (log.isErrorEnabled()) {
+                log.error( event + "事件-GRPC通信异常:" + JSON.toJSONString( requestInfo ), e );
+            }
+        }else if (e instanceof WechatException){
+            if (log.isErrorEnabled()) {
+                log.error( event + "事件-事件处理器异常:" + JSON.toJSONString( requestInfo ), e );
+            }
+        }else {
+            if (log.isErrorEnabled()) {
+                log.error( event + "事件-其他异常:" + JSON.toJSONString( requestInfo ), e );
+            }
         }
     }
     public static BaseEventCardEventHandler create(String event){

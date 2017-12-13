@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * <pre>
  * 获取标签下粉丝列表的结果对象
- * Created by Binary Wang on 2016-09-19.
+ * Created by renjianfei on 2016-09-19.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="">renjianfei(renjianfei)</a>
  */
 public class WxTagListUser implements Serializable {
   private static final long serialVersionUID = -4551768374200676112L;

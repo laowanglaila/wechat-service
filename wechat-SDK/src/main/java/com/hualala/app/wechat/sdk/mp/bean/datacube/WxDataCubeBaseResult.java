@@ -9,10 +9,10 @@ import java.io.Serializable;
 /**
  * <pre>
  *  统计接口的共用属性类
- *  Created by Binary Wang on 2016/8/25.
+ *  Created by renjianfei on 2016/8/25.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="">renjianfei(renjianfei)</a>
  */
 public abstract class WxDataCubeBaseResult implements Serializable {
   private static final long serialVersionUID = 8780389911053297600L;
