@@ -89,7 +89,11 @@
           mpID,appID,mpType,appSecret,authorize,authorizerRefreshToken,groupID,mpName
         FROM tbl_shop_wechat_mp
         WHERE
-        mpID = #{mpID} limit 1
+        mpID = #{mpID}
+        AND action in (0,1)
+        AND mpType IN (11,21)
+        AND authorize in (0,1)
+        limit 1
     </select>
 
     <select id="queryMpIDAuth" resultType="java.lang.String">
