@@ -27,7 +27,7 @@ public class MpInfoService {
     private WechatMpMapper wechatMpMapper;
     @Resource(name = "skuRedisTemplate")
     private StringRedisTemplate skuRedisTemplate;
-    private Long EXPIRES = 5L;
+    private Long EXPIRES = 12L;
 
     /**
      * 获取缓存MpInfo
@@ -50,7 +50,7 @@ public class MpInfoService {
             throw new WechatInnerException("获取mpInfo失败");
         }
         String jsonString = JSONObject.toJSONString( mpInfoCache );
-        valueOps.set( jsonString,EXPIRES, TimeUnit.MINUTES );
+        valueOps.set( jsonString,EXPIRES, TimeUnit.HOURS );
         return mpInfoCache;
     }
 
