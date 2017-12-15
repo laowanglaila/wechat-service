@@ -8,10 +8,14 @@ import com.hualala.app.crm.bean.giftDetailChannel.GiftDetailChannelReq;
 import com.hualala.app.crm.service.CardChannelService;
 import com.hualala.app.crm.service.CardInfoService;
 import com.hualala.app.crm.service.GiftDetailChannelService;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.impl.EventHandler.bean.OuterStr;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
+import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
-import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
+import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.model.user.UserModel;
 import com.hualala.app.wechat.model.user.UserModelQuery;
 import com.hualala.core.base.ResultInfo;
@@ -28,13 +32,11 @@ import java.util.List;
  */
 @Slf4j
 @Component("cardUserGetHandler")
-public class CardUserGetHandler extends BaseEventCardEventHandler {
+public class CardUserGetHandler extends AbstractCardEventHandler {
     @Autowired
-    private BaseInfoModelMapper baseInfoModelMapper;
-    @Autowired
-    private UserModelMapper userModelMapper;
-    @Autowired
-    private BaseRpcClient baseRpcClient;
+    private MemberModelMapper memberModelMapper;
+
+
 
     /**
      * 领取卡券事件处理器
@@ -43,49 +45,80 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
      */
     @Override
     public Object handler(JSONObject jsonObject) {
-        if (!jsonObject.containsKey( "OuterStr" )) {
-            if (log.isInfoEnabled())
-                log.info( "微信渠道投放卡券：{}", jsonObject );
-            this.processCardNotBeenExist(jsonObject);
-            return null;
-        }
-        String outerStr = jsonObject.getString( "OuterStr" );
-        JSONObject jsonObj = JSONObject.parseObject( new String( Base64.decodeBase64( outerStr ) ) );
-        if (log.isDebugEnabled()) {
-            log.debug( "outStr:" + jsonObj.toJSONString() );
-        }
-        Long groupID = null;
-        if (jsonObj.containsKey( "groupID" )) {
-            groupID = jsonObj.getLong( "groupID" );
-        }
-        Long hualalaCardID = null;
-        if (jsonObj.containsKey( "hualalaCardID" )) {
-            hualalaCardID = jsonObj.getLong( "hualalaCardID" );
-        }
-        Long hualalaCardCode = null;
-        if (jsonObj.containsKey( "hualalaCardCode" )) {
-            hualalaCardCode = jsonObj.getLong( "hualalaCardCode" );
-        }
-        Long customerID = null;
-        if (jsonObj.containsKey( "customerID" )) {
-            customerID = jsonObj.getLong( "customerID" );
-        }
-        String userCardCode = null;
-        if (jsonObject.containsKey( "UserCardCode" )) {
-            userCardCode = jsonObject.getString( "UserCardCode" );
-        }
         Long cardKey = null;
         String cardId = null;
         String cardType = null;
+        String fromUserName = jsonObject.getString( "FromUserName" );
         BaseInfoModel baseInfoModel = null;
         if (jsonObject.containsKey( "CardId" )) {
             cardId = jsonObject.getString( "CardId" );
             baseInfoModel = getBaseInfoModel( cardId );
         }
+        String userCardCode = null;
+        if (jsonObject.containsKey( "UserCardCode" )) {
+            userCardCode = jsonObject.getString( "UserCardCode" );
+        }
         if (baseInfoModel != null) {
             cardKey = baseInfoModel.getCardKey();
             cardType = baseInfoModel.getCardType();
         }
+        ResultInfo resultInfo;
+        if ("MEMBER_CARD".equals( cardType )) {
+            MemberModel memberModel = memberModelMapper.selectByPrimaryKey( cardKey );
+            if (memberModel != null && !memberModel.getAutoActivate()){
+                log.info( "卡券需要激活，领取事件不做处理" );
+                return null;
+            }
+            if (!jsonObject.containsKey( "OuterStr" )) {
+                if (log.isInfoEnabled())
+                    log.info( "微信渠道-会员卡领取事件：{}", jsonObject );
+                return super.processCardNotBeenExist(null,fromUserName,userCardCode,baseInfoModel);
+            }
+            OuterStr outStr = getOutStr( jsonObject);
+            checkArguments( userCardCode, cardKey, cardId, cardType, outStr );
+            CardChannelService rpcClient = baseRpcClient.getRpcClient( CardChannelService.class );
+            CardChannelReq cardChannelReq = new CardChannelReq();
+            cardChannelReq.setWechatCardKey( cardKey );
+            cardChannelReq.setWechatCardCode( userCardCode );
+            cardChannelReq.setGroupID( outStr.getGroupID() );
+            cardChannelReq.setCardID( outStr.getHualalaCardCode() );
+            resultInfo = rpcClient.addCardChannel( cardChannelReq );
+        } else {
+            if (!jsonObject.containsKey( "OuterStr" )) {
+                if (log.isInfoEnabled())
+                    log.info( "微信渠道-优惠券领取事件：{}", jsonObject );
+            //  todo  this.processCardNotBeenExist(jsonObject,baseInfoModel);
+                return null;
+            }
+            OuterStr outStr = getOutStr( jsonObject);
+            checkArguments( userCardCode, cardKey, cardId, cardType, outStr );
+            GiftDetailChannelService rpcClient = baseRpcClient.getRpcClient( GiftDetailChannelService.class );
+            GiftDetailChannelReq giftDetailChannelReq = new GiftDetailChannelReq();
+            giftDetailChannelReq.setCustomerGiftDetailID( outStr.getHualalaCardCode() );
+            giftDetailChannelReq.setGroupID( outStr.getGroupID() );
+            giftDetailChannelReq.setCustomerID( outStr.getCustomerID() );
+            giftDetailChannelReq.setWechatCardCode( userCardCode );
+            giftDetailChannelReq.setWechatCardKey( cardKey );
+            resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
+        }
+        return resultInfo;
+    }
+
+    private OuterStr getOutStr(JSONObject jsonObject) {
+        String outerStr = jsonObject.getString( "OuterStr" );
+        OuterStr outerObj = JSONObject.parseObject( new String( Base64.decodeBase64( outerStr ) ) ,OuterStr.class);
+        if (log.isDebugEnabled()) {
+            log.debug( "outStr:" + JSONObject.toJSONString( outerObj ) );
+        }
+
+        return outerObj;
+    }
+
+    private void checkArguments(String userCardCode, Long cardKey, String cardId, String cardType, OuterStr outerObj) {
+        Long groupID = outerObj.getGroupID();
+        Long hualalaCardID = outerObj.getHualalaCardID();
+        Long hualalaCardCode = outerObj.getHualalaCardCode();
+        Long customerID = outerObj.getCustomerID();
         if (cardKey == null || userCardCode == null || hualalaCardID == null || groupID == null
                 || hualalaCardCode == null || cardType == null) {
             if (log.isErrorEnabled()) {
@@ -99,86 +132,11 @@ public class CardUserGetHandler extends BaseEventCardEventHandler {
                         "customerID:[" + customerID + "]\n" +
                         "cardType:[" + cardType + "]" );
             }
-            return null;
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS);
         }
-        ResultInfo resultInfo;
-        if ("MEMBER_CARD".equals( cardType )) {
-            CardChannelService rpcClient = baseRpcClient.getRpcClient( CardChannelService.class );
-            CardChannelReq cardChannelReq = new CardChannelReq();
-            cardChannelReq.setWechatCardKey( cardKey );
-            cardChannelReq.setWechatCardCode( userCardCode );
-            cardChannelReq.setGroupID( groupID );
-            cardChannelReq.setCardID( hualalaCardCode );
-            resultInfo = rpcClient.addCardChannel( cardChannelReq );
-        } else {
-            GiftDetailChannelService rpcClient = baseRpcClient.getRpcClient( GiftDetailChannelService.class );
-            GiftDetailChannelReq giftDetailChannelReq = new GiftDetailChannelReq();
-            giftDetailChannelReq.setCustomerGiftDetailID( hualalaCardCode );
-            giftDetailChannelReq.setGroupID( groupID );
-            giftDetailChannelReq.setCustomerID( customerID );
-            giftDetailChannelReq.setWechatCardCode( userCardCode );
-            giftDetailChannelReq.setWechatCardKey( cardKey );
-            resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
-        }
-        return resultInfo;
     }
 
-    private BaseInfoModel getBaseInfoModel(String cardId) {
-        BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
-        baseInfoModelQuery.createCriteria().andCardIDEqualTo( cardId );
-        List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample( baseInfoModelQuery );
-        BaseInfoModel baseInfoModel = null;
-        if (baseInfoModels != null && baseInfoModels.size() == 1) {
-            baseInfoModel = baseInfoModels.get( 0 );
-        }
-        return baseInfoModel;
-    }
 
-    private VoucherCardRes processCardNotBeenExist(JSONObject jsonObject) {
-        String userCardCode = jsonObject.getString( "UserCardCode" );
-        String fromUserName = jsonObject.getString( "FromUserName" );
-        String cardId = null;
-        BaseInfoModel baseInfoModel = null;
-        if (jsonObject.containsKey( "CardId" )) {
-            cardId = jsonObject.getString( "CardId" );
-            baseInfoModel = getBaseInfoModel( cardId );
-        }
-        if (baseInfoModel != null) {
-            log.info( "未找到卡券关系，不处理" );
-            return null;
-        }
-        CardInfoService rpcClient = baseRpcClient.getRpcClient( CardInfoService.class );
-        VoucherCardReq voucherCardReq = new VoucherCardReq();
-        voucherCardReq.setMpID( baseInfoModel.getMpID() );
-        voucherCardReq.setGroupID( baseInfoModel.getGroupID() );
-        voucherCardReq.setWechatCardKey( baseInfoModel.getCardKey() );
-        voucherCardReq.setCardTypeID( baseInfoModel.getHualalaCardID() );
-        voucherCardReq.setWechatCardCode( userCardCode );
-        voucherCardReq.setActiveStatus( 1 );
-        voucherCardReq.setSourceWay( true );
-        voucherCardReq.setSourceType( 30 );
-        voucherCardReq.setShopWeixinID( fromUserName );
-        UserModelQuery userModelQuery = new UserModelQuery();
-        userModelQuery.createCriteria().andOpenidEqualTo( fromUserName );
-        List <UserModel> userModels = userModelMapper.selectByExample( userModelQuery );
-        if (userModels != null && userModels.size() > 0) {
-            UserModel userModel = userModels.get( 0 );
-            Long userID = userModel.getUserID();
-            if(userID != null && -1 != userID){
-                UserModelQuery userModelQuery1 = new UserModelQuery();
-                userModelQuery1.createCriteria().andUserIDEqualTo( userID ).andMpIDEqualTo( "hualala_com" );
-                List <UserModel> userModels1 = userModelMapper.selectByExample( userModelQuery1 );
-                if (userModels1 != null && userModels1.size() > 0) {
-                    UserModel userModel1 = userModels1.get( 0 );
-                    String openid = userModel1.getOpenid();
-                    voucherCardReq.setWeixinID( openid );
-                }
-            }
-        }
-        return rpcClient.reverseVoucherCardAssociation( voucherCardReq );
-
-
-    }
 
 
 }

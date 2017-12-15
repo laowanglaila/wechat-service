@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.service.user;
 
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatUserMapper;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

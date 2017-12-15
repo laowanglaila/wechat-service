@@ -181,7 +181,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("倩倩会员卡");
+        memberInfo.setPrerogative("反向同步专用会员卡");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -202,11 +202,11 @@ public class CardPrePareCreateRpcServiceImplTest {
         Integer startTime =  (int)(currentDateTimeLong/1000L);
         Integer endTime = startTime + 3600 * 24 * 365;
         baseInfo.setBrandID(5L);
-        baseInfo.setGroupID(8L);
+        baseInfo.setGroupID(1155L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("倩倩会员卡");
-        baseInfo.setMpID("wangxiangyuanceshi");
+        baseInfo.setTitle("反向同步专用会员卡");
+        baseInfo.setMpID("dohko1155");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
         baseInfo.setBrandName("微信会员");

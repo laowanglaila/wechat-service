@@ -1,6 +1,6 @@
 package com.hualala.app.wechat.exception;
 
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.core.base.ServiceException;
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class WechatException extends ServiceException {
     public WechatException(){
-        super(WechatExceptionTypeEnum.WECHAT_COMMON_ERROR.getCode(),WechatExceptionTypeEnum.WECHAT_COMMON_ERROR.getMessage());
+        super( WechatExceptionTypeEnum.WECHAT_COMMON_ERROR.getCode(),WechatExceptionTypeEnum.WECHAT_COMMON_ERROR.getMessage());
     }
     public WechatException(String code,String message){
         super(code,message);

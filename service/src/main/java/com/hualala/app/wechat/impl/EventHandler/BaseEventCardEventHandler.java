@@ -54,7 +54,7 @@ public abstract class BaseEventCardEventHandler  {
             }
         }else if (e instanceof WechatException){
             if (log.isErrorEnabled()) {
-                log.error( event + "事件-事件处理器异常:" + JSON.toJSONString( requestInfo ), e );
+                log.error( event + "事件-事件处理器异常:" + e.getMessage(), e );
             }
         }else {
             if (log.isErrorEnabled()) {
@@ -66,7 +66,7 @@ public abstract class BaseEventCardEventHandler  {
 
         if (WechatMessageType.EVENT_CARD_MEMBER_ACTIVE.equals( event )) {
             //激活会员卡
-
+            return WechatBeanFactory.getBean( ActiveMembercardUserInfoEventHandler.class );
         } else if (WechatMessageType.EVENT_CARD_NOT_PASS_CHECK.equals( event )) {
             //未通过审核
 

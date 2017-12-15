@@ -71,7 +71,9 @@ public enum WechatExceptionTypeEnum {
     WECHAT_OAUTH_ERROR("00112165","公众号OAUTH不具备授权权限"),
     WECHAT_USER_SERVICE_ERROR("00112166","获取用户服务错误"),
     WECHAT_USER_AUTHORIZATION_FIELD("00112167","获取用户授权失败"),
-    WECHAT_AUTHORIZATION_MISS("00112168","接口校验失败");
+    WECHAT_AUTHORIZATION_MISS("00112168","接口校验失败"),
+    WECHAT_NONE_CARD_RELATION_MAPPING("00112169","卡券关系映射异常");
+
 
     private String code;
     private String message;

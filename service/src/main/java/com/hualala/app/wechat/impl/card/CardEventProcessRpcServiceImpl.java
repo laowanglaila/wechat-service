@@ -6,6 +6,9 @@ import com.hualala.app.wechat.impl.EventHandler.BaseEventCardEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * 识别事件类型，根据事件类型作出处理
  * Created by renjianfei on 2017/6/1.
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcService {
+
+    ExecutorService executorService = Executors.newCachedThreadPool();
 
     @Override
     public EventProcessRes process(EventProcessReq json) {
@@ -26,7 +31,7 @@ public class CardEventProcessRpcServiceImpl implements CardEventProcessRpcServic
         BaseEventCardEventHandler baseEventCardEventHandler = BaseEventCardEventHandler
                 .create( event );
         if (baseEventCardEventHandler != null){
-            baseEventCardEventHandler.handler( jsonObject,event );
+            executorService.submit( () -> baseEventCardEventHandler.handler( jsonObject,event ) );
         }
         eventProcessRes.setJson( jsonStr );
         return eventProcessRes;
