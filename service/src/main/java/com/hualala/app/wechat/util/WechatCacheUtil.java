@@ -189,7 +189,7 @@ public class WechatCacheUtil {
         if(StringUtils.isNotEmpty(mpID)) {
             value = redisTemplateStatic.opsForValue().get(WE_CACHE.get("wechatMpID") + mpID);
         } else {
-            value = redisTemplateStatic.opsForValue().get(WE_CACHE.get("wechatAppID") + mpID);
+            value = redisTemplateStatic.opsForValue().get(WE_CACHE.get("wechatAppID") + appID);
         }
         if (StringUtils.isEmpty(value)) {
             return null;
