@@ -107,7 +107,8 @@ public class MsgPublishRpcServiceTest {
         String text = "群发测试Hellow word!\r\n<a url=\"http://www.hualala.com/\">hualala<a/>";
 //        String mpID = "doulaofangceshi";
 //        String mpID = "hualala_com";
-        String mpID = "tut1Ceu1DX005996";
+        String mpID = "dohko1155";
+//        String mpID = "tut1Ceu1DX005996";
         String url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview";
 //        String params = "{ " +
 //                "    \"towxname\":\"renfeifei_1314\"," +
@@ -119,7 +120,7 @@ public class MsgPublishRpcServiceTest {
 //                      "    \"towxname\":\"renfeifei_1314\"," +
                       "    \"towxname\":\"xukai80231314\"," +
 //                        "  \"msgtype\":\"mpnews\",\n" +
-                "  \"wxcard\":{\"card_id\":\"pXpuzwdJJPIE9peUazT_JntW7spo\"},\n" +
+                "  \"wxcard\":{\"card_id\":\"pFx2ovyg0tT2OWXbc36IKCUi2O-U\"},\n" +
                 "        \"msgtype\":\"wxcard\"\n" +
 //                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
                 "}";

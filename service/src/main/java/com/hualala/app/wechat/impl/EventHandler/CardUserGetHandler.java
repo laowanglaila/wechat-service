@@ -58,10 +58,12 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
         if (jsonObject.containsKey( "UserCardCode" )) {
             userCardCode = jsonObject.getString( "UserCardCode" );
         }
-        if (baseInfoModel != null) {
-            cardKey = baseInfoModel.getCardKey();
-            cardType = baseInfoModel.getCardType();
+        if (baseInfoModel != null && baseInfoModel.getHualalaCardID() != 0L) {
+            log.info( "卡券信息不存在，或者还没有绑定到哗啦啦卡券！" );
+            return null;
         }
+        cardKey = baseInfoModel.getCardKey();
+        cardType = baseInfoModel.getCardType();
         ResultInfo resultInfo;
         if ("MEMBER_CARD".equals( cardType )) {
             MemberModel memberModel = memberModelMapper.selectByPrimaryKey( cardKey );

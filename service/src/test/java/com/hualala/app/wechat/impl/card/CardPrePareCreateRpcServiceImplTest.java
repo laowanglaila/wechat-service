@@ -181,7 +181,7 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("反向同步专用会员卡");
+        memberInfo.setPrerogative("反向同步专用1");
         memberInfo.setAutoActivate(true);
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
@@ -205,7 +205,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(1155L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("反向同步专用会员卡");
+        baseInfo.setTitle("反向同步专用1");
         baseInfo.setMpID("dohko1155");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);
@@ -227,7 +227,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setPromotionUrlName("年中大促");
         baseInfo.setServicePhone("17614430096");
         baseInfo.setSource("lingqudaokabao");
-        baseInfo.setUseCustomCode(true);
+        baseInfo.setUseCustomCode(false);
 //        baseInfo.setCustomCodeMode("GET_CUSTOM_CODE_MODE_DEPOSIT");
         baseInfo.setUseLimit(0);
         baseInfo.setUseAllLocations(false);

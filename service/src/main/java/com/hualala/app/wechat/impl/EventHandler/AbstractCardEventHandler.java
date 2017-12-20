@@ -54,7 +54,6 @@ public abstract class AbstractCardEventHandler extends BaseEventCardEventHandler
         voucherCardReq.setWechatCardKey( baseInfoModel.getCardKey() );
         voucherCardReq.setCardTypeID( baseInfoModel.getHualalaCardID() );
         voucherCardReq.setWechatCardCode( userCardCode );
-        voucherCardReq.setActiveStatus( 1 );
         voucherCardReq.setSourceWay( true );
         voucherCardReq.setSourceType( 30 );
         voucherCardReq.setShopWeixinID( fromUserName );
