@@ -317,6 +317,14 @@ public class BaseHttpService implements WechatBaseApi {
         String url = SET_ACTIVATE_USERFORM;
         return this.commonHttpPost(url, map, mpID);
     }
+    /**
+     * 获取一键激活时用户填入的信息
+     */
+    public JSONObject setActivateUserForm(String json, String mpID) {
+        JSONObject jsonObject = JSONObject.parseObject( json );
+        String url = SET_ACTIVATE_USERFORM;
+        return this.commonHttpPost(url, jsonObject, mpID);
+    }
 
     /**
      * 获取微信二维码

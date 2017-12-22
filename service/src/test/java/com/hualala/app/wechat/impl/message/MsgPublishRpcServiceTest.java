@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.MsgPublishRpcService;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.user.UserModelQuery;
+import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.api.WxMpCardService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;
@@ -27,10 +29,13 @@ public class MsgPublishRpcServiceTest {
     @Autowired
     private BaseRpcClient baseRpcClient;
 
+    @Autowired
+    private WxGroupMpService wxGroupMpService;
+
     @Test
     public void test(){
-        String text = "温馨提示：\n恭喜您获得【优惠券名称】，\n【数量】张\n" +
-                "详情点击：\n【优惠券列表地址】\n" +
+        String text = "温馨提示:\n恭喜您获得【优惠券名称】，\n【数量】张\n" +
+                "详情点击:\n【优惠券列表地址】\n" +
                 "【集团名称】";
         String mpID = "doulaofangceshi";
 //        String mpID = "hualala_com";
@@ -118,15 +123,82 @@ public class MsgPublishRpcServiceTest {
         String params = "{\n" +
 //                "  \"touser\":\"oXpuzwXrT6TRDji_GtIK2frw7ZK4\", \n" +
 //                      "    \"towxname\":\"renfeifei_1314\"," +
-                      "    \"towxname\":\"xukai80231314\"," +
+//                      "    \"towxname\":\"wxdyed\"," +
+//                      "    \"towxname\":\"hualalaceshi\"," +
+//                      "    \"towxname\":\"Meinasun06\"," +
+                      "    \"towxname\":\"zjc765749637\"," +
 //                        "  \"msgtype\":\"mpnews\",\n" +
-                "  \"wxcard\":{\"card_id\":\"pFx2ovyg0tT2OWXbc36IKCUi2O-U\"},\n" +
+                "  \"wxcard\":{\"card_id\":\"pACwGs1o30yZFhsTqysXImX5QHDA\"},\n" +
                 "        \"msgtype\":\"wxcard\"\n" +
 //                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
                 "}";
         JSONObject jsonObject = baseHttpService.commonHttpPost(url, params, mpID);
         System.out.println(jsonObject);
     }
+
+    @Test
+    public void test6(){
+        String mpID = "dohko1155";
+        String cardID = "pFx2ovyagFYoMbjhmUKakj4NKCMc";
+        String json = "{\n" +
+                "    \"card_id\": \"" + cardID + "\",\n" +
+                "    \"service_statement\": {\n" +
+                "        \"name\": \"会员守则\",\n" +
+                "        \"url\": \"https://www.qq.com\"\n" +
+                "    },\n" +
+                "    \"bind_old_card\": {\n" +
+                "        \"name\": \"老会员绑定\",\n" +
+                "        \"url\": \"https://www.qq.com\"\n" +
+                "    },\n" +
+                "    \"required_form\": {\n" +
+                "        \"can_modify\":false,\n" +
+                "        \"rich_field_list\": [\n" +
+                "            {\n" +
+                "                \"type\": \"FORM_FIELD_RADIO\",\n" +
+                "                \"name\": \"兴趣\",\n" +
+                "                \"values\": [\n" +
+                "                    \"钢琴\",\n" +
+                "                    \"舞蹈\",\n" +
+                "                    \"足球\"\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"type\": \"FORM_FIELD_SELECT\",\n" +
+                "                \"name\": \"喜好\",\n" +
+                "                \"values\": [\n" +
+                "                    \"郭敬明\",\n" +
+                "                    \"韩寒\",\n" +
+                "                    \"南派三叔\"\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"type\": \"FORM_FIELD_CHECK_BOX\",\n" +
+                "                \"name\": \"职业\",\n" +
+                "                \"values\": [\n" +
+                "                    \"赛车手\",\n" +
+                "                    \"旅行家\"\n" +
+                "                ]\n" +
+                "            }\n" +
+                "        ],\n" +
+                "        \"common_field_id_list\": [\n" +
+                "            \"USER_FORM_INFO_FLAG_MOBILE\"\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    \"optional_form\": {\n" +
+                "        \"can_modify\":false,\n" +
+                "        \"common_field_id_list\": [\n" +
+                "            \"USER_FORM_INFO_FLAG_LOCATION\",\n" +
+                "            \"USER_FORM_INFO_FLAG_BIRTHDAY\"\n" +
+                "        ],\n" +
+                "        \"custom_field_list\": [\n" +
+                "            \"喜欢的电影\"\n" +
+                "        ]\n" +
+                "    }}";
+        JSONObject jsonObject = baseHttpService.setActivateUserForm( json, mpID );
+        System.out.println(jsonObject);
+
+    }
+
     @Test
     public void test5(){
         String text = "<![CDATA[<a href='http://www.hualala.com'>hualala<a/>>]]>";

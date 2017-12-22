@@ -181,8 +181,9 @@ public class CardPrePareCreateRpcServiceImplTest {
 
         CardPrePareCreateRpcService.PreMemberReqData memberInfo = new CardPrePareCreateRpcService.PreMemberReqData();
         //头信息：商家信息
-        memberInfo.setPrerogative("反向同步专用1");
-        memberInfo.setAutoActivate(true);
+        memberInfo.setPrerogative("激活反向同步");
+//        memberInfo.setAutoActivate(true);
+        memberInfo.setWxActivate( true );
         memberInfo.setSupplyBonus(true);
         memberInfo.setSupplyBalance(true);
         memberInfo.setCustomCell1("{\n" +
@@ -205,7 +206,7 @@ public class CardPrePareCreateRpcServiceImplTest {
         baseInfo.setGroupID(1155L);
         baseInfo.setShopID(5L);
         baseInfo.setCardType("MEMBER_CARD");
-        baseInfo.setTitle("反向同步专用1");
+        baseInfo.setTitle("激活反向同步");
         baseInfo.setMpID("dohko1155");
         baseInfo.setDateInfo("{\"type\" : \"DATE_TYPE_PERMANENT\"}");
         baseInfo.setBindOpenid(false);

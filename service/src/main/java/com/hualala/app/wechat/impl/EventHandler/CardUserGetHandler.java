@@ -74,7 +74,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
             if (!jsonObject.containsKey( "OuterStr" )) {
                 if (log.isInfoEnabled())
                     log.info( "微信渠道-会员卡领取事件：{}", jsonObject );
-                return super.processCardNotBeenExist(null,fromUserName,userCardCode,baseInfoModel);
+                return super.processCardNotBeenExist(fromUserName,userCardCode,baseInfoModel);
             }
             OuterStr outStr = getOutStr( jsonObject);
             checkArguments( userCardCode, cardKey, cardId, cardType, outStr );

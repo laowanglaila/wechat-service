@@ -1,22 +1,26 @@
 package com.hualala.app.wechat.impl.EventHandler;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.crm.bean.card.VoucherCardReq;
 import com.hualala.app.crm.bean.card.VoucherCardRes;
 import com.hualala.app.crm.service.CardInfoService;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.impl.EventHandler.bean.UserForm;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
 import com.hualala.app.wechat.model.user.UserModel;
 import com.hualala.app.wechat.model.user.UserModelQuery;
+import com.hualala.app.wechat.sdk.mp.bean.membercard.WxMpMemberCardUserInfoResult;
 import com.hualala.core.client.BaseRpcClient;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by renjianfei on 2017/12/15.
@@ -46,7 +50,11 @@ public abstract class AbstractCardEventHandler extends BaseEventCardEventHandler
         return baseInfoModel;
     }
 
-    protected VoucherCardRes processCardNotBeenExist(String mobile, String fromUserName,String userCardCode, BaseInfoModel baseInfoModel) {
+    protected VoucherCardRes processCardNotBeenExist(String fromUserName,String userCardCode, BaseInfoModel baseInfoModel){
+        return this.processCardNotBeenExist( null,fromUserName,userCardCode,baseInfoModel );
+    }
+
+    protected VoucherCardRes processCardNotBeenExist(WxMpMemberCardUserInfoResult userInfo, String fromUserName, String userCardCode, BaseInfoModel baseInfoModel) {
         CardInfoService rpcClient = baseRpcClient.getRpcClient( CardInfoService.class );
         VoucherCardReq voucherCardReq = new VoucherCardReq();
         voucherCardReq.setMpID( baseInfoModel.getMpID() );
@@ -57,8 +65,23 @@ public abstract class AbstractCardEventHandler extends BaseEventCardEventHandler
         voucherCardReq.setSourceWay( true );
         voucherCardReq.setSourceType( 30 );
         voucherCardReq.setShopWeixinID( fromUserName );
-        if (mobile != null){
-            voucherCardReq.setCustomerMobile( mobile );
+        if (userInfo != null){
+            HashMap<String, String> collect = Stream.of( userInfo.getUserInfo().getCommonFieldList() )
+                                                    .collect( HashMap <String, String>::new,
+                                                             (map, item) -> map.put( item.getName(), item.getValue() ),
+                                                             (map, map1) -> map.putAll( map1 ) );
+            String mobile = collect.get( UserForm.USER_FORM_INFO_FLAG_MOBILE );
+            String birthday = collect.get( UserForm.USER_FORM_INFO_FLAG_BIRTHDAY );
+            String name = collect.get( UserForm.USER_FORM_INFO_FLAG_NAME );
+            String sex = collect.get( UserForm.USER_FORM_INFO_FLAG_SEX );
+            if (StringUtils.isNotBlank( birthday ))
+                voucherCardReq.setCustomerBirthday( birthday );
+            if (StringUtils.isNotBlank( sex ))
+                voucherCardReq.setCustomerSex( "MALE".equals( sex )?1:0 );
+            if (StringUtils.isNotBlank( mobile ))
+                voucherCardReq.setCustomerMobile( mobile );
+          if (StringUtils.isNotBlank( name ))
+           voucherCardReq.setCustomerName( name );
         }
         UserModelQuery userModelQuery = new UserModelQuery();
         userModelQuery.createCriteria().andOpenidEqualTo( fromUserName );

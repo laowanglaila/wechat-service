@@ -54,7 +54,7 @@ public abstract class BaseEventCardEventHandler  {
             }
         }else if (e instanceof WechatException){
             if (log.isErrorEnabled()) {
-                log.error( event + "事件-事件处理器异常:" + e.getMessage(), e );
+                log.error( event + "事件-事件处理器异常:" + ((WechatException) e).getErrorMessage(), e );
             }
         }else {
             if (log.isErrorEnabled()) {

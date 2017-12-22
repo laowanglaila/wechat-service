@@ -17,9 +17,9 @@ public class VoucherChardTest extends BaseRpcTest {
         String mpID = "dohko1155";
         Long groupID = 1155L;
         Long cardKey = 6501468355902317699L;
-        String code = "592766754503";
+        String code = "209946605749";
         Long cardType = 788298068629155840L;
-        String fromUserName = "oFx2ov0gR-6v8jYAZdGPllWpI0IY";
+        String fromUserName = "oFx2ov454NaPZ26DXdZYSgUbMv1A";
         String openid = "oACwGs4QPjQ_JoAVBOCQgwC12yFk";
         voucherCardReq.setMpID( mpID );
         voucherCardReq.setGroupID( groupID );
