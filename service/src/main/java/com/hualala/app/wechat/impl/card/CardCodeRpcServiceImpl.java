@@ -3,6 +3,8 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardCodeRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
+import com.hualala.app.wechat.mapper.card.MemberModelMapper;
+import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
@@ -33,6 +35,8 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     private BaseHttpService baseHttpService;
     @Autowired
     private BaseInfoModelMapper baseInfoModel;
+    @Autowired
+    private MemberModelMapper memberModelMapper;
 
     @Autowired
     private MemberMsgModelMapper memberMsgModelMapper;
@@ -182,6 +186,10 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         if (null == baseInfoModel) {
             return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
         }
+        MemberModel memberModel = memberModelMapper.selectByPrimaryKey( cardKey );
+        if (null == memberModel){
+            return new MemberItemUpdateRes().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "没有微信会员卡模板信息！");
+        }
         //校验消息时间，如果消息创建时间小于上一次消息的创建时间，则不执行该条语句。
         msgLock(cardCode, msgCreateTime, baseInfoModel);
 
@@ -207,28 +215,34 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
                 "    \"card_id\": \""+baseInfoModel.getCardID()+"\", ";
 
         StringBuilder sb = new StringBuilder(json);
-        if (StringUtils.isNotBlank(bonus))
-            sb.append("\"bonus\": "+bonus+",");
-        if (StringUtils.isNotBlank(addBonus))
-            sb.append("\"add_bonus\": "+addBonus+",");
-        if (StringUtils.isNotBlank(balance)) {
-            BigDecimal bigDecimal = new BigDecimal(balance);
-            BigDecimal bigDecimal1 = new BigDecimal("100");
-            BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
-            sb.append("\"balance\": "+decimal.longValue()+",");
+        if (memberModel.getSupplyBonus()) {
+            if (StringUtils.isNotBlank( bonus ))
+                sb.append( "\"bonus\": " + bonus + "," );
+            if (StringUtils.isNotBlank( addBonus ))
+                sb.append( "\"add_bonus\": " + addBonus + "," );
+            if (StringUtils.isNotBlank(recordBonus))
+                sb.append("\"record_bonus\": \""+recordBonus+"\",");
         }
-        if (StringUtils.isNotBlank(addBalance)) {
-            BigDecimal bigDecimal = new BigDecimal(addBalance);
-            BigDecimal bigDecimal1 = new BigDecimal("100");
-            BigDecimal decimal = bigDecimal.multiply(bigDecimal1);
-            sb.append("\"add_balance\": " + decimal.longValue() + ",");
+        if (memberModel.getSupplyBalance()) {
+            if (StringUtils.isNotBlank( balance )) {
+                BigDecimal bigDecimal = new BigDecimal( balance );
+                BigDecimal bigDecimal1 = new BigDecimal( "100" );
+                BigDecimal decimal = bigDecimal.multiply( bigDecimal1 );
+                sb.append( "\"balance\": " + decimal.longValue() + "," );
+            }
+            if (StringUtils.isNotBlank( addBalance )) {
+                BigDecimal bigDecimal = new BigDecimal( addBalance );
+                BigDecimal bigDecimal1 = new BigDecimal( "100" );
+                BigDecimal decimal = bigDecimal.multiply( bigDecimal1 );
+                sb.append( "\"add_balance\": " + decimal.longValue() + "," );
+            }
+            if (StringUtils.isNotBlank(recordBalance))
+                sb.append("\"record_balance\": \""+recordBalance+"\",");
         }
         if (StringUtils.isNotBlank(backgroundPicUrl))
             sb.append("\"background_pic_url\": \""+backgroundPicUrl+"\",");
-        if (StringUtils.isNotBlank(recordBonus))
-            sb.append("\"record_bonus\": \""+recordBonus+"\",");
-        if (StringUtils.isNotBlank(recordBalance))
-            sb.append("\"record_balance\": \""+recordBalance+"\",");
+
+
         if (StringUtils.isNotBlank(customFieldValue1))
             sb.append("\"custom_field_value1\": \""+customFieldValue1+"\"，");
         if (StringUtils.isNotBlank(customFieldValue2))
