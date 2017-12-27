@@ -102,5 +102,4 @@ public abstract class AbstractCardEventHandler extends BaseEventCardEventHandler
         }
         return rpcClient.reverseVoucherCardAssociation( voucherCardReq );
     }
-
 }
