@@ -3,6 +3,8 @@ package com.hualala.app.wechat.impl.login;
 import com.hualala.app.wechat.WechatQrcodeLoginRpcService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -11,9 +13,9 @@ import java.util.Map;
 /**
  * Created by renjianfei on 2017/12/18.
  */
-//@Service
+@Service
 public class WechatQrcodeLoginRpcServiceImpl implements WechatQrcodeLoginRpcService {
-//    @Autowired
+    @Autowired
     private BaseHttpService baseHttpService;
 
     private static final String url= "https://open.weixin.qq.com/connect/qrconnect";

@@ -45,6 +45,9 @@ public class HttpApiService {
             String[] sp = url.trim().split("[?]");
             url = sp[0];
             jsonObject = httpPost(url, params, mpID);
+        }else if ("40001".equals( errCode )){
+            String newUrl = checkAccessTocken( url, mpID, true );
+            jsonObject = OkHttpUtil.post(newUrl, params);
         }
         return jsonObject;
     }
@@ -73,6 +76,10 @@ public class HttpApiService {
     }
 
     private String checkAccessTocken(String url, String mpID) {
+        return checkAccessTocken( url, mpID ,false);
+    }
+
+    private String checkAccessTocken(String url, String mpID, boolean isForceRefresh) {
         String[] split = url.trim().split("[?]");
         if(split.length ==1 && !url.contains("access_token")){
 
@@ -83,7 +90,7 @@ public class HttpApiService {
                 logger.error( e.getMessage(), e);
                 throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD);
             }
-            if(!result.getBoolean(WechatMessageType.IS_SUCCESS)){
+            if(!result.getBoolean( WechatMessageType.IS_SUCCESS)){
                 String code = result.getString(WechatMessageType.CODE);
                 String message = result.getString(WechatMessageType.MESSAGE);
                 throw new WechatException(code,message) ;

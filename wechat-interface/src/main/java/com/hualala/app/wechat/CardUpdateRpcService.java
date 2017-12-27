@@ -128,7 +128,7 @@ public interface CardUpdateRpcService {
         //        bonus_rules            	        否           	string(3072)            	积分规则。
         @Protocol(fieldType = FieldType.STRING, order = 20, description = "积分规则")
         private String bonusRules;
-        @Protocol(fieldType = FieldType.BOOL, order = 21, description = "使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活")
+        @Protocol(fieldType = FieldType.STRING, order = 21, description = "使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活")
         private Boolean wxActivateAfterSubmit;
         @Protocol(fieldType = FieldType.STRING, order = 22, description = "使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url")
         private String wxActivateAfterSubmitUrl;

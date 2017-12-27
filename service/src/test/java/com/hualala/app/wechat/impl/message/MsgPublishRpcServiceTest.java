@@ -5,14 +5,12 @@ import com.hualala.app.wechat.MsgPublishRpcService;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.user.UserModelQuery;
 import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
-import com.hualala.app.wechat.sdk.mp.api.WxMpCardService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -128,7 +126,7 @@ public class MsgPublishRpcServiceTest {
 //                      "    \"towxname\":\"Meinasun06\"," +
                       "    \"towxname\":\"zjc765749637\"," +
 //                        "  \"msgtype\":\"mpnews\",\n" +
-                "  \"wxcard\":{\"card_id\":\"pACwGs1o30yZFhsTqysXImX5QHDA\"},\n" +
+                "  \"wxcard\":{\"card_id\":\"pFx2ovyg0tT2OWXbc36IKCUi2O-U\"},\n" +
                 "        \"msgtype\":\"wxcard\"\n" +
 //                        "  \"mpnews\":{\"media_id\":\"oEevPYTm4Q0qmOl7f8kK_m5O30AQG-uSQW00hAhnf1JGonEhMgmUgfU2tuhKa7U_\"},\n" +
                 "}";

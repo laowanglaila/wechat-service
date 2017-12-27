@@ -16,12 +16,12 @@ public class CardUpdateRpcServiceImplTest extends BaseRpcTest {
         CardUpdateRpcService.MemberUpdateReqData memberUpdateReqData = new CardUpdateRpcService.MemberUpdateReqData();
         memberUpdateReqData.setCardKey(6439570631557130245L);
         memberUpdateReqData.setWxActivate( true );
-        memberUpdateReqData.setWxActivateAfterSubmit( true );
-        memberUpdateReqData.setWxActivateAfterSubmitUrl( "https://www.hualala.com" );
-        CardUpdateRpcService.CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = memberUpdateReqData.buildBaseInfo();
-        cardBaseInfoUpdateReqData.setTitle("哗啦啦钻石会员1");
-        cardBaseInfoUpdateReqData.setCanGiveFriend(true);
-        cardBaseInfoUpdateReqData.setDescription("asdfasdf");
+        memberUpdateReqData.setWxActivateAfterSubmit( false );
+        memberUpdateReqData.setWxActivateAfterSubmitUrl( "" );
+//        CardUpdateRpcService.CardBaseInfoUpdateReqData cardBaseInfoUpdateReqData = memberUpdateReqData.buildBaseInfo();
+//        cardBaseInfoUpdateReqData.setTitle("哗啦啦钻石会员1");
+//        cardBaseInfoUpdateReqData.setCanGiveFriend(true);
+//        cardBaseInfoUpdateReqData.setDescription("asdfasdf");
 //        cardBaseInfoUpdateReqData.setGetLimit( 10 );
         CardUpdateRpcService.CardUpdateResData cardUpdateResData = rpcClient.updateMemberInfo(memberUpdateReqData);
         System.out.println(cardUpdateResData.isSendCheck());

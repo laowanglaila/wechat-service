@@ -85,13 +85,15 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
             memberModel1.setCardKey(cardKey);
             memberModelMapper.updateByPrimaryKeySelective(memberModel1);
 
-            BaseInfoModel baseInfoModel = DataUtils.copyProperties(cardBaseInfoUpdateReqData, BaseInfoModel.class);
-            boolean sendCheck = resultInfoBean.isSendCheck();
-            if (sendCheck) {
-                baseInfoModel.setCardStatus(2);
+            if (cardBaseInfoUpdateReqData != null) {
+                BaseInfoModel baseInfoModel = DataUtils.copyProperties( cardBaseInfoUpdateReqData, BaseInfoModel.class );
+                boolean sendCheck = resultInfoBean.isSendCheck();
+                if (sendCheck) {
+                    baseInfoModel.setCardStatus( 2 );
+                }
+                baseInfoModel.setCardKey( cardKey );
+                baseInfoModelMapper.updateByPrimaryKeySelective( baseInfoModel );
             }
-            baseInfoModel.setCardKey(cardKey);
-            baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
         }
         return resultInfoBean;
 
@@ -404,7 +406,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         card.put("supplyBonus", supplyBonus);
         Boolean wxActivate = memberUpdateReqData.getWxActivate();
         card.put("wxActivate", wxActivate);
-        Boolean wxActivateAfterSubmit = memberUpdateReqData.getWxActivateAfterSubmit();
+        boolean wxActivateAfterSubmit = memberUpdateReqData.getWxActivateAfterSubmit();
         card.put( "wxActivateAfterSubmit",wxActivateAfterSubmit );
         String wxActivateAfterSubmitUrl = memberUpdateReqData.getWxActivateAfterSubmitUrl();
         if (StringUtils.isNotBlank( wxActivateAfterSubmitUrl )){

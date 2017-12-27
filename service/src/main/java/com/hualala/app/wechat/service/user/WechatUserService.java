@@ -3,6 +3,8 @@ package com.hualala.app.wechat.service.user;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatUserMapper;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.Map;
  * 微信用户
  * Created by xkia on 2017/4/10.
  */
+@Slf4j
 @Service
 public class WechatUserService {
 
@@ -31,9 +34,14 @@ public class WechatUserService {
             if(row > 0) {
                 return openID;
             }
+            log.info("用户未关注！");
+            throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"用户未关注！");
         }
-        openID = wechatUserMapper.queryOpenID(mpID,userID,isSubscribe);
+        if (userID > 2){
+            openID = wechatUserMapper.queryOpenID(mpID,userID,isSubscribe);
+        }
         if (StringUtils.isBlank( openID )){
+            log.info("用户唯一标识为空，请指定正确的userID或者openID！");
             throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"用户唯一标识为空，请指定正确的userID或者openID！");
         }
         return openID;

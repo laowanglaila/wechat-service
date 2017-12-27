@@ -191,7 +191,7 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
 //                            "\"expire_seconds\": 1800,\n" +
                             "\"action_info\": {\n" +
                                 "\"card\": {\n" +
-                                "\"card_id\": \"pXpuzwZdfqUSuLQJrZG_XvDXapPA\", \n" +
+                                "\"card_id\": \"pACwGs1o30yZFhsTqysXImX5QHDA\", \n" +
 //                                "\"code\": \"198372383512\"," +
 //                                "\"openid\": \"oACwGswdcsCnQgJlarC9xIqQL2YI\"," +
 //                                "\"openid\": \"oACwGs4QPjQ_JoAVBOCQgwC12yFk\"," +
@@ -200,7 +200,7 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
                             "  }\n" +
                             " }\n" +
                             "}";
-        String mpID = "tut1Ceu1DX005996";
+        String mpID = "hualala_com";
 
         JSONObject jsonObject = baseHttpService.commonHttpPost("https://api.weixin.qq.com/card/qrcode/create", jsonString,mpID);
 //        JSONObject jsonObject = HttpApiUtil.httpPost("http://dohko.eshopapi.hualala.com/wechat/getQrcodeList.html", params);
