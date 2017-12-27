@@ -77,7 +77,7 @@ public abstract class AbstractCardEventHandler extends BaseEventCardEventHandler
             if (StringUtils.isNotBlank( birthday ))
                 voucherCardReq.setCustomerBirthday( birthday );
             if (StringUtils.isNotBlank( sex ))
-                voucherCardReq.setCustomerSex( "MALE".equals( sex )?1:0 );
+                voucherCardReq.setCustomerSex( "MALE".equals( sex )||"男".equals( sex )?1:0 );
             if (StringUtils.isNotBlank( mobile ))
                 voucherCardReq.setCustomerMobile( mobile );
           if (StringUtils.isNotBlank( name ))
