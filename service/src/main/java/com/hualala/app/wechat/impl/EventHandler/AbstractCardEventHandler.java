@@ -70,10 +70,10 @@ public abstract class AbstractCardEventHandler extends BaseEventCardEventHandler
                                                     .collect( HashMap <String, String>::new,
                                                              (map, item) -> map.put( item.getName(), item.getValue() ),
                                                              (map, map1) -> map.putAll( map1 ) );
-            String mobile = collect.get( UserForm.USER_FORM_INFO_FLAG_MOBILE );
-            String birthday = collect.get( UserForm.USER_FORM_INFO_FLAG_BIRTHDAY );
-            String name = collect.get( UserForm.USER_FORM_INFO_FLAG_NAME );
-            String sex = collect.get( UserForm.USER_FORM_INFO_FLAG_SEX );
+            String mobile = collect.get( UserForm.USER_FORM_INFO_FLAG_MOBILE.name() );
+            String birthday = collect.get( UserForm.USER_FORM_INFO_FLAG_BIRTHDAY.name() );
+            String name = collect.get( UserForm.USER_FORM_INFO_FLAG_NAME.name());
+            String sex = collect.get( UserForm.USER_FORM_INFO_FLAG_SEX.name() );
             if (StringUtils.isNotBlank( birthday ))
                 voucherCardReq.setCustomerBirthday( birthday );
             if (StringUtils.isNotBlank( sex ))
