@@ -224,7 +224,14 @@ public class BaseHttpService implements WechatBaseApi {
         return this.commonHttpPost(CONSUME_CARD_CODE, map, mpId);
     }
 
-    public JSONObject destoryCardCode(String json, String mpId) {
+    public JSONObject destoryCardCode(String cardID,String code, String mpId) {
+        StringBuilder stringBuilder = new StringBuilder( "{\"code\": \"" );
+        stringBuilder.append( code ).append( "\"" );
+        if (StringUtils.isNotBlank( cardID )){
+            stringBuilder.append( ",\"card_id\": \"" ).append( cardID ).append( "\"" );
+        }
+        stringBuilder.append( "}" );
+        String json = stringBuilder.toString();
         return this.commonHttpPost(CONSUME_CARD_CODE, json, mpId);
     }
 

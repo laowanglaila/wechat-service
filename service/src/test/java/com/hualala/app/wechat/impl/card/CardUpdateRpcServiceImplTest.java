@@ -68,15 +68,15 @@ public class CardUpdateRpcServiceImplTest extends BaseRpcTest {
         CardCodeRpcService rpcClient = super.baseRpcClient.getRpcClient(CardCodeRpcService.class);
         CardCodeRpcService.MemberItemUpdateReq memberItemUpdateReq = new CardCodeRpcService.MemberItemUpdateReq();
 //        memberItemUpdateReq.setCardCode("154096919594");
-        memberItemUpdateReq.setCardCode("177839940248");
-        memberItemUpdateReq.setCardKey(6435763117279446021L);
+        memberItemUpdateReq.setCardCode("318648895989");
+        memberItemUpdateReq.setCardKey(6439570631557130245L);
         memberItemUpdateReq.setBonus("400");
         memberItemUpdateReq.setAddBonus("6");
         memberItemUpdateReq.setBalance("100");
         memberItemUpdateReq.setAddBalance("100");
         memberItemUpdateReq.setRecordBonus("哗啦啦测试消费积分");
         memberItemUpdateReq.setRecordBalance("哗啦啦测试储值");
-
+        memberItemUpdateReq.setMsgCreateTime( System.currentTimeMillis() );
         CardCodeRpcService.MemberItemUpdateRes memberItemUpdateRes = rpcClient.updateMemberItem(memberItemUpdateReq);
         System.out.println(memberItemUpdateRes.toString());
         System.out.println(memberItemUpdateRes.getMessage());

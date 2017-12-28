@@ -7,6 +7,7 @@ import com.hualala.core.rpc.Protocol;
 import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
 
@@ -25,9 +26,6 @@ public interface CardCodeRpcService {
     @RpcMethod(description = "导入code方法")
     CardCodeImportResData importCode(CardCodeImportReqData cardCodeImportReqData);
 
-//    @RpcMethod
-//    CardCodeImportResData importCouponCode(CardCodeImportReqData cardCodeImportReqData);
-
     /**
      * 核销code方法
      *
@@ -36,6 +34,9 @@ public interface CardCodeRpcService {
      */
     @RpcMethod(description = "核销code方法")
     CardCodeDestroyResData destoryCode(CardCodeDestroyReqData cardCodeDestroyReqData);
+
+    @RpcMethod(description = "核销code方法")
+    CardCodeDestroyResData destoryThirdpartyCode(DestoryThirdpartyCodeReqData cardCodeDestroyReqData);
 
 //    @RpcMethod
 //    CardCodeDestroyResData destoryCouponCode(CardCodeDestroyReqData cardCodeDestroyReqData);
@@ -98,6 +99,21 @@ public interface CardCodeRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
         private String groupID;
     }
+    @Data
+    class DestoryThirdpartyCodeReqData extends RequestInfo {
+        //    card_id	否	string(32) 卡券ID。创建卡券时use_custom_code填写true时必填。非自定义Code不必填写。
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "微信卡券模板唯一ID")
+        private String cardID;
+        //    code	是	string(20)	1231231	需核销的Code码。
+        @NotBlank(message = "微信code码不能为空")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "需导入微信卡券后台的自定义code，上限为100个。")
+        private String code;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
+        private String groupID;
+        @NotBlank(message = "公众号唯一标识不能为空")
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "公众号ID")
+        private String mpID;
+    }
 
     @Data
     class CardCodeDestroyResData extends ResultInfo {
@@ -105,7 +121,7 @@ public interface CardCodeRpcService {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "唯一ID")
         private String openId;
         //    card_id	卡券ID。
-        @Protocol(fieldType = FieldType.STRING, order = 3, description = "需导入微信卡券后台的自定义code，上限为100个。")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "卡券模板ID")
         private String cardId;
     }
 

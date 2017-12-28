@@ -3,8 +3,10 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardCodeRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.MemberModel;
+import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
 import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
@@ -40,6 +42,9 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
 
     @Autowired
     private MemberMsgModelMapper memberMsgModelMapper;
+
+    @Autowired
+    private WxGroupMpService wxGroupMpService;
     /**
      * 导入code
      * @param cardCodeImportReqData
@@ -87,12 +92,17 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         String mpID = baseInfoModel.getMpID();
         String code = cardCodeDestroyReqData.getCode();
 
-        String params = "{" +
-                "  \"code\": \"" + code + "\"," +
-                "  \"card_id\": \"" + cardID + "\"" +
-                "}";
-        JSONObject jsonObject = baseHttpService.destoryCardCode(params, mpID);
+        JSONObject jsonObject = baseHttpService.destoryCardCode(cardID,code, mpID);
 
+        return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
+    }
+
+    @Override
+    public CardCodeDestroyResData destoryThirdpartyCode(DestoryThirdpartyCodeReqData cardCodeDestroyReqData) {
+        String cardID = cardCodeDestroyReqData.getCardID();
+        String code = cardCodeDestroyReqData.getCode();
+        String mpID = cardCodeDestroyReqData.getMpID();
+        JSONObject jsonObject = baseHttpService.destoryCardCode(cardID,code, mpID);
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
     }
 
@@ -216,10 +226,14 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
 
         StringBuilder sb = new StringBuilder(json);
         if (memberModel.getSupplyBonus()) {
-            if (StringUtils.isNotBlank( bonus ))
-                sb.append( "\"bonus\": " + bonus + "," );
-            if (StringUtils.isNotBlank( addBonus ))
-                sb.append( "\"add_bonus\": " + addBonus + "," );
+            if (StringUtils.isNotBlank( bonus )) {
+                BigDecimal bigDecimal = new BigDecimal( bonus );
+                sb.append( "\"bonus\": " + bigDecimal.intValue() + "," );
+            }
+            if (StringUtils.isNotBlank( addBonus )) {
+                BigDecimal bigDecimal = new BigDecimal( addBonus );
+                sb.append( "\"add_bonus\": " + bigDecimal.intValue() + "," );
+            }
             if (StringUtils.isNotBlank(recordBonus))
                 sb.append("\"record_bonus\": \""+recordBonus+"\",");
         }

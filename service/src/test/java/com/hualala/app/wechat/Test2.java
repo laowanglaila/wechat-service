@@ -3,16 +3,16 @@ package com.hualala.app.wechat;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.service.BaseHttpService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import java.math.BigDecimal;
 
 /**
  * Created by renjianfei on 2017/9/7.
  */
 @Slf4j
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class Test2 {
 //    @Autowired
@@ -42,12 +42,14 @@ public class Test2 {
         System.out.println(jsonObject);
     }
 //   grpc stream test
-//    @org.junit.Test
-//    public void test2(){
-//        TestRpcData.TestReqData build = TestRpcData.TestReqData.newBuilder().setRequesq( "777" ).build();
-//        Iterator<TestRpcData.TestResData> preAuthCode = testRpcServiceBlockingStub.createPreAuthCode( build );
-//        preAuthCode.forEachRemaining( res -> System.out.println(res.getResponse()) );
-//
-//    }
+    @org.junit.Test
+    public void test2(){
+        String dou = "10.12";
+        BigDecimal bigDecimal = new BigDecimal( dou );
+        int i = bigDecimal.intValue();
+        System.out.println(i);
+
+    }
+
 
 }
