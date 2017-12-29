@@ -1,9 +1,10 @@
 package com.hualala.app.wechat.service.user;
 
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.service.MpInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ import static com.hualala.app.wechat.sdk.mp.common.WechatMessageType.OAUTH_USERI
  */
 @Service
 public class WechatUserOAuthService {
+
+    private Logger logger = LoggerFactory.getLogger(WechatUserOAuthService.class);
 
     private static String wechatOAuthRequestURL = "https://open.weixin.qq.com/connect/oauth2/authorize";
     @Value("${wechat.data.componentAppID}")
@@ -43,7 +46,8 @@ public class WechatUserOAuthService {
         String appID = (String) mpInfo.get("appID");
         Integer authorize = (Integer) mpInfo.get("authorize");
         int oauth = 1;
-        if(!WechatMessageType.HUALALA_COM.equals(mpID) && 1 == authorize){
+        // if(!WechatMessageType.HUALALA_COM.equals(mpID) && 1 == authorize){
+        if( 1 == authorize){
             oauth = 3;
         }
 
@@ -92,6 +96,8 @@ public class WechatUserOAuthService {
                         + "&state=" + state + "#wechat_redirect";
                 break;
         }
+
+        logger.info("oauth url : {}",oauthUrl);
 
         return oauthUrl;
     }
