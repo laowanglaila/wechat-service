@@ -29,16 +29,10 @@ public class WechatUserService {
         Integer isSubscribe = (Integer) param.get("isSubscribe");
         String openID = String.valueOf(param.get("openID"));
 
-//        if(!StringUtils.isEmpty(openID)) {
-//            int row  = wechatUserMapper.queryCheckOpenID(mpID,openID,isSubscribe);
-//            if(row > 0) {
-//                return openID;
-//            }
-//            log.info("用户未关注！");
-//            throw new WechatException( WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"用户未关注！");
-//        }
-        if (userID > 2){
-            openID = wechatUserMapper.queryOpenID(mpID,userID,null);
+        if(StringUtils.isEmpty(openID)) {
+            if (userID > 2){
+                openID = wechatUserMapper.queryOpenID(mpID,userID,null);
+            }
         }
         if (StringUtils.isBlank( openID )){
             log.info("用户唯一标识为空，请指定正确的userID或者openID！");

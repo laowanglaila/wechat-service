@@ -3,16 +3,17 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.CardSyncRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.card.CreateCardKeyService;
+import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatNameConverterUtil;
 import com.hualala.core.utils.DataUtils;
@@ -66,10 +67,8 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
     @Override
     public CardListResData getCardList(CardListReqData cardListReqData) {
-        String mpID = cardListReqData.getMpID();
-        if (StringUtils.isBlank(mpID)) {
-            return new CardListResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "公众号mpID不允许为空");
-        }
+        String mpID = RequestUtil.getMpID(cardListReqData);
+
         int count = cardListReqData.getCount();
         int offset = cardListReqData.getOffset();
         List<String> statusList = cardListReqData.getStatusList();
@@ -271,7 +270,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService {
 
     @Override
     public CardDownloadResData downloadCardInfo(CardDownloadReqData cardSyncReqData) {
-        String mpID = cardSyncReqData.getMpID();
+        String mpID = RequestUtil.getMpID( cardSyncReqData );
         String cardID = cardSyncReqData.getCardID();
         if (StringUtils.isBlank(cardID)) {
             return new CardDownloadResData()

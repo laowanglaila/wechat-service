@@ -3,16 +3,23 @@ syntax = "proto3";
 option java_package = "com.hualala.app.wechat.grpc";
 option java_outer_classname = "CardSyncRpcData";
 import "commons.proto";
+import "wechatcommons.proto";
 
 message CardListReqData {  
    // 公众号mpid
    string mpID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
    // 开始位置
-   int32 offset=3;
+   int32 offset=6;
    // 数量，最大50
-   int32 count=4;
+   int32 count=7;
    // 期望获取卡券状态列表
-   repeated string statusList=5;
+   repeated string statusList=8;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -27,8 +34,14 @@ message CardListResData {
 message CardDownloadReqData {  
    // 微信卡券唯一ID
    string cardID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 品牌ID
+   int64 brandID=4;
+   // 店铺ID
+   int64 shopID=5;
    // 微信公众号唯一标识
-   string mpID=3;
+   string mpID=6;
    // 请求公共字段
    RequestHeader header=1;
 }

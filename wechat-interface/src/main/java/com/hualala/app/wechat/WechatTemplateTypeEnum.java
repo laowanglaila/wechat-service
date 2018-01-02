@@ -16,7 +16,9 @@ public enum WechatTemplateTypeEnum implements ValueEnum {
     TEMPLATE_ENUM_CRM_GIFT(6, "crm", "gift", ""),
     TEMPLATE_ENUM_CRM_CUSTOMER(7, "crm", "customer", ""),
     TEMPLATE_ENUM_INVOICE(8, "invoice", "alarm", ""),
-    TEMPLATE_ENUM_ASSESSMENT(9, "assessment", "asReply", "");
+    TEMPLATE_ENUM_ASSESSMENT(9, "assessment", "asReply", ""),
+    TEMPLATE_ENUM_CRM_EXPIRED(10, "crm", "expired", ""),
+    TEMPLATE_ENUM_PAY_SUCCESS(11, "pay", "success", "");
 
     private int value;
     private String modelType;

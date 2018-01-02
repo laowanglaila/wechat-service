@@ -1,6 +1,5 @@
 package com.hualala.app.wechat;
 
-import com.hualala.core.base.RequestInfo;
 import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
 import com.hualala.core.rpc.Protocol;
@@ -80,7 +79,7 @@ public interface CardPrePareQueryRpcService {
      * 查询条件
      */
     @Data
-    class CardQuery extends RequestInfo {
+    class CardQuery extends WechatRequestInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
         @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")

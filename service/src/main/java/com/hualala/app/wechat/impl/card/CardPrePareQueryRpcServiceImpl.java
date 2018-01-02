@@ -1,13 +1,15 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
+import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.service.BaseHttpService;
+import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.core.utils.DataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,18 +193,14 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
      */
     @Override
     public CardBaseInfoResDataList queryBaseInfoList(CardQuery cardQuery) {
-        String mpID = cardQuery.getMpID();
-        Long groupID = cardQuery.getGroupID();
-        if (StringUtils.isBlank(mpID)) {
-            return new MemberResDataList().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID不能为空！");
-        }
+        String mpID = RequestUtil.getMpID( cardQuery );
+//        String mpID = cardQuery.getMpID();
         BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
         BaseInfoModelQuery.Criteria criteria = baseInfoModelQuery.createCriteria().andMpIDEqualTo(mpID);
         String title = cardQuery.getTitle();
         if (StringUtils.isNotBlank(title)) {
             criteria.andTitleLike(title);
         }
-
         String cardType = cardQuery.getCardType();
         if (StringUtils.isNotBlank(cardType)) {
             criteria.andCardTypeEqualTo(cardType);

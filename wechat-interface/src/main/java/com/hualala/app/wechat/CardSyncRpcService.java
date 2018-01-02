@@ -25,15 +25,21 @@ public interface CardSyncRpcService {
     CardListResData getCardList(CardListReqData cardListReqData);
 
     @Data
-    class CardListReqData extends RequestInfo{
+    class CardListReqData extends WechatRequestInfo{
 
         @Protocol(fieldType = FieldType.STRING,order = 2,description = "公众号mpid")
         private String mpID;
-        @Protocol(fieldType = FieldType.INT,order = 3,description = "开始位置")
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        private Long groupID;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        private Long brandID;
+        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        private Long shopID;
+        @Protocol(fieldType = FieldType.INT,order = 6,description = "开始位置")
         private int offset;
-        @Protocol(fieldType = FieldType.INT,order = 4,description = "数量，最大50")
+        @Protocol(fieldType = FieldType.INT,order = 7,description = "数量，最大50")
         private int count;
-        @Protocol(fieldType = FieldType.STRING,order = 5,description = "期望获取卡券状态列表")
+        @Protocol(fieldType = FieldType.STRING,order = 8,description = "期望获取卡券状态列表")
         private List<String> statusList;
 // {
 //            "offset": 0,
@@ -85,10 +91,16 @@ public interface CardSyncRpcService {
     }
 
     @Data
-    class CardDownloadReqData extends RequestInfo{
+    class CardDownloadReqData extends WechatRequestInfo{
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "微信卡券唯一ID")
         private String cardID;
-        @Protocol(fieldType = FieldType.STRING, order = 3, description = "微信公众号唯一标识")
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        private Long groupID;
+        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        private Long brandID;
+        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        private Long shopID;
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "微信公众号唯一标识")
         private String mpID;
     }
     @Data

@@ -59,7 +59,7 @@ public class UserTokenService {
     /**
      * 公众号未授权，通过appID和APPSecret获取用户授权
      */
-    private UserAuthVO userAuthorization(String appID,String secret,String code) throws WechatInnerException {
+    public UserAuthVO userAuthorization(String appID,String secret,String code) throws WechatInnerException {
         String params = "appid="+appID+
                 "&secret="+ secret +
                 "&code=" + code +

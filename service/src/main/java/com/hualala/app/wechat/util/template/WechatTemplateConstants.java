@@ -79,6 +79,10 @@ public class WechatTemplateConstants {
 	public static final String ORDER_BOOK_MODELID = "OPENTM411367320";
 	// 预订结果通知
 	public static final String ASSESSMENT_ASREPLY = "TM405716624";
+	// 会员到期提醒
+	public static final String CRM_EXPIRED = "TM00054";
+	// 支付成功通知
+	public static final String PAY_SUCCESS = "OPENTM401700930";
 
 
 
@@ -102,6 +106,8 @@ public class WechatTemplateConstants {
 
 		MODELID_TITLE_MAP.put("OPENTM408389786","开票结果通知");
 		MODELID_TITLE_MAP.put("TM405716624","用餐评价提醒");
+		MODELID_TITLE_MAP.put("TM00054","会员到期提醒");
+		MODELID_TITLE_MAP.put("OPENTM401700930","支付成功通知");
 
 		MODEL_TYPE_MODELID_MAP.put("queue_alarm",QUEUE_ALARM_MODELID);
 		MODEL_TYPE_MODELID_MAP.put("order_default",ORDER_MODELID);
@@ -113,6 +119,8 @@ public class WechatTemplateConstants {
 		MODEL_TYPE_MODELID_MAP.put("crm_customer",GIFT_ALARM_CRMCUSTOMER_MODELID);
 
 		MODEL_TYPE_MODELID_MAP.put("assessment_asReply",ASSESSMENT_ASREPLY);
+		MODEL_TYPE_MODELID_MAP.put("crm_expired",CRM_EXPIRED);
+		MODEL_TYPE_MODELID_MAP.put("pay_success",PAY_SUCCESS);
 
 	}
 }
