@@ -8,6 +8,7 @@ import com.hualala.app.wechat.service.MpInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
@@ -15,6 +16,7 @@ import javax.annotation.PostConstruct;
  * Created by renjianfei on 2017/8/17.
  */
 @Slf4j
+@Component
 public class RequestUtil {
     @Autowired
     private MpInfoService mpInfoServiceInjector;
