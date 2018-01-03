@@ -163,7 +163,7 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
                     return userModel1;
                 }
             } catch (Throwable e) {
-                log.debug( "更新用户异常", e );
+                log.error( "更新用户异常", e );
                 throw e;
             }
             return userModel;

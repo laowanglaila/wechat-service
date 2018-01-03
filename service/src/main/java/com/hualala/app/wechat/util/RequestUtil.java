@@ -33,7 +33,7 @@ public class RequestUtil {
             Long brandID = requestInfo.getBrandID();
             Long groupID = requestInfo.getGroupID();
             Long shopID = requestInfo.getShopID();
-            if (brandID == null || groupID == null || shopID == null) {
+            if ( groupID == null || shopID == null) {
                 log.error("mpID为空并且没有提供brandID[{}]、groupID[{}]、shopID[{}]！",brandID,groupID,shopID);
                 throw new WechatException(WechatExceptionTypeEnum.WECHAT_ILLEGAL_ARGUMENTS,"mpID为空并且没有提供brandID、groupID、shopID！");
             }

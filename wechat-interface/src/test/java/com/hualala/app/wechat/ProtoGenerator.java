@@ -22,7 +22,7 @@ public class ProtoGenerator {
 //                CardEventRpcService.class,
                 CardSyncRpcService.class,
                 CardPrePareQueryRpcService.class,
-//                CardPrePareCreateRpcService.class,
+                CardPrePareCreateRpcService.class,
 //                CreateCardCouponRpcService.class,
 //                WechatQRCodeRpcSerivce.class,
 //                WechatMessageRpcService.class,

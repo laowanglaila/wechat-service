@@ -5,6 +5,28 @@ option java_outer_classname = "CardPrePareCreateRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
+message PreAdvancedInfoData {  
+   // card唯一键
+   int64 cardKey=2;
+   // 封面摘要结构体名称
+   string abstractInfo=3;
+   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
+   string businessService=4;
+   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
+   string textImage=5;
+   // 使用时段限制，包含以下字段
+   string timeLimit=6;
+   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
+   string useCodition=7;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PreCardResData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message PreCouponReqData {  
    // 唯一ID
    int64 cardKey=8;
@@ -20,58 +42,6 @@ message PreCouponReqData {
    string discount=13;
    // 可兑换音乐木盒一个。兑换券专用，填写兑换内容的名称。
    string gift=14;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message PreCardResData {  
-   // 唯一ID
-   int64 cardKey=2;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message PreMemberReqData {  
-   // 会员端产生的唯一主键ID
-   int64 cardKey=8;
-   // 折扣，该会员卡享受的折扣优惠,填10就是九折。
-   int32 discount=9;
-   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
-   string backgroundPicUrl=10;
-   // 会员卡特权说明。
-   string prerogative=11;
-   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
-   bool autoActivate=12;
-   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
-   bool wxActivate=13;
-   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
-   bool supplyBonus=14;
-   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
-   string bonusUrl=15;
-   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
-   bool supplyBalance=16;
-   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
-   string balanceUrl=17;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField1=18;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField2=19;
-   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
-   string customField3=20;
-   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
-   string customCell1=21;
-   // 积分规则。JSON结构
-   string bonusRule=22;
-   // 激活会员卡的url。
-   string activateUrl=23;
-   // 积分清零规则。
-   string bonusCleared=24;
-   // 储值说明。
-   string balanceRules=25;
-   // 积分规则
-   string bonusRules=26;
-   // 使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活
-   bool wxActivateAfterSubmit=27;
-   // 使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url
-   string wxActivateAfterSubmitUrl=28;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -143,15 +113,61 @@ message PreCardBaseInfoData {
    // 公众号编码
    string mpID=34;
    // 集团ID
-   int64 groupID=35;
+   string groupID=35;
    // 品牌ID
-   int64 brandID=36;
+   string brandID=36;
    // 店铺ID
-   int64 shopID=37;
+   string shopID=37;
    // 卡券名称
    string title=38;
    // 优惠券类型
    string cardType=39;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PreMemberReqData {  
+   // 会员端产生的唯一主键ID
+   int64 cardKey=8;
+   // 折扣，该会员卡享受的折扣优惠,填10就是九折。
+   int32 discount=9;
+   // 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错，卡面设计请遵循微信会员卡自定义背景设计规范  ,像素大小控制在1000像素*600像素以下
+   string backgroundPicUrl=10;
+   // 会员卡特权说明。
+   string prerogative=11;
+   // 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
+   bool autoActivate=12;
+   // 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见一键开卡。
+   bool wxActivate=13;
+   // 显示积分，填写true或false，如填写true，积分相关字段均为必填。
+   bool supplyBonus=14;
+   // 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
+   string bonusUrl=15;
+   // 是否支持储值，填写true或false。如填写true，储值相关字段均为必填。
+   bool supplyBalance=16;
+   // 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
+   string balanceUrl=17;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField1=18;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField2=19;
+   // 自定义会员信息类目，会员卡激活后显示,包含name_type(name)和url字段。JSON结构
+   string customField3=20;
+   // 自定义会员信息类目，会员卡激活后显示。name/tips/url。JSON结构
+   string customCell1=21;
+   // 积分规则。JSON结构
+   string bonusRule=22;
+   // 激活会员卡的url。
+   string activateUrl=23;
+   // 积分清零规则。
+   string bonusCleared=24;
+   // 储值说明。
+   string balanceRules=25;
+   // 积分规则
+   string bonusRules=26;
+   // 使用微信一键开卡或微信开卡组件时，是否支持跳转商户Url激活
+   bool wxActivateAfterSubmit=27;
+   // 使用微信一键开卡或微信开卡组件时，支持跳转商户Url激活，需要跳转到的商户激活页面Url
+   string wxActivateAfterSubmitUrl=28;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -161,32 +177,16 @@ message CardPrimaryKey {
    // 请求公共字段
    RequestHeader header=1;
 }
-message PreAdvancedInfoData {  
-   // card唯一键
-   int64 cardKey=2;
-   // 封面摘要结构体名称
-   string abstractInfo=3;
-   // 商家服务类型：BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位；BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi，可多选,多个采用“，”+“空格”分割
-   string businessService=4;
-   // 图文列表，显示在详情内页，优惠券券开发者须至少传入一组图文列表
-   string textImage=5;
-   // 使用时段限制，包含以下字段
-   string timeLimit=6;
-   // 使用门槛（条件）字段，若不填写使用条件则在券面拼写：无最低消费限制，全场通用，不限品类；并在使用说明显示：可与其他优惠共享
-   string useCodition=7;
-   // 请求公共字段
-   RequestHeader header=1;
-}
 //预创建卡券接口
 service CardPrePareCreateRpcService{
-    //卡券创建必要信息方法
-    rpc createCoupon(PreCouponReqData) returns (PreCardResData) {}
-    //会员卡创建必要信息方法
-    rpc createMemberCard(PreMemberReqData) returns (PreCardResData) {}
-    //基本信息
-    rpc createBaseInfo(PreCardBaseInfoData) returns (PreCardResData) {}
-    //提交卡券到微信
-    rpc submitCardInfo(CardPrimaryKey) returns (PreCardResData) {}
     //高级信息
     rpc createAdvancedInfo(PreAdvancedInfoData) returns (PreCardResData) {}
+    //卡券创建必要信息方法
+    rpc createCoupon(PreCouponReqData) returns (PreCardResData) {}
+    //基本信息
+    rpc createBaseInfo(PreCardBaseInfoData) returns (PreCardResData) {}
+    //会员卡创建必要信息方法
+    rpc createMemberCard(PreMemberReqData) returns (PreCardResData) {}
+    //提交卡券到微信
+    rpc submitCardInfo(CardPrimaryKey) returns (PreCardResData) {}
 }

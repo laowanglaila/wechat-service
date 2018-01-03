@@ -82,11 +82,11 @@ public interface CardPrePareQueryRpcService {
     class CardQuery extends WechatRequestInfo {
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
         private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "集团ID")
         private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "品牌ID")
         private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "店铺ID")
         private Long shopID;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "卡券名称")
         private String title;
@@ -254,11 +254,11 @@ public interface CardPrePareQueryRpcService {
         private String cardKey;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "公众号编码")
         private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "集团ID")
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
         private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "品牌ID")
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "品牌ID")
         private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 6, description = "店铺ID")
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "店铺ID")
         private Long shopID;
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "卡券名称")
         private String title;

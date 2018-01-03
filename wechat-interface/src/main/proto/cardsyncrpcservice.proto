@@ -9,11 +9,11 @@ message CardListReqData {
    // 公众号mpid
    string mpID=2;
    // 集团ID
-   int64 groupID=3;
+   string groupID=3;
    // 品牌ID
-   int64 brandID=4;
+   string brandID=4;
    // 店铺ID
-   int64 shopID=5;
+   string shopID=5;
    // 开始位置
    int32 offset=6;
    // 数量，最大50
@@ -35,11 +35,11 @@ message CardDownloadReqData {
    // 微信卡券唯一ID
    string cardID=2;
    // 集团ID
-   int64 groupID=3;
+   string groupID=3;
    // 品牌ID
-   int64 brandID=4;
+   string brandID=4;
    // 店铺ID
-   int64 shopID=5;
+   string shopID=5;
    // 微信公众号唯一标识
    string mpID=6;
    // 请求公共字段

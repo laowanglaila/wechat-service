@@ -29,11 +29,11 @@ public interface CardSyncRpcService {
 
         @Protocol(fieldType = FieldType.STRING,order = 2,description = "公众号mpid")
         private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "集团ID")
         private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "品牌ID")
         private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "店铺ID")
         private Long shopID;
         @Protocol(fieldType = FieldType.INT,order = 6,description = "开始位置")
         private int offset;
@@ -94,11 +94,11 @@ public interface CardSyncRpcService {
     class CardDownloadReqData extends WechatRequestInfo{
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "微信卡券唯一ID")
         private String cardID;
-        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "集团ID")
         private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 4, description = "品牌ID")
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "品牌ID")
         private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 5, description = "店铺ID")
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "店铺ID")
         private Long shopID;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "微信公众号唯一标识")
         private String mpID;

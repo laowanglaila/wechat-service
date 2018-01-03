@@ -258,11 +258,11 @@ public interface CardPrePareCreateRpcService {
 
         @Protocol(fieldType = FieldType.STRING, order = 34, description = "公众号编码")
         private String mpID;
-        @Protocol(fieldType = FieldType.LONG, order = 35, description = "集团ID")
+        @Protocol(fieldType = FieldType.STRING, order = 35, description = "集团ID")
         private Long groupID;
-        @Protocol(fieldType = FieldType.LONG, order = 36, description = "品牌ID")
+        @Protocol(fieldType = FieldType.STRING, order = 36, description = "品牌ID")
         private Long brandID;
-        @Protocol(fieldType = FieldType.LONG, order = 37, description = "店铺ID")
+        @Protocol(fieldType = FieldType.STRING, order = 37, description = "店铺ID")
         private Long shopID;
         @Protocol(fieldType = FieldType.STRING, order = 38, description = "卡券名称")
         private String title;
