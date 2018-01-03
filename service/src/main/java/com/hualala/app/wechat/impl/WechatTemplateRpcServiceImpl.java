@@ -462,6 +462,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
                 "\"param\":" + json +""+
                 "}";
         Integer status = 0;
+        logger.info( ()-> mqMsg );
         try {
             rabbitTemplate.convertAndSend( rabbitQueueProps.getTemplateMessageExchange(),null ,mqMsg );
             status = 1;
