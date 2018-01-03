@@ -27,7 +27,7 @@ public class WechatUserService {
         String mpID = String.valueOf(param.get("mpID"));
         long userID = (long) param.get("userID");
         Integer isSubscribe = (Integer) param.get("isSubscribe");
-        String openID = String.valueOf(param.get("openID"));
+        String openID = (String)param.get("openID");
 
         if(StringUtils.isEmpty(openID)) {
             if (userID > 2){
