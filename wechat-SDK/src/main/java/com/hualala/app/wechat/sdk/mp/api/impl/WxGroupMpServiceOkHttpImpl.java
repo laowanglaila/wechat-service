@@ -3,6 +3,7 @@ package com.hualala.app.wechat.sdk.mp.api.impl;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcData;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
 import com.hualala.app.wechat.sdk.mp.api.*;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -36,7 +37,7 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
     public static final Integer MAXIDLE_CONNECTION = 20;
     public static final Long KEEP_ALIVE_DURATION = 10L;
     public static final Long RESPONSE_TIMOUT = 5L;
-    private String mpID;
+    private ThreadLocal<String> mpIDProvider = new ThreadLocal <>();
     protected WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub accessTokenStub;
 
     @Override
@@ -45,7 +46,7 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
     WechatAccessTokenRpcData.AccessTokenReq accessTokenReq = WechatAccessTokenRpcData
             .AccessTokenReq
             .newBuilder()
-            .setMpID( this.mpID )
+            .setMpID( mpIDProvider.get() )
             .setIsForceRefresh( forceRefresh )
             .build();
     WechatAccessTokenRpcData.AccessTokenRes accessTokenRes = null;
@@ -120,92 +121,93 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
     }
     @Override
     public WxMpKefuService getKefuService(String mpID) {
-        this.mpID = mpID;
+
+        mpIDProvider.set( mpID );
         return this.getKefuService();
     }
 
     @Override
     public WxMpMaterialService getMaterialService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getMaterialService();
     }
 
     @Override
     public WxMpMenuService getMenuService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getMenuService();
     }
 
     @Override
     public WxMpUserService getUserService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getUserService();
     }
 
     @Override
     public WxMpUserTagService getUserTagService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getUserTagService();
     }
 
     @Override
     public WxMpQrcodeService getQrcodeService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getQrcodeService();
     }
 
     @Override
     public WxMpCardService getCardService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getCardService();
     }
 
     @Override
     public WxMpDataCubeService getDataCubeService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getDataCubeService();
     }
 
     @Override
     public WxMpUserBlacklistService getBlackListService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getBlackListService();
     }
 
     @Override
     public WxMpStoreService getStoreService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getStoreService();
     }
 
     @Override
     public WxMpTemplateMsgService getTemplateMsgService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getTemplateMsgService();
     }
 
     @Override
     public WxMpDeviceService getDeviceService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getDeviceService();
     }
 
     @Override
     public WxMpShakeService getShakeService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getShakeService();
     }
 
     @Override
     public WxMpMemberCardService getMemberCardService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getMemberCardService();
     }
 
 
     @Override
     public WxMpMassMessageService getMassMessageService(String mpID) {
-        this.mpID = mpID;
+        mpIDProvider.set( mpID );
         return this.getMassMessageService();
     }
 
