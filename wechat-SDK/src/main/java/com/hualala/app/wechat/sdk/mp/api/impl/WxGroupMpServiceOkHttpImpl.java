@@ -42,11 +42,12 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
 
     @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    logger.debug("WxMpServiceOkHttpImpl is running");
+        String mpID = mpIDProvider.get();
+        logger.info("get AccessToken with forceRefresh is [{}], and mpID is [{}] ",forceRefresh,mpID);
     WechatAccessTokenRpcData.AccessTokenReq accessTokenReq = WechatAccessTokenRpcData
             .AccessTokenReq
             .newBuilder()
-            .setMpID( mpIDProvider.get() )
+            .setMpID( mpID )
             .setIsForceRefresh( forceRefresh )
             .build();
     WechatAccessTokenRpcData.AccessTokenRes accessTokenRes = null;
