@@ -7,7 +7,7 @@ import com.hualala.app.wechat.mapper.sem.TemplateMessageModelMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
 import com.hualala.app.wechat.model.sem.TemplateMessageModel;
-import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
 import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateData;
 import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateMessage;
 import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
