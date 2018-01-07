@@ -19,4 +19,16 @@ public enum MpTypeEnum implements ValueEnum {
     public int getValue() {
         return value;
     }
+    public static MpTypeEnum valueOf(int value){
+        if (value == SUBSCRIPTIONS.getValue()){
+            return SUBSCRIPTIONS;
+        }else if (value == SUBSCRIPTIONS_AUTH.getValue()){
+            return SUBSCRIPTIONS_AUTH;
+        }else if (value == SERVICE.getValue()){
+            return SERVICE;
+        }else if (value == SERVICE_AUTH.getValue()){
+            return SERVICE_AUTH;
+        }
+        return DEFAULT;
+    }
 }
