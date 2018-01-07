@@ -3,6 +3,10 @@ package com.hualala.app.wechat.impl.EventHandler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.impl.EventHandler.impl.ActiveMembercardUserInfoEventHandler;
+import com.hualala.app.wechat.impl.EventHandler.impl.CardCheckEventHandler;
+import com.hualala.app.wechat.impl.EventHandler.impl.CardUserGetHandler;
+import com.hualala.app.wechat.impl.EventHandler.impl.UserGiftingCardEventHandler;
 import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
 import com.hualala.core.base.ResultInfo;
@@ -69,10 +73,11 @@ public abstract class BaseEventCardEventHandler  {
             return WechatBeanFactory.getBean( ActiveMembercardUserInfoEventHandler.class );
         } else if (WechatMessageType.EVENT_CARD_NOT_PASS_CHECK.equals( event )) {
             //未通过审核
+            return WechatBeanFactory.getBean( CardCheckEventHandler.class );
 
         } else if (WechatMessageType.EVENT_CARD_PASS_CHECK.equals( event )) {
             //通过审核
-
+            return WechatBeanFactory.getBean( CardCheckEventHandler.class );
         } else if (WechatMessageType.EVENT_CARD_PAY_ORDER.equals( event )) {
             //券点流水详情事件
 
@@ -96,7 +101,7 @@ public abstract class BaseEventCardEventHandler  {
             return WechatBeanFactory.getBean( CardUserGetHandler.class );
         } else if (WechatMessageType.EVENT_CARD_USER_GIFTING.equals( event )) {
             //用户转赠事件
-
+            return WechatBeanFactory.getBean( UserGiftingCardEventHandler.class );
         } else if (WechatMessageType.EVENT_CARD_USER_PAY_FROM_PAY_CELL.equals( event )) {
             //用户买单事件
 

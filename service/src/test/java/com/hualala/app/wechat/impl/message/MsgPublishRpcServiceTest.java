@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.MsgPublishRpcService;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.user.UserModelQuery;
-import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.core.client.BaseRpcClient;
 import org.junit.Test;

@@ -54,7 +54,7 @@ public class WechatTemplateRpcServiceImplTest {
     public void sentMQWechatTemplate() throws Exception {
 //        String openID = "oAkHb1IuY78GZyAo9uxzna7MPvV8";
         String userID = "3574377";
-        String mpID = "doulaofang1ceshi";
+        String mpID = "hualala_com";
 //        String mpID = "dohko1155";
         List <WechatTemplateRpcService.WechatTemplateItem> items = new ArrayList <>();
         WechatTemplateRpcService.WechatTemplateItem first = new WechatTemplateRpcService.WechatTemplateItem();
@@ -89,7 +89,7 @@ public class WechatTemplateRpcServiceImplTest {
         items.add( keynote5 );
 
         WechatTemplateRpcService.WechatSendTemplateReq reqData = new WechatTemplateRpcService.WechatSendTemplateReq();
-        reqData.setTemplateType( WechatTemplateTypeEnum.TEMPLATE_ENUM_ASSESSMENT);
+        reqData.setTemplateType( WechatTemplateTypeEnum.TEMPLATE_ENUM_ORDER);
 //        reqData.setOpenID( openID );
         reqData.setUserID( Long.parseLong( userID ));
         reqData.setParam1( "1126" );

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.grpc.CardCodeRpcData;
-import com.hualala.app.wechat.impl.EventHandler.CardUserGetHandler;
+import com.hualala.app.wechat.impl.EventHandler.impl.CardUserGetHandler;
 import com.hualala.app.wechat.sdk.mp.util.OkHttpUtil;
 import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
 import org.apache.commons.codec.binary.Base64;

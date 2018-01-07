@@ -3,6 +3,7 @@ package com.hualala.app.wechat;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.service.BaseHttpService;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.util.crypto.SHA1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -49,6 +50,15 @@ public class Test2 {
         int i = bigDecimal.intValue();
         System.out.println(i);
 
+    }
+    @org.junit.Test
+    public void test3(){
+        String token = "41c6a0fd89534a129c675854e926bff8";
+        String timestamp = "" + System.currentTimeMillis();
+        String nonce = "234234";
+        String echostr = "hello";
+        String signature = SHA1.gen( token, timestamp, nonce );
+        log.info("http://127.0.0.1:9090/access?signature={}&timestamp={}&nonce={}&echostr={}" , signature,timestamp,nonce,echostr );
     }
 
 

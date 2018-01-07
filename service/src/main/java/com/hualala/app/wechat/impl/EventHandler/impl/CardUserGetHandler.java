@@ -1,4 +1,4 @@
-package com.hualala.app.wechat.impl.EventHandler;
+package com.hualala.app.wechat.impl.EventHandler.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.crm.bean.card.VoucherCardReq;
@@ -10,6 +10,7 @@ import com.hualala.app.crm.service.CardInfoService;
 import com.hualala.app.crm.service.GiftDetailChannelService;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.impl.EventHandler.AbstractCardEventHandler;
 import com.hualala.app.wechat.impl.EventHandler.bean.OuterStr;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
@@ -28,7 +29,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ *
+ * 领取卡券事件，判断 是会员卡，是优惠券，判断是否需要激活，判断是否正向投放回调
+ * 作出不同动作
+ *
  * Created by renjianfei on 2017/9/8.
+ *
  */
 @Slf4j
 @Component("cardUserGetHandler")
