@@ -12,6 +12,7 @@ public class WechatMpModel extends BaseItem {
     private String token;
     private String appID;
     private Long brandID;
+    private Long groupID;
     private String appSecret;
     private String encodingAESKey;
     private String weixinURL;
@@ -252,6 +253,13 @@ public class WechatMpModel extends BaseItem {
 
     public WechatMpModel setWechatEndDate(Long wechatEndDate) {
         this.wechatEndDate = wechatEndDate;
+        return this;
+    }
+    public Long getGroupID(){
+        return this.groupID;
+    }
+    public WechatMpModel setGroupID(Long groupID){
+        this.groupID = groupID;
         return this;
     }
 }
