@@ -28,7 +28,7 @@ public class MpInfoRpcServiceImpl implements MpInfoRpcService {
     public MpInfoQueryResData queryMpInfo(MpInfoQueryReqData reqData) {
 
         Map<String, Object> param = new HashMap<>();
-        if(StringUtils.isEmpty(reqData.getAppID())){
+        if(StringUtils.isNotEmpty(reqData.getAppID())){
             param.put("appID",reqData.getAppID());
         }
         if(StringUtils.isNotEmpty(reqData.getMpID())){
