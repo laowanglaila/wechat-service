@@ -1,9 +1,9 @@
 package com.hualala.app.wechat.sdk.mp.config;
 
-import com.hualala.app.wechat.sdk.mp.api.WxGroupMpService;
-import com.hualala.app.wechat.sdk.mp.api.impl.WxGroupMpServiceOkHttpImpl;
+import com.hualala.app.wechat.grpc.MpInfoRpcServiceGrpc;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
-import com.hualala.core.grpc.GrpcClient;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpServiceOkHttpImpl;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,12 @@ public class AccessTokenServiceConfig {
     @Value( "${wechatsdk.host}" )
     private String host;
 
-    @Bean(name = "accessTokenClient", destroyMethod = "clean")
-    public GrpcClient grpcClient() {
-        log.info("Initializing com.hualala.app.wechat.accessToken gRpc client... [" + host + "]");
-        GrpcClient client = new GrpcClient(host);
-        return client;
-    }
+//    @Bean(name = "accessTokenClient", destroyMethod = "clean")
+//    public GrpcClient grpcClient() {
+//        log.info("Initializing com.hualala.app.wechat.accessToken gRpc client... [" + host + "]");
+//        GrpcClient client = new GrpcClient(host);
+//        return client;
+//    }
 
 
     //    grpc stream test
@@ -39,6 +39,11 @@ public class AccessTokenServiceConfig {
     @Bean(name = "wechatSDKAccessTokenRpcServiceFutureStub")
     public WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub sdkaccessTokenRpcServiceFutureStub(@Qualifier("channel") Channel client)  {
         return WechatAccessTokenRpcServiceGrpc.newFutureStub( client );
+    }
+
+    @Bean
+    public MpInfoRpcServiceGrpc.MpInfoRpcServiceFutureStub getFoodRecommendFutureStub(@Qualifier("channel") Channel client) throws Exception {
+        return MpInfoRpcServiceGrpc.newFutureStub( client );
     }
 
     @Bean

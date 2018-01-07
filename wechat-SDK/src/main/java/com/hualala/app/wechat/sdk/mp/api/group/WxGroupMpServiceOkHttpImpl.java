@@ -1,9 +1,9 @@
-package com.hualala.app.wechat.sdk.mp.api.impl;
+package com.hualala.app.wechat.sdk.mp.api.group;
 
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcData;
 import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
 import com.hualala.app.wechat.sdk.mp.api.*;
-import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.api.impl.WxMpServiceOkHttpImpl;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -14,8 +14,11 @@ import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -29,9 +32,17 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
 
     private OkHttpClient httpClient;
     private OkHttpProxyInfo httpProxy;
+    private StringRedisTemplate stringRedisTemplate;
     public WxGroupMpServiceOkHttpImpl(WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub accessTokenStub){
         super();
         this.accessTokenStub = accessTokenStub;
+        this.initHttp();
+    }
+    public WxGroupMpServiceOkHttpImpl(WechatAccessTokenRpcServiceGrpc.WechatAccessTokenRpcServiceFutureStub accessTokenStub,
+                                      StringRedisTemplate stringRedisTemplate){
+        super();
+        this.accessTokenStub = accessTokenStub;
+        this.stringRedisTemplate = stringRedisTemplate;
         this.initHttp();
     }
     public static final Integer MAXIDLE_CONNECTION = 20;
@@ -123,95 +134,123 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
     @Override
     public WxMpKefuService getKefuService(String mpID) {
 
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getKefuService();
     }
 
     @Override
     public WxMpMaterialService getMaterialService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getMaterialService();
     }
 
     @Override
     public WxMpMenuService getMenuService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getMenuService();
     }
 
     @Override
     public WxMpUserService getUserService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getUserService();
     }
 
     @Override
     public WxMpUserTagService getUserTagService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getUserTagService();
     }
 
     @Override
     public WxMpQrcodeService getQrcodeService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getQrcodeService();
     }
 
     @Override
     public WxMpCardService getCardService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getCardService();
     }
 
     @Override
     public WxMpDataCubeService getDataCubeService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getDataCubeService();
     }
 
     @Override
     public WxMpUserBlacklistService getBlackListService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getBlackListService();
     }
 
     @Override
     public WxMpStoreService getStoreService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getStoreService();
     }
 
     @Override
     public WxMpTemplateMsgService getTemplateMsgService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getTemplateMsgService();
     }
 
     @Override
     public WxMpDeviceService getDeviceService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getDeviceService();
     }
 
     @Override
     public WxMpShakeService getShakeService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getShakeService();
     }
 
     @Override
     public WxMpMemberCardService getMemberCardService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getMemberCardService();
     }
 
 
     @Override
     public WxMpMassMessageService getMassMessageService(String mpID) {
-        mpIDProvider.set( mpID );
+        this.initWxMpConfigStorage( mpID );
         return this.getMassMessageService();
     }
 
+    public WxMpConfigStorage initWxMpConfigStorage(String mpID){
+        return initWxMpConfigStorage(mpID,this.stringRedisTemplate);
+    }
+
+    public WxMpConfigStorage initWxMpConfigStorage(String mpID, StringRedisTemplate stringRedisTemplate){
+        mpIDProvider.set( mpID );
+        //TODO 根据mpID获取mpInfo
+        WxMpConfigStorage wxMpConfigStorage = wxMpConfigProvider.get( mpID );
+        if (wxMpConfigStorage == null){
+            wxMpConfigStorage = new WxGroupMpInRedisConfigStorage( mpID,stringRedisTemplate );
+        }
+        wxMpConfigProvider.put( mpID, wxMpConfigStorage);
+        return wxMpConfigStorage;
+    }
+
+    private Map<String,WxMpConfigStorage> wxMpConfigProvider = new HashMap <>();
+
+    @Override
+    public WxMpConfigStorage getWxMpConfigStorage() {
+        WxMpConfigStorage wxMpConfigStorage = wxMpConfigProvider.get( this.mpIDProvider.get() );
+        return wxMpConfigStorage;
+    }
+
+    @Override
+    public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
+        wxMpConfigProvider.put( this.mpIDProvider.get(),wxConfigProvider );
+        this.initHttp();
+    }
 
     @Override
     public <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {

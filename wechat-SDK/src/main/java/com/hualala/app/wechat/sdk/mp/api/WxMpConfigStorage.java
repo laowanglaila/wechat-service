@@ -13,6 +13,17 @@ import java.util.concurrent.locks.Lock;
  */
 public interface WxMpConfigStorage {
 
+  default Long getGroupID(){
+    return null;
+  }
+  default void setGroupID(Long mpID){
+  }
+  default String getMpID(){
+    return null;
+  }
+  default void setMpID(String mpID){
+  }
+
   String getAccessToken();
 
   Lock getAccessTokenLock();

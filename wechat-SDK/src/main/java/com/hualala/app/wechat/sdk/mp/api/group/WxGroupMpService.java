@@ -1,6 +1,8 @@
-package com.hualala.app.wechat.sdk.mp.api;
+package com.hualala.app.wechat.sdk.mp.api.group;
 
+import com.hualala.app.wechat.sdk.mp.api.*;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * 微信API的Service,多公众号
@@ -118,6 +120,24 @@ public interface WxGroupMpService  {
    */
   WxMpMassMessageService getMassMessageService(String mpID);
 
+  /**
+   * 初始化WxMpConfigStorage
+   * @param mpID
+   */
+  WxMpConfigStorage initWxMpConfigStorage(String mpID);
+  WxMpConfigStorage initWxMpConfigStorage(String mpID, StringRedisTemplate stringRedisTemplate);
+
+  /**
+   * 获取WxMpConfigStorage 对象
+   *
+   * @return WxMpConfigStorage
+   */
+  WxMpConfigStorage getWxMpConfigStorage();
+
+  /**
+   * 注入 {@link WxMpConfigStorage} 的实现
+   */
+  void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider);
   /**
    * @return RequestHttp对象
    */
