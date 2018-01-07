@@ -1,5 +1,6 @@
 package com.hualala.app.wechat.sdk.mp.api.group;
 
+import com.hualala.app.wechat.sdk.mp.api.WxMpAbstractRouter;
 import com.hualala.app.wechat.sdk.mp.bean.message.WxMpXmlMessage;
 import com.hualala.app.wechat.sdk.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
@@ -50,7 +51,7 @@ import java.util.concurrent.Future;
  *
  * @author Daniel Qian
  */
-public class WxGroupMpMessageRouter {
+public class WxGroupMpMessageRouter extends WxMpAbstractRouter{
 
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
   protected final Logger log = LoggerFactory.getLogger(WxGroupMpMessageRouter.class);
@@ -129,7 +130,7 @@ public class WxGroupMpMessageRouter {
    * 处理微信消息
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
-    if (isMsgDuplicated(wxMessage)) {
+    if (!isAllowMsgDuplicate && isMsgDuplicated(wxMessage)) {
       // 如果是重复消息，那么就不做处理
       return null;
     }

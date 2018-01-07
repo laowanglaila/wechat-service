@@ -40,7 +40,6 @@ public class WxGroupMpInRedisConfigStorage extends WxMpInMemoryConfigStorage {
         this.setAesKey( mpInfoRelation.getAesKey() );
         this.setToken( mpInfoRelation.getToken() );
       }
-
       this.setGroupID( mpInfoRelation.getGroupID() );
       this.setAppId( mpInfoRelation.getAppID() );
       this.setSecret( mpInfoRelation.getSecret() );

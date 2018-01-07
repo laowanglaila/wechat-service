@@ -50,7 +50,7 @@ import java.util.concurrent.Future;
  *
  * @author Daniel Qian
  */
-public class WxMpMessageRouter {
+public class WxMpMessageRouter extends WxMpAbstractRouter{
 
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
   protected final Logger log = LoggerFactory.getLogger(WxMpMessageRouter.class);
@@ -129,8 +129,8 @@ public class WxMpMessageRouter {
    * 处理微信消息
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
-    if (isMsgDuplicated(wxMessage)) {
-      // 如果是重复消息，那么就不做处理
+    if (!isAllowMsgDuplicate && isMsgDuplicated(wxMessage)) {
+      // todo 暂时不考虑 如果是重复消息，那么就不做处理
       return null;
     }
 
@@ -222,4 +222,6 @@ public class WxMpMessageRouter {
     }
 
   }
+
+
 }

@@ -53,12 +53,14 @@ public class MpInfoProviderMemoryImpl implements MpInfoProvider {
             MpInfoRpcData.MpInfoQueryReqData.Builder builder = MpInfoRpcData.MpInfoQueryReqData.newBuilder();
             builder.setMpID( mpID );
             MpInfoRpcData.MpInfoResData mpInfoResDataList = getRelation( builder );
-            appID = mpInfoResDataList.getAppID();
             mpInfoRelation = new MpInfoRelation();
-            mpInfoRelation.setAppID( appID );
             mpInfoRelation.setMpID( mpID );
+            mpInfoRelation.setAppID( mpInfoResDataList.getAppID() );
+            mpInfoRelation.setSecret( mpInfoResDataList.getAppSecret() );
             mpInfoRelation.setGroupID( mpInfoResDataList.getGroupID() );
             mpInfoRelation.setAuthorize( mpInfoResDataList.getAuthorize() );
+            mpInfoRelation.setToken( mpInfoResDataList.getToken() );
+            mpInfoRelation.setAesKey( mpInfoResDataList.getEncodingAESKey() );
             relationMap.put( mpID,mpInfoRelation );
         }
         return mpInfoRelation;
