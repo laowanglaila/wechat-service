@@ -126,7 +126,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
         crmGiftRequest.setSourceOpenID( fromUserName );
         crmGiftRequest.setMpID( baseInfoModel.getMpID() );
         CrmGiftRequest.GiftDetailListModel giftDetailListModel = new CrmGiftRequest.GiftDetailListModel();
-        giftDetailListModel.setWechatGiftCardID( baseInfoModel.getCardType() );
+        giftDetailListModel.setWechatGiftCardID( baseInfoModel.getCardKey().toString() );
         giftDetailListModel.setWechatGiftCode( userCardCode );
         giftDetailListModel.setGiftItemID( baseInfoModel.getHualalaCardID() );
         ArrayList<CrmGiftRequest.GiftDetailListModel> list = new ArrayList <>();
