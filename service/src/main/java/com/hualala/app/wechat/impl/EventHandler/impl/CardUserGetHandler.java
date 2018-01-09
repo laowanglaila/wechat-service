@@ -4,9 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.crm.bean.card.VoucherCardReq;
 import com.hualala.app.crm.bean.card.VoucherCardRes;
 import com.hualala.app.crm.bean.cardChannel.CardChannelReq;
+import com.hualala.app.crm.bean.gift.CrmGiftRequest;
+import com.hualala.app.crm.bean.gift.CrmGiftResponse;
 import com.hualala.app.crm.bean.giftDetailChannel.GiftDetailChannelReq;
 import com.hualala.app.crm.service.CardChannelService;
 import com.hualala.app.crm.service.CardInfoService;
+import com.hualala.app.crm.service.CrmGiftService;
 import com.hualala.app.crm.service.GiftDetailChannelService;
 import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.exception.WechatException;
@@ -26,6 +29,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,8 +99,8 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
             if (!jsonObject.containsKey( "OuterStr" )) {
                 if (log.isInfoEnabled())
                     log.info( "微信渠道-优惠券领取事件：{}", jsonObject );
-            //  todo  this.processCardNotBeenExist(jsonObject,baseInfoModel);
-                return null;
+                CrmGiftResponse giftFromTrd = sendCoupon( fromUserName, baseInfoModel, userCardCode );
+                return giftFromTrd;
             }
             OuterStr outStr = getOutStr( jsonObject);
             checkArguments( userCardCode, cardKey, cardId, cardType, outStr );
@@ -110,6 +114,25 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
             resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
         }
         return resultInfo;
+    }
+
+    private CrmGiftResponse sendCoupon(String fromUserName, BaseInfoModel baseInfoModel, String userCardCode) {
+        CrmGiftService rpcClient = baseRpcClient.getRpcClient( CrmGiftService.class );
+        CrmGiftRequest crmGiftRequest = new CrmGiftRequest();
+        crmGiftRequest.setWechatCardCode( userCardCode );
+        crmGiftRequest.setGroupID( baseInfoModel.getGroupID() );
+        crmGiftRequest.setSourceType( 30 );
+        crmGiftRequest.setSourceWay( true );
+        crmGiftRequest.setSourceOpenID( fromUserName );
+        crmGiftRequest.setMpID( baseInfoModel.getMpID() );
+        CrmGiftRequest.GiftDetailListModel giftDetailListModel = new CrmGiftRequest.GiftDetailListModel();
+        giftDetailListModel.setWechatGiftCardID( baseInfoModel.getCardType() );
+        giftDetailListModel.setWechatGiftCode( userCardCode );
+        giftDetailListModel.setGiftItemID( baseInfoModel.getHualalaCardID() );
+        ArrayList<CrmGiftRequest.GiftDetailListModel> list = new ArrayList <>();
+        list.add( giftDetailListModel );
+        crmGiftRequest.setGiftDetailList( list );
+        return rpcClient.getGiftFromTrd( crmGiftRequest );
     }
 
     private OuterStr getOutStr(JSONObject jsonObject) {

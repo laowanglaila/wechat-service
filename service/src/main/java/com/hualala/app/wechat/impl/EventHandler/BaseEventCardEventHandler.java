@@ -40,8 +40,6 @@ public abstract class BaseEventCardEventHandler  {
                 log.debug( JSONObject.toJSONString( result.getMessageParams() ) );
             }
             if (!"000".equals( result.getCode() )) {
-                Object[] messageParams = result.getMessageParams();
-                String s = JSONObject.toJSONString( messageParams );
                 if (log.isErrorEnabled()) {
                     log.error( "卡券事件处理器:"+event+"-服务端执行失败:" + JSON.toJSONString( resultInfo ) + ";\n" + JSON.toJSONString( requestInfo ) );
                 }

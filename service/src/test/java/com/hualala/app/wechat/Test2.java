@@ -53,7 +53,7 @@ public class Test2 {
     }
     @org.junit.Test
     public void test3(){
-        String token = "41c6a0fd89534a129c675854e926bff8";
+        String token = "hualala666";
         String timestamp = "" + System.currentTimeMillis();
         String nonce = "234234";
         String echostr = "hello";
