@@ -8,6 +8,7 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public interface WechatQRCodeRpcSerivce {
     WechatQRCodeListRes createQRCodeList(WechatQRCodeListReq qrCodeReqList);
     @RpcMethod
     WechatQRCodeRes createLoginQRCode(WechatQRCodeReq qrCodeReq);
+    @RpcMethod
+    UpdateWechatQrcodeRes uploadQRcodeParam(UpdateWechatQrcodeReq qrCodeReq);
 
 
     @Data
@@ -126,5 +129,25 @@ public interface WechatQRCodeRpcSerivce {
         private Long itemID;
         @Protocol(fieldType = FieldType.STRING, order= 9, description = "公众号mpID")
         private String mpID;
+    }
+
+    @Data
+    class UpdateWechatQrcodeReq extends RequestInfo {
+        @NotNull(message = "二维码唯一ID不能为空！")
+        @Protocol(fieldType = FieldType.LONG, order = 2, description = "二维码唯一ID")
+        private Long itemID;
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "param1冗余,长度51")
+        private String param1;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "param2冗余,长度20")
+        private String param2;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "param3冗余,长度1000")
+        private String param3;
+        @Protocol(fieldType = FieldType.INT, order = 6, description = "该二维码有效时间/秒")
+        private int expireSeconds;
+
+    }
+    @Data
+    class UpdateWechatQrcodeRes extends ResultInfo {
+
     }
 }

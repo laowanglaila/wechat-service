@@ -55,6 +55,24 @@ message WechatQRCodeRes {
    // 响应公共字段
    ResultHeader result=1;
 }
+message UpdateWechatQrcodeReq {  
+   // 二维码唯一ID
+   int64 itemID=2;
+   // param1冗余,长度51
+   string param1=3;
+   // param2冗余,长度20
+   string param2=4;
+   // param3冗余,长度1000
+   string param3=5;
+   // 该二维码有效时间/秒
+   int32 expireSeconds=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UpdateWechatQrcodeRes {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
 message WechatQRCodeListReq {  
    // 公众号编码
    string mpID=2;
@@ -101,6 +119,8 @@ message WechatQRCodeListRes {
 service WechatQRCodeRpcSerivce{
     //
     rpc createLoginQRCode(WechatQRCodeReq) returns (WechatQRCodeRes) {}
+    //
+    rpc uploadQRcodeParam(UpdateWechatQrcodeReq) returns (UpdateWechatQrcodeRes) {}
     //
     rpc createQRCode(WechatQRCodeReq) returns (WechatQRCodeRes) {}
     //

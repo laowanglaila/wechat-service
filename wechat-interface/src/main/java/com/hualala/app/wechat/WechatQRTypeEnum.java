@@ -9,7 +9,8 @@ public enum WechatQRTypeEnum implements ValueEnum {
     DEFAULT_QR_TYPE(0),
     LOGIN(1,604800,false),//七天
     INVOICE(2,2592000,false),//三十天
-    QUEUE(3,259200,false);//三天
+    QUEUE(3,259200,false),//三天
+    SAAS_SUPPLY_COUPONS(4,2592000,false);//三十天
 
     private int value;
     //类型默认有效时间
