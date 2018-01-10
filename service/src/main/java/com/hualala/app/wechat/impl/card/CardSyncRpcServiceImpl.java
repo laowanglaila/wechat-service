@@ -340,9 +340,9 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService, RedisKeys {
         BaseInfoModelQuery baseInfoModelQuery = new BaseInfoModelQuery();
         baseInfoModelQuery.createCriteria()
                 .andCardIDEqualTo(cardID);
-        List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample(baseInfoModelQuery);
         Long cardKey = null;
         boolean lock = redisLock.tryLock( WEHCHAT_CARD_BASE_LOCK + cardID, LOCKED_TIME_OUT_SECONDS );
+        List<BaseInfoModel> baseInfoModels = baseInfoModelMapper.selectByExample(baseInfoModelQuery);
         if (!lock){
             throw new WechatException( WechatExceptionTypeEnum.WAIT_LOCK_TIMEOUT, "插入卡券数据失败，获取同步锁超时" );
         }
