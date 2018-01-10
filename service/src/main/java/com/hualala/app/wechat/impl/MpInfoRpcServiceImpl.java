@@ -2,6 +2,7 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.MpInfoRpcService;
 import com.hualala.app.wechat.MpTypeEnum;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.model.WechatMpModel;
 import com.hualala.core.utils.DataUtils;

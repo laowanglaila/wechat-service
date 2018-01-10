@@ -47,7 +47,7 @@ spring:
       max-wait: 10000
   redis2:
     database: 0
-    host: 172.16.0.27
+    host: 172.16.32.96
     port: 19000
     pool:
       max-idle: 1
@@ -90,7 +90,7 @@ wechat:
   mpID:
     qrcodeDefaultMpID: doulaofangceshi
 #redisStock:
-#  host: 172.16.0.27
+#  host: 172.16.32.96
 #  port: 19000
 #  db: 0
 #  pool:
@@ -99,7 +99,7 @@ wechat:
 #    maxIdle: 1
 #    minIdle: 1
 redisSku:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -108,7 +108,7 @@ redisSku:
     maxIdle: 10
     minIdle: 1
 redisLocker:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -185,7 +185,7 @@ spring:
       max-wait: 10000
   redis2:
     database: 0
-    host: 172.16.0.27
+    host: 172.16.32.96
     port: 19000
     pool:
       max-idle: 1
@@ -223,7 +223,7 @@ wechat:
   mpID:
     qrcodeDefaultMpID: doulaofangceshi
 #redisStock:
-#  host: 172.16.0.27
+#  host: 172.16.32.96
 #  port: 19000
 #  db: 0
 #  pool:
@@ -232,7 +232,7 @@ wechat:
 #    maxIdle: 1
 #    minIdle: 1
 redisSku:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -241,7 +241,7 @@ redisSku:
     maxIdle: 10
     minIdle: 1
 redisLocker:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -310,7 +310,7 @@ spring:
       max-wait: 10000
   redis2:
     database: 0
-    host: 172.16.0.27
+    host: 172.16.32.96
     port: 19000
     pool:
       max-idle: 1
@@ -347,7 +347,7 @@ wechat:
   mpID:
     qrcodeDefaultMpID: doulaofangceshi
 #redisStock:
-#  host: 172.16.0.27
+#  host: 172.16.32.96
 #  port: 19000
 #  db: 0
 #  pool:
@@ -356,7 +356,7 @@ wechat:
 #    maxIdle: 10
 #    minIdle: 1
 redisSku:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -365,7 +365,7 @@ redisSku:
     maxIdle: 10
     minIdle: 1
 redisLocker:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -434,7 +434,7 @@ spring:
   # REDIS (RedisProperties)
   redis2:
     database: 0
-    host: 172.16.0.27
+    host: 172.16.32.96
     port: 19000
     pool:
       max-idle: 1
@@ -469,7 +469,7 @@ wechat:
   mpID:
       qrcodeDefaultMpID: hualala_dld
 #redisStock:
-#  host: 172.16.0.27
+#  host: 172.16.32.96
 #  port: 19000
 #  db: 0
 #  pool:
@@ -478,7 +478,7 @@ wechat:
 #    maxIdle: 10
 #    minIdle: 1
 redisSku:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
@@ -487,7 +487,7 @@ redisSku:
     maxIdle: 10
     minIdle: 1
 redisLocker:
-  host: 172.16.0.27
+  host: 172.16.32.96
   port: 19000
   db: 0
   pool:
