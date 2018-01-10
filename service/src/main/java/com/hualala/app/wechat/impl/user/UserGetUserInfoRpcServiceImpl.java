@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.user.UserInfoWechatRpcService;
 import com.hualala.app.wechat.LangTypeEnum;
 import com.hualala.app.wechat.UserGetUserInfoRpcService;
+import com.hualala.app.wechat.common.RedisKeys;
 import com.hualala.app.wechat.lock.RedisLock;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
@@ -31,15 +32,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-import static com.hualala.app.wechat.sdk.mp.common.RedisKeys.WECHAT_USER_INFO_LOCK;
-import static com.hualala.app.wechat.sdk.mp.common.RedisKeys.WECHAT_USER_RELATION_LOCK;
 
 /**
  * Created by renjianfei on 2017/8/17.
  */
 @Slf4j
 @Service("getUserInfoService")
-public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService {
+public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService ,RedisKeys{
+
     @Autowired
     private BaseHttpService baseHttpService;
     @Autowired
@@ -53,8 +53,6 @@ public class UserGetUserInfoRpcServiceImpl implements UserGetUserInfoRpcService 
     @Autowired
     private RedisLock redisLockHandler;
     ExecutorService executor = Executors.newCachedThreadPool();
-
-    private static final Long LOCKED_TIME_OUT_SECONDS = 10L;
 
     @Override
     public UserInfoResData getUserInfoByOpenID(UserInfoReqData userInfoReqData) {

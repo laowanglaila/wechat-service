@@ -5,9 +5,9 @@ import com.hualala.app.wechat.AuthorizationCheckRpcService;
 import com.hualala.app.wechat.WechatFuctionEnum;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
+import com.hualala.app.wechat.common.RedisKeys;
 import com.hualala.app.wechat.lock.RedisLock;
 import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.config.RabbitQueueProps;
@@ -47,7 +47,6 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
     private static final String COLON = ":";
     private static final int SIZE = 1;
     private static final int USED_QRCODE_STATUS = 2;
-    private static final Long LOCKED_TIME_OUT_SECONDS = 10L;
 
 
     @Autowired
