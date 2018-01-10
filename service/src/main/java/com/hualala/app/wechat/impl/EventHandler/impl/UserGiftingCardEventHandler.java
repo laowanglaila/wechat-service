@@ -43,7 +43,7 @@ public class UserGiftingCardEventHandler extends AbstractCardEventHandler {
         crmGiftRequest.setSourceType( 30 );
         CrmGiftResponse crmGiftResponse;
         if (isReturnBack == 0){
-            crmGiftRequest.setGiftStatus( 0 );
+            crmGiftRequest.setGiftStatus( 100 );
             crmGiftResponse = rpcClient.trdTransferGift( crmGiftRequest );
         }else{
             crmGiftRequest.setGiftStatus( 1 );
