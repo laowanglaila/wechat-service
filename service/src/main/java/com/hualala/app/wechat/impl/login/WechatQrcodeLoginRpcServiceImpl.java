@@ -11,7 +11,6 @@ import com.hualala.app.wechat.service.UserTokenService;
 import com.hualala.app.wechat.vo.UserAuthVO;
 import com.hualala.core.utils.DataUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,28 +24,29 @@ import java.util.Map;
 @Slf4j
 @Service
 public class WechatQrcodeLoginRpcServiceImpl implements WechatQrcodeLoginRpcService  {
+    private static final String url= "https://open.weixin.qq.com/connect/qrconnect";
+    private static final String SHOP_DOHKO_APPID= "wx707511f565f186b9";
+    private static final String SHOP_DOHKO_SECRET= "00bca46012bceea791d47f5f55f3f6dd";
+    private static final String SHOP_PRE_APPID= "wx5b5d9bc30db9d1fd";
+    private static final String SHOP_PRE_SECRET= "dad44b640db98aa9624101daedffa6a6";
+    private static final String SHOP_APPID= "wx499ddc30e0416fc9";
+    private static final String SHOP_SECRET= "8be8197b496ebdd53bcc18f38f8c9e84";
+    private static Map<String,String> appRepository;
+    static {
+        appRepository = new HashMap <>(  );
+        appRepository.put( SHOP_DOHKO_APPID, SHOP_DOHKO_SECRET );
+        appRepository.put( SHOP_PRE_APPID, SHOP_PRE_SECRET );
+        appRepository.put( SHOP_APPID, SHOP_SECRET );
+    }
     @Autowired
     private BaseHttpService baseHttpService;
     @Autowired
     private WebAuthorizationRpcServiceImpl webAuthorizationRpcService;
-    private static final String url= "https://open.weixin.qq.com/connect/qrconnect";
-    private static final String appID= "wx707511f565f186b9";
-    private static final String appSecret= "00bca46012bceea791d47f5f55f3f6dd";
-    private static Map<String,String> appRepository;
-    static {
-        appRepository = new HashMap <>(  );
-        appRepository.put( appID, appSecret );
-    }
-
+    @Autowired
     private UserTokenService userTokenService;
     @Override
     public OauthUrlRes getOauthUrl(OauthUrlReq reqData) {
         String appID = reqData.getAppID();
-        String appSecret = appRepository.get( appID );
-        if (StringUtils.isBlank(appSecret)){
-            appID = this.appID;
-            appSecret = this.appSecret;
-        }
         String callBackUrl = reqData.getCallBackUrl();
         String encodeUtl = Base64.getUrlEncoder().encodeToString( callBackUrl.getBytes() );
         String state = "open";
