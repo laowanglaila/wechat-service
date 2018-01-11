@@ -101,8 +101,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
                 if (log.isInfoEnabled())
                     log.info( "微信渠道-优惠券领取事件：{}", jsonObject );
                 CrmGiftResponse giftFromTrd;
-                if ("0".equals( isGiveByFriend )){
-
+                if ("1".equals( isGiveByFriend )){
                     giftFromTrd = giveToFriend(jsonObject,baseInfoModel);
                 }else {
                     giftFromTrd = sendCoupon( fromUserName, baseInfoModel, userCardCode );
