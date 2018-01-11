@@ -5,27 +5,15 @@ option java_outer_classname = "CardCodeRpcData";
 import "commons.proto";
 import "wechatcommons.proto";
 
-message CardCodeDecodingReqData {  
-   // 公众号mpID
-   string mpID=2;
-   // 经过加密的Code码
-   string encryptCode=3;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message CardCodeDecodingResData {  
-   // 解密后获取的真实Code码
-   string cardCode=2;
-   // 响应公共字段
-   ResultHeader result=1;
-}
-message CardCodeDestroyReqData {  
-   // 唯一ID
-   int64 cardKey=2;
+message DestoryThirdpartyCodeReqData {  
+   // 微信卡券模板唯一ID
+   string cardID=2;
    // 需导入微信卡券后台的自定义code，上限为100个。
    string code=3;
    // 集团ID
    string groupID=4;
+   // 公众号ID
+   string mpID=5;
    // 请求公共字段
    RequestHeader header=1;
 }
@@ -34,6 +22,30 @@ message CardCodeDestroyResData {
    string openId=2;
    // 卡券模板ID
    string cardId=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeQueryReqData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   int64 cardKey=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeQueryResData {  
+   // 解密后获取的真实Code码
+   int64 cardKey=2;
+   // 卡券ID代表一类卡券。自定义code卡券必填
+   string openId=3;
+   // 起始使用时间
+   int64 beginTime=4;
+   // 结束时间
+   int64 endTime=5;
+   // 是否可以核销
+   bool canConsume=6;
+   // 当前code对应卡券的状态
+   string userCardStatus=7;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -50,6 +62,34 @@ message CardCodeImportResData {
    repeated string existCode=2;
    // 没有存入的code
    repeated string notExistCode=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CardCodeDestroyReqData {  
+   // 唯一ID
+   int64 cardKey=2;
+   // 需导入微信卡券后台的自定义code，上限为100个。
+   string code=3;
+   // 集团ID
+   string groupID=4;
+   // 微信卡券模板唯一ID
+   string cardID=5;
+   // 公众号ID
+   string mpID=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDecodingReqData {  
+   // 公众号mpID
+   string mpID=2;
+   // 经过加密的Code码
+   string encryptCode=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CardCodeDecodingResData {  
+   // 解密后获取的真实Code码
+   string cardCode=2;
    // 响应公共字段
    ResultHeader result=1;
 }
@@ -105,54 +145,18 @@ message MemberItemUpdateRes {
    // 响应公共字段
    ResultHeader result=1;
 }
-message DestoryThirdpartyCodeReqData {  
-   // 微信卡券模板唯一ID
-   string cardID=2;
-   // 需导入微信卡券后台的自定义code，上限为100个。
-   string code=3;
-   // 集团ID
-   string groupID=4;
-   // 公众号ID
-   string mpID=5;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message CardCodeQueryReqData {  
-   // 解密后获取的真实Code码
-   string cardCode=2;
-   // 卡券ID代表一类卡券。自定义code卡券必填
-   int64 cardKey=3;
-   // 请求公共字段
-   RequestHeader header=1;
-}
-message CardCodeQueryResData {  
-   // 解密后获取的真实Code码
-   int64 cardKey=2;
-   // 卡券ID代表一类卡券。自定义code卡券必填
-   string openId=3;
-   // 起始使用时间
-   int64 beginTime=4;
-   // 结束时间
-   int64 endTime=5;
-   // 是否可以核销
-   bool canConsume=6;
-   // 当前code对应卡券的状态
-   string userCardStatus=7;
-   // 响应公共字段
-   ResultHeader result=1;
-}
 //
 service CardCodeRpcService{
-    //code解码
-    rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
-    //核销code方法
-    rpc destoryCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
-    //导入code方法
-    rpc importCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
-    //修改会员积分余额等信息
-    rpc updateMemberItem(MemberItemUpdateReq) returns (MemberItemUpdateRes) {}
     //核销code方法
     rpc destoryThirdpartyCode(DestoryThirdpartyCodeReqData) returns (CardCodeDestroyResData) {}
     //查询优惠券code状态
     rpc queryCouponStatus(CardCodeQueryReqData) returns (CardCodeQueryResData) {}
+    //导入code方法
+    rpc importCode(CardCodeImportReqData) returns (CardCodeImportResData) {}
+    //核销code方法
+    rpc destoryCode(CardCodeDestroyReqData) returns (CardCodeDestroyResData) {}
+    //code解码
+    rpc decodingCardCode(CardCodeDecodingReqData) returns (CardCodeDecodingResData) {}
+    //修改会员积分余额等信息
+    rpc updateMemberItem(MemberItemUpdateReq) returns (MemberItemUpdateRes) {}
 }

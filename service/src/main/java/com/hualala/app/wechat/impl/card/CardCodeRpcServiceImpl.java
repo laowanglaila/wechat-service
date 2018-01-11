@@ -80,27 +80,35 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
     @Override
     public CardCodeDestroyResData destoryCode(CardCodeDestroyReqData cardCodeDestroyReqData) {
         Long cardKey = cardCodeDestroyReqData.getCardKey();
-        if (cardKey == null) {
-            return new CardCodeDestroyResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+        String cardID;
+        String code;
+        String mpID;
+        if (cardKey == null || cardKey == 0) {
+            cardID = cardCodeDestroyReqData.getCardID();
+            code = cardCodeDestroyReqData.getCode();
+            mpID = cardCodeDestroyReqData.getMpID();
+            if (StringUtils.isBlank( cardID ) || StringUtils.isBlank( code ) || StringUtils.isBlank( mpID )){
+                throw new WechatException( ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS,"缺少必传参数！" );
+            }
+        }else {
+            BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey( cardKey );
+            if (null == baseInfoModel) {
+                return new CardCodeDestroyResData().setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！" );
+            }
+            cardID = baseInfoModel.getCardID();
+            mpID = baseInfoModel.getMpID();
+            code = cardCodeDestroyReqData.getCode();
         }
-        BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
-        if (null == baseInfoModel) {
-            return new CardCodeDestroyResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
-        }
-        String cardID = baseInfoModel.getCardID();
-        String mpID = baseInfoModel.getMpID();
-        String code = cardCodeDestroyReqData.getCode();
-
         JSONObject jsonObject = baseHttpService.destoryCardCode(cardID,code, mpID);
 
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
     }
 
     @Override
-    public CardCodeDestroyResData destoryThirdpartyCode(DestoryThirdpartyCodeReqData cardCodeDestroyReqData) {
-        String cardID = cardCodeDestroyReqData.getCardID();
-        String code = cardCodeDestroyReqData.getCode();
-        String mpID = cardCodeDestroyReqData.getMpID();
+    public CardCodeDestroyResData destoryThirdpartyCode(DestoryThirdpartyCodeReqData destoryThirdpartyCodeReqData) {
+        String cardID = destoryThirdpartyCodeReqData.getCardID();
+        String code = destoryThirdpartyCodeReqData.getCode();
+        String mpID = destoryThirdpartyCodeReqData.getMpID();
         JSONObject jsonObject = baseHttpService.destoryCardCode(cardID,code, mpID);
         return ResultUtil.getResultInfoBean(jsonObject, CardCodeDestroyResData.class);
     }

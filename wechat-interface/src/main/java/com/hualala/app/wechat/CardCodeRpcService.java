@@ -98,6 +98,11 @@ public interface CardCodeRpcService {
         private String code;
         @Protocol(fieldType = FieldType.STRING, order = 4, description = "集团ID")
         private String groupID;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "微信卡券模板唯一ID")
+        private String cardID;
+        @NotBlank(message = "公众号唯一标识不能为空")
+        @Protocol(fieldType = FieldType.STRING, order = 6, description = "公众号ID")
+        private String mpID;
     }
     @Data
     class DestoryThirdpartyCodeReqData extends RequestInfo {
