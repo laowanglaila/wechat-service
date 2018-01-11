@@ -87,7 +87,7 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
             cardID = cardCodeDestroyReqData.getCardID();
             code = cardCodeDestroyReqData.getCode();
             mpID = cardCodeDestroyReqData.getMpID();
-            if (StringUtils.isBlank( cardID ) || StringUtils.isBlank( code ) || StringUtils.isBlank( mpID )){
+            if (StringUtils.isBlank( code ) || StringUtils.isBlank( mpID )){
                 throw new WechatException( ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS,"缺少必传参数！" );
             }
         }else {
