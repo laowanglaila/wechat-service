@@ -123,7 +123,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
     }
 
     private CrmGiftResponse giveToFriend(JSONObject jsonObject, BaseInfoModel baseInfoModel) {
-        String targetOpenID = jsonObject.getString( "fromUserName" );
+        String targetOpenID = jsonObject.getString( "FromUserName" );
         String sourceOpenID = jsonObject.getString( "FriendUserName" );
         String sourceCode = jsonObject.getString( "OldUserCardCode" );
         String targetCode = jsonObject.getString( "UserCardCode" );
