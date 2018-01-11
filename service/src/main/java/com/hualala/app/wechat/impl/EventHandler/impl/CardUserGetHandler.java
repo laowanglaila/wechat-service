@@ -59,6 +59,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
         String cardId = null;
         String cardType = null;
         String fromUserName = jsonObject.getString( "FromUserName" );
+        String isGiveByFriend = jsonObject.getString( "IsGiveByFriend" );
         BaseInfoModel baseInfoModel = null;
         if (jsonObject.containsKey( "CardId" )) {
             cardId = jsonObject.getString( "CardId" );
@@ -99,7 +100,13 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
             if (!jsonObject.containsKey( "OuterStr" )) {
                 if (log.isInfoEnabled())
                     log.info( "微信渠道-优惠券领取事件：{}", jsonObject );
-                CrmGiftResponse giftFromTrd = sendCoupon( fromUserName, baseInfoModel, userCardCode );
+                CrmGiftResponse giftFromTrd;
+                if ("0".equals( isGiveByFriend )){
+
+                    giftFromTrd = giveToFriend(jsonObject,baseInfoModel);
+                }else {
+                    giftFromTrd = sendCoupon( fromUserName, baseInfoModel, userCardCode );
+                }
                 return giftFromTrd;
             }
             OuterStr outStr = getOutStr( jsonObject);
@@ -114,6 +121,27 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
             resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
         }
         return resultInfo;
+    }
+
+    private CrmGiftResponse giveToFriend(JSONObject jsonObject, BaseInfoModel baseInfoModel) {
+        String sourceOpenID = jsonObject.getString( "fromUserName" );
+        String targetOpenID = jsonObject.getString( "FriendUserName" );
+        String sourceCode = jsonObject.getString( "OldUserCardCode" );
+        String targetCode = jsonObject.getString( "UserCardCode" );
+        //转赠发券
+        CrmGiftService rpcClient = baseRpcClient.getRpcClient( CrmGiftService.class );
+        CrmGiftRequest crmGiftRequest = new CrmGiftRequest();
+        crmGiftRequest.setGroupID( baseInfoModel.getGroupID() );
+        crmGiftRequest.setMpID( baseInfoModel.getMpID() );
+        crmGiftRequest.setSourceType( 30 );
+        crmGiftRequest.setSourceWay( true );
+        crmGiftRequest.setSourceOpenID( sourceOpenID );
+        crmGiftRequest.setTargetOpenID( targetOpenID );
+        crmGiftRequest.setWechatCardCode( targetCode );
+        crmGiftRequest.setSourceWechatCardCode( sourceCode );
+        crmGiftRequest.setWechatCardKey( baseInfoModel.getCardKey().toString() );
+        crmGiftRequest.setSourceWechatCardKey( baseInfoModel.getCardKey().toString() );
+        return rpcClient.trdTransferGift( crmGiftRequest );
     }
 
     private CrmGiftResponse sendCoupon(String fromUserName, BaseInfoModel baseInfoModel, String userCardCode) {

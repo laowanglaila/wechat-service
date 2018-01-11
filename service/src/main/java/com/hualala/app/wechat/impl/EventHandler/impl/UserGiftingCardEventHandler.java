@@ -34,17 +34,16 @@ public class UserGiftingCardEventHandler extends AbstractCardEventHandler {
         CrmGiftService rpcClient = super.baseRpcClient.getRpcClient( CrmGiftService.class );
         CrmGiftRequest crmGiftRequest = new CrmGiftRequest();
         crmGiftRequest.setGroupID( baseInfoModel.getGroupID() );
+        crmGiftRequest.setMpID( baseInfoModel.getMpID() );
         crmGiftRequest.setWechatCardCode( userCardCode );
-        crmGiftRequest.setCardTypeID( baseInfoModel.getHualalaCardID() );
         crmGiftRequest.setSourceOpenID( FromUserName );
         crmGiftRequest.setTargetOpenID( friendUserName );
-        crmGiftRequest.setMpID( baseInfoModel.getMpID() );
         crmGiftRequest.setSourceWay( true );
         crmGiftRequest.setSourceType( 30 );
         CrmGiftResponse crmGiftResponse;
         if (isReturnBack == 0){
             crmGiftRequest.setGiftStatus( 100 );
-            crmGiftResponse = rpcClient.trdTransferGift( crmGiftRequest );
+            crmGiftResponse = rpcClient.updateGiftStatusForTrd( crmGiftRequest );
         }else{
             crmGiftRequest.setGiftStatus( 1 );
             crmGiftResponse = rpcClient.updateGiftStatusForTrd( crmGiftRequest );
