@@ -100,7 +100,6 @@ public interface CardCodeRpcService {
         private String groupID;
         @Protocol(fieldType = FieldType.STRING, order = 5, description = "微信卡券模板唯一ID")
         private String cardID;
-        @NotBlank(message = "公众号唯一标识不能为空")
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "公众号ID")
         private String mpID;
     }
