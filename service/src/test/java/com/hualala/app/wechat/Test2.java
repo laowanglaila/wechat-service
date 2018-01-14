@@ -78,13 +78,13 @@ public class Test2 {
     }
 
 
-    @org.junit.Test
-    public void test5() throws WxErrorException {
-        String mpID = "dohko1155";
-        String url = "http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSKyv7L5vzxedzFIrQHpc87HdR681GnDTdcgjNvmLLtdgDY4iae5C7t8UZnyMQfAPO9vg/0?wx_fmt=png";
-        String pdf = wxGroupMpService.getWxMpInvoiceService( mpID ).uploadPdf( url );
-        log.info( pdf );
-    }
+//    @org.junit.Test
+//    public void test5() throws WxErrorException {
+//        String mpID = "dohko1155";
+//        String url = "http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSKyv7L5vzxedzFIrQHpc87HdR681GnDTdcgjNvmLLtdgDY4iae5C7t8UZnyMQfAPO9vg/0?wx_fmt=png";
+//        String pdf = wxGroupMpService.getWxMpInvoiceService( mpID ).uploadPdf( url );
+//        log.info( pdf );
+//    }
 
 
 }
