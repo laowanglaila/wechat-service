@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Created by renjianfei on 2017/6/27.
@@ -135,5 +136,30 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         String encodeOuterStr = Base64.encodeBase64URLSafeString(s.getBytes());
         cardSignResData.setOuterStr(encodeOuterStr);
         return cardSignResData;
+    }
+
+    @Override
+    public CardBachSignResData getSignList(CardBachSignReqData cardSignReqData) {
+        String mpID = cardSignReqData.getMpID();
+        Long groupID = cardSignReqData.getGroupID();
+        String openid = cardSignReqData.getOpenid();
+        String customerID = cardSignReqData.getCustomerID();
+        CardSignReqData cardSignReqData1 = new CardSignReqData();
+        List <CardSignResData> cardSignResDataList
+                = cardSignReqData.getItems()
+                                .stream()
+                                .map( item -> {
+                                    cardSignReqData1.setMpID( mpID );
+                                    cardSignReqData1.setGroupID( groupID );
+                                    cardSignReqData1.setOpenid( openid );
+                                    cardSignReqData1.setCustomerID( customerID );
+                                    cardSignReqData1.setHualalaCardID( item.getHualalaCardID() );
+                                    cardSignReqData1.setHualalaCardCode( item.getHualalaCardCode() );
+                                    cardSignReqData1.setCode( item.getCode() );
+                                    return this.getSign( cardSignReqData1 );
+                                } ).collect( Collectors.toList() );
+        CardBachSignResData cardBachSignResData = new CardBachSignResData();
+        cardBachSignResData.setSigns( cardSignResDataList );
+        return cardBachSignResData;
     }
 }

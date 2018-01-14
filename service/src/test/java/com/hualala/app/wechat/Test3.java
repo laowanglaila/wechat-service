@@ -1,5 +1,6 @@
 package com.hualala.app.wechat;
 
+import com.hualala.app.wechat.sdk.mp.bean.invoice.InvoiceResult;
 import com.hualala.core.utils.DateUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -148,7 +149,6 @@ public class Test3
     }
     @org.junit.Test
     public void test3(){
-
         System.out.println( true ^ true);
     }
 }

@@ -8,6 +8,9 @@ import com.hualala.core.rpc.RpcMethod;
 import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
+import java.util.List;
+
 /**
  * Created by renjianfei on 2017/6/27.
  */
@@ -20,6 +23,8 @@ public interface CardSignRpcService {
      */
     @RpcMethod(description = "获取h5投放卡券签名和必传参数")
     CardSignResData getSign(CardSignReqData cardSignReqData);
+    @RpcMethod(description = "批量获取h5投放卡券签名和必传参数")
+    CardBachSignResData getSignList(CardBachSignReqData cardSignReqData);
 
 
     @Data
@@ -42,8 +47,6 @@ public interface CardSignRpcService {
         private String hualalaCardCode;
         @Protocol(fieldType = FieldType.STRING, order = 9, description = "哗啦啦用户id")
         private String customerID;
-
-
     }
     @Data
     class CardSignResData extends ResultInfo {
@@ -57,5 +60,36 @@ public interface CardSignRpcService {
         private String cardID;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "领取渠道参数，用于标识本次领取的渠道值")
         private String outerStr;
+    }
+
+    @Data
+    class CardBachSignReqData extends RequestInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "公众号编码")
+        private String mpID;
+        @Protocol(fieldType = FieldType.LONG, order = 3, description = "集团ID")
+        private Long groupID;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，bind_openid字段为false不必填写")
+        private String openid;
+        @Protocol(fieldType = FieldType.STRING, order = 5, description = "哗啦啦用户id")
+        private String customerID;
+        @Size(min = 1,message = "签名卡券实例参数集合不能为空")
+        @Protocol(fieldType = FieldType.OBJECT, order = 6, description = "批量签名卡券实例参数集合")
+        private List<CardBachSignReqItem> items;
+
+
+    }
+    @Data
+    class CardBachSignReqItem {
+        @Protocol(fieldType = FieldType.LONG, order = 1, description = "哗啦啦会员卡TypeID")
+        private Long hualalaCardID;
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "指定的卡券code码，只能被领一次。自定义code模式的卡券必须填写，非自定义code和预存code模式的卡券不必填写")
+        private String code;
+        @Protocol(fieldType = FieldType.STRING, order = 3, description = "哗啦啦用户的会员卡id")
+        private String hualalaCardCode;
+    }
+    @Data
+    class CardBachSignResData extends ResultInfo {
+        @Protocol(fieldType = FieldType.OBJECT, order = 2, description = "卡券签名集合")
+        private List<CardSignResData> signs;
     }
 }

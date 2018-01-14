@@ -1,11 +1,16 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
+import com.hualala.app.wechat.sdk.mp.bean.result.WxMpUser;
 import com.hualala.app.wechat.service.BaseHttpService;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
@@ -13,12 +18,13 @@ import java.math.BigDecimal;
  * Created by renjianfei on 2017/9/7.
  */
 @Slf4j
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class Test2 {
 //    @Autowired
 //    private TestRpcServiceGrpc.TestRpcServiceBlockingStub testRpcServiceBlockingStub;
-
+    @Autowired
+    private WxGroupMpService wxGroupMpService;
     @Autowired
     private BaseHttpService baseHttpService;
     @org.junit.Test
@@ -59,6 +65,25 @@ public class Test2 {
         String echostr = "hello";
         String signature = SHA1.gen( token, timestamp, nonce );
         log.info("http://127.0.0.1:9090/access?signature={}&timestamp={}&nonce={}&echostr={}" , signature,timestamp,nonce,echostr );
+    }
+
+    @org.junit.Test
+    public void test4() throws WxErrorException {
+//        String mpID = "hualala_com";
+//        String openID = "oACwGs4QPjQ_JoAVBOCQgwC12yFk";
+        String mpID = "dohko1155";
+        String openID = "oFx2ov1lGXfEzIDNrX0r5hjKYjao";
+        WxMpUser wxMpUser = wxGroupMpService.getUserService( mpID ).userInfo( openID );
+        log.info( JSONObject.toJSONString( wxMpUser ) );
+    }
+
+
+    @org.junit.Test
+    public void test5() throws WxErrorException {
+        String mpID = "dohko1155";
+        String url = "http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSKyv7L5vzxedzFIrQHpc87HdR681GnDTdcgjNvmLLtdgDY4iae5C7t8UZnyMQfAPO9vg/0?wx_fmt=png";
+        String pdf = wxGroupMpService.getWxMpInvoiceService( mpID ).uploadPdf( url );
+        log.info( pdf );
     }
 
 

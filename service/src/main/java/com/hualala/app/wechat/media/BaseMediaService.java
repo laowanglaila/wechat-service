@@ -1,10 +1,11 @@
-package com.hualala.app.wechat.service;
+package com.hualala.app.wechat.media;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.impl.WechatTemplateRpcServiceImpl;
 import com.hualala.app.wechat.sdk.mp.common.*;
 import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
+import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatMediaUtil;
 import com.hualala.core.app.Logger;

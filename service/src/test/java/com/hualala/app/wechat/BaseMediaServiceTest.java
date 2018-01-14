@@ -1,9 +1,10 @@
 package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.sdk.mp.api.WxMpService;
 import com.hualala.app.wechat.service.AccessTokenService;
 import com.hualala.app.wechat.service.BaseHttpService;
-import com.hualala.app.wechat.service.BaseMediaService;
+import com.hualala.app.wechat.media.BaseMediaService;
 import com.hualala.app.wechat.util.FileUtil;
 import com.hualala.core.app.Logger;
 import org.junit.Test;
@@ -31,32 +32,15 @@ public class BaseMediaServiceTest {
     @Autowired
     private AccessTokenService accessTokenService;
 
+    @Autowired
+    private WxMpService wxMpService;
     /**
      * 测试图片上传接口
      */
     @Test
     public void test() {
         String source = "http://res.hualala.com/group2/M00/6A/78/wKgVT1kdWLbQm5NNAAPBkK92Ylc478=600x300.png";
-        String[] split = source.split("\\.");
-        String suffix = "";
-        if (split.length > 1) {
-            suffix = "." + split[split.length - 1];
-        }
-        File file = null;
-        try {
-            file = File.createTempFile(UUID.randomUUID().toString(), suffix);
-            System.out.println(file.getPath());
-            FileUtil.downloadFile(source, file.getPath(), 1000, 1000);
-            JSONObject jsonObject = baseMediaService.uploadImage(file, "doulaofangceshi");
-            System.out.println(jsonObject.toJSONString());
-        } catch (IOException e) {
-            logger.error(">>> update user photoIma is error");
-            e.printStackTrace();
-        } finally {
-            if (file != null) {
-                file.delete();
-            }
-        }
+
     }
 
     /**

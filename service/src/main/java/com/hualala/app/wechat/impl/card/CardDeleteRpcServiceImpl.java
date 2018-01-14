@@ -47,9 +47,6 @@ public class CardDeleteRpcServiceImpl implements CardDeleteRpcService {
             baseInfoModel.setCardStatus(0);
             baseInfoModel.setAction(3);
             baseInfoModelMapper.updateByPrimaryKeySelective(baseInfoModel);
-//            advancedModelMapper.deleteByPrimaryKey(cardKey);
-//            baseInfoModelMapper.deleteByPrimaryKey(cardKey);
-//            memberModelMapper.deleteByPrimaryKey(cardKey);
         }
         return ResultUtil.getResultInfoBean(jsonObject, CardDeleteAndUnAbailableResData.class);
     }
