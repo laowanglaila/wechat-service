@@ -1,6 +1,5 @@
 package com.hualala.app.wechat;
 
-import com.hualala.app.wechat.sdk.mp.bean.invoice.InvoiceResult;
 import com.hualala.core.utils.DateUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
