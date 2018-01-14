@@ -368,6 +368,11 @@ public interface WxMpService {
   WxMpMemberCardService getMemberCardService();
 
   /**
+   * 电子发票服务对象
+   * @return
+   */
+  WxMpInvoiceService getWxMpInvoiceService();
+  /**
    * 初始化http请求对象
    */
   void initHttp();

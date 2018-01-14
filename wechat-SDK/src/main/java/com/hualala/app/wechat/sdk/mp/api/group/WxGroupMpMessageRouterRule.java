@@ -117,6 +117,11 @@ public class WxGroupMpMessageRouterRule {
     this.matcher = matcher;
     return this;
   }
+  public WxGroupMpMessageRouterRule matcher(Class<? extends WxGroupMpMessageMatcher> clazz) {
+    WxGroupMpMessageMatcher matcher = WechatBeanFactory.getBean( clazz );
+    this.matcher = matcher;
+    return this;
+  }
 
   /**
    * 设置微信消息拦截器
@@ -169,7 +174,7 @@ public class WxGroupMpMessageRouterRule {
    * 规则结束，代表如果一个消息匹配该规则，那么它将不再会进入其他规则
    */
   public WxGroupMpMessageRouter end() {
-    this.routerBuilder.getRules().add(this);
+    this.routerBuilder.putRule( this.msgType, this.event, this.eventKey,this );
     return this.routerBuilder;
   }
 

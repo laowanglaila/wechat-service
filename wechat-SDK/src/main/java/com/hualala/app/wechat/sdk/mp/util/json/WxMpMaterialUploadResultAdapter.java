@@ -24,11 +24,20 @@ public class WxMpMaterialUploadResultAdapter implements JsonDeserializer<WxMpMat
     WxMpMaterialUploadResult uploadResult = new WxMpMaterialUploadResult();
     JsonObject uploadResultJsonObject = json.getAsJsonObject();
 
+    if (uploadResultJsonObject.get("errcode") != null && !uploadResultJsonObject.get("errcode").isJsonNull()) {
+      uploadResult.setErrCode( GsonHelper.getAsInteger(uploadResultJsonObject.get("errcode")));
+    }
+    if (uploadResultJsonObject.get("errmsg") != null && !uploadResultJsonObject.get("errmsg").isJsonNull()) {
+      uploadResult.setErrMsg( GsonHelper.getAsString(uploadResultJsonObject.get("errmsg")));
+    }
+
     if (uploadResultJsonObject.get("url") != null && !uploadResultJsonObject.get("url").isJsonNull()) {
       uploadResult.setUrl( GsonHelper.getAsString(uploadResultJsonObject.get("url")));
     }
     if (uploadResultJsonObject.get("media_id") != null && !uploadResultJsonObject.get("media_id").isJsonNull()) {
       uploadResult.setMediaId( GsonHelper.getAsString(uploadResultJsonObject.get("media_id")));
+    } else if (uploadResultJsonObject.get("s_media_id") != null && !uploadResultJsonObject.get("s_media_id").isJsonNull()) {
+      uploadResult.setMediaId( GsonHelper.getAsString(uploadResultJsonObject.get("s_media_id")));
     }
     return uploadResult;
   }

@@ -121,6 +121,12 @@ public interface WxGroupMpService  {
   WxMpMassMessageService getMassMessageService(String mpID);
 
   /**
+   * 获取电子发票服务对象
+   * @param mpID
+   * @return
+   */
+  WxMpInvoiceService getWxMpInvoiceService(String mpID);
+  /**
    * 初始化WxMpConfigStorage
    * @param mpID
    */

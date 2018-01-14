@@ -222,6 +222,11 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
         this.initWxMpConfigStorage( mpID );
         return this.getMassMessageService();
     }
+    @Override
+    public WxMpInvoiceService getWxMpInvoiceService(String mpID) {
+        this.initWxMpConfigStorage( mpID );
+        return this.getWxMpInvoiceService();
+    }
 
     public WxMpConfigStorage initWxMpConfigStorage(String mpID){
         return initWxMpConfigStorage(mpID,this.stringRedisTemplate);
@@ -251,6 +256,7 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
         wxMpConfigProvider.put( this.mpIDProvider.get(),wxConfigProvider );
         this.initHttp();
     }
+
 
     @Override
     public <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {

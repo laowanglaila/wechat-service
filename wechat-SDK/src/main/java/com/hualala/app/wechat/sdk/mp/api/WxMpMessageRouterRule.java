@@ -117,6 +117,11 @@ public class WxMpMessageRouterRule {
     this.matcher = matcher;
     return this;
   }
+  public WxMpMessageRouterRule matcher(Class<? extends WxMpMessageMatcher> clazz) {
+    WxMpMessageMatcher matcher = WechatBeanFactory.getBean( clazz );
+    this.matcher = matcher;
+    return this;
+  }
 
   /**
    * 设置微信消息拦截器

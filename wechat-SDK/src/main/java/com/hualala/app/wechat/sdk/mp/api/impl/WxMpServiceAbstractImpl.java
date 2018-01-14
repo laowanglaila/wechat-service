@@ -48,6 +48,12 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   private WxMpMemberCardService memberCardService = new WxMpMemberCardServiceImpl(this);
   private WxMpMassMessageService massMessageService = new WxMpMassMessageServiceImpl(this);
 
+  public WxMpInvoiceService getWxMpInvoiceService() {
+    return wxMpInvoiceService;
+  }
+
+  private WxMpInvoiceService wxMpInvoiceService = new WxMpInvoiceServiceImpl(this);
+
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
 

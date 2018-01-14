@@ -56,6 +56,7 @@ public class WxGroupMpMessageRouter extends WxMpAbstractRouter{
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
   protected final Logger log = LoggerFactory.getLogger(WxGroupMpMessageRouter.class);
   private final List<WxGroupMpMessageRouterRule> rules = new ArrayList<>();
+  private final Map<String, List<WxGroupMpMessageRouterRule>> ruleMap = new HashMap <>();
 
   private final WxGroupMpService wxMpService;
 
@@ -118,6 +119,19 @@ public class WxGroupMpMessageRouter extends WxMpAbstractRouter{
   List<WxGroupMpMessageRouterRule> getRules() {
     return this.rules;
   }
+  void putRule(String msgType,String event,String eventKey,WxGroupMpMessageRouterRule rule){
+    String key = msgType + event + eventKey;
+    List <WxGroupMpMessageRouterRule> wxGroupMpMessageRouterRules = this.ruleMap.get( key );
+    if (wxGroupMpMessageRouterRules == null){
+        wxGroupMpMessageRouterRules = new ArrayList <>();
+    }
+    wxGroupMpMessageRouterRules.add( rule );
+    this.ruleMap.put( key,wxGroupMpMessageRouterRules);
+  }
+  List <WxGroupMpMessageRouterRule> getRule(String msgType,String event,String eventKey){
+    String key = msgType + event + eventKey;
+    return this.ruleMap.get( key );
+  }
 
   /**
    * 开始一个新的Route规则
@@ -137,7 +151,8 @@ public class WxGroupMpMessageRouter extends WxMpAbstractRouter{
 
     final List<WxGroupMpMessageRouterRule> matchRules = new ArrayList<>();
     // 收集匹配的规则
-    for (final WxGroupMpMessageRouterRule rule : this.rules) {
+    List <WxGroupMpMessageRouterRule> rules = this.getRule( wxMessage.getMsgType(), wxMessage.getEvent(), wxMessage.getEventKey());
+    for (final WxGroupMpMessageRouterRule rule : rules) {
       if (rule.test(wxMessage)) {
         matchRules.add(rule);
         if (!rule.isReEnter()) {
