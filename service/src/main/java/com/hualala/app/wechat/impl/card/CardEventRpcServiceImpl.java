@@ -2,7 +2,7 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardEventRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
@@ -35,7 +35,7 @@ public class CardEventRpcServiceImpl implements CardEventRpcService {
         BaseInfoModel baseInfoModel = baseInfoModelMapper.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel){
             return new ActivateMemberCardResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的cardKey！");
+                    .setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的cardKey！");
         }
         String cardID = baseInfoModel.getCardID();
         String mpID = baseInfoModel.getMpID();

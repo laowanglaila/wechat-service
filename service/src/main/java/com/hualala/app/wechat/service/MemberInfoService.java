@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatBaseApi;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatBaseApi;
 import com.hualala.app.wechat.mapper.WechatMemberInfoMapper;
 import com.hualala.app.wechat.model.WechatMemberInfoModel;
 import com.hualala.app.wechat.util.HttpApiUtil;

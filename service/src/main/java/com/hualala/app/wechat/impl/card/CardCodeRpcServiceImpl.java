@@ -3,17 +3,17 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardCodeRpcService;
 import com.hualala.app.wechat.CardUpdateRpcService;
-import com.hualala.app.wechat.mapper.card.MemberModelMapper;
-import com.hualala.app.wechat.model.card.MemberModel;
-import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
+import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberMsgModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
+import com.hualala.app.wechat.model.card.MemberModel;
 import com.hualala.app.wechat.model.card.MemberMsgModel;
 import com.hualala.app.wechat.model.card.MemberMsgModelQuery;
+import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import org.apache.commons.lang.StringUtils;
@@ -54,7 +54,7 @@ public class CardCodeRpcServiceImpl implements CardCodeRpcService {
         Long cardKey = cardCodeImportReqData.getCardKey();
         if (cardKey == null) {
             return new CardUpdateRpcService.CardUpdateResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
+                    .setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空！");
         }
         BaseInfoModel baseInfoModel = this.baseInfoModel.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel) {

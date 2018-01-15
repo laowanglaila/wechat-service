@@ -1,9 +1,9 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.JsApiSignRpcService;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.service.ApiTicketService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.JsApiSignUtil;
@@ -35,7 +35,7 @@ public class JsApiSignRpcServiceImpl implements JsApiSignRpcService {
             mpID = HUALALA_COM;
         }
         if (StringUtils.isBlank(url)) {
-            return new JsApiSignResData().setResultInfo(ErrorCodes.WECHAT_SIGN_URL_EMPTY, "url不能为空！");
+            return new JsApiSignResData().setResultInfo( ErrorCodes.WECHAT_SIGN_URL_EMPTY, "url不能为空！");
         }
         JSONObject jsApiTicket = apiTicketService.getJsApiTicket(mpID);
         if (!jsApiTicket.getBoolean(WechatMessageType.IS_SUCCESS)){

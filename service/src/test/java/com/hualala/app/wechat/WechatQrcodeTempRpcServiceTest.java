@@ -71,19 +71,20 @@ public class WechatQrcodeTempRpcServiceTest {
     public void  test1(){
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
-        wechatQRCodeListReq.setMpID("AfTiEFjiRU0897bd");
-//        wechatQRCodeListReq.setMpID("5fWNjiboDX32dcec");
-//        wechatQRCodeListReq.setBrandID("0");
-//        wechatQRCodeListReq.setGroupID("5");
-//        wechatQRCodeListReq.setShopID("0");
-        wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.INVOICE);
-//        wechatQRCodeListReq.setExpireSeconds(3600*24);
+//        wechatQRCodeListReq.setMpID("AfTiEFjiRU0897bd");
+//        wechatQRCodeListReq.setMpID("hualala_com");
+        wechatQRCodeListReq.setBrandID("0");
+        wechatQRCodeListReq.setGroupID("5");
+        wechatQRCodeListReq.setShopID("0");
+        wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.SAAS_SUPPLY_COUPONS);
+        wechatQRCodeListReq.setExpireSeconds(3600*24);
         wechatQRCodeListReq.setSize(20);
         List<WechatQRCodeRpcSerivce.WechatQRCodeData> list = new ArrayList<>();
-        for (int i = 0 ; i < 3; i++) {
+        for (int i = 0 ; i < 20; i++) {
             WechatQRCodeRpcSerivce.WechatQRCodeData wechatQRCodeData = new WechatQRCodeRpcSerivce.WechatQRCodeData();
-            wechatQRCodeData.setQrcodeName("QrcodeName");
-            wechatQRCodeData.setParam1("param1");
+            wechatQRCodeData.setQrcodeName("账单领券二维码");
+            String param1 = i + 10000 + "";
+            wechatQRCodeData.setParam1(param1);
             list.add(wechatQRCodeData);
         }
         wechatQRCodeListReq.setWechatQRCodeDataList(list);
@@ -93,11 +94,7 @@ public class WechatQrcodeTempRpcServiceTest {
         System.out.println("--------------"+(end-start)+"ms");
         System.out.println(qrCodeList.getMessage());
         System.out.println(qrCodeList.getWechatQRCodeResList()==null?0:qrCodeList.getWechatQRCodeResList().size());
-        try {
-            Thread.sleep(300000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**

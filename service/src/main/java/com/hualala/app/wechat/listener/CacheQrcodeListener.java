@@ -43,7 +43,6 @@ public class CacheQrcodeListener {
             qrcodeCacheService.cache(wechatQRTypeEnum,cacheNo,expireSeconds,mpID);
 
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("caccheQrcode error", e);
         }
     }

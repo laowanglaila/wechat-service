@@ -5,13 +5,13 @@ import com.hualala.app.wechat.AuthorizationCheckRpcService;
 import com.hualala.app.wechat.WechatFuctionEnum;
 import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
 import com.hualala.app.wechat.WechatQRTypeEnum;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.RedisKeys;
-import com.hualala.app.wechat.lock.RedisLock;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.config.RabbitQueueProps;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.lock.RedisLock;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.model.mq.QrcodeInfoModel;
@@ -272,7 +272,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         boolean isLock = redisLockHandler.tryLock(locdKey, LOCKED_TIME_OUT_SECONDS);
         log.debug(() -> "isLock:" + isLock);
         if (!isLock){
-            return new WechatQRCodeRes().setResultInfo(ErrorCodes.WAIT_LOCK_TIMEOUT, "等待同步锁超时，LOCKED_TIME_OUT：" + LOCKED_TIME_OUT_SECONDS + "s");
+            return new WechatQRCodeRes().setResultInfo( ErrorCodes.WAIT_LOCK_TIMEOUT, "等待同步锁超时，LOCKED_TIME_OUT：" + LOCKED_TIME_OUT_SECONDS + "s");
         }
         List<WechatQrcodeTempModel> qrcodeModelList;
         try {
@@ -390,7 +390,7 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         int tempSenceID = qrcodeCreateSceneIDService.getTempSenceID(mpID);
         JSONObject jsonObject = baseHttpService.createQrCode(getModel(expireSeconds, qrcodeType.getWechatType(), tempSenceID), mpID);
 
-        if (!jsonObject.getBoolean(WechatMessageType.IS_SUCCESS)) {
+        if (!jsonObject.getBoolean( WechatMessageType.IS_SUCCESS)) {
             return ResultUtil.getResultInfoBean(jsonObject, WechatQRCodeRes.class);
         }
         //插入数据库

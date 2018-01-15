@@ -2,10 +2,10 @@ package com.hualala.app.wechat.service.Qrcode;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.WechatQRTypeEnum;
+import com.hualala.app.wechat.common.RedisKeys;
 import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatQrcodeTempMapper;
 import com.hualala.app.wechat.model.WechatQrcodeTempModel;
 import com.hualala.app.wechat.service.BaseHttpService;
@@ -56,6 +56,9 @@ public class QrcodeCacheService implements RedisKeys{
                     expireSeconds = qrcodeType.getDeadTime();
                     break;
                 case LOGIN:
+                    expireSeconds = qrcodeType.getDeadTime();
+                    break;
+                default:
                     expireSeconds = qrcodeType.getDeadTime();
             }
             int tempSenceID = qrcodeCreateSceneIDService.getTempSenceID(mpID);

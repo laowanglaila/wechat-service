@@ -1,12 +1,12 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
-import com.hualala.app.wechat.sdk.mp.util.OkHttpUtil;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
+import com.hualala.app.wechat.util.OkHttpUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class HttpApiService {
      */
     public JSONObject httpPost(String url, String params, String mpID){
         if(url == null){
-            return ResultUtil.toResultJson(null,WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_URL_NULL,"http请求url不能为空！");
+            return ResultUtil.toResultJson(null, WechatMessageType.FALSE, ErrorCodes.WECHAT_MP_URL_NULL,"http请求url不能为空！");
         }
         url = checkAccessTocken(url, mpID);
 //        JSONObject jsonObject = HttpApiUtil.httpPost(url, params);

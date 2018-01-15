@@ -2,12 +2,9 @@ package com.hualala.app.wechat.impl.EventHandler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.impl.EventHandler.impl.ActiveMembercardUserInfoEventHandler;
-import com.hualala.app.wechat.impl.EventHandler.impl.CardCheckEventHandler;
-import com.hualala.app.wechat.impl.EventHandler.impl.CardUserGetHandler;
-import com.hualala.app.wechat.impl.EventHandler.impl.UserGiftingCardEventHandler;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.impl.EventHandler.impl.*;
 import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
 import com.hualala.core.base.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -106,6 +103,9 @@ public abstract class BaseEventCardEventHandler  {
         } else if (WechatMessageType.EVENT_CARD_USER_VIEW.equals( event )) {
             //用户进入会员卡事件（暂不接受压力大）
 
+        } else if (WechatMessageType.EVENT_INVOICE_USER_AUTHORIZE.equals( event )){
+            //用户授权开具电子发票
+            return WechatBeanFactory.getBean( InvoiceUserAuthorizeEventHandler.class );
         }
         return null;
     }

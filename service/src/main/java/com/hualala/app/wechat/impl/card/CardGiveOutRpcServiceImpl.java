@@ -3,7 +3,7 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardGiveOutRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.service.BaseHttpService;
@@ -46,7 +46,7 @@ public class CardGiveOutRpcServiceImpl implements CardGiveOutRpcService {
         }
         long currentTime = System.currentTimeMillis() / 1000;
         if (beginTime == null || endTime == null || beginTime < (currentTime-60*60*24) || endTime < currentTime) {
-            return new PayToMemberRes().setResultInfo(ErrorCodes.WECHAT_TIME_RANGE_WRONG,"时间范围有误!");
+            return new PayToMemberRes().setResultInfo( ErrorCodes.WECHAT_TIME_RANGE_WRONG,"时间范围有误!");
         }
         if (StringUtils.isBlank(leastCost) || StringUtils.isBlank(maxCost)){
             int i = Integer.parseInt(leastCost);

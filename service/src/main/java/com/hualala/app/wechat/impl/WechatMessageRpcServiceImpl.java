@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatMessageRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatCustomService;
 import com.hualala.app.wechat.service.user.WechatUserService;
@@ -33,7 +33,7 @@ public class WechatMessageRpcServiceImpl implements WechatMessageRpcService {
         }
 
         if(mpID == null){
-            throw new WechatException(ErrorCodes.WECHAT_MP_ERROR,"未找到对应公众号");
+            throw new WechatException( ErrorCodes.WECHAT_MP_ERROR,"未找到对应公众号");
         }
 
         if(StringUtils.isEmpty(openID)){

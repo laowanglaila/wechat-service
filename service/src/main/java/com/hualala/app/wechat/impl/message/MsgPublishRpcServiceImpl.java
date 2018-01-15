@@ -2,7 +2,7 @@ package com.hualala.app.wechat.impl.message;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.MsgPublishRpcService;
 import com.hualala.app.wechat.mapper.user.UserModelMapper;
 import com.hualala.app.wechat.model.user.UserModelQuery;
@@ -41,7 +41,7 @@ public class MsgPublishRpcServiceImpl implements MsgPublishRpcService {
             Long groupID = textMsgReq.getGroupID();
             Long shopID = textMsgReq.getShopID();
             if (null == brandID || null == groupID) {
-                return new MsgPublishRpcService.TextMsgRes().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
+                return new MsgPublishRpcService.TextMsgRes().setResultInfo( ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
             }
             //通过上面三个属性获取mpID，调用方法待定；
             mpID = mpInfoService.queryMpIDAuth(groupID, brandID, shopID);

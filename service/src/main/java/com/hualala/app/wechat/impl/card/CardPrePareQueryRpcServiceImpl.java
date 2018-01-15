@@ -1,13 +1,12 @@
 package com.hualala.app.wechat.impl.card;
 
 import com.hualala.app.wechat.CardPrePareQueryRpcService;
-import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.core.utils.DataUtils;
@@ -46,7 +45,7 @@ public class CardPrePareQueryRpcServiceImpl implements CardPrePareQueryRpcServic
         Long cardKey = cardQuery.getCardKey();
 
         if (cardKey == null) {
-            return new MemberResData().setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空");
+            return new MemberResData().setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NULL, "cardKey不允许为空");
         }
         MemberModel memberModel = memberModelMapper.selectByPrimaryKey(cardQuery.getCardKey());
         if (memberModel == null){

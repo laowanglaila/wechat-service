@@ -82,7 +82,8 @@ public class WechatMessageType {
 	public static final String EVENT_CARD_PAY_ORDER = "card_pay_order";
 	//会员卡激活事件推送
 	public static final String EVENT_CARD_MEMBER_ACTIVE = "submit_membercard_user_info";
-
+	//用户授权开具电子发票
+	public static final String EVENT_INVOICE_USER_AUTHORIZE = "user_authorize_invoice";
 
 	public static final String OAUTH_BASE = "snsapi_base";
 	public static final String OAUTH_USERINFO = "snsapi_userinfo";

@@ -1,14 +1,14 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.WechatBaseApi;
-import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
+import com.hualala.app.wechat.common.WechatBaseApi;
+import com.hualala.app.wechat.common.WechatErrorCode;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
-import com.hualala.app.wechat.sdk.mp.util.OkHttpUtil;
+import com.hualala.app.wechat.util.OkHttpUtil;
 import com.hualala.app.wechat.vo.UserAuthVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

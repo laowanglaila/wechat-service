@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.service.user;
 
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.service.MpInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +14,8 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.hualala.app.wechat.sdk.mp.common.WechatMessageType.OAUTH_BASE;
-import static com.hualala.app.wechat.sdk.mp.common.WechatMessageType.OAUTH_USERINFO;
+import static com.hualala.app.wechat.common.WechatMessageType.OAUTH_BASE;
+import static com.hualala.app.wechat.common.WechatMessageType.OAUTH_USERINFO;
 
 /**
  * OAuth2.0

@@ -1,11 +1,11 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatBaseApi;
-import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
-import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatBaseApi;
+import com.hualala.app.wechat.common.WechatErrorCode;
+import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -42,7 +42,7 @@ public class AccessTokenService {
     public JSONObject getAccessToken(String mpID,boolean isForceRefresh) throws WechatInnerException {
 
         if (mpID == null || mpID.trim().isEmpty()) {
-            return ResultUtil.toResultJson(null,WechatMessageType.FALSE,ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
+            return ResultUtil.toResultJson(null, WechatMessageType.FALSE, ErrorCodes.WECHAT_MPID_EMPTY,"mpID is empty");
         }
 
         String appID = null;

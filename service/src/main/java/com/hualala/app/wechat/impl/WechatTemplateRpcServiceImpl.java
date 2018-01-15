@@ -2,7 +2,12 @@ package com.hualala.app.wechat.impl;
 
 import com.hualala.app.wechat.WechatTemplateRpcService;
 import com.hualala.app.wechat.WechatTemplateTypeEnum;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.RedisKeys;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.config.RabbitQueueProps;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.mapper.sem.TemplateMessageModelMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.model.mp.MpInfoCache;
@@ -10,11 +15,6 @@ import com.hualala.app.wechat.model.sem.TemplateMessageModel;
 import com.hualala.app.wechat.sdk.mp.api.group.WxGroupMpService;
 import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateData;
 import com.hualala.app.wechat.sdk.mp.bean.template.WxMpTemplateMessage;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.RedisKeys;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.WechatTemplateService;
 import com.hualala.app.wechat.service.user.WechatUserService;
@@ -152,7 +152,7 @@ public class WechatTemplateRpcServiceImpl implements WechatTemplateRpcService {
             mpID = mpInfoService.queryMpIDAuth(reqData.getGroupID(),reqData.getBrandID(),reqData.getShopID());
         }
         if(StringUtils.isEmpty(mpID)) {
-            return new WechatTemplateRpcResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "未找到对应公众号");
+            return new WechatTemplateRpcResData().setResultInfo( ErrorCodes.WECHAT_MPID_EMPTY, "未找到对应公众号");
         }
 
         WechatTemplateTypeEnum modelTypeEnum = reqData.getTemplateType();

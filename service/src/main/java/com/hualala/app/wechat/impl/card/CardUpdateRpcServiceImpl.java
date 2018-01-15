@@ -2,10 +2,10 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardUpdateRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
@@ -54,7 +54,7 @@ public class CardUpdateRpcServiceImpl implements CardUpdateRpcService {
         BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel1) {
             return new CardUpdateResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+                    .setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
         }
 
         String mpID = baseInfoModel1.getMpID();

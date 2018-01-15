@@ -2,8 +2,8 @@ package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.*;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.ErrorCodes;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -53,7 +53,7 @@ public class CreateCardCouponRpcServiceImpl implements CreateCardCouponRpcServic
         }
         if (StringUtils.isBlank(mpID)) {
             //返回响应对象，设置错误信息和错误码；
-            return new CardCouponResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
+            return new CardCouponResData().setResultInfo( ErrorCodes.WECHAT_MPID_EMPTY, "获取mpID失败！");
         }
         CouponTypeEnum couponType = couponReqData.getCouponType();
         if(couponType == null){

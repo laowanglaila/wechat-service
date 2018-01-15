@@ -3,7 +3,7 @@ package com.hualala.app.wechat.impl.EventHandler.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardSyncRpcService;
 import com.hualala.app.wechat.impl.EventHandler.AbstractCardEventHandler;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.core.client.BaseRpcClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

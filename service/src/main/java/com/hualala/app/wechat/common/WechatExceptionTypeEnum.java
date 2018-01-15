@@ -82,8 +82,8 @@ public enum WechatExceptionTypeEnum {
         this.message = message;
     }
 
-    public static com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum parseEnum(String code) {
-        for (com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum each : com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum.class.getEnumConstants()){
+    public static WechatExceptionTypeEnum parseEnum(String code) {
+        for (WechatExceptionTypeEnum each : WechatExceptionTypeEnum.class.getEnumConstants()){
             if (code.equals(each.getCode())){
                 return each;
             }

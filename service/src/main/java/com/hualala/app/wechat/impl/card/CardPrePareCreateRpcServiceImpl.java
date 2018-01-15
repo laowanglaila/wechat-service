@@ -3,10 +3,8 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardPrePareCreateRpcService;
-import com.hualala.app.wechat.CreateCardCouponRpcService;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
@@ -16,8 +14,8 @@ import com.hualala.app.wechat.model.card.AdvancedModel;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.CouponModel;
 import com.hualala.app.wechat.model.card.MemberModel;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.service.BaseHttpService;
-import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.service.card.CreateCardKeyService;
 import com.hualala.app.wechat.util.RequestUtil;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -54,7 +52,7 @@ public class CardPrePareCreateRpcServiceImpl implements CardPrePareCreateRpcServ
     @Override
     public PreCardResData createCoupon(PreCouponReqData preCouponReqData) {
         if (preCouponReqData.getCardKey() == null) {
-            throw new WechatException(ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
+            throw new WechatException( ErrorCodes.WECHAT_CARD_KEY_NULL, "参数cardKey为空！");
         }
 
         CouponModel couponModel = DataUtils.copyProperties(preCouponReqData, CouponModel.class);

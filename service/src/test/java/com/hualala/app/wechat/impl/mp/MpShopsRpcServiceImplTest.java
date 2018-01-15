@@ -2,7 +2,7 @@ package com.hualala.app.wechat.impl.mp;
 
 import com.hualala.app.wechat.BaseRpcTest;
 import com.hualala.app.wechat.MpShopsRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
+import com.hualala.app.wechat.common.ErrorCodes;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;

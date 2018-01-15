@@ -1,7 +1,7 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.mapper.WechatTemplateMapper;
 import com.hualala.app.wechat.model.WechatTemplateModel;
 import com.hualala.app.wechat.util.template.WechatTemplateConstants;

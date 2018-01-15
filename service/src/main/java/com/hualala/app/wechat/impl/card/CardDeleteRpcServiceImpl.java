@@ -2,10 +2,10 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardDeleteRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class CardDeleteRpcServiceImpl implements CardDeleteRpcService {
         BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel1){
             return new CardDeleteAndUnAbailableResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+                    .setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
 
         }
         String cardID = baseInfoModel1.getCardID();

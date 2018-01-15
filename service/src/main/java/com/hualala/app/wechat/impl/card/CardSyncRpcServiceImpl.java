@@ -3,8 +3,11 @@ package com.hualala.app.wechat.impl.card;
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardStatusEnum;
 import com.hualala.app.wechat.CardSyncRpcService;
-import com.hualala.app.wechat.WechatQRCodeRpcSerivce;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.common.RedisKeys;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatMessageType;
+import com.hualala.app.wechat.exception.WechatException;
 import com.hualala.app.wechat.lock.RedisLock;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.AdvancedModelMapper;
@@ -12,10 +15,6 @@ import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.CouponModelMapper;
 import com.hualala.app.wechat.mapper.card.MemberModelMapper;
 import com.hualala.app.wechat.model.card.*;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.card.CreateCardKeyService;
 import com.hualala.app.wechat.util.RequestUtil;
@@ -96,7 +95,7 @@ public class CardSyncRpcServiceImpl implements CardSyncRpcService, RedisKeys {
         BaseInfoModel baseInfoModel1 = baseInfoModelMapper.selectByPrimaryKey(cardKey);
         if (null == baseInfoModel1) {
             return new CardSyncResData()
-                    .setResultInfo(ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
+                    .setResultInfo( ErrorCodes.WECHAT_CARD_KEY_NONE, "不存在指定的Key！");
 
         }
         String cardID = baseInfoModel1.getCardID();

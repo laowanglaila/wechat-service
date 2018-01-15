@@ -1,9 +1,9 @@
 package com.hualala.app.wechat.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.*;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
-import com.hualala.app.wechat.sdk.mp.exception.WechatInnerException;
+import com.hualala.app.wechat.common.*;
+import com.hualala.app.wechat.exception.WechatException;
+import com.hualala.app.wechat.exception.WechatInnerException;
 import com.hualala.app.wechat.util.HttpApiUtil;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WechatCacheUtil;

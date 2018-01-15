@@ -2,12 +2,12 @@ package com.hualala.app.wechat;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.WechatErrorCode;
-import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
+import com.hualala.app.wechat.common.WechatErrorCode;
+import com.hualala.app.wechat.common.WechatExceptionTypeEnum;
 import com.hualala.app.wechat.grpc.CardCodeRpcData;
 import com.hualala.app.wechat.impl.EventHandler.impl.CardUserGetHandler;
-import com.hualala.app.wechat.sdk.mp.util.OkHttpUtil;
 import com.hualala.app.wechat.sdk.mp.util.WechatBeanFactory;
+import com.hualala.app.wechat.util.OkHttpUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.mockito.cglib.proxy.Enhancer;
 import org.mockito.cglib.proxy.MethodInterceptor;

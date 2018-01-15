@@ -1,8 +1,8 @@
 package com.hualala.app.wechat.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
 import com.hualala.app.wechat.WhiteListRpcService;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.service.BaseHttpService;
 import com.hualala.app.wechat.service.MpInfoService;
 import com.hualala.app.wechat.util.ResultUtil;
@@ -31,7 +31,7 @@ public class WhiteListRpcServiceImpl implements WhiteListRpcService {
             String groupID = reqData.getGroupID();
             String shopID = reqData.getShopID();
             if (StringUtils.isBlank(brandID) || StringUtils.isBlank(groupID)) {
-                return new ResData().setResultInfo(ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
+                return new ResData().setResultInfo( ErrorCodes.WECHAT_MPID_EMPTY, "mpID为空并且没有提供brandID、groupID、shopID！");
             }
             //通过上面三个属性获取mpID，调用方法待定；
             mpID = mpInfoService.queryMpIDAuth(Long.parseLong(groupID), Long.parseLong(brandID), Long.parseLong(shopID));

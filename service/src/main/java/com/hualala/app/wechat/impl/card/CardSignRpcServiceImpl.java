@@ -2,13 +2,13 @@ package com.hualala.app.wechat.impl.card;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hualala.app.wechat.CardSignRpcService;
-import com.hualala.app.wechat.sdk.mp.common.ErrorCodes;
-import com.hualala.app.wechat.sdk.mp.common.WechatMessageType;
+import com.hualala.app.wechat.common.ErrorCodes;
 import com.hualala.app.wechat.mapper.WechatMpMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapper;
 import com.hualala.app.wechat.mapper.card.BaseInfoModelMapperEXT;
 import com.hualala.app.wechat.model.card.BaseInfoModel;
 import com.hualala.app.wechat.model.card.BaseInfoModelQuery;
+import com.hualala.app.wechat.common.WechatMessageType;
 import com.hualala.app.wechat.service.ApiTicketService;
 import com.hualala.app.wechat.util.ResultUtil;
 import com.hualala.app.wechat.util.WxCardSign;
@@ -48,7 +48,7 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
         String hualalaCardCode = cardSignReqData.getHualalaCardCode();
         String customerID = cardSignReqData.getCustomerID();
         if (StringUtils.isBlank(hualalaCardCode)){
-            return new CardSignResData().setResultInfo(ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS, "非法参数:hualalaCardCode[null]！");
+            return new CardSignResData().setResultInfo( ErrorCodes.WECHAT_ILLEGAL_ARGUMENTS, "非法参数:hualalaCardCode[null]！");
         }
         Long hualalaCardID = cardSignReqData.getHualalaCardID();
         if (hualalaCardID == null){
