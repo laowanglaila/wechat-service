@@ -29,7 +29,6 @@ public class RedisLockImpl implements RedisLock{
             long currentTime = System.currentTimeMillis();
             String lockTimeDuration = String.valueOf(currentTime + Lock_Timeout);
             Long result = jedis.setnx(lockKey, lockTimeDuration);
-
             if(result == 1){
                 return true;
             }else {
