@@ -2,7 +2,7 @@ package com.hualala.app.wechat.sdk.mp.api.group.mp;
 
 import com.hualala.app.wechat.grpc.MpInfoRpcData;
 import com.hualala.app.wechat.grpc.MpInfoRpcServiceGrpc;
-import com.hualala.app.wechat.sdk.mp.common.TimeConstants;
+import com.hualala.app.wechat.TimeConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

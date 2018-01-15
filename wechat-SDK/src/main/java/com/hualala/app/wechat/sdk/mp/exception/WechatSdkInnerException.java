@@ -10,16 +10,16 @@ import org.apache.commons.lang.StringUtils;
  * Created by renjianfei on 2017/8/30.
  */
 @Getter
-public class WechatInnerException extends Exception {
+public class WechatSdkInnerException extends Exception {
 
-    public WechatInnerException(String message){
+    public WechatSdkInnerException(String message){
         super(message);
     }
 
-    public static WechatInnerException of( JSONObject jsonObject){
+    public static WechatSdkInnerException of(JSONObject jsonObject){
         return of( "",jsonObject );
     }
-    public static WechatInnerException of( String message, JSONObject jsonObject){
+    public static WechatSdkInnerException of(String message, JSONObject jsonObject){
         if (StringUtils.isNotBlank( message )){
             message = "->"+message;
         }
@@ -30,6 +30,6 @@ public class WechatInnerException extends Exception {
         if (StringUtils.isNotBlank( errmsgCH )){
             errmsgCH = "_" + errmsgCH;
         }
-        return new WechatInnerException( objMessage + message + ":" + errcode + "("+errmsg + errmsgCH +")" );
+        return new WechatSdkInnerException( objMessage + message + ":" + errcode + "("+errmsg + errmsgCH +")" );
     }
 }

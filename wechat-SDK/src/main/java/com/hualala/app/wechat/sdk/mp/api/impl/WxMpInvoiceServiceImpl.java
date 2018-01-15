@@ -6,7 +6,7 @@ import com.hualala.app.wechat.sdk.mp.api.WxMpService;
 import com.hualala.app.wechat.sdk.mp.bean.invoice.*;
 import com.hualala.app.wechat.sdk.mp.bean.material.WxMpMaterialUploadResult;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatSdkException;
 import com.hualala.app.wechat.sdk.mp.util.FileUtil;
 import com.hualala.app.wechat.sdk.mp.util.http.okhttp.OkhttpInvoiceUploadExecutor;
 import com.hualala.app.wechat.sdk.mp.util.json.WxMpGsonBuilder;
@@ -48,7 +48,7 @@ public class WxMpInvoiceServiceImpl implements WxMpInvoiceService {
             log.error(">>> update user photoImage is error",e);
         } catch (WxErrorException e){
             log.error( ">>> update user photoImage is error",e );
-            throw new WechatException( WechatExceptionTypeEnum.WECHAT_MP_ERROR,e.getMessage());
+            throw new WechatSdkException( WechatExceptionTypeEnum.WECHAT_MP_ERROR,e.getMessage());
         } finally{
             if (file != null) {
                 file.delete();

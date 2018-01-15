@@ -109,14 +109,11 @@ public class InvoiceInfo {
         @NotBlank
         String title;
         //        description	string	否	发票使用说明。可以介绍电子发票的背景、报销使用流程等
-        @NotBlank
         String descriprion;
         //        custom_url_name	string	否	开票平台自定义入口名称，与 custom_url 字段共同使用，长度限制在 5 个汉字内
-        @NotBlank
         @SerializedName( "custom_url_name" )
         String customUrlName;
         //        custom_url	string	否	开票平台自定义入口跳转外链的地址链接 , 发票外跳的链接会带有发票参数，用于标识是从哪张发票跳出的链接，详情请见 备注6.2 。
-        @NotBlank
         @SerializedName( "custom_url" )
         String customUtl;
         //        custom_url_sub_title	string	否	显示在入口右侧的 tips ，长度限制在 6 个汉字内
@@ -124,15 +121,12 @@ public class InvoiceInfo {
         @SerializedName( "custom_url_sub_title" )
         String customUrlSubTitle;
         //        promotion_url_name	string	否	营销场景的自定义入口
-        @NotBlank
         @SerializedName( "promotion_url_name" )
         String promotionUrlName;
         //        promotion_url	string	否	入口跳转外链的地址链接，发票外跳的链接会带有发票参数，用于标识是从那张发票跳出的链接，详情请见 备注6.2 。
-        @NotBlank
         @SerializedName( "promotion_url" )
         String promotionUrl;
         //        promotion_url_sub_title	string	否	显示在入口右侧的 tips ，长度限制在 6 个汉字内
-        @NotBlank
         @SerializedName( "promotion_url_sub_title" )
         String promotionUrlSubTitle;
 

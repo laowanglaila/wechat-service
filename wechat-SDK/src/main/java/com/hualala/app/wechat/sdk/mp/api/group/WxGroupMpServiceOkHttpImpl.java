@@ -5,7 +5,7 @@ import com.hualala.app.wechat.grpc.WechatAccessTokenRpcServiceGrpc;
 import com.hualala.app.wechat.sdk.mp.api.*;
 import com.hualala.app.wechat.sdk.mp.api.impl.WxMpServiceOkHttpImpl;
 import com.hualala.app.wechat.sdk.mp.common.WechatExceptionTypeEnum;
-import com.hualala.app.wechat.sdk.mp.exception.WechatException;
+import com.hualala.app.wechat.sdk.mp.exception.WechatSdkException;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
@@ -71,15 +71,15 @@ public class WxGroupMpServiceOkHttpImpl extends WxMpServiceOkHttpImpl implements
       String message = accessTokenRes.getResult().getMessage();
       if (!"000".equals( code )){
         log.error( "获取accessToken失败：[" + code +"]:"+ message );
-        throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,message );
+        throw new WechatSdkException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,message );
       }
 
     } catch (InterruptedException e) {
       log.error( "获取accessToken接口调用失败：" + e.getMessage() );
-      throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,"获取accessToken接口调用失败：" + e.getMessage() );
+      throw new WechatSdkException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,"获取accessToken接口调用失败：" + e.getMessage() );
     } catch (ExecutionException e) {
       log.error("获取accessToken接口调用失败：" + e.getMessage() );
-      throw new WechatException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,"获取accessToken接口调用失败：" + e.getMessage() );
+      throw new WechatSdkException( WechatExceptionTypeEnum.WECHAT_GET_ACCESSTOKEN_FIELD,"获取accessToken接口调用失败：" + e.getMessage() );
     }
     return accessTokenRes.getAccessToken();
   }
