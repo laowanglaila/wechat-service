@@ -23,7 +23,7 @@ public interface WxMpInvoiceService {
     InvoiceResult createInvoiceTemplate(InvoiceInfo invoiceInfo) throws WxErrorException;
 
     /**
-     * 上传电子发票pdf
+     * 上传电子发票pdf 返回mediaID
      * @param sourceUrl
      * @return
      */

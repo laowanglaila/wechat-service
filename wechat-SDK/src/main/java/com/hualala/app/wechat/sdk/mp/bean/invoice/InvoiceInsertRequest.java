@@ -10,7 +10,7 @@ import java.util.*;
  * Created by renjianfei on 2018/1/14.
  */
 public class InvoiceInsertRequest {
-
+    private InvoiceInsertRequest(){}
     //    order_id	string	是	发票order_id
     @SerializedName("order_id")
     private String orderID;
