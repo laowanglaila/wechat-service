@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "InvoiceTemplateRpcData";
+import "commons.proto";
+import "wechatcommons.proto";
+
+message InvoiceInfoReq {  
+   // 收款方（开票方）全称，显示在发票详情内。故建议一个收款方对应一个发票卡券模板
+   string payee=2;
+   // 发票类型
+   string type=3;
+   // 发票商家 LOGO ，请参考 上传图片接口
+   string logoUrl=4;
+   // 收款方（显示在列表），上限为 9 个汉字，建议填入商户简称
+   string title=5;
+   // 发票使用说明。可以介绍电子发票的背景、报销使用流程等
+   string descriprion=6;
+   // 开票平台自定义入口名称，与 custom_url 字段共同使用，长度限制在 5 个汉字内
+   string customUrlName=7;
+   // 开票平台自定义入口跳转外链的地址链接 , 发票外跳的链接会带有发票参数，用于标识是从哪张发票跳出的链接
+   string customUrl=8;
+   // 显示在入口右侧的 tips ，长度限制在 6 个汉字内
+   string customUrlSubTitle=9;
+   // 营销场景的自定义入口
+   string promotionUrlName=10;
+   // 入口跳转外链的地址链接，发票外跳的链接会带有发票参数，用于标识是从那张发票跳出的链接
+   string promotionUrl=11;
+   // 显示在入口右侧的 tips ，长度限制在 6 个汉字内
+   string promotionUrlSubTitle=12;
+   // 公众号唯一ID
+   string mpID=13;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message InvoiceInfoRes {  
+   // 电子发票模板ID
+   string cardID=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service InvoiceTemplateRpcService{
+    //创建微信电子发票模板
+    rpc create(InvoiceInfoReq) returns (InvoiceInfoRes) {}
+}
