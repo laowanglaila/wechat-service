@@ -136,10 +136,16 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
         crmGiftRequest.setSourceWay( true );
         crmGiftRequest.setSourceOpenID( sourceOpenID );
         crmGiftRequest.setTargetOpenID( targetOpenID );
-        crmGiftRequest.setWechatCardCode( targetCode );
-        crmGiftRequest.setSourceWechatCardCode( sourceCode );
-        crmGiftRequest.setWechatCardKey( baseInfoModel.getCardKey().toString() );
-        crmGiftRequest.setSourceWechatCardKey( baseInfoModel.getCardKey().toString() );
+
+        ArrayList <CrmGiftRequest.TransferCouponModel> models = new ArrayList <>();
+        CrmGiftRequest.TransferCouponModel transferCouponModel = new CrmGiftRequest.TransferCouponModel();
+        transferCouponModel.setGiftItemID( baseInfoModel.getHualalaCardID() );
+        transferCouponModel.setSourceWechatCardCode( sourceCode );
+        transferCouponModel.setSourceWechatCardKey(  baseInfoModel.getCardKey().toString() );
+        transferCouponModel.setWechatCardCode( targetCode );
+        transferCouponModel.setWechatCardKey( baseInfoModel.getCardKey().toString() );
+        models.add( transferCouponModel );
+        crmGiftRequest.setTransferCouponModelList( models );
         return rpcClient.trdTransferGift( crmGiftRequest );
     }
 
