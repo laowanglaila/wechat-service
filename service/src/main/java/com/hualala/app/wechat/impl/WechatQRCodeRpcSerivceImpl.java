@@ -436,7 +436,14 @@ class WechatQRCodeRpcSerivceImpl implements WechatQRCodeRpcSerivce, RedisKeys {
         wechatQrcodeTempModel.setParam1( param1 );
         wechatQrcodeTempModel.setParam2( param2 );
         wechatQrcodeTempModel.setParam3( param3 );
-        wechatQrcodeTempModel.setDeadTime( getDate( 3600 * 50 ) );
+        int expireSeconds = qrCodeReq.getExpireSeconds();
+        Long deadTime;
+        if (expireSeconds > 0){
+            deadTime = getDate( expireSeconds );
+        }else {
+            deadTime = getDate( 3600 * 50 );
+        }
+        wechatQrcodeTempModel.setDeadTime( deadTime );
         qrcodeTempMapper.updateByPrimaryKeySelective( wechatQrcodeTempModel );
         return ResultUtil.success(UpdateWechatQrcodeRes.class);
     }

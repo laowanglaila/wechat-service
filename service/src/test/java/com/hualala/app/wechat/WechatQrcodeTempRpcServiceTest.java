@@ -231,4 +231,19 @@ String s = "http://127.0.0.1:8090/wechat/getQrcode.html?async=true&brandID=5&des
         long end = System.currentTimeMillis();
         System.out.println("-------------" + (end - start) + "ms------------------>" + qrCode.toJson());
     }
+    /**
+     *
+     * 登录码测试
+     */
+    @Test
+    public void  test7(){
+        WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
+        WechatQRCodeRpcSerivce.UpdateWechatQrcodeReq updateWechatQrcodeReq = new WechatQRCodeRpcSerivce.UpdateWechatQrcodeReq();
+        updateWechatQrcodeReq.setItemID( 48006L );
+        updateWechatQrcodeReq.setParam1( "2018011617014713734885770005" );
+        updateWechatQrcodeReq.setExpireSeconds( 1296000);
+        WechatQRCodeRpcSerivce.UpdateWechatQrcodeRes updateWechatQrcodeRes = rpcClient.uploadQRcodeParam( updateWechatQrcodeReq );
+        logger.info( updateWechatQrcodeRes.getMessage() );
+
+    }
 }

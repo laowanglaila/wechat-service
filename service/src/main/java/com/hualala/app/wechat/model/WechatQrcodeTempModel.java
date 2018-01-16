@@ -28,7 +28,7 @@ public class WechatQrcodeTempModel extends BaseItem {
         this.qrcodeIP = qrcodeIP;
         return this;
     }
-    public int getQrcodeStatus(){
+    public Integer getQrcodeStatus(){
         return this.qrcodeStatus;
     }
 
