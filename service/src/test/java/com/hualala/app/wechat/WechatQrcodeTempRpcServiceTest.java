@@ -72,10 +72,10 @@ public class WechatQrcodeTempRpcServiceTest {
         WechatQRCodeRpcSerivce rpcClient = baseRpcClient.getRpcClient(WechatQRCodeRpcSerivce.class);
         WechatQRCodeRpcSerivce.WechatQRCodeListReq wechatQRCodeListReq = new WechatQRCodeRpcSerivce.WechatQRCodeListReq();
 //        wechatQRCodeListReq.setMpID("AfTiEFjiRU0897bd");
-//        wechatQRCodeListReq.setMpID("hualala_com");
-        wechatQRCodeListReq.setBrandID("0");
-        wechatQRCodeListReq.setGroupID("5");
-        wechatQRCodeListReq.setShopID("0");
+        wechatQRCodeListReq.setMpID("hualala_com");
+//        wechatQRCodeListReq.setBrandID("0");
+//        wechatQRCodeListReq.setGroupID("5");
+//        wechatQRCodeListReq.setShopID("0");
         wechatQRCodeListReq.setQrcodeType(WechatQRTypeEnum.SAAS_SUPPLY_COUPONS);
         wechatQRCodeListReq.setExpireSeconds(3600*24);
         wechatQRCodeListReq.setSize(20);

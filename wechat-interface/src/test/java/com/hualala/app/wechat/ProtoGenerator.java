@@ -13,7 +13,7 @@ public class ProtoGenerator {
         Class[] generatorClass = new Class[]{
 //                CardGiveOutRpcService.class,
 //                JsApiSignRpcService.class,
-                CardSignRpcService.class,
+//                CardSignRpcService.class,
 //                MsgPublishRpcService.class,
 //                CardEventProcessRpcService.class,
 //                CardCodeRpcService.class,
@@ -38,6 +38,8 @@ public class ProtoGenerator {
 //                MpInfoRpcService.class,
 //                WechatTemplateRpcService.class,
 //                WechatQrcodeLoginRpcService.class,
+                InvoiceTemplateRpcService.class,
+                InvoiceAuthorizationRpcService.class,
                 CardStatusEnum.class,
                 ColorEnum.class,
                 CouponTypeEnum.class,

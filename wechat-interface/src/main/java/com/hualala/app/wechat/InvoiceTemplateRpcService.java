@@ -1,17 +1,20 @@
 package com.hualala.app.wechat;
 
 import com.hualala.core.base.RequestInfo;
+import com.hualala.core.base.ResultInfo;
 import com.hualala.core.rpc.FieldType;
 import com.hualala.core.rpc.Protocol;
+import com.hualala.core.rpc.RpcMethod;
+import com.hualala.core.rpc.RpcService;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Created by renjianfei on 2018/1/15.
  */
-//@RpcService
-public interface InvoiceTemplateService {
-//    @RpcMethod(description = "创建微信电子发票模板")
+@RpcService
+public interface InvoiceTemplateRpcService {
+    @RpcMethod(description = "创建微信电子发票模板")
     InvoiceInfoRes create(InvoiceInfoReq invoiceInfoReq);
 
     @Data
@@ -33,7 +36,7 @@ public interface InvoiceTemplateService {
         @Protocol(fieldType = FieldType.STRING, order = 7, description = "开票平台自定义入口名称，与 custom_url 字段共同使用，长度限制在 5 个汉字内")
         String customUrlName;
         @Protocol(fieldType = FieldType.STRING, order = 8, description = "开票平台自定义入口跳转外链的地址链接 , 发票外跳的链接会带有发票参数，用于标识是从哪张发票跳出的链接")
-        String customUtl;
+        String customUrl;
         @Protocol(fieldType = FieldType.STRING, order = 9, description = "显示在入口右侧的 tips ，长度限制在 6 个汉字内")
         String customUrlSubTitle;
         @Protocol(fieldType = FieldType.STRING, order = 10, description = "营销场景的自定义入口")
@@ -42,8 +45,13 @@ public interface InvoiceTemplateService {
         String promotionUrl;
         @Protocol(fieldType = FieldType.STRING, order = 12, description = "显示在入口右侧的 tips ，长度限制在 6 个汉字内")
         String promotionUrlSubTitle;
+        @Protocol(fieldType = FieldType.STRING, order = 13, description = "公众号唯一ID")
+        String mpID;
     }
     @Data
-    class InvoiceInfoRes extends RequestInfo {}
+    class InvoiceInfoRes extends ResultInfo {
+        @Protocol(fieldType = FieldType.STRING, order = 2, description = "电子发票模板ID")
+        String cardID;
+    }
 
 }
