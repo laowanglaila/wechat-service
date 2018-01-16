@@ -66,6 +66,8 @@ message UpdateWechatQrcodeReq {
    string param3=5;
    // 该二维码有效时间/秒
    int32 expireSeconds=6;
+   // 店铺ID
+   int64 shopID=7;
    // 请求公共字段
    RequestHeader header=1;
 }

@@ -144,6 +144,8 @@ public interface WechatQRCodeRpcSerivce {
         private String param3;
         @Protocol(fieldType = FieldType.INT, order = 6, description = "该二维码有效时间/秒")
         private int expireSeconds;
+        @Protocol(fieldType = FieldType.LONG, order = 7, description = "店铺ID")
+        private long shopID;
 
     }
     @Data
