@@ -156,7 +156,9 @@ public class CardSignRpcServiceImpl implements CardSignRpcService{
                                     cardSignReqData1.setHualalaCardID( item.getHualalaCardID() );
                                     cardSignReqData1.setHualalaCardCode( item.getHualalaCardCode() );
                                     cardSignReqData1.setCode( item.getCode() );
-                                    return this.getSign( cardSignReqData1 );
+                                    CardSignResData sign = this.getSign( cardSignReqData1 );
+                                    sign.setEffectiveTime( item.getEffectiveTime() );
+                                    return sign;
                                 } ).collect( Collectors.toList() );
         CardBachSignResData cardBachSignResData = new CardBachSignResData();
         cardBachSignResData.setSigns( cardSignResDataList );
