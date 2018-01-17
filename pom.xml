@@ -79,7 +79,7 @@
             <dependency>
                 <groupId>com.hualala.wechat</groupId>
                 <artifactId>wechat-SDK</artifactId>
-                <version>0.1.0-SNAPSHOT</version>
+                <version>0.1.2-SNAPSHOT</version>
             </dependency>
             <!-- JDK 1.8+ compatible -->
             <!--<dependency>-->
