@@ -26,6 +26,8 @@ message CardBachSignReqItem {
    string code=2;
    // 哗啦啦用户的会员卡id
    string hualalaCardCode=3;
+   // 卡券开始生效时间
+   string effectiveTime=4;
 }
 message CardBachSignResData {  
    // 卡券签名集合
@@ -44,6 +46,8 @@ message CardSignResData {
    string cardID=5;
    // 领取渠道参数，用于标识本次领取的渠道值
    string outerStr=6;
+   // 卡券开始生效时间
+   string effectiveTime=7;
    // 响应公共字段
    ResultHeader result=1;
 }

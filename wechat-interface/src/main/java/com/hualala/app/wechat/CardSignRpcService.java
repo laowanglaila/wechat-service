@@ -60,6 +60,8 @@ public interface CardSignRpcService {
         private String cardID;
         @Protocol(fieldType = FieldType.STRING, order = 6, description = "领取渠道参数，用于标识本次领取的渠道值")
         private String outerStr;
+        @Protocol(fieldType = FieldType.STRING, order = 7, description = "卡券开始生效时间")
+        private String effectiveTime;
     }
 
     @Data
@@ -86,6 +88,8 @@ public interface CardSignRpcService {
         private String code;
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "哗啦啦用户的会员卡id")
         private String hualalaCardCode;
+        @Protocol(fieldType = FieldType.STRING, order = 4, description = "卡券开始生效时间")
+        private String effectiveTime;
     }
     @Data
     class CardBachSignResData extends ResultInfo {
