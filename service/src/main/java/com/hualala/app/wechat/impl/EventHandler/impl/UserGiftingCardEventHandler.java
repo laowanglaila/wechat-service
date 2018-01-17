@@ -9,6 +9,9 @@ import com.hualala.app.wechat.model.card.BaseInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 转赠事件，告知会员修改状态
  *
@@ -35,11 +38,17 @@ public class UserGiftingCardEventHandler extends AbstractCardEventHandler {
         CrmGiftRequest crmGiftRequest = new CrmGiftRequest();
         crmGiftRequest.setGroupID( baseInfoModel.getGroupID() );
         crmGiftRequest.setMpID( baseInfoModel.getMpID() );
-        crmGiftRequest.setWechatCardCode( userCardCode );
         crmGiftRequest.setSourceOpenID( FromUserName );
         crmGiftRequest.setTargetOpenID( friendUserName );
         crmGiftRequest.setSourceWay( true );
         crmGiftRequest.setSourceType( 30 );
+
+        List<CrmGiftRequest.GiftDetailListModel> giftDetailListModels = new ArrayList <>(  );
+        CrmGiftRequest.GiftDetailListModel giftDetailListModel = new CrmGiftRequest.GiftDetailListModel();
+        giftDetailListModel.setWechatGiftCode( userCardCode );
+        giftDetailListModels.add( giftDetailListModel );
+        crmGiftRequest.setGiftDetailList( giftDetailListModels );
+
         CrmGiftResponse crmGiftResponse;
         if (isReturnBack == 0){
             crmGiftRequest.setGiftStatus( 100 );
