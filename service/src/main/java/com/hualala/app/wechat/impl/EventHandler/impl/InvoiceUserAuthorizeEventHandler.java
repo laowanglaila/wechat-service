@@ -1,7 +1,10 @@
 package com.hualala.app.wechat.impl.EventHandler.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hualala.app.user.UserInvoiceCardService;
 import com.hualala.app.wechat.impl.EventHandler.BaseEventCardEventHandler;
+import com.hualala.core.client.BaseRpcClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,6 +12,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class InvoiceUserAuthorizeEventHandler extends BaseEventCardEventHandler {
+    @Autowired
+    private BaseRpcClient baseRpcClient;
+
     @Override
     public Object handler(JSONObject jsonObject) {
 //        ToUserName	String	是	公众号标识
@@ -22,6 +28,14 @@ public class InvoiceUserAuthorizeEventHandler extends BaseEventCardEventHandler 
 //        AuthorizeAppId	String	是	用于接收事件推送的公众号的AppId
 //        Source	String	是	授权来源，web表示来自微信内H5，app标识来自app
 
+
+        UserInvoiceCardService client = baseRpcClient.getRpcClient(UserInvoiceCardService.class);
+
+        UserInvoiceCardService.WeChatInsertCardReqData reqData = new UserInvoiceCardService.WeChatInsertCardReqData();
+        reqData.setTaxOrderNo(succOrderId);
+
+        UserInvoiceCardService.WeChatInsertCardResData weChatInsertCardResData = client.weChatInsertCard(reqData);
+//      weChatInsertCardResData.success();   如果请求发票信息失败怎么办?????
 
         return null;
     }

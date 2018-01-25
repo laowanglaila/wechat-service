@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.wechat.grpc";
+option java_outer_classname = "InvoiceInsertCardRpcData";
+import "commons.proto";
+import "wechatcommons.proto";
+
+message InvoiceInsertReqData {  
+   // 发票order_id
+   string orderID=2;
+   // 微信公众号id
+   string mpID=3;
+   // 开票人，发票下方处
+   string maker=4;
+   // 发票url
+   string invoiceUrl=5;
+   // 发票附件url
+   string invoiceAccessoryUrl=6;
+   // 发票的金额，以分为单位
+   int32 fee=8;
+   // 发票的抬头
+   string title=9;
+   // 发票的开票时间，为10位时间戳（utc+8）
+   int32 billingTime=10;
+   // 发票的发票代码
+   string billingNo=11;
+   // 发票的发票号码
+   string billingCode=12;
+   // 商品详情结构，见下方
+   repeated Info infoList=13;
+   // 不含税金额，以分为单位
+   int32 feeWithoutTax=14;
+   // 税额金额，以分为单位
+   int32 tax=15;
+   // 校验码
+   string checkCode=16;
+   // 购买方纳税人识别号
+   string buyerNumber=17;
+   // 购买方地址、电话
+   string buyerAddressAndPhone=18;
+   // 购买方开户行及账号
+   string buyerBankAccount=19;
+   // 销售方纳税人识别号
+   string sellerNumber=20;
+   // 销售方地址、电话
+   string sellerAddressAndPhone=21;
+   // 销售方开户行及账号
+   string sellerBankAccount=22;
+   // 备注，发票右下角初
+   string remarks=23;
+   // 收款人，发票左下角处
+   string cashier=24;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message Info {  
+   // 项目的名称
+   string name=1;
+   // 项目的数量
+   int32 num=2;
+   // 项目的单位，如个
+   string unit=3;
+   // 项目的单价
+   int32 price=4;
+}
+message InvoiceInsertResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service InvoiceInsertCardRpcService{
+    //插入卡券包
+    rpc insert(InvoiceInsertReqData) returns (InvoiceInsertResData) {}
+}

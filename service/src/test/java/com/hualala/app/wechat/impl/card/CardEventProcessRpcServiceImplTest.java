@@ -47,7 +47,7 @@ public class CardEventProcessRpcServiceImplTest extends BaseRpcTest {
         giftDetailChannelReq.setGroupID(1155L);
         giftDetailChannelReq.setCustomerID(5L);
         giftDetailChannelReq.setWechatCardCode("12364");
-        giftDetailChannelReq.setWechatCardKey(4L);
+        giftDetailChannelReq.setWechatCardKey(4L+"");
         GiftDetailChannelRes giftDetailChannelRes = rpcClient.addGiftDetailChannel(giftDetailChannelReq);
         System.out.println(giftDetailChannelRes);
     }

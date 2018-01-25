@@ -186,6 +186,11 @@
             <groupId>com.hualala.wechat</groupId>
             <artifactId>wechat-SDK</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hualala.invoice</groupId>
+            <artifactId>tax-user-interface</artifactId>
+            <version>0.1.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

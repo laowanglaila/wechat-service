@@ -19,10 +19,9 @@ public interface InvoiceTemplateRpcService {
 
     @Data
     class InvoiceInfoReq extends RequestInfo {
-        @NotBlank
         @Protocol(fieldType = FieldType.STRING, order = 2, description = "收款方（开票方）全称，显示在发票详情内。故建议一个收款方对应一个发票卡券模板")
         String payee;
-        @NotBlank
+        @NotBlank(message = "发票类型不能为空")
         @Protocol(fieldType = FieldType.STRING, order = 3, description = "发票类型")
         String type;
         @NotBlank

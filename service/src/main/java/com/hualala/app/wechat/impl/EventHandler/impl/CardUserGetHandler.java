@@ -116,7 +116,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
             giftDetailChannelReq.setGroupID( outStr.getGroupID() );
             giftDetailChannelReq.setCustomerID( outStr.getCustomerID() );
             giftDetailChannelReq.setWechatCardCode( userCardCode );
-            giftDetailChannelReq.setWechatCardKey( cardKey );
+            giftDetailChannelReq.setWechatCardKey( cardKey.toString() );
             resultInfo = rpcClient.addGiftDetailChannel( giftDetailChannelReq );
         }
         return resultInfo;
@@ -152,7 +152,7 @@ public class CardUserGetHandler extends AbstractCardEventHandler {
     private CrmGiftResponse sendCoupon(String fromUserName, BaseInfoModel baseInfoModel, String userCardCode) {
         CrmGiftService rpcClient = baseRpcClient.getRpcClient( CrmGiftService.class );
         CrmGiftRequest crmGiftRequest = new CrmGiftRequest();
-        crmGiftRequest.setWechatCardCode( userCardCode );
+//        crmGiftRequest.setWechatCardCode( userCardCode);
         crmGiftRequest.setGroupID( baseInfoModel.getGroupID() );
         crmGiftRequest.setSourceType( 30 );
         crmGiftRequest.setSourceWay( true );

@@ -49,7 +49,7 @@ public class InvoiceInsertRequest {
         //        billing_no	String	是	发票的发票代码
         @SerializedName("billing_no")
         String billingNo;
-//        billing_code	String	是	发票的发票号码
+        //        billing_code	String	是	发票的发票号码
         @SerializedName("billing_code")
         String billingCode;
         //        info	List	否	商品详情结构，见下方
